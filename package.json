@@ -5,6 +5,7 @@
     "setup": "node scripts/run.mjs setup",
     "dev": "node scripts/run.mjs dev",
     "api": "node scripts/run.mjs api",
+    "scrape": "node scripts/run.mjs scrape",
     "test": "node scripts/run.mjs test"
   }
 }

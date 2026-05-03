@@ -1,0 +1,19 @@
+[
+  {
+    "flight_id": "TBD_FLIGHT_FEED",
+    "airline": "Unknown",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "",
+      "boarding": "",
+      "departure": ""
+    },
+    "status": "data_pending",
+    "category": "unknown",
+    "source_url": "local://pending/flights",
+    "last_verified_at": "2026-05-03T09:53:40.482851+00:00"
+  }
+]
