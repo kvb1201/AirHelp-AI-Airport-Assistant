@@ -17,6 +17,10 @@ from app.services.route_narrative import (
     passenger_place_name,
     shops_along_path,
 )
+from app.services.turn_by_turn import (
+    generate_summary_stats,
+    generate_turn_by_turn_directions,
+)
 
 
 # Pier gate ends (spine segment 14 = approach to gate lounge)
@@ -182,6 +186,10 @@ def _route_option(
 
     journey = build_simple_journey(path_nodes, edges, int(total_minutes))
     shop_along = shops_along_path(node_ids, max_total=10)
+    
+    # Generate detailed turn-by-turn directions
+    turn_by_turn = generate_turn_by_turn_directions(path_nodes, edges)
+    summary_stats = generate_summary_stats(turn_by_turn)
 
     return {
         "option_index": option_index,
@@ -193,6 +201,8 @@ def _route_option(
         "steps": steps,
         "simple_journey": journey,
         "shops_along_route": shop_along,
+        "turn_by_turn_directions": turn_by_turn,
+        "route_summary": summary_stats,
     }
 
 
