@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 
 class ChatResponse(BaseModel):
     type: str = "chat"
-    intent: str = "general"
+    intent: Optional[str] = None
     message: str
     data: Dict[str, Any] = {}
     context: Dict[str, Any] = {}

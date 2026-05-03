@@ -1,49 +1,35 @@
+# backend/test_locating_engine.py
+
 from app.services.locating_engine import locate_from_query
 
 
-def test_cases():
-    queries = [
-        # -----------------------
-        # 🔹 Strong regex cases
-        # -----------------------
+def run_tests():
+    test_cases = [
         "I am near gate B12",
-        "food near terminal 3",
         "go to terminal 2",
         "navigate to gate A1",
-
-        # -----------------------
-        # 🔹 Semantic cases
-        # -----------------------
-        "I want to eat",
-        "lounge",
-        "where can I get wifi",
-        "atm nearby",
-
-        # -----------------------
-        # 🔹 Mixed cases
-        # -----------------------
-        "coffee near terminal 1",
-        "restaurants in terminal 2",
-        "shops near t3",
-
-        # -----------------------
-        # 🔹 Edge cases
-        # -----------------------
-        "something to do",
-        "help me",
-        "random text xyz",
+        "food near terminal 3",
+        "coffee near t1",
     ]
 
-    for q in queries:
-        print("\n" + "=" * 50)
-        print("QUERY:", q)
+    print("\n" + "="*60)
+    print("🔍 LOCATING ENGINE TEST")
+    print("="*60)
 
-        result = locate_from_query(q)
+    for query in test_cases:
+        print(f"\nQUERY: {query}")
+
+        result = locate_from_query(query)
 
         print("OUTPUT:")
-        for k, v in result.items():
-            print(f"{k}: {v}")
+        print(f"  source       : {result.get('source')}")
+        print(f"  destination  : {result.get('destination')}")
+        print(f"  intent       : {result.get('intent')}")
+        print(f"  clarification: {result.get('needs_clarification')}")
+        print(f"  confidence   : {result.get('confidence')}")
+
+        print("-"*50)
 
 
 if __name__ == "__main__":
-    test_cases()
+    run_tests()
