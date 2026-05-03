@@ -1,0 +1,313 @@
+{
+  "gates": [
+    {
+      "gate": "A1",
+      "terminal": "Terminal 1",
+      "description": "Gate A1 is located at the far north end of Terminal 1, near the international departures wing. It serves wide-body aircraft including Boeing 777 and Airbus A380 flights.",
+      "walking_time_from_security": "5 minutes",
+      "nearby_facilities": ["Café Aroma", "Duty-Free Zone A", "Accessible Restrooms", "Charging Stations"],
+      "status": "Operational"
+    },
+    {
+      "gate": "A2",
+      "terminal": "Terminal 1",
+      "description": "Gate A2 is adjacent to Gate A1 in Terminal 1, positioned right after the first set of escalators. It handles mid-range international routes.",
+      "walking_time_from_security": "7 minutes",
+      "nearby_facilities": ["SkyLounge Premium Lounge", "Restrooms", "Vending Machines"],
+      "status": "Operational"
+    },
+    {
+      "gate": "B12",
+      "terminal": "Terminal 2",
+      "description": "Gate B12 is located in Terminal 2, on Level 2, accessible via the central elevator bank or escalators from the B-concourse entrance. Follow the blue 'B Gates' signs from the security checkpoint. It primarily serves domestic and regional flights.",
+      "walking_time_from_security": "10 minutes",
+      "nearby_facilities": ["The Runway Grill", "IndiaMart Convenience Store", "Family Restrooms", "Kids Play Area"],
+      "status": "Operational"
+    },
+    {
+      "gate": "C5",
+      "terminal": "Terminal 3",
+      "description": "Gate C5 is in the south wing of Terminal 3, accessible via the moving walkway from the main Terminal 3 security exit. It serves low-cost carrier domestic flights.",
+      "walking_time_from_security": "8 minutes",
+      "nearby_facilities": ["QuickBite Fast Food", "ATM", "Restrooms"],
+      "status": "Operational"
+    },
+    {
+      "gate": "D3",
+      "terminal": "Terminal 3",
+      "description": "Gate D3 is at the end of the D-concourse in Terminal 3. It is the furthest gate from security — take the shuttle train from the main terminal or walk 15 minutes. Serves charter and cargo-mixed flights.",
+      "walking_time_from_security": "15 minutes (or 4 minutes by shuttle train)",
+      "nearby_facilities": ["Business Lounge Horizon", "Grab & Go Kiosk", "Restrooms"],
+      "status": "Operational"
+    }
+  ],
+  "terminals": [
+    {
+      "name": "Terminal 1",
+      "code": "T1",
+      "description": "Terminal 1 is the international departures terminal, handling all intercontinental and long-haul international flights. It features a world-class duty-free mall, premium lounges, and fine dining. The terminal spans four levels connected by escalators, elevators, and moving walkways.",
+      "facilities": [
+        "Premium Duty-Free Mall",
+        "SkyLounge Premium Lounge",
+        "Café Aroma",
+        "Currency Exchange",
+        "Medical Center",
+        "Family Prayer Rooms",
+        "Baby Care Rooms",
+        "Business Centre",
+        "Multiple Restrooms on every floor"
+      ],
+      "access": "Enter via the International Departures main entrance on Level 1. Dedicated drop-off zone on the ground floor. Sky Bridge connects to the hotel on Level 3."
+    },
+    {
+      "name": "Terminal 2",
+      "code": "T2",
+      "description": "Terminal 2 handles domestic and short-haul international flights. It is modern and compact, designed for fast boarding. It features a food court, shopping, and quick-service lounges. Security is typically faster here than Terminal 1.",
+      "facilities": [
+        "The Runway Grill Restaurant",
+        "IndiaMart Convenience Store",
+        "Sky Connect Lounge",
+        "ATM Cluster",
+        "Pharmacy",
+        "Kids Play Zone",
+        "Charging Stations throughout",
+        "Restrooms on Levels 1 and 2"
+      ],
+      "access": "Enter via Terminal 2 Departure Hall on Level 1. Shared parking structure with Terminal 1. Shuttle bus connects Terminal 2 to Terminal 3 every 10 minutes."
+    },
+    {
+      "name": "Terminal 3",
+      "code": "T3",
+      "description": "Terminal 3 is a dedicated low-cost carrier and regional terminal. It offers basic amenities with budget-friendly food and retail options. The terminal has two concourses, C and D, with D-concourse served by an automated shuttle train.",
+      "facilities": [
+        "QuickBite Fast Food Court",
+        "Grab & Go Kiosk",
+        "Business Lounge Horizon",
+        "ATM",
+        "Baggage Wrap Service",
+        "Restrooms in both concourses",
+        "Shuttle Train to D-concourse"
+      ],
+      "access": "Accessible via the Airport Ring Road on Level 1. Terminal 3 has its own dedicated check-in counters (rows 40–60). Shuttle bus from Terminal 2 stops at the T3 main entrance."
+    }
+  ],
+  "food_courts": [
+    {
+      "name": "Café Aroma",
+      "cuisine": "Café & Bakery",
+      "location": "Terminal 1, Level 2, near Gate A1",
+      "timings": "04:00 AM – 11:59 PM (daily)",
+      "price_range": "₹200 – ₹800 per person",
+      "description": "Café Aroma serves artisan coffees, fresh-baked pastries, sandwiches, and light bites. Perfect for a quick snack before a long international flight. Offers specialty blends from three continents.",
+      "highlights": ["Espresso bar", "Freshly baked croissants", "Gluten-free options available"]
+    },
+    {
+      "name": "The Runway Grill",
+      "cuisine": "Multi-Cuisine (Indian, Continental, Chinese)",
+      "location": "Terminal 2, Level 2, near Gate B12",
+      "timings": "05:30 AM – 11:00 PM (daily)",
+      "price_range": "₹350 – ₹1200 per person",
+      "description": "The Runway Grill is the main sit-down restaurant in Terminal 2. It offers a full menu spanning Indian curries and thalis, continental mains, pasta, and a dedicated Chinese corner. Great choice for families.",
+      "highlights": ["Live pasta counter", "Thali meals", "Children's menu", "Window seating with airside views"]
+    },
+    {
+      "name": "QuickBite Fast Food",
+      "cuisine": "Fast Food & Snacks",
+      "location": "Terminal 3, Level 1, C-concourse entrance",
+      "timings": "24 hours (daily)",
+      "price_range": "₹100 – ₹450 per person",
+      "description": "QuickBite is a 24-hour fast food outlet offering burgers, wraps, fries, cold beverages, and meal combos. Ideal for budget travellers seeking a fast and filling option.",
+      "highlights": ["Veg and non-veg options", "Meal combos available", "Digital self-ordering kiosks"]
+    },
+    {
+      "name": "Spice Garden",
+      "cuisine": "South Indian & Tandoor",
+      "location": "Terminal 1, Level 3, Food Court Zone",
+      "timings": "06:00 AM – 10:00 PM (daily)",
+      "price_range": "₹250 – ₹900 per person",
+      "description": "Spice Garden specialises in authentic South Indian breakfast items (idli, dosa, vada) as well as North Indian tandoori dishes and biryanis for lunch and dinner.",
+      "highlights": ["Masala dosa", "Biryani counter from noon", "Live tandoor station"]
+    }
+  ],
+  "shops": [
+    {
+      "name": "SkyMall Duty-Free",
+      "location": "Terminal 1, Level 2, post-security (International Departures)",
+      "sku_categories": [
+        "Perfumes & Fragrances",
+        "Wines & Spirits",
+        "Tobacco",
+        "Chocolates & Confectionery",
+        "Cosmetics & Skincare",
+        "Electronics",
+        "Luxury Accessories"
+      ],
+      "current_offers": [
+        "Buy 2 get 1 free on selected perfumes (Chanel, Dior)",
+        "15% off on all single malt Scotch whiskies above ₹5000",
+        "Complimentary luxury gift wrapping on purchases above ₹3000"
+      ],
+      "description": "SkyMall is the flagship duty-free store in Terminal 1. It is the largest retail space in the airport, spanning 4,000 sq ft, stocking global luxury and lifestyle brands. Open to all international departing passengers."
+    },
+    {
+      "name": "World Spirits & Wines",
+      "location": "Terminal 1, Level 2, near Gate A2",
+      "sku_categories": [
+        "Single Malt Whiskies",
+        "Blended Scotch",
+        "Champagne & Sparkling Wines",
+        "Red & White Wines",
+        "Craft Gins & Vodkas",
+        "Rum & Brandy"
+      ],
+      "current_offers": [
+        "Buy any 2 bottles and get a premium whisky glass set free",
+        "10% extra discount when you spend over ₹8000",
+        "Special pricing on Moët & Chandon Champagne this week"
+      ],
+      "description": "World Spirits & Wines is a specialist liquor boutique offering curated collections of premium spirits from Scotland, France, Ireland, and more. Expert staff offer tasting recommendations."
+    },
+    {
+      "name": "IndiaMart Convenience Store",
+      "location": "Terminal 2, Level 2, near Gate B12",
+      "sku_categories": [
+        "Snacks & Chips",
+        "Beverages (Bottled Water, Juices, Energy Drinks)",
+        "Reading Material (Books, Magazines)",
+        "Travel Accessories",
+        "Electronics (Cables, Earphones, Power Banks)",
+        "Medicines & First Aid"
+      ],
+      "current_offers": [
+        "3 for ₹100 on selected snack packs",
+        "20% off on all power banks this week"
+      ],
+      "description": "IndiaMart is the go-to convenience store in Terminal 2, stocking everything a traveller might need at the last minute — from medicines and snacks to phone chargers and neck pillows."
+    }
+  ],
+  "services": [
+    {
+      "name": "SkyLounge Premium Lounge",
+      "type": "Airport Lounge",
+      "location": "Terminal 1, Level 3, near Gate A2",
+      "description": "SkyLounge offers premium travellers a quiet, comfortable environment with unlimited food and beverages, high-speed Wi-Fi, private shower suites, massage chairs, and a business centre. Accessible with eligible credit cards, airline status, or day-pass purchase.",
+      "hours": "04:30 AM – 01:00 AM (daily)",
+      "access": "Credit card (Priority Pass, Amex Platinum, HDFC Infinia), Airline Business/First Class boarding pass, or Day Pass (₹2500)"
+    },
+    {
+      "name": "Sky Connect Lounge",
+      "type": "Airport Lounge",
+      "location": "Terminal 2, Level 2, near central security exit",
+      "description": "A mid-tier lounge in Terminal 2 offering hot and cold buffet, complimentary soft drinks and juices, Wi-Fi, and comfortable seating. Suitable for domestic travellers seeking respite before departure.",
+      "hours": "05:00 AM – 11:30 PM (daily)",
+      "access": "Select credit cards, Lounge Key membership, or Day Pass (₹1200)"
+    },
+    {
+      "name": "Airport Medical Center",
+      "type": "Medical",
+      "location": "Terminal 1, Level 1, Arrival Hall, near Exit Gate 3",
+      "description": "The Airport Medical Centre provides 24-hour emergency first aid, general consultations, vaccination certificates, blood pressure checks, and basic medicines. A licensed doctor and nurse are on duty at all times.",
+      "hours": "24 hours, 7 days a week",
+      "access": "Open to all airport visitors. No appointment needed for emergencies."
+    },
+    {
+      "name": "ForexNow Currency Exchange",
+      "type": "Currency Exchange",
+      "location": "Terminal 1, Level 1, near Customs Exit; Terminal 2, Level 1, Check-in Hall",
+      "description": "ForexNow offers competitive exchange rates for over 30 currencies. Services include currency exchange, travel cards (multi-currency prepaid), and international money transfers. Zero commission on orders above USD 500 equivalent.",
+      "hours": "05:00 AM – 12:00 AM (daily)",
+      "access": "Open to all travellers. Bring valid passport and boarding pass."
+    },
+    {
+      "name": "Restrooms — Terminal 2 Level 1",
+      "type": "Restroom",
+      "location": "Terminal 2, Level 1, near Check-in counters B20–B30",
+      "description": "Fully accessible restrooms with separate male, female, and gender-neutral facilities. Includes baby changing stations, accessible stalls for wheelchair users, and a lactation room.",
+      "hours": "24 hours",
+      "access": "Free, open to all airport users."
+    },
+    {
+      "name": "Restrooms — Terminal 1 Level 2",
+      "type": "Restroom",
+      "location": "Terminal 1, Level 2, midway between Gate A1 and Gate A2",
+      "description": "Premium restrooms featuring automatic flushing, electronic hand dryers, and vanity stations. Accessible restroom available. Separate prayer room adjacent.",
+      "hours": "24 hours",
+      "access": "Free, open to all airside passengers."
+    }
+  ],
+  "facilities": [
+    {
+      "name": "Kids Play Area",
+      "type": "Family Facility",
+      "location": "Terminal 2, Level 2, near Gate B12",
+      "description": "A safe, supervised play zone for children aged 2–12. Features soft-play structures, toy stations, and interactive digital games. Monitored by airport staff."
+    },
+    {
+      "name": "Baby Care Room",
+      "type": "Family Facility",
+      "location": "Terminal 1, Level 2, near Gate A1; Terminal 2, Level 1, near Check-in Hall",
+      "description": "Private nursing and feeding room with comfortable seating, a changing table, warm water access, and a microwave. Free to use, no booking required."
+    },
+    {
+      "name": "Business Centre",
+      "type": "Business Facility",
+      "location": "Terminal 1, Level 3, SkyLounge area",
+      "description": "Fully equipped business centre with private meeting pods, printing, scanning, video-conferencing facilities, and high-speed fibre internet. Available to lounge members and day-pass holders."
+    },
+    {
+      "name": "Charging Stations",
+      "type": "Utility",
+      "location": "Available at all gates in Terminal 1 and Terminal 2; Terminal 3 near C-concourse entrance",
+      "description": "Free multi-standard charging stations (USB-A, USB-C, Type-B, wireless Qi charging pads) located throughout all terminals. Just plug in your device."
+    }
+  ],
+  "check_in_counters": [
+    {
+      "name": "International Check-in Zone A",
+      "terminal": "Terminal 1",
+      "airlines": ["Air India", "Emirates", "British Airways", "Lufthansa", "Singapore Airlines", "Qatar Airways"],
+      "counter_range": "Counters A1 – A40",
+      "description": "All international airline check-in counters are located in Terminal 1, Hall A. Self-check-in kiosks are available at the entrance. Web check-in is recommended; counters open 4 hours before departure.",
+      "hours": "Open as per flight schedules"
+    },
+    {
+      "name": "Domestic Check-in Zone B",
+      "terminal": "Terminal 2",
+      "airlines": ["IndiGo", "SpiceJet", "Air India Express", "Vistara", "Akasa Air"],
+      "counter_range": "Counters B1 – B35",
+      "description": "Domestic airline check-in counters in Terminal 2. Bag drop counters are available for passengers who have completed web check-in. Counters open 2.5 hours before departure.",
+      "hours": "Open as per flight schedules"
+    },
+    {
+      "name": "Budget Carrier Check-in Zone C",
+      "terminal": "Terminal 3",
+      "airlines": ["GoFirst", "StarAir", "Blue Dart Aviation"],
+      "counter_range": "Counters C40 – C60",
+      "description": "Low-cost carrier check-in counters in Terminal 3. Strict baggage weight limits apply. Self-service kiosks are available near the entrance.",
+      "hours": "Open 3 hours before first flight of the day until final departure"
+    }
+  ],
+  "baggage_belts": [
+    {
+      "belt_number": "Belt 1",
+      "terminal": "Terminal 1",
+      "flights": ["AI101", "AI202", "EK512"],
+      "location": "Terminal 1, Arrivals Hall, Level 0, south end",
+      "description": "International arrivals baggage belt for Air India and Emirates long-haul flights. Oversized baggage collection point is adjacent to Belt 1."
+    },
+    {
+      "belt_number": "Belt 2",
+      "terminal": "Terminal 1",
+      "flights": ["BA117", "LH761", "QR555"],
+      "location": "Terminal 1, Arrivals Hall, Level 0, north end",
+      "description": "International arrivals belt for British Airways, Lufthansa, and Qatar Airways. Priority baggage is marked and arrives first."
+    },
+    {
+      "belt_number": "Belt 3",
+      "terminal": "Terminal 2",
+      "flights": ["6E401", "SG305", "UK890"],
+      "location": "Terminal 2, Arrivals, Level 0, central",
+      "description": "Domestic arrivals baggage belt serving IndiGo, SpiceJet, and Vistara flights. Digital display above belt shows assigned flight numbers in real time."
+    }
+  ]
+}
