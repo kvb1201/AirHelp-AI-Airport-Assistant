@@ -53,19 +53,33 @@ def _extract_id(item: dict[str, Any], category: str, index: int) -> str:
 def _flatten_gates(gates: list[dict]) -> list[dict[str, Any]]:
     docs: list[dict[str, Any]] = []
     for i, gate in enumerate(gates):
+        gate_num = gate.get("gate_number") or gate.get("gate", "N/A")
+        terminal = gate.get("terminal", "N/A")
+        nearby = gate.get("nearby_facilities", [])
+        nearby_str = ", ".join(str(n) for n in nearby) if nearby else "N/A"
+
+        # Extract walking time from navigation dict if present
+        nav = gate.get("navigation", {})
+        walk_time = "N/A"
+        for nav_key, nav_val in nav.items():
+            if "security" in nav_key and isinstance(nav_val, dict):
+                walk_time = f"{nav_val.get('walking_time_minutes', 'N/A')} min"
+                break
+
         text = (
-            f"Gate {gate.get('gate', 'N/A')}: "
-            f"Located in Terminal {gate.get('terminal', 'N/A')}. "
+            f"Gate {gate_num}: "
+            f"Located in Terminal {terminal}. "
             f"{gate.get('description', '')} "
-            f"Walking time from security: {gate.get('walking_time_from_security', 'N/A')}. "
-            f"Facilities nearby: {', '.join(gate.get('nearby_facilities', []))}."
+            f"Walking time from security: {walk_time}. "
+            f"Facilities nearby: {nearby_str}."
         )
         docs.append({
             "text": text.strip(),
             "metadata": {
                 "category": "gate",
-                "location": gate.get("terminal", "unknown"),
-                "id": _extract_id(gate, "gate", i),
+                "location": terminal,
+                "name": f"Gate {gate_num}",
+                "id": gate.get("gate_id") or _extract_id(gate, "gate", i),
             },
         })
     return docs
@@ -74,31 +88,53 @@ def _flatten_gates(gates: list[dict]) -> list[dict[str, Any]]:
 def _flatten_terminals(terminals: list[dict]) -> list[dict[str, Any]]:
     docs: list[dict[str, Any]] = []
     for i, terminal in enumerate(terminals):
+        name = terminal.get("name", "N/A")
+        # Handle both old 'facilities' (list of str) and new 'facilities_summary'
+        facs = terminal.get("facilities") or terminal.get("facilities_summary", [])
+        facs_str = ", ".join(str(f) for f in facs) if facs else "N/A"
+
         text = (
-            f"Terminal {terminal.get('name', 'N/A')}: "
+            f"Terminal {name}: "
             f"{terminal.get('description', '')} "
-            f"Facilities: {', '.join(terminal.get('facilities', []))}. "
+            f"Facilities: {facs_str}. "
             f"Access: {terminal.get('access', '')}."
         )
         docs.append({
             "text": text.strip(),
             "metadata": {
                 "category": "terminal",
-                "location": terminal.get("name", "unknown"),
-                "id": _extract_id(terminal, "terminal", i),
+                "location": name,
+                "name": name,
+                "id": terminal.get("terminal_id") or _extract_id(terminal, "terminal", i),
             },
         })
     return docs
 
 
 def _flatten_food_courts(food_courts: list[dict]) -> list[dict[str, Any]]:
+    """Handles both old 'food_courts' and new 'food_outlets' schema."""
     docs: list[dict[str, Any]] = []
     for i, outlet in enumerate(food_courts):
+        name = outlet.get("name", "N/A")
+        # location: old='location', new='location_description'
+        location = outlet.get("location") or outlet.get("location_description", "N/A")
+        # cuisine: old=string, new=list of strings
+        cuisine = outlet.get("cuisine", "N/A")
+        if isinstance(cuisine, list):
+            cuisine = ", ".join(cuisine)
+        # timings: old=string, new=dict{open, close}
+        timings = outlet.get("timings", "N/A")
+        if isinstance(timings, dict):
+            if timings.get("open_24h"):
+                timings = "Open 24 hours"
+            else:
+                timings = f"{timings.get('open', '?')} – {timings.get('close', '?')}"
+
         text = (
-            f"Food Outlet '{outlet.get('name', 'N/A')}': "
-            f"Cuisine: {outlet.get('cuisine', 'N/A')}. "
-            f"Location: {outlet.get('location', 'N/A')}. "
-            f"Timings: {outlet.get('timings', 'N/A')}. "
+            f"Food Outlet '{name}': "
+            f"Cuisine: {cuisine}. "
+            f"Location: {location}. "
+            f"Timings: {timings}. "
             f"Price range: {outlet.get('price_range', 'N/A')}. "
             f"{outlet.get('description', '')}"
         )
@@ -106,8 +142,9 @@ def _flatten_food_courts(food_courts: list[dict]) -> list[dict[str, Any]]:
             "text": text.strip(),
             "metadata": {
                 "category": "food_court",
-                "location": outlet.get("location", "unknown"),
-                "id": _extract_id(outlet, "food_court", i),
+                "location": location,
+                "name": name,
+                "id": outlet.get("outlet_id") or _extract_id(outlet, "food_court", i),
             },
         })
     return docs
@@ -116,14 +153,29 @@ def _flatten_food_courts(food_courts: list[dict]) -> list[dict[str, Any]]:
 def _flatten_shops(shops: list[dict]) -> list[dict[str, Any]]:
     docs: list[dict[str, Any]] = []
     for i, shop in enumerate(shops):
+        name = shop.get("name", "N/A")
+        location = shop.get("location") or shop.get("location_description", "N/A")
+
+        # current_offers: old=list of strings, new=list of dicts
         offers_text = ""
-        if shop.get("current_offers"):
-            offers_text = f"Current offers: {'; '.join(shop['current_offers'])}. "
-        skus = ", ".join(shop.get("sku_categories", []))
+        offers = shop.get("current_offers", [])
+        if offers:
+            offer_titles = []
+            for o in offers:
+                if isinstance(o, dict):
+                    offer_titles.append(o.get("title", str(o)))
+                else:
+                    offer_titles.append(str(o))
+            offers_text = f"Current offers: {'; '.join(offer_titles)}. "
+
+        # sku_categories (old) or sub_category (new)
+        skus = shop.get("sku_categories") or shop.get("sub_category", [])
+        skus_str = ", ".join(str(s) for s in skus) if skus else "N/A"
+
         text = (
-            f"Shop '{shop.get('name', 'N/A')}': "
-            f"Located at {shop.get('location', 'N/A')}. "
-            f"Available categories: {skus}. "
+            f"Shop '{name}': "
+            f"Located at {location}. "
+            f"Available categories: {skus_str}. "
             f"{offers_text}"
             f"{shop.get('description', '')}"
         )
@@ -131,8 +183,9 @@ def _flatten_shops(shops: list[dict]) -> list[dict[str, Any]]:
             "text": text.strip(),
             "metadata": {
                 "category": "shop",
-                "location": shop.get("location", "unknown"),
-                "id": _extract_id(shop, "shop", i),
+                "location": location,
+                "name": name,
+                "id": shop.get("shop_id") or _extract_id(shop, "shop", i),
             },
         })
     return docs
@@ -141,18 +194,31 @@ def _flatten_shops(shops: list[dict]) -> list[dict[str, Any]]:
 def _flatten_services(services: list[dict]) -> list[dict[str, Any]]:
     docs: list[dict[str, Any]] = []
     for i, service in enumerate(services):
+        name = service.get("name", "N/A")
+        location = service.get("location") or service.get("location_description", "N/A")
+
+        # hours: old=string, new=timings dict
+        hours = service.get("hours", "N/A")
+        timings = service.get("timings")
+        if isinstance(timings, dict):
+            if timings.get("open_24h"):
+                hours = "Open 24 hours"
+            else:
+                hours = f"{timings.get('open', '?')} – {timings.get('close', '?')}"
+
         text = (
-            f"Service '{service.get('name', 'N/A')}' ({service.get('type', 'N/A')}): "
-            f"Location: {service.get('location', 'N/A')}. "
+            f"Service '{name}' ({service.get('type', 'N/A')}): "
+            f"Location: {location}. "
             f"{service.get('description', '')} "
-            f"Hours: {service.get('hours', 'N/A')}."
+            f"Hours: {hours}."
         )
         docs.append({
             "text": text.strip(),
             "metadata": {
                 "category": "service",
-                "location": service.get("location", "unknown"),
-                "id": _extract_id(service, "service", i),
+                "location": location,
+                "name": name,
+                "id": service.get("service_id") or _extract_id(service, "service", i),
             },
         })
     return docs
@@ -161,18 +227,22 @@ def _flatten_services(services: list[dict]) -> list[dict[str, Any]]:
 def _flatten_facilities(facilities: list[dict]) -> list[dict[str, Any]]:
     docs: list[dict[str, Any]] = []
     for i, facility in enumerate(facilities):
+        name = facility.get("name", "N/A")
+        location = facility.get("location") or facility.get("location_description", "N/A")
+
         text = (
-            f"Facility '{facility.get('name', 'N/A')}': "
+            f"Facility '{name}': "
             f"Type: {facility.get('type', 'N/A')}. "
-            f"Location: {facility.get('location', 'N/A')}. "
+            f"Location: {location}. "
             f"{facility.get('description', '')}"
         )
         docs.append({
             "text": text.strip(),
             "metadata": {
                 "category": "facility",
-                "location": facility.get("location", "unknown"),
-                "id": _extract_id(facility, "facility", i),
+                "location": location,
+                "name": name,
+                "id": facility.get("facility_id") or _extract_id(facility, "facility", i),
             },
         })
     return docs
@@ -203,12 +273,13 @@ def _flatten_check_in_counters(counters: list[dict]) -> list[dict[str, Any]]:
 def _flatten_baggage_belts(belts: list[dict]) -> list[dict[str, Any]]:
     docs: list[dict[str, Any]] = []
     for i, belt in enumerate(belts):
-        flights = ", ".join(belt.get("flights", []))
+        flights = ", ".join(str(f) for f in belt.get("flights", []))
+        location = belt.get("location") or belt.get("location_description", "N/A")
         text = (
             f"Baggage Belt {belt.get('belt_number', 'N/A')}: "
             f"Terminal: {belt.get('terminal', 'N/A')}. "
             f"Assigned flights: {flights}. "
-            f"Location: {belt.get('location', 'N/A')}. "
+            f"Location: {location}. "
             f"{belt.get('description', '')}"
         )
         docs.append({
@@ -216,7 +287,36 @@ def _flatten_baggage_belts(belts: list[dict]) -> list[dict[str, Any]]:
             "metadata": {
                 "category": "baggage_belt",
                 "location": belt.get("terminal", "unknown"),
-                "id": _extract_id(belt, "baggage_belt", i),
+                "name": belt.get("belt_number", f"Belt {i+1}"),
+                "id": belt.get("belt_id") or _extract_id(belt, "baggage_belt", i),
+            },
+        })
+    return docs
+
+
+def _flatten_flights(flights: list[dict]) -> list[dict[str, Any]]:
+    """Flatten flight data into searchable documents."""
+    docs: list[dict[str, Any]] = []
+    for i, flight in enumerate(flights):
+        gate = flight.get("gate_number", "N/A")
+        terminal = flight.get("terminal", "N/A")
+        text = (
+            f"Flight {flight.get('flight_number', 'N/A')} "
+            f"({flight.get('airline', 'N/A')}): "
+            f"{flight.get('origin', '?')} → {flight.get('destination_city', flight.get('destination', '?'))}. "
+            f"Terminal: {terminal}, Gate: {gate}. "
+            f"Departure: {flight.get('departure_time', 'N/A')}. "
+            f"Status: {flight.get('status', 'N/A')}. "
+            f"Check-in counters: {flight.get('check_in_counter_range', 'N/A')}. "
+            f"{flight.get('notes', '')}"
+        )
+        docs.append({
+            "text": text.strip(),
+            "metadata": {
+                "category": "flight",
+                "location": terminal,
+                "name": flight.get("flight_number", f"flight_{i}"),
+                "id": flight.get("flight_id") or _extract_id(flight, "flight", i),
             },
         })
     return docs
@@ -227,11 +327,17 @@ def _flatten_generic(items: list[dict], category: str) -> list[dict[str, Any]]:
     docs: list[dict[str, Any]] = []
     for i, item in enumerate(items):
         text = f"{category.replace('_', ' ').title()}: {_stringify_dict(item)}"
+        location = (
+            item.get("location")
+            or item.get("location_description")
+            or item.get("terminal", "unknown")
+        )
         docs.append({
             "text": text.strip(),
             "metadata": {
                 "category": category,
-                "location": item.get("location", item.get("terminal", "unknown")),
+                "location": location,
+                "name": item.get("name") or item.get("label", ""),
                 "id": _extract_id(item, category, i),
             },
         })
@@ -246,11 +352,13 @@ _SECTION_HANDLERS: dict[str, Any] = {
     "gates": _flatten_gates,
     "terminals": _flatten_terminals,
     "food_courts": _flatten_food_courts,
+    "food_outlets": _flatten_food_courts,   # new key, same handler
     "shops": _flatten_shops,
     "services": _flatten_services,
     "facilities": _flatten_facilities,
     "check_in_counters": _flatten_check_in_counters,
     "baggage_belts": _flatten_baggage_belts,
+    "flights": _flatten_flights,
 }
 
 
