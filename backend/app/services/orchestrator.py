@@ -13,7 +13,40 @@ from app.core.llm.prompts import SYSTEM_PROMPT
 
 
 # -------------------------------
-# 🔹 Intent Detection
+# 🔥 Intent Normalization
+# -------------------------------
+def normalize_intent(intent: str) -> str:
+    if not intent:
+        return "general"
+
+    intent_lower = intent.lower()
+
+    recommendation_intents = {
+        "food", "coffee", "restaurant", "eat", "dining",
+        "shop", "shopping", "buy", "store", "retail",
+        "lounge", "relax", "rest",
+        "atm", "money", "cash",
+        "wifi", "internet", "charging",
+        "restroom", "toilet", "washroom",
+        "prayer", "meditation",
+        "facility", "service",
+        "recommendation"
+    }
+
+    if intent_lower in recommendation_intents:
+        return "recommendation"
+
+    if intent_lower == "explore":
+        return "explore"
+
+    if intent_lower in {"navigation", "navigate", "direction", "route"}:
+        return "navigation"
+
+    return "general"
+
+
+# -------------------------------
+# 🔹 Intent Detection (fallback)
 # -------------------------------
 def detect_intent(message: str) -> str:
     msg = message.lower()
@@ -25,11 +58,8 @@ def detect_intent(message: str) -> str:
         return "navigation"
 
     if any(phrase in msg for phrase in [
-        "what can i do",
-        "things to do",
-        "explore",
-        "nearby",
-        "around",
+        "what can i do", "things to do", "explore",
+        "nearby", "around",
     ]):
         return "explore"
 
@@ -40,16 +70,42 @@ def detect_intent(message: str) -> str:
     ]):
         return "recommendation"
 
-    if any(word in msg for word in [
-        "time", "late", "delay"
-    ]):
-        return "time_check"
-
     return "general"
 
 
 # -------------------------------
-# 🔹 Extract Terminal for RAG
+# 🔹 Follow-up detection
+# -------------------------------
+def _is_followup_query(msg: str) -> bool:
+    msg = msg.lower().strip()
+
+    return msg in [
+        "show options",
+        "options",
+        "more",
+        "more options",
+        "what else",
+        "anything else",
+    ]
+
+
+# -------------------------------
+# 🔥 Query Rewriting (CRITICAL FIX)
+# -------------------------------
+def _rewrite_query(user_input: str, intent: str, location: Optional[str]) -> Optional[str]:
+    msg = user_input.lower()
+
+    if _is_followup_query(msg):
+        if intent and location:
+            return f"{intent} options in {location}"
+        elif intent:
+            return f"{intent} options"
+
+    return None
+
+
+# -------------------------------
+# 🔹 Extract Terminal
 # -------------------------------
 def _extract_terminal_for_rag(location: Optional[str]) -> Optional[str]:
     if not location:
@@ -71,89 +127,61 @@ def _extract_terminal_for_rag(location: Optional[str]) -> Optional[str]:
 # -------------------------------
 # 🔹 Query Builder
 # -------------------------------
-def _build_search_query(user_input: str, location: Optional[str], intent: str) -> str:
-
-    if intent == "explore":
+def _build_search_query(user_input: str, location: Optional[str], intent_type: str) -> str:
+    if intent_type == "explore":
         return f"things to do in {location} airport" if location else "things to do in airport"
 
-    if intent == "recommendation":
+    if intent_type == "recommendation":
         return f"{user_input} in {location}" if location else user_input
 
     return user_input
 
 
 # -------------------------------
+# 🔹 Format Navigation
+# -------------------------------
+def _format_navigation(nav_data: Dict[str, Any]) -> str:
+    steps = nav_data.get("steps", [])
+
+    if not steps:
+        return "I couldn't generate a route."
+
+    return "Here is your route:\n" + "\n".join(
+        [f"{i+1}. {s}" for i, s in enumerate(steps)]
+    )
+
+
+# -------------------------------
 # 🔹 Format Single Result
 # -------------------------------
-def _format_rag_response(top: Dict[str, Any]) -> str:
-    name = top.get("name") or "A place"
-    loc = top.get("location", "")
-    desc = top.get("description", "")
+def _format_single_result(r: Dict[str, Any]) -> str:
+    name = r.get("name")
+    loc = r.get("location", "")
+    desc = r.get("description", "")
 
     lines = []
 
-    # Title
     if loc:
         lines.append(f"{name} ({loc})")
     else:
         lines.append(name)
 
-    lines.append("")
-
-    # Extract info
-    cuisine = ""
-    timings = ""
-    price = ""
-
-    if "Cuisine:" in desc:
-        cuisine = desc.split("Cuisine:")[1].split(".")[0].strip()
-
-    if "Timings:" in desc:
-        timings = desc.split("Timings:")[1].split(".")[0].strip()
-    elif "Hours:" in desc:
-        timings = desc.split("Hours:")[1].split(".")[0].strip()
-
-    if "Price range:" in desc:
-        price = desc.split("Price range:")[1].split(".")[0].strip()
-
-    if cuisine:
-        lines.append(f"Cuisine: {cuisine}")
-
-    if timings:
-        lines.append(f"Timings: {timings}")
-
-    if price:
-        lines.append(f"Price: {price}")
-
-    # Smart hint
-    d = desc.lower()
-
-    if "fast" in d or "quick" in d:
-        lines.append("\nBest for a quick bite.")
-    elif "restaurant" in d or "multi-cuisine" in d:
-        lines.append("\nBest for a proper meal.")
-    elif "lounge" in d:
-        lines.append("\nGood place to relax.")
-    elif "coffee" in d or "café" in d:
-        lines.append("\nPerfect for coffee.")
+    if desc:
+        lines.append("\n" + desc[:120])
 
     return "\n".join(lines)
 
 
 # -------------------------------
-# 🔹 Format Multiple Results
+# 🔹 Format Multi Results
 # -------------------------------
 def _format_multi_results(results: List[Dict]) -> str:
     lines = ["Here are some options:\n"]
 
     for r in results:
-        name = r.get("name")
-        loc = r.get("location", "")
-
-        line = f"• {name}"
-        if loc:
-            line += f" ({loc})"
-
+        line = f"• {r.get('name')}"
+        if r.get("location"):
+            line += f" ({r['location']})"
         lines.append(line)
 
     return "\n".join(lines)
@@ -165,32 +193,15 @@ def _format_multi_results(results: List[Dict]) -> str:
 def _format_explore_response(results: List[Dict], location: Optional[str]) -> str:
     header = location.replace("_", " ").title() if location else "your area"
 
-    lines = [f"Here are some things you can do near {header}:\n"]
+    lines = [f"Here are some things to do near {header}:\n"]
 
     for r in results:
-        name = r.get("name")
-        loc = r.get("location", "")
-
-        line = f"• {name}"
-        if loc:
-            line += f" ({loc})"
-
+        line = f"• {r.get('name')}"
+        if r.get("location"):
+            line += f" ({r['location']})"
         lines.append(line)
 
     return "\n".join(lines)
-
-
-# -------------------------------
-# 🔹 Format Navigation
-# -------------------------------
-def _format_navigation(nav_data: Dict[str, Any]) -> str:
-    steps = nav_data.get("steps", [])
-    if not steps:
-        return "I couldn't generate a route."
-
-    return "Here is your route:\n" + "\n".join(
-        [f"{i+1}. {s}" for i, s in enumerate(steps)]
-    )
 
 
 # -------------------------------
@@ -198,14 +209,35 @@ def _format_navigation(nav_data: Dict[str, Any]) -> str:
 # -------------------------------
 async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
 
+    # STEP 1: Locate
     extracted = locate_from_query(user_input)
-    extracted["raw_query"] = user_input
 
-    user_context = update_context(user_context, extracted)
+    # STEP 2: Context Engine
+    ctx_output = update_context(user_context, extracted, user_input)
+    user_context = ctx_output["context"]
 
-    intent = detect_intent(user_input)
+    # Clarification
+    if ctx_output["needs_clarification"]:
+        return {
+            "type": "clarification",
+            "intent": None,
+            "message": ctx_output["clarification_message"],
+            "data": {"navigation": None, "recommendations": None},
+            "context": user_context,
+        }
 
-    location = extracted.get("location") or user_context.get("location")
+    # STEP 3: Intent
+    if _is_followup_query(user_input):
+        intent = user_context.get("intent")
+    else:
+        intent = user_context.get("intent") or detect_intent(user_input)
+
+    intent_type = normalize_intent(intent)
+
+    print(f"[ORCHESTRATOR] INTENT: {intent}")
+    print(f"[ORCHESTRATOR] INTENT_TYPE: {intent_type}")
+
+    location = user_context.get("source")
     destination = user_context.get("destination")
 
     rag_location = _extract_terminal_for_rag(location)
@@ -214,10 +246,15 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str
     rag_data = None
 
     # -------------------------------
-    # 🔹 SERVICE CALLS
+    # 🔥 SERVICE CALLS
     # -------------------------------
-    if intent == "navigation":
-        rag_data = search(user_input, location=None, intent=intent)
+    if destination:
+        rag_data = search(
+            user_input,
+            location=None,
+            intent="navigation",
+            signals=user_context
+        )
 
         nav_data = plan_navigation_from_chat(
             user_message=user_input,
@@ -226,9 +263,26 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str
             rag_snippets=rag_data,
         )
 
-    elif intent in ["explore", "recommendation"]:
-        query = _build_search_query(user_input, rag_location, intent)
-        rag_data = search(query, location=rag_location, intent=intent)
+    elif intent_type in ["explore", "recommendation"]:
+
+        # 🔥 FIX: Query rewriting
+        rewritten = _rewrite_query(user_input, intent, rag_location)
+
+        if rewritten:
+            print(f"[ORCHESTRATOR] REWRITTEN QUERY: {rewritten}")
+            query = rewritten
+        else:
+            query = _build_search_query(user_input, rag_location, intent_type)
+
+        print(f"[ORCHESTRATOR] CALLING RAG with query: {query}")
+        print(f"[ORCHESTRATOR] Original intent passed to RAG: {intent}")
+
+        rag_data = search(
+            query,
+            location=rag_location,
+            intent=intent,
+            signals=user_context
+        )
 
     # -------------------------------
     # 🔥 RESPONSE ROUTING
@@ -236,57 +290,77 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str
     if nav_data and nav_data.get("ok"):
         return {
             "type": "navigation",
-            "intent": "navigation",
+            "intent": intent,
             "message": _format_navigation(nav_data),
             "data": {"navigation": nav_data, "recommendations": rag_data},
-            "context": {**user_context, "location": location},
+            "context": user_context,
         }
 
-    if intent == "explore" and rag_data:
+    if intent_type == "explore" and rag_data:
         return {
             "type": "explore",
-            "intent": "explore",
+            "intent": intent,
             "message": _format_explore_response(rag_data[:3], rag_location),
             "data": {"navigation": None, "recommendations": rag_data[:3]},
             "context": user_context,
         }
 
-    if intent == "recommendation" and rag_data:
-        msg_lower = user_input.lower()
+    if intent_type == "recommendation":
 
-        multi = any(x in msg_lower for x in [
-            "nearest", "nearby", "options", "list", "all"
-        ]) or any(x in msg_lower for x in [
+        if not rag_data:
+            return {
+                "type": "recommendation",
+                "intent": intent,
+                "message": "I couldn't find relevant options.",
+                "data": {"navigation": None, "recommendations": []},
+                "context": user_context,
+            }
+
+        multi = _is_followup_query(user_input) or any(x in user_input.lower() for x in [
+            "nearest", "nearby", "options", "list", "all",
             "restaurants", "lounges", "shops"
         ])
 
-        if multi:
-            message = _format_multi_results(rag_data[:3])
-        else:
-            message = _format_rag_response(rag_data[0])
+        message = (
+            _format_multi_results(rag_data[:3])
+            if multi else _format_single_result(rag_data[0])
+        )
 
         return {
             "type": "recommendation",
-            "intent": "recommendation",
+            "intent": intent,
             "message": message,
             "data": {"navigation": nav_data, "recommendations": rag_data},
             "context": user_context,
         }
 
     # -------------------------------
-    # 🔹 FALLBACK
+    # 🔹 Fallback
+    # -------------------------------
+    if ctx_output.get("fallback"):
+        return {
+            "type": "fallback",
+            "intent": intent or "general",
+            "message": "I couldn't determine your location. Here are some general options.",
+            "data": {"navigation": None, "recommendations": rag_data},
+            "context": user_context,
+        }
+
+    # -------------------------------
+    # 🔹 LLM fallback
     # -------------------------------
     response_text = await call_llm(f"""
 {SYSTEM_PROMPT}
 
 USER QUERY: {user_input}
+
 AVAILABLE OPTIONS:
 {json.dumps(rag_data, indent=2) if rag_data else "None"}
 """)
 
     return {
-        "type": intent,
-        "intent": intent,
+        "type": intent or "general",
+        "intent": intent or "general",
         "message": response_text,
         "data": {"navigation": nav_data, "recommendations": rag_data},
         "context": user_context,

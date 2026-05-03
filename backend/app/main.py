@@ -3,11 +3,37 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from contextlib import asynccontextmanager
 
 from app.api import chat, context, guided_navigation, map as map_api, navigation
 from app.services.rag_service import init_rag
 
-app = FastAPI(title="AI Airport Companion API")
+
+# ----------------------------
+# 🔹 Lifespan (Startup + Shutdown)
+# ----------------------------
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("🚀 AI Airport Companion API starting...")
+
+    try:
+        init_rag()
+        print("✅ RAG initialized successfully")
+    except Exception as e:
+        print(f"❌ RAG initialization failed: {e}")
+
+    yield
+
+    print("🛑 API shutting down...")
+
+
+# ----------------------------
+# 🔹 App Init
+# ----------------------------
+app = FastAPI(
+    title="AI Airport Companion API",
+    lifespan=lifespan
+)
 
 
 # ----------------------------
@@ -46,21 +72,11 @@ async def health_check():
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     print(f"[ERROR] {exc}")
+
     return JSONResponse(
         status_code=500,
-        content={"message": "Internal server error"},
+        content={
+            "message": "Internal server error",
+            "details": str(exc),  # 🔥 helpful during dev (remove in prod)
+        },
     )
-
-
-# ----------------------------
-# 🔹 Startup Event
-# ----------------------------
-@app.on_event("startup")
-async def startup_event():
-    print("🚀 AI Airport Companion API started")
-
-    try:
-        init_rag()   # 🔥 Initialize RAG once
-        print("✅ RAG initialized successfully")
-    except Exception as e:
-        print(f"❌ RAG initialization failed: {e}")
