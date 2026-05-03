@@ -102,7 +102,44 @@ export async function fetchCatalog() {
 }
 
 /**
- * Send a chat message to the backend.
+ * Piper TTS status (English only): piper_found, voices_configured { en }, ready.
+ */
+export async function fetchTtsStatus() {
+  const response = await fetch(`${BASE_URL}/tts/status`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+/**
+ * Offline TTS (WAV) from laptop Piper — English only.
+ */
+export async function fetchTtsAudio(text, language = "en") {
+  const response = await fetch(`${BASE_URL}/tts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, language: "en" }),
+  });
+  if (!response.ok) {
+    let detail = `HTTP ${response.status}`;
+    try {
+      const j = await response.json();
+      if (j.detail != null) {
+        detail = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+      }
+    } catch {
+      /* ignore */
+    }
+    const err = new Error(detail);
+    err.status = response.status;
+    throw err;
+  }
+  return response.blob();
+}
+
+/**
+ * Send a chat message to the backend (English assistant).
+ * @param {string} message
+ * @param {string} [location]
  */
 export async function sendChatMessage(message, location = "entrance") {
   try {

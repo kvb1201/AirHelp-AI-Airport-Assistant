@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
-from app.api import chat, context, guided_navigation, map as map_api, navigation
+from app.api import chat, context, guided_navigation, map as map_api, navigation, tts
 from app.services.rag_service import init_rag
 
 
@@ -56,6 +56,7 @@ app.include_router(navigation.router, prefix="/api", tags=["Navigation"])
 app.include_router(guided_navigation.router, prefix="/api", tags=["Guided navigation"])
 app.include_router(context.router, prefix="/api", tags=["Context"])
 app.include_router(map_api.router, prefix="/api", tags=["Map"])
+app.include_router(tts.router, prefix="/api", tags=["TTS"])
 
 
 # ----------------------------

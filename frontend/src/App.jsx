@@ -26,7 +26,7 @@ const WELCOME = {
 
 const SIDEBAR_STUBS = new Set(['Flights', 'My Trips', 'Help & Support', 'Settings']);
 
-export default function App() {
+function App() {
   const [messages, setMessages] = useState([WELCOME]);
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState('t2_entrance');
@@ -130,10 +130,6 @@ export default function App() {
 
         {/* Desktop Header */}
         <header className="desktop-header" role="banner">
-          <button type="button" className="header-lang-btn" aria-label="Change language">
-            <span className="ms" style={{ fontSize: 16 }}>language</span>
-            EN
-          </button>
           <div className="header-avatar" role="button" tabIndex={0} aria-label="User account">
             G
           </div>
@@ -248,3 +244,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;

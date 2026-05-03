@@ -9,3 +9,11 @@ venv10/
 frontend/dist/
 chroma_db/
 chroma_db_demo/
+
+# Piper neural voices (~60MB each; run scripts/download_piper_voices.sh)
+backend/app/data/piper_voices/*.onnx
+backend/app/data/piper_voices/*.onnx.json
+
+# Local Piper / espeak-ng bundles (hundreds of dict files + binaries — never commit; use pip / release tarball + script)
+piper/
+rhasspy-piper-38917ff/

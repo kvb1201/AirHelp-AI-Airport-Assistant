@@ -17,3 +17,6 @@ sentence-transformers==3.2.1
 faiss-cpu==1.9.0.post1
 # Graph support
 networkx==3.3
+
+# Offline TTS (PyPI Piper — `pip install piper-tts`; see app/services/tts_service.py)
+piper-tts>=1.4.0,<2

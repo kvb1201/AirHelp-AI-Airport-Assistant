@@ -444,6 +444,17 @@ body {
   color: var(--on-primary-fixed);
 }
 
+.header-lang-select {
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  cursor: pointer;
+  padding: 0 2px;
+  max-width: 72px;
+}
+
 .header-avatar {
   width: 36px;
   height: 36px;
@@ -507,6 +518,33 @@ body {
 .mobile-header-title p {
   font-size: 11px;
   color: var(--on-surface-variant);
+}
+
+.mobile-header-lang {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--outline-variant);
+  background: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.mobile-header-lang .ms {
+  font-size: 16px;
+  color: var(--on-surface-variant);
+}
+
+.mobile-header-lang-select {
+  border: none;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--on-surface);
+  cursor: pointer;
+  padding: 0;
+  max-width: 52px;
 }
 
 .mobile-header-bell {
@@ -1148,6 +1186,55 @@ body {
   margin: 4px 0 6px;
 }
 
+.terminal-map-journey-heading--row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.terminal-map-journey-heading--row > span {
+  letter-spacing: inherit;
+}
+
+.terminal-map-read-row {
+  margin: 6px 0 10px;
+}
+
+.terminal-map-tts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-highest);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.terminal-map-tts-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.terminal-map-tts-btn .ms {
+  font-size: 15px;
+}
+
+.terminal-map-tts-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
 .terminal-map-journey-line {
   font-size: 13px;
   font-weight: 600;
@@ -1741,6 +1828,63 @@ body {
   margin: 8px 0 6px;
 }
 
+.nav-flow-section-title--row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-flow-section-title--row > span {
+  letter-spacing: inherit;
+}
+
+.nav-flow-read-row {
+  margin: 6px 0 12px;
+}
+
+.nav-flow-tts-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-high);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.nav-flow-tts-inline:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.nav-flow-tts-inline .ms {
+  font-size: 16px;
+}
+
+.nav-flow-tts-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nav-flow-tts-guided-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
 .nav-flow-bullets {
   margin: 0 0 14px;
   padding-left: 18px;
@@ -1827,6 +1971,10 @@ body {
   flex-direction: column;
   flex: 1;
   min-height: 0;
+  /* Let users scroll to the node strip when the column is taller than the viewport. */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .nav-flow-body > .nav-flow-panel--guided {
@@ -1843,12 +1991,105 @@ body {
 }
 
 .nav-flow-guided-main {
-  flex: 1 1 auto;
+  /* Prefer natural height so the node strip is not trapped below a flex-filled pane. */
+  flex: 0 1 auto;
   min-height: 0;
-  overflow-y: auto;
+  overflow-y: visible;
 }
 
-/* Guided navigation: three graph nodes as cards (no floor raster). */
+@media (min-width: 900px) {
+  .nav-flow-guided-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .nav-flow-guided-main {
+    flex: 0 1 380px;
+    max-width: 420px;
+    overflow-y: auto;
+    max-height: min(82vh, 880px);
+    padding-right: 4px;
+  }
+
+  .nav-flow-guided-layout .guided-floor-map {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    max-height: min(82vh, 880px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Guided navigation: embedded floor plan + route (replaces node cards). */
+.guided-floor-map {
+  flex: 0 0 auto;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 900px) {
+  .guided-floor-map {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+.guided-floor-map-inner {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+  line-height: 0;
+}
+
+.guided-floor-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(58vh, 520px);
+  vertical-align: top;
+}
+
+@media (min-width: 900px) {
+  .guided-floor-map-svg {
+    max-height: min(72vh, 640px);
+  }
+}
+
+.guided-floor-map-hints {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--on-surface-variant);
+}
+
+.guided-floor-map-hints-label {
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-right: 6px;
+}
+
+.guided-floor-map-hints--done {
+  color: #1b5e20;
+  font-weight: 600;
+}
+
+.guided-floor-map--error {
+  font-size: 13px;
+  color: var(--error, #b00020);
+  padding: 10px 0;
+}
+
+/* Legacy node-card strip (unused after map embed; kept harmless). */
 .guided-node-strip {
   flex: 0 0 auto;
   padding-top: 12px;
@@ -2884,6 +3125,13 @@ body {
   color: var(--primary);
 }
 
+.chat-panel-map-line-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
 .chat-panel-map-text {
   font-size: 12px;
   line-height: 1.45;
@@ -2892,6 +3140,44 @@ body {
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-panel-map-tts {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  background: var(--surface-container-highest);
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.chat-panel-map-tts:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.chat-panel-map-tts .ms {
+  font-size: 16px;
+}
+
+.chat-panel-map-tts-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.chat-panel-map-tts-wrap .chat-panel-map-tts {
+  width: auto;
+  min-width: 30px;
+  padding: 0 8px;
 }
 
 .chat-panel-map-typing {
@@ -3114,6 +3400,64 @@ body {
   background: var(--error-container);
   color: var(--on-error-container);
   border-color: rgba(186, 26, 26, 0.2);
+}
+
+.msg-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 2px 0 4px;
+}
+
+.msg-tts-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.msg-tts-progress {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+
+.msg-tts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  background: var(--surface-container-high);
+  color: var(--primary);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.msg-tts-btn:hover:not(:disabled) {
+  background: var(--primary-container);
+}
+
+.msg-tts-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.msg-tts-btn .ms {
+  font-size: 16px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.msg-tts-hint {
+  font-size: 11px;
+  color: var(--error);
+  padding: 2px 4px 0;
+  line-height: 1.3;
 }
 
 .msg-time {
