@@ -735,6 +735,45 @@ body {
   line-height: 1.45;
 }
 
+.terminal-map-shops-panel {
+  margin-bottom: 12px;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.terminal-map-shops-summary {
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--on-surface);
+}
+
+.terminal-map-shops-list {
+  margin: 8px 0 0;
+  padding-left: 16px;
+  font-size: 11px;
+  line-height: 1.4;
+  max-height: 28vh;
+  overflow-y: auto;
+  color: var(--on-surface);
+}
+
+.terminal-map-shops-list li {
+  margin-bottom: 4px;
+}
+
+.terminal-map-shop-name {
+  display: inline;
+  margin-right: 6px;
+}
+
+.terminal-map-shop-cat {
+  font-size: 10px;
+  color: var(--on-surface-variant);
+}
+
 .terminal-map-field {
   display: flex;
   flex-direction: column;

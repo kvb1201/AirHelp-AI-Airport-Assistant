@@ -14,6 +14,35 @@ function getBaseUrl() {
 
 const BASE_URL = getBaseUrl();
 
+export async function fetchMapData() {
+  const response = await fetch(`${BASE_URL}/map`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+export async function fetchNavigation(start, end) {
+  const q = new URLSearchParams({ start, end });
+  const response = await fetch(`${BASE_URL}/navigate?${q}`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+export async function fetchShops(params = {}) {
+  const q = new URLSearchParams();
+  if (params.zone) q.set('zone', params.zone);
+  if (params.category) q.set('category', params.category);
+  const suffix = q.toString() ? `?${q}` : '';
+  const response = await fetch(`${BASE_URL}/shops${suffix}`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+export async function fetchCatalog() {
+  const response = await fetch(`${BASE_URL}/catalog`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
 /**
  * Send a chat message to the backend.
  */

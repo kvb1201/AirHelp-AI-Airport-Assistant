@@ -1,11 +1,12 @@
-"""Map geometry + hackathon catalog (static JSON)."""
+"""Map geometry + hackathon catalog (static JSON) + shops CSV."""
 
 import json
 from pathlib import Path
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from app.core.graph.airport_data import EDGES, GRAPH_META, NODES
+from app.services.shops_loader import load_shops_t2_l02
 
 router = APIRouter()
 
@@ -25,3 +26,31 @@ def get_airport_catalog():
     """Flights, F&B, retail, services, offers (mock)."""
     path = _DATA / "mumbai_t2_catalog.json"
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+@router.get("/shops")
+def get_shops_t2(
+    zone: str | None = Query(None, description="Filter by zone e.g. pier_ne"),
+    category: str | None = Query(None, description="Filter by category e.g. cafe"),
+):
+    """
+    Shop directory for T2 L02: names + normalized map coordinates (0–100).
+    Source: `app/data/shops_t2_l02.csv` — extend or replace with scraped/OSM-derived CSV.
+    """
+    shops = load_shops_t2_l02()
+    if zone:
+        z = zone.strip().lower()
+        shops = [s for s in shops if str(s.get("zone", "")).lower() == z]
+    if category:
+        c = category.strip().lower()
+        shops = [s for s in shops if str(s.get("category", "")).lower() == c]
+    return {
+        "meta": {
+            "terminal": "T2",
+            "floor": "L02",
+            "coordinate_system": "normalized_xy_0_100",
+            "csv": "shops_t2_l02.csv",
+        },
+        "count": len(shops),
+        "shops": shops,
+    }

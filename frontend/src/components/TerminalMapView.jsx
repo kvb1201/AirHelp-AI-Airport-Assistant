@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { fetchMapData, fetchNavigation } from '../services/api';
+import { fetchMapData, fetchNavigation, fetchShops } from '../services/api';
 
 const KIND_COLORS = {
   entrance: '#735c00',
@@ -13,6 +13,7 @@ const KIND_COLORS = {
   vertical: '#37474f',
   junction: '#78909c',
   baggage: '#5d4037',
+  shop: '#9c27b0',
 };
 
 function nodeColor(kind) {
@@ -36,6 +37,7 @@ export default function TerminalMapView({ location, onLocationChange }) {
   const [loading, setLoading] = useState(false);
   const [route, setRoute] = useState(null);
   const [routeErr, setRouteErr] = useState(null);
+  const [shops, setShops] = useState([]);
 
   useEffect(() => {
     fromRef.current = from;
@@ -76,6 +78,14 @@ export default function TerminalMapView({ location, onLocationChange }) {
         setById(m);
       } catch (e) {
         if (!cancelled) setLoadErr(e.message || 'Could not load map');
+        return;
+      }
+      try {
+        const shopBundle = await fetchShops();
+        if (cancelled) return;
+        setShops(shopBundle.shops || []);
+      } catch {
+        if (!cancelled) setShops([]);
       }
     })();
     return () => {
@@ -255,6 +265,25 @@ export default function TerminalMapView({ location, onLocationChange }) {
               />
             )}
 
+            <g className="terminal-map-shops" style={{ pointerEvents: 'none' }} aria-hidden="false">
+              {shops.map((s) => {
+                const x = Number(s.x_norm);
+                const y = Number(s.y_norm);
+                if (Number.isNaN(x) || Number.isNaN(y)) return null;
+                const w = 1.15;
+                return (
+                  <g key={s.shop_id} className="terminal-map-shop-marker" transform={`translate(${x},${y}) rotate(45)`}>
+                    <title>
+                      {s.name_display}
+                      {s.category ? ` · ${s.category}` : ''}
+                      {s.zone ? ` · ${s.zone}` : ''}
+                    </title>
+                    <rect x={-w / 2} y={-w / 2} width={w} height={w} rx={0.2} fill="#9c27b0" fillOpacity={0.88} stroke="#fff" strokeWidth={0.12} />
+                  </g>
+                );
+              })}
+            </g>
+
             {sortedNodes.map((n) => {
               if (n.x == null || n.y == null) return null;
               const onPath = pathIds.has(n.id);
@@ -320,8 +349,22 @@ export default function TerminalMapView({ location, onLocationChange }) {
           <h2 className="terminal-map-side-title">Route</h2>
           <p className="terminal-map-side-hint">
             <strong>Map:</strong> first tap sets <strong>From</strong>, second tap sets <strong>To</strong> and
-            loads the path. Dropdowns reset the tap sequence to From.
+            loads the path. Dropdowns reset the tap sequence to From. Purple diamonds = shops (CSV).
           </p>
+
+          <details className="terminal-map-shops-panel" open>
+            <summary className="terminal-map-shops-summary">
+              Shops on map ({shops.length})
+            </summary>
+            <ul className="terminal-map-shops-list">
+              {shops.map((s) => (
+                <li key={s.shop_id} title={s.near_graph_hint || ''}>
+                  <span className="terminal-map-shop-name">{s.name_display}</span>
+                  <span className="terminal-map-shop-cat">{s.category}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
 
           <label className="terminal-map-field">
             From
