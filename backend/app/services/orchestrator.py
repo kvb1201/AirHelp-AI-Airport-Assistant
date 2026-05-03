@@ -1,49 +1,37 @@
 # backend/app/services/orchestrator.py
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 from app.services.llm_service import call_llm
-
-# NOTE:
-# These will be replaced with real implementations later
-# Keep imports ready for easy swap
-# from app.services.navigation_service import get_route
-# from app.services.rag_service import search
+from app.services.rag_service import get_relevant_context
 
 
-# -------------------------------
-# 🔹 Intent Detection (Simple + Fast)
-# -------------------------------
 def detect_intent(message: str) -> str:
+    """Classify the user's message into one of the current backend flows."""
     msg = message.lower()
 
     if any(word in msg for word in ["gate", "navigate", "direction", "reach"]):
         return "navigation"
 
-    if any(word in msg for word in ["food", "eat", "coffee", "restaurant"]):
+    if any(
+        word in msg
+        for word in ["food", "eat", "coffee", "restaurant", "shop", "buy", "lounge", "service", "forex"]
+    ):
         return "recommendation"
 
-    if any(word in msg for word in ["time", "late", "delay"]):
+    if any(word in msg for word in ["time", "late", "delay", "flight", "boarding"]):
         return "time_check"
 
     return "general"
 
 
-# -------------------------------
-# 🔹 Main Orchestrator Function
-# -------------------------------
-async def handle_chat(
-    user_input: str,
-    user_context: Dict[str, Any]
-) -> Dict[str, Any]:
-
+async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+    """Route the chat request and ground the prompt in structured airport data."""
     intent = detect_intent(user_input)
 
-    # ----------------------------------
-    # 🔹 MOCK DATA (Replace Later)
-    # ----------------------------------
     nav_data = None
     rag_data = None
+    rag_context = get_relevant_context(user_input)
 
     if intent == "navigation":
         nav_data = {
@@ -52,35 +40,18 @@ async def handle_chat(
             "steps": [
                 "Walk straight from security",
                 "Enter Corridor A",
-                "Continue to Gate B12"
-            ]
+                "Continue to Gate B12",
+            ],
         }
 
-    elif intent == "recommendation":
-        rag_data = [
-            {
-                "name": "Cafe A",
-                "distance": "2 min",
-                "time_required": 5,
-                "price_range": "low"
-            },
-            {
-                "name": "Snack Bar B",
-                "distance": "3 min",
-                "time_required": 4,
-                "price_range": "medium"
-            }
-        ]
+    elif intent in {"recommendation", "general", "time_check"}:
+        # Recommendation data now comes from the compiled knowledge base instead
+        # of hardcoded mock values, so the prompt stays grounded in repo data.
+        rag_data = rag_context["places"]
 
-    # ----------------------------------
-    # 🔹 Extract Context
-    # ----------------------------------
     location = user_context.get("location", "unknown")
     destination = user_context.get("destination", None)
 
-    # ----------------------------------
-    # 🔹 Build Controlled Prompt
-    # ----------------------------------
     prompt = f"""
 You are an intelligent airport assistant.
 
@@ -96,8 +67,11 @@ Destination: {destination}
 NAVIGATION DATA:
 {nav_data}
 
-FOOD / SHOP DATA:
+STRUCTURED PLACE DATA:
 {rag_data}
+
+RETRIEVED KNOWLEDGE CHUNKS:
+{rag_context["chunks"]}
 
 USER QUERY:
 {user_input}
@@ -105,34 +79,23 @@ USER QUERY:
 Provide a helpful, concise response.
 """
 
-    # ----------------------------------
-    # 🔹 Call LLM
-    # ----------------------------------
     response_text = await call_llm(prompt)
 
-    # ----------------------------------
-    # 🔹 Update Context (Minimal)
-    # ----------------------------------
     updated_context = dict(user_context)
-
     if intent == "navigation":
-        updated_context["destination"] = "gate_B12"  # replace with parsed later
-
+        updated_context["destination"] = "gate_B12"
     if location:
         updated_context["location"] = location
 
-    # ----------------------------------
-    # 🔹 Final Response
-    # ----------------------------------
     return {
         "type": intent,
         "intent": intent,
         "message": response_text,
-
         "data": {
             "navigation": nav_data,
-            "recommendations": rag_data
+            "recommendations": rag_data,
+            "knowledge_chunks": rag_context["chunks"],
         },
-
-        "context": updated_context
+        "context": updated_context,
     }
+
