@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchFacilities, fetchMapData, fetchNavigation, fetchShops } from '../services/api';
+import { formatRouteTimeCompact, formatRouteTimeLine } from '../utils/routeEstimate';
+
+const BUSY_TERMINAL_STORAGE_KEY = 'airhelp_busy_terminal';
 
 const KIND_COLORS = {
   entrance: '#735c00',
@@ -109,6 +112,95 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
   const [navPayload, setNavPayload] = useState(null);
   const [activeRouteIdx, setActiveRouteIdx] = useState(0);
   const [routeErr, setRouteErr] = useState(null);
+  const [busyTerminal, setBusyTerminal] = useState(() => {
+    try {
+      return typeof window !== 'undefined' && window.localStorage?.getItem(BUSY_TERMINAL_STORAGE_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  const mapStackRef = useRef(null);
+  const mapPanInnerRef = useRef(null);
+  const mapPanRef = useRef({ x: 0, y: 0 });
+  const mapPanDragRef = useRef({
+    active: false,
+    pointerId: null,
+    startX: 0,
+    startY: 0,
+    originX: 0,
+    originY: 0,
+    maxX: 1,
+    maxY: 1,
+  });
+  const [mapPan, setMapPan] = useState({ x: 0, y: 0 });
+  const [mapIsPanning, setMapIsPanning] = useState(false);
+
+  useEffect(() => {
+    mapPanRef.current = mapPan;
+  }, [mapPan]);
+
+  const onMapPanPointerDown = useCallback((e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    if (e.target.closest?.('.terminal-map-node')) return;
+    const stack = mapStackRef.current;
+    if (!stack) return;
+    const rect = stack.getBoundingClientRect();
+    const w = Math.max(1, rect.width);
+    const h = Math.max(1, rect.height);
+    const d = mapPanDragRef.current;
+    d.active = true;
+    d.pointerId = e.pointerId;
+    d.startX = e.clientX;
+    d.startY = e.clientY;
+    d.originX = mapPanRef.current.x;
+    d.originY = mapPanRef.current.y;
+    d.maxX = w * 0.48;
+    d.maxY = h * 0.48;
+    setMapIsPanning(true);
+    try {
+      mapPanInnerRef.current?.setPointerCapture(e.pointerId);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const onMapPanPointerMove = useCallback((e) => {
+    const d = mapPanDragRef.current;
+    if (!d.active || e.pointerId !== d.pointerId) return;
+    const nx = Math.max(-d.maxX, Math.min(d.maxX, d.originX + (e.clientX - d.startX)));
+    const ny = Math.max(-d.maxY, Math.min(d.maxY, d.originY + (e.clientY - d.startY)));
+    setMapPan({ x: nx, y: ny });
+  }, []);
+
+  const endMapPan = useCallback((e) => {
+    const d = mapPanDragRef.current;
+    if (!d.active) return;
+    if (e?.pointerId != null && e.pointerId !== d.pointerId) return;
+    const pid = d.pointerId;
+    d.active = false;
+    d.pointerId = null;
+    setMapIsPanning(false);
+    try {
+      if (pid != null && mapPanInnerRef.current?.releasePointerCapture) {
+        mapPanInnerRef.current.releasePointerCapture(pid);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const onMapPanLostCapture = useCallback(() => {
+    const d = mapPanDragRef.current;
+    d.active = false;
+    d.pointerId = null;
+    setMapIsPanning(false);
+  }, []);
+
+  const onMapPanDoubleClick = useCallback((e) => {
+    if (e.target.closest?.('.terminal-map-node')) return;
+    setMapPan({ x: 0, y: 0 });
+  }, []);
 
   const route = useMemo(() => {
     if (!navPayload?.ok) return null;
@@ -129,6 +221,14 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
     if (fromApi) return fromApi;
     return { ...FALLBACK_PLAN_IMAGE_CALIB };
   }, [meta]);
+
+  useEffect(() => {
+    try {
+      window.localStorage?.setItem(BUSY_TERMINAL_STORAGE_KEY, busyTerminal ? '1' : '0');
+    } catch {
+      /* ignore */
+    }
+  }, [busyTerminal]);
 
   useEffect(() => {
     fromRef.current = from;
@@ -238,7 +338,11 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
       setActiveRouteIdx(prefer);
       setRouteErr(null);
       try {
-        const data = await fetchNavigation(startId, endId);
+        const data = await fetchNavigation(startId, endId, {
+          localHour: new Date().getHours(),
+          busyTerminal,
+          ...opts,
+        });
         const nav = data?.data?.navigation;
         if (!nav?.ok) {
           setRouteErr(nav?.hint || nav?.error || 'No route');
@@ -255,7 +359,7 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
         setLoading(false);
       }
     },
-    [onLocationChange],
+    [onLocationChange, busyTerminal],
   );
 
   useEffect(() => {
@@ -268,7 +372,7 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
       void fetchRoute(from, to);
     }, 450);
     return () => window.clearTimeout(tid);
-  }, [from, to, fetchRoute]);
+  }, [from, to, fetchRoute, busyTerminal]);
 
   useEffect(() => {
     if (!launchRoute?.fromId || !launchRoute?.toId) return;
@@ -375,11 +479,26 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
       )}
 
       <div className="terminal-map-body">
-        <div className={`terminal-map-stack${routeFocusMode ? ' terminal-map-stack--route-focus' : ''}`}>
+        <div
+          ref={mapStackRef}
+          className={`terminal-map-stack${routeFocusMode ? ' terminal-map-stack--route-focus' : ''}${mapIsPanning ? ' terminal-map-stack--panning' : ''}`}
+        >
+          <div
+            ref={mapPanInnerRef}
+            className="terminal-map-pan-inner"
+            style={{ transform: `translate3d(${mapPan.x}px, ${mapPan.y}px, 0)` }}
+            onPointerDown={onMapPanPointerDown}
+            onPointerMove={onMapPanPointerMove}
+            onPointerUp={endMapPan}
+            onPointerCancel={endMapPan}
+            onLostPointerCapture={onMapPanLostCapture}
+            onDoubleClick={onMapPanDoubleClick}
+          >
           <svg
             className="terminal-map-svg-full"
             viewBox={`0 0 ${PLAN_W} ${PLAN_H}`}
             preserveAspectRatio="xMidYMid meet"
+            overflow="visible"
             role="img"
             aria-label="Terminal floor plan with walking graph"
           >
@@ -626,6 +745,10 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
             {tapPhase === 'from' ? 'Tap map: pick From' : 'Tap map: pick To (route runs)'}
           </div>
 
+          <div className="terminal-map-pan-hint" aria-hidden>
+            Drag empty map area to move · double-click to reset
+          </div>
+
           <div className={`terminal-map-legend${routeFocusMode ? ' terminal-map-legend--route-focus' : ''}`}>
             {routeFocusMode ? (
               <span className="terminal-map-legend-route-msg">
@@ -647,6 +770,7 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
               </>
             )}
           </div>
+          </div>
         </div>
 
         <aside className="terminal-map-side">
@@ -658,7 +782,7 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
             diamonds = shops. Facilities below are grouped by walking-graph node (every facility appears under its node).
           </p>
 
-          <details className="terminal-map-shops-panel" open>
+          <details className="terminal-map-shops-panel">
             <summary className="terminal-map-shops-summary">
               Facilities by graph node ({facilities.length} at {facilitiesByNode.length} nodes)
             </summary>
@@ -701,7 +825,7 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
             </div>
           </details>
 
-          <details className="terminal-map-shops-panel" open>
+          <details className="terminal-map-shops-panel">
             <summary className="terminal-map-shops-summary">
               Shops on map ({shops.length})
             </summary>
@@ -740,6 +864,15 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
                 </option>
               ))}
             </select>
+          </label>
+
+          <label className="terminal-map-field terminal-map-field--checkbox">
+            <input
+              type="checkbox"
+              checked={busyTerminal}
+              onChange={(e) => setBusyTerminal(e.target.checked)}
+            />
+            <span>Busy terminal (adds typical security-queue allowance — not live crowd data)</span>
           </label>
 
           <button
@@ -801,7 +934,7 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
                           <span className="terminal-map-route-opt-label">
                             {opt.option_label || `Route ${idx + 1}`}
                           </span>
-                          <span className="terminal-map-route-opt-time">{opt.total_time_minutes} min</span>
+                          <span className="terminal-map-route-opt-time">{formatRouteTimeCompact(opt)}</span>
                           <span className="terminal-map-route-opt-hint">{hint}</span>
                         </button>
                       );
@@ -813,16 +946,17 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
               <div className="terminal-map-result-meta">
                 {Array.isArray(routeOptions) && routeOptions.length > 1 ? (
                   <>
-                    Following <strong>{route.option_label || 'selected route'}</strong> — about{' '}
-                    <strong>{route.total_time_minutes}</strong> minutes.
+                    Following <strong>{route.option_label || 'selected route'}</strong> — {formatRouteTimeLine(route, navPayload)}.
                   </>
                 ) : (
-                  <>
-                    About <strong>{route.total_time_minutes}</strong> minutes walking — plain-language steps below (no
-                    staff gate codes).
-                  </>
+                  <>{formatRouteTimeLine(route, navPayload)} — plain-language steps below (no staff gate codes).</>
                 )}
               </div>
+              {(route.congestion?.disclaimer || navPayload?.congestion?.disclaimer) && (
+                <p className="terminal-map-side-hint terminal-map-congestion-note" role="note">
+                  {route.congestion?.disclaimer || navPayload?.congestion?.disclaimer}
+                </p>
+              )}
 
               {Array.isArray(route.shops_along_route?.tips) && route.shops_along_route.tips.length > 0 ? (
                 <section className="terminal-map-route-callout" aria-label="Food and shopping near your walk">

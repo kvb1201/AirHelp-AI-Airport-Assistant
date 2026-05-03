@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchMapData, fetchNavigation } from '../services/api';
+import { formatRouteTimeCompact, formatRouteTimeLine } from '../utils/routeEstimate';
+
+const BUSY_TERMINAL_STORAGE_KEY = 'airhelp_busy_terminal';
 
 function routesFromPayload(nav) {
   if (!nav?.ok) return [];
@@ -91,10 +94,25 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
   const [routeErr, setRouteErr] = useState(null);
   const [navPayload, setNavPayload] = useState(null);
   const [pickedIdx, setPickedIdx] = useState(0);
+  const [busyTerminal, setBusyTerminal] = useState(() => {
+    try {
+      return typeof window !== 'undefined' && window.localStorage?.getItem(BUSY_TERMINAL_STORAGE_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     if (location) setFrom(location);
   }, [location]);
+
+  useEffect(() => {
+    try {
+      window.localStorage?.setItem(BUSY_TERMINAL_STORAGE_KEY, busyTerminal ? '1' : '0');
+    } catch {
+      /* ignore */
+    }
+  }, [busyTerminal]);
 
   useEffect(() => {
     let cancelled = false;
@@ -131,7 +149,10 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
     setRouteErr(null);
     setNavPayload(null);
     try {
-      const data = await fetchNavigation(from, to);
+      const data = await fetchNavigation(from, to, {
+        localHour: new Date().getHours(),
+        busyTerminal,
+      });
       const nav = data?.data?.navigation;
       if (!nav?.ok) {
         setRouteErr(nav?.hint || nav?.error || 'No route found');
@@ -148,7 +169,7 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
     } finally {
       setLoading(false);
     }
-  }, [from, to, onLocationChange]);
+  }, [from, to, onLocationChange, busyTerminal]);
 
   const resetFlow = () => {
     setStep('pick');
@@ -217,6 +238,15 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
               </select>
             </label>
 
+            <label className="nav-flow-field nav-flow-field--checkbox">
+              <input
+                type="checkbox"
+                checked={busyTerminal}
+                onChange={(e) => setBusyTerminal(e.target.checked)}
+              />
+              <span>Busy terminal (heavier security wait estimate — not live crowd counts)</span>
+            </label>
+
             {routeErr ? (
               <p className="nav-flow-error" role="alert">
                 {routeErr}
@@ -259,7 +289,7 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
                   }}
                 >
                   <span className="nav-flow-card-label">{opt.option_label || `Route ${idx + 1}`}</span>
-                  <span className="nav-flow-card-time">{opt.total_time_minutes} min</span>
+                  <span className="nav-flow-card-time">{formatRouteTimeCompact(opt)}</span>
                   <span className="nav-flow-card-hint">{routeCardHint(routeList, idx)}</span>
                   {opt.simple_journey?.subtitle ? (
                     <span className="nav-flow-card-preview">{opt.simple_journey.subtitle}</span>
@@ -286,9 +316,12 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
                 <h2 id="nav-flow-detail-title" className="nav-flow-panel-title">
                   {selectedRoute.option_label || 'Your route'}
                 </h2>
-                <p className="nav-flow-detail-meta">
-                  About <strong>{selectedRoute.total_time_minutes}</strong> minutes walking
-                </p>
+                <p className="nav-flow-detail-meta">{formatRouteTimeLine(selectedRoute, navPayload)}</p>
+                {(selectedRoute.congestion?.disclaimer || navPayload?.congestion?.disclaimer) && (
+                  <p className="nav-flow-footnote" role="note">
+                    {selectedRoute.congestion?.disclaimer || navPayload?.congestion?.disclaimer}
+                  </p>
+                )}
               </div>
             </div>
 

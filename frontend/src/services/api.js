@@ -20,8 +20,19 @@ export async function fetchMapData() {
   return response.json();
 }
 
-export async function fetchNavigation(start, end) {
+/**
+ * @param {string} start
+ * @param {string} end
+ * @param {{ localHour?: number, busyTerminal?: boolean }} [opts]
+ */
+export async function fetchNavigation(start, end, opts = {}) {
   const q = new URLSearchParams({ start, end });
+  if (typeof opts.localHour === 'number' && opts.localHour >= 0 && opts.localHour <= 23) {
+    q.set('local_hour', String(Math.floor(opts.localHour)));
+  }
+  if (opts.busyTerminal) {
+    q.set('busy_terminal', 'true');
+  }
   const response = await fetch(`${BASE_URL}/navigate?${q}`);
   if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
   return response.json();

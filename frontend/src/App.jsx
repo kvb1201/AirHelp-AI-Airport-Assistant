@@ -4,6 +4,7 @@ import HomeContent from './components/HomeContent';
 import RightPanel from './components/RightPanel';
 import TerminalMapView from './components/TerminalMapView';
 import NavigationFlowView from './components/NavigationFlowView';
+import FacilitiesDirectoryView from './components/FacilitiesDirectoryView';
 import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
@@ -27,13 +28,14 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState('t2_entrance');
   const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
-  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'trips' | 'map' | 'nav' | 'profile'
+  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'map' | 'nav' | 'facilities' | 'profile'
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
 
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
+  const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
 
   const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
 
@@ -43,6 +45,13 @@ export default function App() {
     setSidebarNav('Map');
     setMobileView('map');
   }, []);
+
+  const goToFacilityOnMap = useCallback(
+    ({ graphNodeId }) => {
+      openFloorMap({ fromId: location, toId: graphNodeId, routeIndex: 0 });
+    },
+    [location, openFloorMap],
+  );
 
   const handleSend = async (text, loc = null) => {
     const currentLocation = loc ?? location;
@@ -110,7 +119,9 @@ export default function App() {
         </header>
 
         {/* Content area */}
-        <div className={`content-area${showMap ? ' content-area--map' : ''}`}>
+        <div
+          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
+        >
           <main className="main-content">
             {showMap ? (
               <TerminalMapView
@@ -125,6 +136,8 @@ export default function App() {
                 onLocationChange={setLocation}
                 onOpenFloorMap={openFloorMap}
               />
+            ) : showFacilities ? (
+              <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
             ) : (
               <>
                 <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
@@ -142,7 +155,7 @@ export default function App() {
             )}
           </main>
 
-          {!showMap && !showNavFlow && <RightPanel />}
+          {!showMap && !showNavFlow && !showFacilities && <RightPanel />}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}

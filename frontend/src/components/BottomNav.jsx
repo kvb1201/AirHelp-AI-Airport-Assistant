@@ -1,11 +1,11 @@
 import React from 'react';
 
 const NAV_ITEMS = [
-  { label: 'Home',     icon: 'home',            view: 'home' },
-  { label: 'Routes',   icon: 'directions_walk', view: 'nav' },
-  { label: 'My Trips', icon: 'work',            view: 'trips' },
-  { label: 'Map',      icon: 'map',             view: 'map' },
-  { label: 'Profile',  icon: 'account_circle', view: 'profile' },
+  { label: 'Home',       icon: 'home',            view: 'home' },
+  { label: 'Routes',     icon: 'directions_walk', view: 'nav' },
+  { label: 'Facilities', icon: 'apartment',       view: 'facilities' },
+  { label: 'Map',        icon: 'map',             view: 'map' },
+  { label: 'Profile',    icon: 'account_circle',  view: 'profile' },
 ];
 
 /**
