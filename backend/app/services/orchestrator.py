@@ -9,6 +9,9 @@ from app.services.rag_service import search
 from app.core.llm.prompts import SYSTEM_PROMPT
 
 
+# -------------------------------
+# 🔹 Intent Detection (keep simple)
+# -------------------------------
 def detect_intent(message: str) -> str:
     msg = message.lower()
 
@@ -24,6 +27,9 @@ def detect_intent(message: str) -> str:
     return "general"
 
 
+# -------------------------------
+# 🔹 Main Orchestrator
+# -------------------------------
 async def handle_chat(
     user_input: str,
     user_context: Dict[str, Any],
@@ -37,8 +43,11 @@ async def handle_chat(
     nav_data = None
     rag_data = None
 
+    # -------------------------------
+    # 🔹 Service Calls
+    # -------------------------------
     if intent == "navigation":
-        rag_data = search(user_input)
+        rag_data = search(user_input, location)
         nav_data = plan_navigation_from_chat(
             user_message=user_input,
             location_label=location,
@@ -47,44 +56,87 @@ async def handle_chat(
         )
 
     elif intent == "recommendation":
-        rag_data = search(user_input)
+        rag_data = search(user_input, location)
 
-    nav_block = json.dumps(nav_data, indent=2) if nav_data is not None else "null"
-    rag_block = json.dumps(rag_data, indent=2) if rag_data is not None else "null"
+    # -------------------------------
+    # 🔥 Deterministic Fallback (IMPORTANT)
+    # -------------------------------
+    if nav_data and nav_data.get("ok"):
+        steps = nav_data.get("steps", [])
+        message = "Here is your route:\n" + "\n".join(
+            [f"{i+1}. {step}" for i, step in enumerate(steps)]
+        )
+
+        return {
+            "type": "navigation",
+            "intent": "navigation",
+            "message": message,
+            "data": {
+                "navigation": nav_data,
+                "recommendations": rag_data,
+            },
+            "context": {
+                **user_context,
+                "location": location,
+                "destination": nav_data.get("goal_id"),
+                "last_route": nav_data,
+            },
+        }
+
+    # -------------------------------
+    # 🔹 Build Better Prompt
+    # -------------------------------
+    nav_block = json.dumps(nav_data, indent=2) if nav_data else "None"
+    rag_block = json.dumps(rag_data, indent=2) if rag_data else "None"
 
     prompt = f"""
 {SYSTEM_PROMPT}
 
-USER CONTEXT:
-Location: {location}
-Destination: {destination}
+CURRENT USER STATE:
+- Location: {location}
+- Destination: {destination}
 
-NAVIGATION DATA (graph-computed; use only if ok is true):
-{nav_block}
-
-RETRIEVAL / OPTIONS:
+AVAILABLE OPTIONS (ONLY USE THESE):
 {rag_block}
+
+NAVIGATION PLAN (ONLY USE IF ok=true):
+{nav_block}
 
 USER QUERY:
 {user_input}
+
+Instructions:
+- Do NOT invent places
+- Prefer nearby options
+- If navigation exists, guide step-by-step
+- Keep answer concise
 """
 
+    # -------------------------------
+    # 🔹 LLM Call
+    # -------------------------------
     response_text = await call_llm(prompt)
 
+    # -------------------------------
+    # 🔹 Context Update
+    # -------------------------------
     updated_context = dict(user_context)
-    if location:
-        updated_context["location"] = location
+
+    updated_context["location"] = location
+
     if destination:
         updated_context["destination"] = destination
 
     if nav_data and nav_data.get("ok"):
         updated_context["last_route"] = nav_data
-        if nav_data.get("goal_id"):
-            updated_context["destination"] = nav_data["goal_id"]
+        updated_context["destination"] = nav_data.get("goal_id")
 
     if rag_data:
         updated_context["last_recommendations"] = rag_data
 
+    # -------------------------------
+    # 🔹 Final Response
+    # -------------------------------
     return {
         "type": intent,
         "intent": intent,
