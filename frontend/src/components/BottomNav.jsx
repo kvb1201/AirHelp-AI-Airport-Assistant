@@ -1,11 +1,11 @@
 import React from 'react';
 
 const NAV_ITEMS = [
-  { label: 'Home',     icon: 'home',            view: 'home' },
-  { label: 'Routes',   icon: 'directions_walk', view: 'nav' },
-  { label: 'My Trips', icon: 'work',            view: 'trips' },
-  { label: 'Map',      icon: 'map',             view: 'map' },
-  { label: 'Profile',  icon: 'account_circle', view: 'profile' },
+  { label: 'Home',       icon: 'home',            view: 'home' },
+  { label: 'Routes',     icon: 'directions_walk', view: 'nav' },
+  { label: 'Facilities', icon: 'apartment',       view: 'facilities' },
+  { label: 'Map',        icon: 'map',             view: 'map' },
+  { label: 'Profile',    icon: 'account_circle',  view: 'profile' },
 ];
 
 /**
@@ -16,6 +16,7 @@ export default function BottomNav({ activeView, onViewChange }) {
     <nav className="bottom-nav" aria-label="Mobile navigation">
       {NAV_ITEMS.map((item) => (
         <button
+          type="button"
           key={item.label}
           className={`bottom-nav-item ${activeView === item.view ? 'active' : ''}`}
           onClick={() => onViewChange(item.view)}

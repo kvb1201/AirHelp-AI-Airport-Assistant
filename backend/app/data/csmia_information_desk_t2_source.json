@@ -1,0 +1,74 @@
+{
+  "page_url": "https://csmia-mumbai.adaniairports.com/en/airport-facilities/information-desk",
+  "terminal": "T2",
+  "last_verified_iso": "2026-05-03",
+  "notes": "Transcribed from the official CSMIA Information Desk page (Terminal 2 tab). Do not automate live scraping of the site; refresh this file when the airport updates copy.",
+  "helpline": "1800-572-111111",
+  "tables": [
+    {
+      "context": "T2 — first departure listing",
+      "rows": [
+        {
+          "s_no": 1,
+          "location": "Departure Curbside Near Gate 2",
+          "landmark": ""
+        }
+      ]
+    },
+    {
+      "context": "T2 — Arrival",
+      "rows": [
+        {
+          "s_no": 1,
+          "location": "Arrival domestic",
+          "landmark": "Near Belt no. 01-02 and Opp. Belt no. 13-14"
+        },
+        {
+          "s_no": 2,
+          "location": "Arrival hall, International",
+          "landmark": "Between arrival belt 8-9"
+        },
+        {
+          "s_no": 3,
+          "location": "Arrival plaza",
+          "landmark": "Curbside between Arrival exit Gate A – B"
+        }
+      ]
+    },
+    {
+      "context": "T2 — Departure",
+      "rows": [
+        {
+          "s_no": 1,
+          "location": "Curbside Lane 2",
+          "landmark": "Opposite Departure entry gate no. 04"
+        },
+        {
+          "s_no": 2,
+          "location": "Curbside Lane 1",
+          "landmark": "Near Departure entry gate no. 01 -02"
+        },
+        {
+          "s_no": 3,
+          "location": "Departure Gate number 5, check-in hall",
+          "landmark": "Near Island H"
+        },
+        {
+          "s_no": 4,
+          "location": "Departure Gate number 3, check-in hall",
+          "landmark": "Near Island D"
+        },
+        {
+          "s_no": 5,
+          "location": "Retail Area (for international passengers) at Level 4",
+          "landmark": ""
+        },
+        {
+          "s_no": 6,
+          "location": "Retail Area (for domestic passengers) at Level 3",
+          "landmark": ""
+        }
+      ]
+    }
+  ]
+}

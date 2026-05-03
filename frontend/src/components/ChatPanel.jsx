@@ -46,6 +46,7 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
         </div>
         <div className="chat-panel-actions">
           <button
+            type="button"
             className="chat-panel-btn"
             onClick={(e) => { e.stopPropagation(); onToggle(); }}
             aria-label={isOpen ? 'Minimize chat' : 'Expand chat'}
@@ -53,6 +54,7 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
             <span className="ms">{isOpen ? 'remove' : 'open_in_full'}</span>
           </button>
           <button
+            type="button"
             className="chat-panel-btn"
             onClick={(e) => { e.stopPropagation(); onClose(); }}
             aria-label="Close chat"
@@ -99,6 +101,7 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
                 <div className="suggested-replies" aria-label="Suggested questions">
                   {SUGGESTED.map((s) => (
                     <button
+                      type="button"
                       key={s}
                       className="suggested-reply"
                       onClick={() => onSend(s, null)}

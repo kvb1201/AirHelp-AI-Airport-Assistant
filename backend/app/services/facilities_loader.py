@@ -3,13 +3,11 @@
 from __future__ import annotations
 
 import csv
-from functools import lru_cache
 from pathlib import Path
 
 _FACILITIES_CSV = Path(__file__).resolve().parents[1] / "data" / "facilities_bom.csv"
 
 
-@lru_cache(maxsize=1)
 def load_facilities_bom() -> list[dict[str, object]]:
     if not _FACILITIES_CSV.is_file():
         return []
@@ -28,6 +26,9 @@ def load_facilities_bom() -> list[dict[str, object]]:
             gid = (raw.get("graph_node_id") or "").strip()
             listing = (raw.get("listing_location") or "").strip()
             hint = (raw.get("near_graph_hint") or "").strip()
+            terminal = (raw.get("terminal") or "").strip()
+            traffic_type = (raw.get("traffic_type") or "").strip()
+            landmark = (raw.get("landmark") or "").strip()
             rows.append(
                 {
                     "facility_id": rid,
@@ -44,6 +45,9 @@ def load_facilities_bom() -> list[dict[str, object]]:
                     "listing_location": listing,
                     "near_graph_hint": hint or gid or listing,
                     "page_url": (raw.get("page_url") or "").strip(),
+                    "terminal": terminal,
+                    "traffic_type": traffic_type,
+                    "landmark": landmark,
                 }
             )
     return rows

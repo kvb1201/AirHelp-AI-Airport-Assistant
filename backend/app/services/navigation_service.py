@@ -6,22 +6,17 @@ Mumbai T2 Level 02 — dense graph from scripts/build_mumbai_t2_l02_graph.py
 from __future__ import annotations
 
 import re
-from functools import lru_cache
 from typing import Any
 
-from app.core.graph.airport_data import NODES
+from app.core.graph.airport_data import EDGES, NODES
 from app.core.graph.graph_builder import build_airport_graph
 from app.core.graph.path_finder import PathFinder
+from app.services import congestion
 from app.services.route_narrative import (
     build_simple_journey,
     passenger_place_name,
     shops_along_path,
 )
-
-
-@lru_cache(maxsize=1)
-def _finder() -> PathFinder:
-    return PathFinder(build_airport_graph())
 
 
 # Pier gate ends (spine segment 14 = approach to gate lounge)
@@ -206,11 +201,18 @@ def build_route_payload(
     goal_id: str,
     *,
     rag_hints: list[dict[str, Any]] | None = None,
+    local_hour: int | None = None,
+    busy_terminal: bool = False,
 ) -> dict[str, Any]:
     _ = rag_hints
-    k_paths = _finder().find_k_paths(start_id, goal_id, k=3)
+    hour = int(local_hour) if local_hour is not None else congestion.default_terminal_local_hour()
+    hour = hour % 24
+    extras = congestion.security_extras_for_context(local_hour=hour, busy_terminal=busy_terminal)
+    finder = PathFinder(build_airport_graph(security_queue_minutes=float(extras.mid)))
+
+    k_paths = finder.find_k_paths(start_id, goal_id, k=3)
     if not k_paths:
-        probe = _finder().find_path(start_id, goal_id)
+        probe = finder.find_path(start_id, goal_id)
         if not probe.get("ok"):
             return {
                 "ok": False,
@@ -224,17 +226,37 @@ def build_route_payload(
     routes: list[dict[str, Any]] = []
     for i, pr in enumerate(k_paths):
         lab = labels[i] if i < len(labels) else f"Option {i + 1}"
+        node_ids = pr["node_ids"]
+        low, mid, high, n_sec = congestion.path_time_bands_minutes(
+            node_ids,
+            edges_base=EDGES,
+            nodes=NODES,
+            extras=extras,
+        )
+        total_mid = int(round(mid))
         routes.append(
             _route_option(
                 start_id,
                 goal_id,
-                node_ids=pr["node_ids"],
+                node_ids=node_ids,
                 edges=pr["edges"],
-                total_minutes=pr["total_minutes"],
+                total_minutes=total_mid,
                 option_index=i,
                 option_label=lab,
             )
         )
+        cb = congestion.congestion_public_block(
+            local_hour=hour,
+            busy_terminal=busy_terminal,
+            extras=extras,
+            security_edges_on_route=n_sec,
+        )
+        routes[-1]["congestion"] = {
+            "total_time_minutes_low": int(low),
+            "total_time_minutes_mid": total_mid,
+            "total_time_minutes_high": int(high),
+            **cb,
+        }
 
     primary = routes[0]
     out: dict[str, Any] = {
@@ -253,6 +275,8 @@ def get_route(
     goal_label: str,
     *,
     rag_hints: list[dict[str, Any]] | None = None,
+    local_hour: int | None = None,
+    busy_terminal: bool = False,
 ) -> dict[str, Any]:
     start_id, err_s = resolve_node_id(start_label, role="start")
     goal_id, err_g = resolve_node_id(goal_label, role="goal")
@@ -266,7 +290,13 @@ def get_route(
             "hint": "Pick a destination (pier gate id like t2_ne_sp_14, or say NE pier).",
         }
 
-    return build_route_payload(start_id, goal_id, rag_hints=rag_hints)
+    return build_route_payload(
+        start_id,
+        goal_id,
+        rag_hints=rag_hints,
+        local_hour=local_hour,
+        busy_terminal=busy_terminal,
+    )
 
 
 def plan_navigation_from_chat(
@@ -286,4 +316,10 @@ def plan_navigation_from_chat(
             "hint": "Say NE/NW/SE/SW pier gate, or a node id (e.g. t2_ne_sp_14).",
         }
 
-    return get_route(start, goal, rag_hints=rag_snippets)
+    return get_route(
+        start,
+        goal,
+        rag_hints=rag_snippets,
+        local_hour=congestion.default_terminal_local_hour(),
+        busy_terminal=False,
+    )

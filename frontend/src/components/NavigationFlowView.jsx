@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { fetchMapData, fetchNavigation } from '../services/api';
+import GuidedStepMap from './GuidedStepMap';
+import { fetchGuidedCheckpoints, fetchGuidedRelocalize, fetchMapData, fetchNavigation } from '../services/api';
+import { formatRouteTimeCompact, formatRouteTimeLine } from '../utils/routeEstimate';
+
+const BUSY_TERMINAL_STORAGE_KEY = 'airhelp_busy_terminal';
 
 function routesFromPayload(nav) {
   if (!nav?.ok) return [];
@@ -91,10 +95,39 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
   const [routeErr, setRouteErr] = useState(null);
   const [navPayload, setNavPayload] = useState(null);
   const [pickedIdx, setPickedIdx] = useState(0);
+  const [busyTerminal, setBusyTerminal] = useState(() => {
+    try {
+      return typeof window !== 'undefined' && window.localStorage?.getItem(BUSY_TERMINAL_STORAGE_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  const [guidedPayload, setGuidedPayload] = useState(null);
+  const [guidedStepIndex, setGuidedStepIndex] = useState(0);
+  const [lastConfirmedPathIndex, setLastConfirmedPathIndex] = useState(0);
+  const [guidedPhase, setGuidedPhase] = useState('question');
+  const [lostObservation, setLostObservation] = useState('');
+  const [guidedErr, setGuidedErr] = useState(null);
+  const [notYetHint, setNotYetHint] = useState('');
+  const [relocalizeCandidates, setRelocalizeCandidates] = useState([]);
+  const [guidedLoading, setGuidedLoading] = useState(false);
 
   useEffect(() => {
     if (location) setFrom(location);
   }, [location]);
+
+  useEffect(() => {
+    setNotYetHint('');
+  }, [guidedStepIndex, guidedPhase, step]);
+
+  useEffect(() => {
+    try {
+      window.localStorage?.setItem(BUSY_TERMINAL_STORAGE_KEY, busyTerminal ? '1' : '0');
+    } catch {
+      /* ignore */
+    }
+  }, [busyTerminal]);
 
   useEffect(() => {
     let cancelled = false;
@@ -131,7 +164,10 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
     setRouteErr(null);
     setNavPayload(null);
     try {
-      const data = await fetchNavigation(from, to);
+      const data = await fetchNavigation(from, to, {
+        localHour: new Date().getHours(),
+        busyTerminal,
+      });
       const nav = data?.data?.navigation;
       if (!nav?.ok) {
         setRouteErr(nav?.hint || nav?.error || 'No route found');
@@ -148,21 +184,159 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
     } finally {
       setLoading(false);
     }
-  }, [from, to, onLocationChange]);
+  }, [from, to, onLocationChange, busyTerminal]);
 
   const resetFlow = () => {
     setStep('pick');
     setNavPayload(null);
     setRouteErr(null);
     setPickedIdx(0);
+    setGuidedPayload(null);
+    setGuidedStepIndex(0);
+    setLastConfirmedPathIndex(0);
+    setGuidedPhase('question');
+    setLostObservation('');
+    setRelocalizeCandidates([]);
+    setGuidedErr(null);
+    setNotYetHint('');
   };
 
   const openMapForSelection = () => {
     onOpenFloorMap?.({ fromId: from, toId: to, routeIndex: pickedIdx });
   };
 
+  const exitGuidedNav = () => {
+    setStep('detail');
+    setGuidedPayload(null);
+    setGuidedStepIndex(0);
+    setLastConfirmedPathIndex(0);
+    setGuidedPhase('question');
+    setLostObservation('');
+    setRelocalizeCandidates([]);
+    setGuidedErr(null);
+    setNotYetHint('');
+  };
+
+  const startGuidedNav = useCallback(async () => {
+    if (!selectedRoute?.path?.length) return;
+    setGuidedLoading(true);
+    setGuidedErr(null);
+    try {
+      const path = selectedRoute.path.map((p) => p.id);
+      const edges = selectedRoute.edges || [];
+      const cp = await fetchGuidedCheckpoints({ path, edges });
+      if (!cp?.ok) {
+        setGuidedErr(cp?.hint || cp?.error || 'Could not build guidance');
+        return;
+      }
+      if (!cp.steps?.length) {
+        setGuidedErr('Route is too short for live steps.');
+        return;
+      }
+      setGuidedPayload(cp);
+      setGuidedStepIndex(0);
+      setLastConfirmedPathIndex(0);
+      setGuidedPhase('question');
+      setLostObservation('');
+      setRelocalizeCandidates([]);
+      setStep('guided');
+    } catch (e) {
+      setGuidedErr(e.message || 'Guidance request failed');
+    } finally {
+      setGuidedLoading(false);
+    }
+  }, [selectedRoute]);
+
+  const confirmGuidedYes = () => {
+    const steps = guidedPayload?.steps || [];
+    const cur = steps[guidedStepIndex];
+    if (!cur) return;
+    setLastConfirmedPathIndex(cur.to_path_index);
+    if (guidedStepIndex >= steps.length - 1) {
+      setGuidedStepIndex(steps.length);
+      return;
+    }
+    setGuidedStepIndex((x) => x + 1);
+  };
+
+  const submitLostObservation = async () => {
+    const steps = guidedPayload?.steps || [];
+    const cur = steps[guidedStepIndex];
+    if (!cur || !lostObservation.trim()) return;
+    setGuidedLoading(true);
+    setGuidedErr(null);
+    try {
+      const res = await fetchGuidedRelocalize({
+        path: guidedPayload.path,
+        last_confirmed_path_index: lastConfirmedPathIndex,
+        next_waypoint_path_index: cur.to_path_index,
+        observation: lostObservation.trim(),
+        localHour: new Date().getHours(),
+        busyTerminal,
+      });
+      if (!res?.ok) {
+        setGuidedErr(res?.hint || res?.error || 'Relocalize failed');
+        return;
+      }
+      setRelocalizeCandidates(res.candidates || []);
+      setGuidedPhase('candidates');
+    } catch (e) {
+      setGuidedErr(e.message || 'Relocalize request failed');
+    } finally {
+      setGuidedLoading(false);
+    }
+  };
+
+  const applyRelocalizeNode = async (graphNodeId) => {
+    setGuidedLoading(true);
+    setGuidedErr(null);
+    try {
+      setFrom(graphNodeId);
+      if (onLocationChange) onLocationChange(graphNodeId);
+      const data = await fetchNavigation(graphNodeId, to, {
+        localHour: new Date().getHours(),
+        busyTerminal,
+      });
+      const nav = data?.data?.navigation;
+      if (!nav?.ok) {
+        setGuidedErr(nav?.hint || nav?.error || 'No route from that spot');
+        return;
+      }
+      setNavPayload(nav);
+      setPickedIdx(0);
+      const route0 = routesFromPayload(nav)[0];
+      const path = route0.path.map((p) => p.id);
+      const cp = await fetchGuidedCheckpoints({ path, edges: route0.edges || [] });
+      if (!cp?.ok || !cp.steps?.length) {
+        setGuidedErr(cp?.hint || 'Could not rebuild guidance from here');
+        setGuidedPayload(null);
+        setStep('detail');
+        return;
+      }
+      setGuidedPayload(cp);
+      setGuidedStepIndex(0);
+      setLastConfirmedPathIndex(0);
+      setGuidedPhase('question');
+      setLostObservation('');
+      setRelocalizeCandidates([]);
+      setStep('guided');
+    } catch (e) {
+      setGuidedErr(e.message || 'Failed to replan');
+    } finally {
+      setGuidedLoading(false);
+    }
+  };
+
+  const guidedSteps = guidedPayload?.steps || [];
+  const guidedDone = Boolean(guidedPayload && guidedStepIndex >= guidedSteps.length);
+  const guidedCur = guidedSteps[guidedStepIndex];
+
   return (
-    <div className="nav-flow">
+    <div
+      className={`nav-flow nav-flow--full-bleed${
+        step === 'detail' || step === 'guided' ? ' nav-flow--step-detail' : ''
+      }`}
+    >
       <header className="nav-flow-header">
         <div>
           <h1 className="nav-flow-title">Walking directions</h1>
@@ -217,6 +391,15 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
               </select>
             </label>
 
+            <label className="nav-flow-field nav-flow-field--checkbox">
+              <input
+                type="checkbox"
+                checked={busyTerminal}
+                onChange={(e) => setBusyTerminal(e.target.checked)}
+              />
+              <span>Busy terminal (heavier security wait estimate — not live crowd counts)</span>
+            </label>
+
             {routeErr ? (
               <p className="nav-flow-error" role="alert">
                 {routeErr}
@@ -259,7 +442,7 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
                   }}
                 >
                   <span className="nav-flow-card-label">{opt.option_label || `Route ${idx + 1}`}</span>
-                  <span className="nav-flow-card-time">{opt.total_time_minutes} min</span>
+                  <span className="nav-flow-card-time">{formatRouteTimeCompact(opt)}</span>
                   <span className="nav-flow-card-hint">{routeCardHint(routeList, idx)}</span>
                   {opt.simple_journey?.subtitle ? (
                     <span className="nav-flow-card-preview">{opt.simple_journey.subtitle}</span>
@@ -286,13 +469,32 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
                 <h2 id="nav-flow-detail-title" className="nav-flow-panel-title">
                   {selectedRoute.option_label || 'Your route'}
                 </h2>
-                <p className="nav-flow-detail-meta">
-                  About <strong>{selectedRoute.total_time_minutes}</strong> minutes walking
-                </p>
+                <p className="nav-flow-detail-meta">{formatRouteTimeLine(selectedRoute, navPayload)}</p>
+                {(selectedRoute.congestion?.disclaimer || navPayload?.congestion?.disclaimer) && (
+                  <p className="nav-flow-footnote" role="note">
+                    {selectedRoute.congestion?.disclaimer || navPayload?.congestion?.disclaimer}
+                  </p>
+                )}
               </div>
             </div>
 
             <RouteDetailBody route={selectedRoute} />
+
+            <div className="nav-flow-actions nav-flow-actions--stack">
+              <button
+                type="button"
+                className="nav-flow-btn nav-flow-btn--secondary"
+                disabled={guidedLoading}
+                onClick={() => startGuidedNav()}
+              >
+                {guidedLoading ? 'Preparing…' : 'Start step-by-step guidance'}
+              </button>
+            </div>
+            {guidedErr && step === 'detail' ? (
+              <p className="nav-flow-error" role="alert">
+                {guidedErr}
+              </p>
+            ) : null}
 
             <div className="nav-flow-actions nav-flow-actions--spread">
               <button type="button" className="nav-flow-btn nav-flow-btn--ghost" onClick={() => setStep('routes')}>
@@ -305,6 +507,202 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
             <button type="button" className="nav-flow-linkish" onClick={resetFlow}>
               Start over with new places
             </button>
+          </section>
+        )}
+
+        {step === 'guided' && guidedPayload && (
+          <section className="nav-flow-panel nav-flow-panel--guided" aria-labelledby="nav-flow-guided-title">
+            <div className="nav-flow-guided-layout">
+              <div className="nav-flow-guided-main">
+            <h2 id="nav-flow-guided-title" className="nav-flow-panel-title">
+              Live guidance
+            </h2>
+            {guidedDone ? (
+              <>
+                <p className="nav-flow-panel-hint">
+                  You confirmed the last checkpoint for <strong>{to}</strong>. Open the map if you want the full path
+                  drawing, or exit when you are at your gate or desk.
+                </p>
+                <div className="nav-flow-actions nav-flow-actions--spread">
+                  <button type="button" className="nav-flow-btn nav-flow-btn--ghost" onClick={exitGuidedNav}>
+                    Back to route summary
+                  </button>
+                  <button type="button" className="nav-flow-btn nav-flow-btn--primary" onClick={openMapForSelection}>
+                    View on floor map
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="nav-flow-guided-progress">
+                  Step {guidedStepIndex + 1} of {guidedSteps.length}
+                  {guidedCur?.to_place_label ? (
+                    <span className="nav-flow-guided-target"> · Toward {guidedCur.to_place_label}</span>
+                  ) : null}
+                </p>
+
+                {guidedPhase === 'question' && guidedCur ? (
+                  <div className="nav-flow-guided-question" role="status">
+                    <p>{guidedCur.question}</p>
+                    {Array.isArray(guidedCur.look_for) && guidedCur.look_for.length > 0 ? (
+                      <ul className="nav-flow-guided-lookfor">
+                        {guidedCur.look_for.map((x) => (
+                          <li key={x}>{x}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                ) : null}
+
+                {guidedPhase === 'lost_observation' ? (
+                  <div className="nav-flow-guided-lost">
+                    <label className="nav-flow-field" htmlFor="nav-flow-lost-obs">
+                      What do you see right next to you?
+                    </label>
+                    <input
+                      id="nav-flow-lost-obs"
+                      className="nav-flow-input"
+                      type="text"
+                      placeholder="e.g. washroom, Starbucks, baggage belt…"
+                      value={lostObservation}
+                      onChange={(e) => setLostObservation(e.target.value)}
+                      autoComplete="off"
+                    />
+                    <p className="nav-flow-footnote">
+                      We match your text to shops and facilities on the graph, then rank likely spots near where you
+                      were on the planned route.
+                    </p>
+                  </div>
+                ) : null}
+
+                {guidedPhase === 'candidates' ? (
+                  <div className="nav-flow-guided-candidates">
+                    {relocalizeCandidates.length === 0 ? (
+                      <p className="nav-flow-panel-hint">
+                        No strong match — try another word (restroom, duty-free, information, belt number…).
+                      </p>
+                    ) : (
+                      <ul className="nav-flow-candidate-list">
+                        {relocalizeCandidates.map((c) => (
+                          <li key={c.graph_node_id}>
+                            <button
+                              type="button"
+                              className="nav-flow-candidate-btn"
+                              disabled={guidedLoading}
+                              onClick={() => applyRelocalizeNode(c.graph_node_id)}
+                            >
+                              <span className="nav-flow-candidate-label">{c.label}</span>
+                              <span className="nav-flow-candidate-meta">
+                                ~{c.walking_minutes_from_last_anchor} min from last confirmed spot · score {c.match_score}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <button
+                      type="button"
+                      className="nav-flow-linkish"
+                      onClick={() => {
+                        setGuidedPhase('question');
+                        setRelocalizeCandidates([]);
+                      }}
+                    >
+                      Back to checkpoint question
+                    </button>
+                  </div>
+                ) : null}
+
+                {guidedErr ? (
+                  <p className="nav-flow-error" role="alert">
+                    {guidedErr}
+                  </p>
+                ) : null}
+
+                {guidedPhase === 'question' && guidedCur ? (
+                  <div className="nav-flow-actions nav-flow-actions--guided">
+                    {notYetHint ? (
+                      <p className="nav-flow-footnote" role="status">
+                        {notYetHint}
+                      </p>
+                    ) : null}
+                    <button
+                      type="button"
+                      className="nav-flow-btn nav-flow-btn--primary"
+                      disabled={guidedLoading}
+                      onClick={confirmGuidedYes}
+                    >
+                      Yes — I see that
+                    </button>
+                    <button
+                      type="button"
+                      className="nav-flow-btn nav-flow-btn--ghost"
+                      disabled={guidedLoading}
+                      onClick={() =>
+                        setNotYetHint(
+                          'No problem — keep following the path. Press Yes when you recognise the cues for this step.',
+                        )
+                      }
+                    >
+                      Not yet — still walking
+                    </button>
+                    <button
+                      type="button"
+                      className="nav-flow-btn nav-flow-btn--ghost"
+                      disabled={guidedLoading}
+                      onClick={() => {
+                        setGuidedPhase('lost_observation');
+                        setLostObservation('');
+                      }}
+                    >
+                      No — I am somewhere else
+                    </button>
+                  </div>
+                ) : null}
+
+                {guidedPhase === 'lost_observation' ? (
+                  <div className="nav-flow-actions nav-flow-actions--spread">
+                    <button
+                      type="button"
+                      className="nav-flow-btn nav-flow-btn--ghost"
+                      disabled={guidedLoading}
+                      onClick={() => {
+                        setGuidedPhase('question');
+                        setLostObservation('');
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="nav-flow-btn nav-flow-btn--primary"
+                      disabled={guidedLoading || !lostObservation.trim()}
+                      onClick={() => submitLostObservation()}
+                    >
+                      {guidedLoading ? 'Searching…' : 'Find where I might be'}
+                    </button>
+                  </div>
+                ) : null}
+
+                <div className="nav-flow-actions nav-flow-actions--spread">
+                  <button type="button" className="nav-flow-btn nav-flow-btn--ghost" onClick={exitGuidedNav}>
+                    Exit live guidance
+                  </button>
+                  <button type="button" className="nav-flow-btn nav-flow-btn--ghost" onClick={openMapForSelection}>
+                    Floor map
+                  </button>
+                </div>
+              </>
+            )}
+              </div>
+              <GuidedStepMap
+                path={guidedPayload.path}
+                steps={guidedSteps}
+                stepIndex={guidedStepIndex}
+                guidedDone={guidedDone}
+                nextLookFor={guidedDone ? [] : guidedCur?.look_for}
+              />
+            </div>
           </section>
         )}
       </div>
