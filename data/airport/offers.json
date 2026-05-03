@@ -1,0 +1,16 @@
+[
+  {
+    "offer_id": "TBD_OFFER_FEED",
+    "title": "Offers feed pending ingestion",
+    "type": "info",
+    "description": "Official airport offer pages have not been normalized yet.",
+    "valid_at": [],
+    "valid_till": null,
+    "tags": [
+      "pending"
+    ],
+    "source_url": "local://pending/offers",
+    "last_verified_at": "2026-05-03T12:31:45.971777+00:00",
+    "status": "draft"
+  }
+]
