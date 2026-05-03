@@ -8,6 +8,7 @@ from __future__ import annotations
 from typing import Any
 
 from app.core.graph.airport_data import NODES
+from app.core.graph.node_mapper import resolve_to_graph_node_id
 from app.core.knowledge_base.repository import KnowledgeBaseRepository
 from app.services.distance_calculator import (
     format_distance,
@@ -136,11 +137,13 @@ class NavigationKnowledgeIntegrator:
         Returns:
             Dictionary with node info and nearby points of interest
         """
-        if node_id not in NODES:
-            return {"error": "unknown_node", "node_id": node_id}
-        
-        node = dict(NODES[node_id])
-        node["id"] = node_id
+        resolved, resolution = resolve_to_graph_node_id(node_id)
+        if not resolved or resolved not in NODES:
+            return {"error": "unknown_node", "node_id": node_id, "resolution": resolution}
+
+        canonical_id = resolved
+        node = dict(NODES[canonical_id])
+        node["id"] = canonical_id
         
         coords = get_node_coordinates(node)
         if not coords:
@@ -209,12 +212,17 @@ class NavigationKnowledgeIntegrator:
         nearby_facilities.sort(key=lambda item: item[0])
         nearby_shops.sort(key=lambda item: item[0])
         
-        return {
+        out: dict[str, Any] = {
             "node": node,
             "coordinates": {"x": x, "y": y},
             "nearby_facilities": [f for _, f in nearby_facilities[:5]],
             "nearby_shops": [s for _, s in nearby_shops[:10]],
         }
+        if canonical_id != str(node_id).strip():
+            out["requested_node_id"] = node_id
+            out["resolved_graph_node_id"] = canonical_id
+            out["resolution"] = resolution
+        return out
     
     def get_contextual_directions(
         self,
@@ -234,16 +242,24 @@ class NavigationKnowledgeIntegrator:
             Dictionary with directions and relevant context
         """
         from app.services.navigation_service import build_route_payload
-        
-        # Get base route
-        route = build_route_payload(from_node_id, to_node_id)
+
+        start_resolved, _ = resolve_to_graph_node_id(from_node_id)
+        goal_resolved, _ = resolve_to_graph_node_id(to_node_id)
+        if not start_resolved:
+            return {"ok": False, "error": "unknown_start", "node_id": from_node_id}
+        if not goal_resolved:
+            return {"ok": False, "error": "unknown_goal", "node_id": to_node_id}
+
+        route = build_route_payload(start_resolved, goal_resolved)
         
         if not route.get("ok"):
             return route
-        
-        # Enrich with context
-        start_context = self.enrich_node_with_context(from_node_id)
-        goal_context = self.enrich_node_with_context(to_node_id)
+
+        route["resolved_start_id"] = start_resolved
+        route["resolved_goal_id"] = goal_resolved
+
+        start_context = self.enrich_node_with_context(start_resolved)
+        goal_context = self.enrich_node_with_context(goal_resolved)
         
         # Add relevant knowledge base chunks if query provided
         kb_context: list[dict[str, Any]] = []

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import GuidedStepMap, { normalizeGuidedPath } from './GuidedStepMap';
 import TtsMiniBar from './TtsMiniBar';
 import { fetchGuidedCheckpoints, fetchGuidedRelocalize, fetchMapData, fetchNavigation } from '../services/api';
@@ -105,7 +105,7 @@ function RouteDetailBody({ route }) {
 /**
  * Step-by-step walking navigation without the floor map until the user asks for it.
  */
-export default function NavigationFlowView({ location, onLocationChange, onOpenFloorMap, chatNavStart, chatNavEnd, onChatNavConsumed }) {
+export default function NavigationFlowView({ location, onLocationChange, onOpenFloorMap }) {
   const [meta, setMeta] = useState(null);
   const [nodes, setNodes] = useState([]);
   const [loadErr, setLoadErr] = useState(null);
@@ -138,20 +138,6 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
   useEffect(() => {
     if (location) setFrom(location);
   }, [location]);
-
-  // 🚀 Auto-trigger from chat navigation
-  const pendingAutoFetch = useRef(false);
-
-  useEffect(() => {
-    if (chatNavStart && chatNavEnd) {
-      setFrom(chatNavStart);
-      setTo(chatNavEnd);
-      if (onLocationChange) onLocationChange(chatNavStart);
-      pendingAutoFetch.current = true;
-      // Signal consumed so App clears the chatNav state
-      if (onChatNavConsumed) onChatNavConsumed();
-    }
-  }, [chatNavStart, chatNavEnd, onLocationChange, onChatNavConsumed]);
 
   useEffect(() => {
     setNotYetHint('');
@@ -221,14 +207,6 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
       setLoading(false);
     }
   }, [from, to, onLocationChange, busyTerminal]);
-
-  // 🚀 Auto-fetch after chat navigation sets from/to
-  useEffect(() => {
-    if (pendingAutoFetch.current) {
-      pendingAutoFetch.current = false;
-      findRoutes();
-    }
-  }, [from, to, findRoutes]);
 
   const resetFlow = () => {
     setStep('pick');

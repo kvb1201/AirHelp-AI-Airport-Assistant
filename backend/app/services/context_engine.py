@@ -1,5 +1,7 @@
 from typing import Dict, Optional
+
 from app.services.context_signal_engine import extract_signals
+from app.services.locating_engine import SERVICE_LABELS
 
 
 # -------------------------------
@@ -52,6 +54,14 @@ def _merge_context(old: Dict, new: Dict) -> Dict:
 
         ctx["intent"] = new["intent"]
 
+    # Client / API uses ``location``; decision layer uses ``source`` — keep them aligned.
+    if isinstance(ctx.get("location"), str) and ctx["location"].strip():
+        if not (isinstance(ctx.get("source"), str) and ctx["source"].strip()):
+            ctx["source"] = ctx["location"].strip()
+    if isinstance(ctx.get("source"), str) and ctx["source"].strip():
+        if not (isinstance(ctx.get("location"), str) and ctx["location"].strip()):
+            ctx["location"] = ctx["source"].strip()
+
     return ctx
 
 
@@ -63,6 +73,10 @@ def _apply_consistency(ctx: Dict) -> Dict:
     # ❌ invalid sources
     if ctx.get("source") in ["wifi", "atm", "lounge", "shop"]:
         ctx["source"] = None
+
+    dest = ctx.get("destination")
+    if isinstance(dest, str) and dest.strip().lower() in SERVICE_LABELS:
+        ctx["destination"] = None
 
     return ctx
 

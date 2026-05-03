@@ -3,10 +3,19 @@ import re
 from typing import Any, Dict, List, Optional
 
 from app.services.llm_service import call_llm
-from app.services.navigation_service import plan_navigation_from_chat, get_route
+from app.services.navigation_service import (
+    get_route,
+    plan_navigation_from_chat,
+    resolve_node_id,
+    resolve_place_label_to_graph_node,
+    resolve_walking_goal_id,
+)
 from app.services.rag_service import search
-from app.services.locating_engine import locate_from_query
+from app.services.locating_engine import SERVICE_LABELS, locate_from_query
 from app.services.context_engine import update_context
+from app.services.context_normalizer import normalize_chat_context
+from app.services.query_preprocess import compose_navigation_message, prepare_for_locate_and_context
+from app.core.graph.node_mapper import coerce_to_graph_node_id
 from app.core.llm.prompts import SYSTEM_PROMPT
 
 
@@ -50,8 +59,21 @@ def detect_intent(message: str) -> str:
     msg = message.lower()
 
     if any(word in msg for word in [
-        "gate", "navigate", "direction", "reach",
-        "walk", "how do i get", "where is"
+        "gate",
+        "navigate",
+        "direction",
+        "reach",
+        "walk",
+        "how do i get",
+        "how do i go",
+        "how to get",
+        "where is",
+        "where's",
+        "point me",
+        "which way",
+        "route to",
+        "path to",
+        "take me",
     ]):
         return "navigation"
 
@@ -239,12 +261,114 @@ def _is_navigation_request(msg: str) -> bool:
         "take me",
         "directions",
         "how do i go",
+        "how do i get",
+        "how to get",
+        "how to go",
         "route",
-        "how do i get to",
         "walk me to",
+        "walk me ",
         "guide me to",
+        "guide me ",
+        "redirect",
+        "redirection",
+        "show me the way",
+        "path to",
+        "way to",
+        "want to go to",
+        "going to",
+        "need to get to",
+        "need to go to",
+        "head to",
+        "heading to",
+        "get me to",
+        "bring me to",
+        "lead me to",
+        "go to",  # e.g. "want to go to …", "go to gate B12"
+        "where is",
+        "where's",
+        "wheres",
+        "point me to",
+        "point me ",
+        "which way",
+        "help me get",
+        "help me find",
+        "find my way",
+        "need directions",
+        "looking for directions",
+        "can you get me",
+        "drop me at",
+        "send me to",
     ]
-    return any(t in m for t in triggers)
+    if any(t in m for t in triggers):
+        return True
+    # "from gate 5 to security" style
+    if re.search(r"\bfrom\s+.{2,60}\s+to\s+.{2,60}\b", m):
+        return True
+    return False
+
+
+def _is_place_to_place_request(msg: str) -> bool:
+    """``lenskart to haldiram`` or ``from lenskart to haldiram`` (no explicit ``take me`` / ``navigate``)."""
+    low = (msg or "").strip().lower()
+    if len(low) < 5:
+        return False
+    a, b = _parse_place_to_place(msg)
+    if not a or not b:
+        return False
+    if any(
+        x in low
+        for x in (
+            "take me",
+            "navigate",
+            "walk me",
+            "guide me",
+            "directions to",
+            "route to",
+            "path to",
+            "how do i get",
+            "how do i go",
+            "get me to",
+            "bring me to",
+            "lead me to",
+            "show me the way",
+        )
+    ):
+        return False
+    return True
+
+
+_BAD_PTP_LEFT = re.compile(
+    r"^(i|we|you)\s+(want|need|would|have|try|am|was|were|like)\b",
+    re.I,
+)
+
+
+def _parse_place_to_place(msg: str) -> tuple[Optional[str], Optional[str]]:
+    """Last ``<place> to <place>`` span wins so leading filler does not break parsing."""
+    raw = (msg or "").strip()
+    if len(raw) < 3:
+        return None, None
+    pat = re.compile(
+        r"\b([a-z0-9][a-z0-9\s\-'’]{0,120}?)\s+to\s+([a-z0-9][a-z0-9\s\-'’]{1,120})\b",
+        re.I,
+    )
+    last: Optional[tuple[str, str]] = None
+    for mm in pat.finditer(raw):
+        a, b = mm.group(1).strip(), mm.group(2).strip()
+        a = re.sub(r"^(?:from|starting at|start at)\s+", "", a, flags=re.I).strip()
+        if len(a) < 2 or len(b) < 2:
+            continue
+        if _BAD_PTP_LEFT.match(a):
+            continue
+        if len(a.split()) > 10 or len(b.split()) > 10:
+            continue
+        # Avoid "trying to get to haldiram" → a ends with get/go
+        if re.search(r"\b(get|go)\s*$", a, re.I):
+            continue
+        last = (a, b)
+    if not last:
+        return None, None
+    return last
 
 
 # -------------------------------
@@ -252,14 +376,21 @@ def _is_navigation_request(msg: str) -> bool:
 # -------------------------------
 def _map_to_node(location_str: str) -> str:
     """
-    Map human-readable location strings to graph node IDs.
-    RAG returns names like 'Gate D3', 'food court', etc.
-    The navigation graph uses snake_case IDs.
+    Map labels toward graph node IDs for the navigation intercept.
+
+    RAG / client may send ``node-t2-entrance`` or ``t2_ne_sp_14``. Those must reach
+    ``get_route`` intact: stripping punctuation here used to turn ``node-t2-entrance``
+    into ``nodet2entrance`` (unmappable). Resolve via ``node_mapper`` first.
     """
     if not location_str:
         return "entrance"
 
-    loc = location_str.strip().lower()
+    raw = location_str.strip()
+    gid = coerce_to_graph_node_id(raw)
+    if gid:
+        return gid
+
+    loc = raw.lower()
 
     # Direct gate pattern: "gate d3" → "gate_d3", "gate b12" → "gate_b12"
     gate_match = re.match(r"gate\s+([a-z]?\d+)", loc)
@@ -302,6 +433,110 @@ def _map_to_node(location_str: str) -> str:
 
 
 # -------------------------------
+# 3a. Vague / placeholder destinations (do not call the graph router)
+# -------------------------------
+_VAGUE_DESTINATION_EXACT = frozenset(
+    {
+        "someplace",
+        "somewhere",
+        "anywhere",
+        "whatever",
+        "idk",
+        "dunno",
+        "any",
+        "there",
+        "it",
+        "that",
+        "this",
+        "something",
+        "anything",
+        "wherever",
+        "you",
+        "you pick",
+        "your choice",
+        "a place",
+        "place",
+        "somewhere nice",
+        "anywhere nice",
+        "some place",
+        "any place",
+    }
+)
+
+# Strip trailing "… to eat / for food" so "someplace to eat" is treated like "someplace".
+_FOOD_OR_EXPLORATION_TAIL = re.compile(
+    r"\s+(?:"
+    r"to\s+eat|to\s+drink|to\s+snack|"
+    r"for\s+food|for\s+lunch|for\s+dinner|for\s+breakfast|for\s+a\s+meal|"
+    r"to\s+get\s+food|for\s+something\s+to\s+eat|to\s+grab\s+(?:a\s+)?(?:bite|food)|"
+    r"for\s+coffee|for\s+a\s+coffee|to\s+have\s+coffee|"
+    r"that\s+serves\s+food|with\s+food|"
+    r"to\s+hang\s+out|to\s+chill|to\s+rest"
+    r")\s*$",
+    re.I,
+)
+
+_VAGUE_LEADING = re.compile(
+    r"^(someplace|somewhere|anything|something|anywhere|whatever|"
+    r"some\s+place|any\s+place|any\s+thing)\b",
+    re.I,
+)
+
+
+def _normalize_destination_for_vague_check(raw: str) -> str:
+    s = str(raw).strip().lower()
+    s = re.sub(r"^(?:uh|um|er)\b\s*", "", s)
+    s = _FOOD_OR_EXPLORATION_TAIL.sub("", s).strip()
+    s = re.sub(r"[?!.,]+$", "", s).strip()
+    return s
+
+
+def _is_vague_destination(raw: Optional[str]) -> bool:
+    if not raw or not str(raw).strip():
+        return True
+    s = _normalize_destination_for_vague_check(raw)
+    if len(s) <= 1:
+        return True
+    if s in _VAGUE_DESTINATION_EXACT:
+        return True
+    if re.fullmatch(r"(?:some|any)\s*(?:where|place|thing)", s):
+        return True
+    if s in {"not sure", "i dont know", "i don't know", "no idea"}:
+        return True
+    if _VAGUE_LEADING.match(s):
+        return True
+    # "someplace …" with extra filler words after stripping tails (e.g. "someplace good")
+    if re.match(r"^someplace\b", s) or re.match(r"^somewhere\b", s):
+        if len(s.split()) <= 3:
+            return True
+    return False
+
+
+def _trim_trailing_stated_at_from_destination(label: str) -> str:
+    """
+    ``take me to The Face Shop i am at Haldiram`` — the goal is only ``The Face Shop``;
+    ``i am at Haldiram`` is the stated start (handled separately).
+    """
+    s = (label or "").strip()
+    if not s:
+        return s
+    s2 = re.sub(r"\s+(?:i['’]m|i am)\s+at\s+.+$", "", s, flags=re.I | re.S).strip()
+    return s2 if s2 else s
+
+
+def _extract_trailing_i_am_at_place(msg: str) -> Optional[str]:
+    """``… take me to X i am at haldiram`` — start is the trailing ``at`` clause."""
+    raw = (msg or "").strip()
+    if not raw:
+        return None
+    m = re.search(r"\b(?:i['’]m|i am)\s+at\s+(.+?)\s*$", raw, re.I | re.S)
+    if not m:
+        return None
+    place = m.group(1).strip().rstrip(".,;:!?")
+    return place if len(place) >= 2 else None
+
+
+# -------------------------------
 # 3. Destination Resolution
 # -------------------------------
 def _resolve_destination(msg: str, context: Dict[str, Any]) -> Optional[str]:
@@ -324,27 +559,137 @@ def _resolve_destination(msg: str, context: Dict[str, Any]) -> Optional[str]:
             return result.get("name") or result.get("location", "")
         return None
 
-    # CASE B: "navigate to <destination>" / "take me to <destination>"
+    # CASE B: "… to <destination>" (last clause wins when multiple)
     dest_patterns = [
+        r"(?:i['’]m|i am)\s+here\b(?:\s+and\s+|\s*,\s*)?\s*(?:i\s+)?(?:want|need)\s+to\s+(?:get\s+to|go\s+to)\s+(.+)",
+        r"(?:i['’]m|i am)\s+here\b\s+and\s+(?:i\s+)?(?:want|need)\s+to\s+go\s+to\s+(.+)",
+        r"want\s+to\s+go\s+to\s+(.+)",
+        r"need\s+to\s+(?:get\s+to|go\s+to)\s+(.+)",
+        r"(?:head|heading)\s+(?:to|toward)\s+(.+)",
+        r"going\s+to\s+(.+)",
         r"navigate\s+to\s+(.+)",
         r"take\s+me\s+to\s+(.+)",
         r"directions\s+to\s+(.+)",
         r"route\s+to\s+(.+)",
         r"how\s+do\s+i\s+go\s+to\s+(.+)",
         r"how\s+do\s+i\s+get\s+to\s+(.+)",
+        r"how\s+to\s+(?:get|go)\s+to\s+(.+)",
         r"walk\s+me\s+to\s+(.+)",
         r"guide\s+me\s+to\s+(.+)",
+        r"redirect\s+(?:me\s+)?to\s+(.+)",
+        r"show\s+me\s+the\s+way\s+to\s+(.+)",
+        r"path\s+to\s+(.+)",
+        r"way\s+to\s+(.+)",
+        r"(?:get|bring|lead)\s+me\s+to\s+(.+)",
+        r"(?:point|send)\s+me\s+to\s+(.+)",
+        r"(?:could|can)\s+you\s+(?:help\s+me\s+)?(?:get|bring)\s+(?:me\s+)?to\s+(.+)",
+        r"(?:i['’]d|i would)\s+like\s+to\s+(?:get\s+to|go\s+to)\s+(.+)",
+        r"\bgo\s+to\s+(.+)",
+        r"where\s+(?:is|are)\s+(.+)",
     ]
     for pattern in dest_patterns:
         match = re.search(pattern, m)
         if match:
-            return match.group(1).strip()
+            dest = match.group(1).strip().strip("\"'").rstrip("?.! ")
+            return _trim_trailing_stated_at_from_destination(dest)
 
     # CASE A: bare "navigate" / "directions" → use context["selected"]
     selected = context.get("selected")
     if selected:
-        return selected.get("name") or selected.get("location", "")
+        raw = selected.get("name") or selected.get("location", "")
+        return _trim_trailing_stated_at_from_destination(str(raw).strip()) if raw else None
 
+    return None
+
+
+# Ends the "near <place>" span when a goal phrase follows (not only "and want …").
+_NEAR_THEN_GOAL = (
+    r"(?:\s*,\s*"
+    r"|\s+and\s+(?:i\s+)?(?:want|need|would like|trying)\s+to\s+go\s+to\s+"
+    r"|\s+and\s+(?:i\s+)?(?:want|need|would like|trying)\b"
+    r"|\s+take\s+me\s+to\s+"
+    r"|\s+navigate\s+to\s+"
+    r"|\s+walk\s+me\s+to\s+"
+    r"|\s+guide\s+me\s+to\s+"
+    r"|\s+want\s+to\s+go\s+to\s+"
+    r"|\s+going\s+to\s+"
+    r"|\s+need\s+to\s+(?:get\s+to|go\s+to)\s+"
+    r"|\s+(?:get|bring|lead)\s+me\s+to\s+"
+    r"|\s+go\s+to\s+"
+    r")"
+)
+
+
+# Phrases that look like ``i am X`` but are not a stated location before ``take me to``.
+_I_AM_NOT_A_PLACE = frozenset(
+    {
+        "here",
+        "there",
+        "ok",
+        "okay",
+        "trying",
+        "looking",
+        "hoping",
+        "wondering",
+        "not sure",
+        "unsure",
+        "good",
+        "fine",
+        "lost",
+        "confused",
+        "stuck",
+        "waiting",
+    }
+)
+
+
+def _extract_stated_start_place_from_message(msg: str) -> Optional[str]:
+    """
+    Extract where the user says they are, before a goal clause:
+
+    - ``I am near …`` / leading ``near …``
+    - ``I'm at …`` / ``I am at …``
+    - ``I am <shop or place>`` (e.g. ``i am lenskart take me to …``) — not ``i am near …``
+    """
+    raw = (msg or "").strip()
+    if not raw:
+        return None
+    pat1 = re.compile(
+        r"(?:i['’]m|i am)\s+near\s+(.+?)" + _NEAR_THEN_GOAL,
+        re.I | re.S,
+    )
+    mm = pat1.search(raw)
+    if mm:
+        return mm.group(1).strip().rstrip(".,;:")
+    pat2 = re.compile(r"(?:^|\s)near\s+(.+?)" + _NEAR_THEN_GOAL, re.I | re.S)
+    mm = pat2.search(raw)
+    if mm:
+        frag = mm.group(1).strip().rstrip(".,;:")
+        low = frag.lower()
+        if low.startswith(("the ", "a ", "an ")):
+            parts = frag.split(None, 1)
+            frag = parts[1] if len(parts) > 1 else frag
+        return frag
+    pat_at = re.compile(r"(?:i['’]m|i am)\s+at\s+(.+?)" + _NEAR_THEN_GOAL, re.I | re.S)
+    mm = pat_at.search(raw)
+    if mm:
+        return mm.group(1).strip().rstrip(".,;:")
+    pat_iam = re.compile(
+        r"(?:i['’]m|i am)\s+(?!near\b|at\b)(.+?)" + _NEAR_THEN_GOAL,
+        re.I | re.S,
+    )
+    mm = pat_iam.search(raw)
+    if mm:
+        place = mm.group(1).strip().rstrip(".,;:")
+        low = place.lower()
+        if low in _I_AM_NOT_A_PLACE:
+            return None
+        if len(place) < 2:
+            return None
+        return place
+    trail = _extract_trailing_i_am_at_place(raw)
+    if trail:
+        return trail
     return None
 
 
@@ -389,20 +734,115 @@ def _format_navigation_response(nav_data: Dict[str, Any]) -> str:
     return header + step_lines
 
 
+def _try_pure_rules_navigation(
+    *,
+    nav_msg: str,
+    is_ptp: bool,
+    ptp_a: Optional[str],
+    ptp_b: Optional[str],
+    user_context: Dict[str, Any],
+) -> Optional[Dict[str, Any]]:
+    """
+    Point A → point B using only rules, CSV/graph resolution, and prior ``last_results``
+    (list picks — not a vector KB search). If anything is missing or unresolved, return
+    ``None`` so ``handle_chat`` can use RAG + LLM instead.
+    """
+    location = (user_context.get("source") or user_context.get("location") or "").strip() or None
+    destination_raw: Optional[str] = None
+
+    if is_ptp and ptp_a and ptp_b:
+        pf = resolve_place_label_to_graph_node(ptp_a)
+        if pf:
+            location = pf
+        destination_raw = ptp_b
+    else:
+        stated_start = _extract_stated_start_place_from_message(nav_msg)
+        if stated_start:
+            start_resolved = resolve_place_label_to_graph_node(stated_start)
+            if start_resolved:
+                location = start_resolved
+        destination_raw = _resolve_destination(nav_msg, user_context)
+
+    if not location or not destination_raw or _is_vague_destination(destination_raw):
+        return None
+
+    start_graph = resolve_place_label_to_graph_node(location)
+    if not start_graph:
+        start_graph, _ = resolve_node_id(_map_to_node(location), role="start")
+    start_node = start_graph or _map_to_node(location)
+    if not start_graph:
+        return None
+
+    snippets = user_context.get("last_results") or None
+    goal_graph = resolve_walking_goal_id(
+        user_message=nav_msg,
+        destination_label=destination_raw,
+        rag_snippets=snippets,
+        start_graph_id=start_graph,
+    )
+    if not goal_graph:
+        return None
+
+    print(f"[NAV] Rules-only: '{location}' → {start_node} ({start_graph}), goal → {goal_graph}")
+
+    nav_data = _call_navigation_api(start_node, goal_graph)
+
+    end_graph, _ = resolve_node_id(goal_graph, role="goal")
+    start_graph = start_graph or start_node
+    end_graph = end_graph or goal_graph
+    if nav_data.get("ok"):
+        start_graph = nav_data.get("start_id") or start_graph
+        end_graph = nav_data.get("goal_id") or end_graph
+
+    user_context["mode"] = "navigation"
+
+    if nav_data.get("ok"):
+        message = _format_navigation_response(nav_data)
+        return {
+            "type": "navigation",
+            "intent": "navigation",
+            "message": message,
+            "data": {
+                "navigation": nav_data,
+                "start": start_graph,
+                "end": end_graph,
+            },
+            "context": user_context,
+        }
+    return {
+        "type": "navigation",
+        "intent": "navigation",
+        "message": _format_navigation_response(nav_data),
+        "data": {
+            "navigation": nav_data,
+            "start": start_graph,
+            "end": end_graph,
+        },
+        "context": user_context,
+    }
+
+
 # ===============================
 # 🔹 MAIN ORCHESTRATOR
 # ===============================
 async def handle_chat(user_input: str, user_context: Dict[str, Any], language: str = "en") -> Dict[str, Any]:
 
-    # STEP 1: Locate
-    extracted = locate_from_query(user_input)
+    loc_msg = prepare_for_locate_and_context(user_input)
+    nav_msg = compose_navigation_message(user_input)
+
+    # STEP 1: Locate (filler-stripped so "Man, take me…" still maps)
+    extracted = locate_from_query(loc_msg)
 
     # STEP 2: Context Engine
-    ctx_output = update_context(user_context, extracted, user_input)
-    user_context = ctx_output["context"]
+    ctx_output = update_context(user_context, extracted, loc_msg)
+    user_context = normalize_chat_context(ctx_output["context"])
 
-    # Clarification
-    if ctx_output["needs_clarification"]:
+    ptp_a, ptp_b = _parse_place_to_place(nav_msg)
+    is_ptp = _is_place_to_place_request(nav_msg) and bool(ptp_a and ptp_b)
+
+    # Clarification — but do not block walking requests: locate/context often omit
+    # ``destination``/``intent`` for "take me to BIBA" while _resolve_destination still has the goal.
+    if ctx_output["needs_clarification"] and not _is_navigation_request(nav_msg) and not is_ptp:
         return {
             "type": "clarification",
             "intent": None,
@@ -412,80 +852,39 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         }
 
     # ===============================
-    # 🚀 NAVIGATION INTERCEPT (BEFORE RAG)
+    # 🚀 RULES-ONLY A→B MAP (NO RAG / NO KB SEARCH)
+    # If source + destination cannot be resolved from rules + prior list picks, fall through
+    # to STEP 3 (RAG / ``plan_navigation_from_chat`` / LLM).
     # ===============================
-    if _is_navigation_request(user_input):
-        print(f"[ORCHESTRATOR] Navigation request detected: {user_input}")
-
-        location = user_context.get("source")
-        destination_raw = _resolve_destination(user_input, user_context)
-
-        # --- Validate source ---
-        if not location:
-            return {
-                "type": "clarification",
-                "intent": "navigation",
-                "message": "Where are you currently?",
-                "data": {"navigation": None, "recommendations": None},
-                "context": user_context,
-            }
-
-        # --- Validate destination ---
-        if not destination_raw:
-            return {
-                "type": "clarification",
-                "intent": "navigation",
-                "message": "Where would you like to go?",
-                "data": {"navigation": None, "recommendations": None},
-                "context": user_context,
-            }
-
-        # --- Map to node IDs ---
-        start_node = _map_to_node(location)
-        end_node = _map_to_node(destination_raw)
-
-        print(f"[NAV] Resolved: '{location}' → {start_node}, '{destination_raw}' → {end_node}")
-
-        # --- Call navigation ---
-        nav_data = _call_navigation_api(start_node, end_node)
-
-        # --- Update context ---
-        user_context["mode"] = "navigation"
-
-        # --- Format response ---
-        if nav_data.get("ok"):
-            message = _format_navigation_response(nav_data)
-            return {
-                "type": "navigation",
-                "intent": "navigation",
-                "message": message,
-                "data": {"navigation": nav_data, "start": start_node, "end": end_node},
-                "context": user_context,
-            }
-        else:
-            return {
-                "type": "navigation",
-                "intent": "navigation",
-                "message": _format_navigation_response(nav_data),
-                "data": {"navigation": nav_data, "start": start_node, "end": end_node},
-                "context": user_context,
-            }
+    if _is_navigation_request(nav_msg) or is_ptp:
+        print(f"[ORCHESTRATOR] Navigation-shaped query: {user_input!r} → routing: {nav_msg!r}")
+        pure = _try_pure_rules_navigation(
+            nav_msg=nav_msg,
+            is_ptp=is_ptp,
+            ptp_a=ptp_a,
+            ptp_b=ptp_b,
+            user_context=user_context,
+        )
+        if pure is not None:
+            return pure
 
     # ===============================
     # 🔥 STEP 3: SAFE INTENT LOGIC (EXISTING)
     # ===============================
-    if _is_followup_query(user_input) and user_context.get("intent"):
+    if _is_followup_query(loc_msg) and user_context.get("intent"):
         intent = user_context.get("intent")
     else:
-        intent = detect_intent(user_input)
+        intent = detect_intent(loc_msg)
 
     intent_type = normalize_intent(intent)
 
     print(f"[ORCHESTRATOR] INTENT: {intent}")
     print(f"[ORCHESTRATOR] INTENT_TYPE: {intent_type}")
 
-    location = user_context.get("source")
+    location = (user_context.get("source") or user_context.get("location") or "").strip() or None
     destination = user_context.get("destination")
+    if isinstance(destination, str) and destination.strip().lower() in SERVICE_LABELS:
+        destination = None
 
     rag_location = _extract_terminal_for_rag(location)
 
@@ -497,21 +896,21 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
     # -------------------------------
     if destination:
         rag_data = search(
-            user_input,
+            loc_msg,
             location=None,
             intent="navigation",
-            signals=user_context
+            signals=user_context,
         )
 
         nav_data = plan_navigation_from_chat(
-            user_message=user_input,
+            user_message=loc_msg,
             location_label=location,
             destination_label=destination,
             rag_snippets=rag_data,
         )
 
     elif intent_type in ["explore", "recommendation"] and intent:
-        query = _rewrite_query(user_input, user_context)
+        query = _rewrite_query(loc_msg, user_context)
 
         print(f"[ORCHESTRATOR] REWRITTEN QUERY: {query}")
 
@@ -525,6 +924,12 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
             intent=intent,
             signals=user_context
         )
+
+    print(
+        f"[ORCHESTRATOR] RAG: intent_type={intent_type} "
+        f"hits={len(rag_data or [])} destination_in_ctx={bool(destination)} "
+        f"nav_ok={nav_data.get('ok') if isinstance(nav_data, dict) else None}"
+    )
 
     # -------------------------------
     # 🔥 HARD STOP (NO INTENT = NO RAG)
@@ -561,17 +966,8 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
             "context": user_context,
         }
 
-    if intent_type == "recommendation":
-        if not rag_data:
-            return {
-                "type": "recommendation",
-                "intent": intent,
-                "message": "I couldn't find relevant options.",
-                "data": {"navigation": None, "recommendations": []},
-                "context": user_context,
-            }
-
-        multi = _is_followup_query(user_input)
+    if intent_type == "recommendation" and rag_data:
+        multi = _is_followup_query(loc_msg)
 
         message = (
             _format_multi_results(rag_data[:3])
@@ -579,9 +975,8 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         )
 
         # 🔥 STORE SELECTED RESULT
-        if rag_data:
-            user_context["selected"] = rag_data[0]
-            user_context["last_results"] = rag_data
+        user_context["selected"] = rag_data[0]
+        user_context["last_results"] = rag_data
 
         return {
             "type": "recommendation",
@@ -590,26 +985,55 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
             "data": {
                 "navigation": nav_data,
                 "recommendations": rag_data,
-                "selected": rag_data[0] if rag_data else None   # 👈 IMPORTANT
+                "selected": rag_data[0],
             },
             "context": user_context,
         }
 
     # -------------------------------
-    # 🔹 FINAL FALLBACK
+    # 🔹 FINAL FALLBACK (LLM) — also used when RAG returned 0 hits for recommendation
     # -------------------------------
+    rag_empty_hint = ""
+    if intent_type == "recommendation" and intent and not rag_data:
+        rag_empty_hint = (
+            "\nNote: The venue retrieval index returned no matching documents for this query. "
+            "Reply helpfully; mention that naming Terminal 2, a cuisine, or a shop type may improve "
+            "structured suggestions on the next turn.\n"
+        )
+        print("[ORCHESTRATOR] RAG returned 0 hits for recommendation → using LLM fallback")
+
+    if intent_type == "explore" and intent and not rag_data:
+        rag_empty_hint = (
+            "\nNote: Retrieval returned no matching items for this explore query. "
+            "Suggest practical airport activities anyway.\n"
+        )
+        print("[ORCHESTRATOR] RAG returned 0 hits for explore → using LLM fallback")
+
+    if destination and isinstance(nav_data, dict) and not nav_data.get("ok"):
+        rag_empty_hint += (
+            "\nNote: The user wanted walking directions but the map/router could not complete a path. "
+            "Give concise guidance; suggest a clearer landmark or gate if needed.\n"
+        )
+        print("[ORCHESTRATOR] RAG+router did not return ok navigation → using LLM fallback")
+
+    print("[ORCHESTRATOR] Calling LLM (Ollama) final fallback…")
+
     response_text = await call_llm(
         f"""
 {SYSTEM_PROMPT}
-
+{rag_empty_hint}
 USER QUERY: {user_input}
 """
     )
 
+    llm_response_type = "general"
+    if intent_type == "recommendation" and intent and not rag_data:
+        llm_response_type = "recommendation"
+
     return {
-        "type": "general",
+        "type": llm_response_type,
         "intent": intent,
         "message": response_text,
-        "data": {"navigation": None, "recommendations": None},
+        "data": {"navigation": None, "recommendations": rag_data if rag_data else None},
         "context": user_context,
     }

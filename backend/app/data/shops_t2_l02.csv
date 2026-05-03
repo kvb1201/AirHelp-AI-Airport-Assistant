@@ -265,7 +265,7 @@ csmia_4c4eecfb301532,TIKG (The Indian Kebab Grill) Bar,tikg_the_indian_kebab_gri
 csmia_e8592795fdc953,Ultra Bar,ultra_bar,bar_&_restaurant,6.5231,94.3846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C,Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
 csmia_744e4ecc8ce524,Vaango,vaango,qsr,48.1692,41.8462,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
 csmia_ceda63658dba85,Vaango,vaango,qsr,51.7231,31.4769,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
-csmia_dc1e5cd6f5d2f5,Wow Momo,wow_momo,qsr,50.1385,74.9846,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_dc1e5cd6f5d2f5,Wow Momo,wow_momo,qsr,50.1385,74.9846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
 csmia_9f07b8f3af0f78,Wrapafella,wrapafella,qsr,50.5846,39.2,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
 csmia_23820a25a01c3c,Wrapafella,wrapafella,qsr,49.2308,33.0923,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
 csmia_0c9ad753e9561f,Zambar,zambar,qsr,50.2,30.2308,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec

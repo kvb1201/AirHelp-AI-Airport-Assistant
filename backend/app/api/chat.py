@@ -37,7 +37,9 @@ async def chat_endpoint(request: ChatRequest):
     patch = {}
     if request.location:
         patch["location"] = request.location
+        patch["source"] = request.location
         context["location"] = request.location
+        context["source"] = request.location
     if request.destination is not None:
         patch["destination"] = request.destination
         context["destination"] = request.destination

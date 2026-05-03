@@ -20,7 +20,7 @@ function formatTime() {
 }
 
 const WELCOME = {
-  text: 'Ask about Terminal 2 facilities, flights, walking routes, or issues. How can we help?',
+  text: "You're in AirHelp for Terminal 2. Ask about facilities, flights, walking routes, or issues — or say e.g. “take me to BIBA”.",
   role: 'bot',
   time: formatTime(),
 };
@@ -36,9 +36,6 @@ function App() {
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
-  /** When chat triggers navigation: `{ start, end }`. Consumed by NavigationFlowView. */
-  const [chatNav, setChatNav] = useState(null);
-
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
@@ -121,10 +118,15 @@ function App() {
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
 
-      // 🚀 Navigation intercept: auto-redirect to Navigation view
-      if (data.type === 'navigation' && data.data?.start && data.data?.end) {
-        setChatNav({ start: data.data.start, end: data.data.end });
-        handleNavSelect('Navigation');
+      const payload = data.data || {};
+      const navStart = payload.start;
+      const navEnd = payload.end;
+      if (
+        (data.type === 'navigation' || data.intent === 'navigation') &&
+        navStart &&
+        navEnd
+      ) {
+        openFloorMap({ fromId: navStart, toId: navEnd, routeIndex: 0 });
       }
     } catch (err) {
       console.error('API error:', err);
@@ -192,9 +194,6 @@ function App() {
                 location={location}
                 onLocationChange={setLocation}
                 onOpenFloorMap={openFloorMap}
-                chatNavStart={chatNav?.start || null}
-                chatNavEnd={chatNav?.end || null}
-                onChatNavConsumed={() => setChatNav(null)}
               />
             ) : showFacilities ? (
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />

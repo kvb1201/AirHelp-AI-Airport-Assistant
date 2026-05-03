@@ -12,6 +12,7 @@ from pathlib import Path
 from time import time
 
 from app.core.graph.airport_data import NODES
+from app.core.graph.node_mapper import coerce_to_graph_node_id, resolve_to_graph_node_id
 
 
 def db_path() -> Path:
@@ -78,13 +79,22 @@ def _flight_key(s: str | None) -> str:
     return re.sub(r"[^a-z0-9]", "", _norm(s))
 
 
+def _canonical_last_seen(last_seen_node_id: str | None) -> str | None:
+    if not last_seen_node_id or not str(last_seen_node_id).strip():
+        return None
+    return coerce_to_graph_node_id(last_seen_node_id.strip())
+
+
 def validate_graph_node(node_id: str | None) -> str | None:
     if not node_id or not str(node_id).strip():
         return None
     nid = str(node_id).strip()
-    if nid not in NODES:
-        return f"Unknown graph node id: {nid}"
-    return None
+    if nid in NODES:
+        return None
+    mapped, _ = resolve_to_graph_node_id(nid)
+    if mapped:
+        return None
+    return f"Unknown graph node id: {nid} (add a mapping in app/data/rag_to_graph_node_map.json if this is an LLM navigation id)"
 
 
 def create_lost(
@@ -98,6 +108,7 @@ def create_lost(
     init_db()
     rid = _gen_id()
     code = _gen_claim_code()
+    ls_canon = _canonical_last_seen(last_seen_node_id)
     with _connect() as c:
         c.execute(
             """
@@ -114,7 +125,7 @@ def create_lost(
                 (bag_color or "").strip() or None,
                 unique_detail.strip(),
                 (pir_reference or "").strip() or None,
-                (last_seen_node_id or "").strip() or None,
+                ls_canon,
                 code,
             ),
         )
@@ -154,6 +165,7 @@ def create_found(
         ):
             raise ValueError("Claim code does not match that lost report")
 
+        ls_canon = _canonical_last_seen(last_seen_node_id)
         with _connect() as c:
             c.execute(
                 """
@@ -170,7 +182,7 @@ def create_found(
                     (bag_color or "").strip() or None,
                     unique_detail.strip(),
                     (pir_reference or "").strip() or None,
-                    (last_seen_node_id or "").strip() or None,
+                    ls_canon,
                     lost_report_id,
                 ),
             )
@@ -189,6 +201,7 @@ def create_found(
             "message": "Matched using claim code. Meet at the baggage desk; staff can supervise handover.",
         }
 
+    ls_canon = _canonical_last_seen(last_seen_node_id)
     with _connect() as c:
         c.execute(
             """
@@ -205,7 +218,7 @@ def create_found(
                 (bag_color or "").strip() or None,
                 unique_detail.strip(),
                 (pir_reference or "").strip() or None,
-                (last_seen_node_id or "").strip() or None,
+                ls_canon,
             ),
         )
 

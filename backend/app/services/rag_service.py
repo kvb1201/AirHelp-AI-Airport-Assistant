@@ -186,17 +186,21 @@ def _parse_result(r: Any) -> Dict[str, Any]:
                 name = m.group(1)
 
         return {
+            "id": meta.get("id") or "",
             "name": name or "Unknown",
             "category": category,
             "location": meta.get("location", ""),
+            "terminal": meta.get("terminal", ""),
             "description": text,
             "score": r.get("score", 0),
         }
 
     return {
+        "id": "",
         "name": str(r),
         "category": "",
         "location": "",
+        "terminal": "",
         "description": "",
         "score": 0,
     }
