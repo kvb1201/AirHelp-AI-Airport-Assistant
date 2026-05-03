@@ -1,6 +1,6 @@
 """
 Graph-based navigation: resolve semantic labels → shortest path (minutes).
-Mumbai T2 Level 02 mock graph (see app/data/mumbai_t2_level02_graph.json).
+Mumbai T2 Level 02 — dense graph from scripts/build_mumbai_t2_l02_graph.py
 """
 
 from __future__ import annotations
@@ -19,36 +19,49 @@ def _finder() -> PathFinder:
     return PathFinder(build_airport_graph())
 
 
+# Pier gate ends (spine segment 14 = approach to gate lounge)
+_PIER_TIP = {
+    "nw": "t2_nw_sp_14",
+    "ne": "t2_ne_sp_14",
+    "sw": "t2_sw_sp_14",
+    "se": "t2_se_sp_14",
+}
+
 _LEGACY_GATE: dict[str, str] = {
-    "gate_a1": "t2_gate_nw",
-    "gate_a2": "t2_gate_nw",
-    "gate_b3": "t2_gate_sw",
-    "gate_b12": "t2_gate_se",
+    "gate_a1": _PIER_TIP["nw"],
+    "gate_a2": _PIER_TIP["nw"],
+    "gate_b3": _PIER_TIP["sw"],
+    "gate_b12": _PIER_TIP["se"],
+    "gate_nw": _PIER_TIP["nw"],
+    "gate_ne": _PIER_TIP["ne"],
+    "gate_sw": _PIER_TIP["sw"],
+    "gate_se": _PIER_TIP["se"],
+    "t2_gate_nw": _PIER_TIP["nw"],
+    "t2_gate_ne": _PIER_TIP["ne"],
+    "t2_gate_sw": _PIER_TIP["sw"],
+    "t2_gate_se": _PIER_TIP["se"],
 }
 
 _START_ALIASES: dict[str, str] = {
-    # Generic / legacy → T2 L02 nodes
     "entrance": "t2_entrance",
     "entrance_main": "t2_entrance",
     "main_entrance": "t2_entrance",
     "entry": "t2_entrance",
     "unknown": "t2_entrance",
-    "checkin": "t2_hub_central",
-    "checkin_a": "t2_hub_central",
     "baggage": "t2_baggage_claim",
     "baggage_drop": "t2_baggage_claim",
     "security": "t2_security_intl",
     "security_north": "t2_security_intl",
-    "corridor": "t2_hub_central",
-    "corridor_t1": "t2_hub_central",
-    "food": "t2_fb_nw",
-    "food_court": "t2_fb_nw",
-    "duty": "t2_duty_ne",
-    "duty_free": "t2_duty_ne",
-    # T2 explicit aliases
-    "hub": "t2_hub_central",
-    "central": "t2_hub_central",
-    "mall": "t2_hub_central",
+    "security_intl": "t2_security_intl",
+    "security_dom": "t2_security_dom",
+    "checkin": "t2_hub_02_02",
+    "checkin_a": "t2_hub_02_02",
+    "hub": "t2_hub_02_02",
+    "central": "t2_hub_02_02",
+    "mall": "t2_hub_02_02",
+    "corridor": "t2_hub_02_02",
+    "corridor_t1": "t2_hub_02_02",
+    "t2_hub_central": "t2_hub_02_02",
     "info": "t2_information",
     "medical": "t2_medical",
     "wc": "t2_wc_central",
@@ -57,6 +70,10 @@ _START_ALIASES: dict[str, str] = {
     "lifts": "t2_vertical_core",
     "elevator": "t2_vertical_core",
     "escalator": "t2_vertical_core",
+    "food": "t2_nw_fb",
+    "food_court": "t2_nw_fb",
+    "duty": "t2_ne_dutyfree",
+    "duty_free": "t2_ne_dutyfree",
 }
 
 
@@ -84,9 +101,6 @@ def resolve_node_id(label: str | None, *, role: str) -> tuple[str | None, str | 
 
 
 def extract_goal_node_hint(message: str) -> str | None:
-    """
-    Resolve goal: explicit t2_* id, pier hints, or legacy gate_a1 style.
-    """
     if not message:
         return None
     text = message.lower()
@@ -98,13 +112,13 @@ def extract_goal_node_hint(message: str) -> str | None:
             return gid
 
     if "north west" in text or "northwest" in text or "nw pier" in text:
-        return "t2_gate_nw"
+        return _PIER_TIP["nw"]
     if "north east" in text or "northeast" in text or "ne pier" in text:
-        return "t2_gate_ne"
+        return _PIER_TIP["ne"]
     if "south west" in text or "southwest" in text or "sw pier" in text:
-        return "t2_gate_sw"
+        return _PIER_TIP["sw"]
     if "south east" in text or "southeast" in text or "se pier" in text:
-        return "t2_gate_se"
+        return _PIER_TIP["se"]
 
     m = re.search(r"\b(?:gate|boarding)\s*([ab]?)\s*(\d{1,2})\b", text)
     if m:
@@ -191,7 +205,7 @@ def get_route(
         return {
             "ok": False,
             "error": err_g,
-            "hint": "Pick a destination node (e.g. t2_gate_ne or NE pier gate).",
+            "hint": "Pick a destination (pier gate id like t2_ne_sp_14, or say NE pier).",
         }
 
     return build_route_payload(start_id, goal_id, rag_hints=rag_hints)
@@ -211,7 +225,7 @@ def plan_navigation_from_chat(
         return {
             "ok": False,
             "error": "goal_required",
-            "hint": "Say a pier (NE/NW/SE/SW gate), or a node id like t2_gate_ne.",
+            "hint": "Say NE/NW/SE/SW pier gate, or a node id (e.g. t2_ne_sp_14).",
         }
 
     return get_route(start, goal, rag_hints=rag_snippets)

@@ -11,7 +11,7 @@
       "domestic_international": "domestic",
       "terminal": "T2",
       "check_in_row": "A12–A18",
-      "gate_node_id": "t2_gate_ne",
+      "gate_node_id": "t2_ne_sp_14",
       "boarding_time": "11:20",
       "departure_time": "12:05",
       "gate_display": "NE pier — mock gates 73–77"
@@ -22,7 +22,7 @@
       "domestic_international": "domestic",
       "terminal": "T2",
       "check_in_row": "B04–B09",
-      "gate_node_id": "t2_gate_sw",
+      "gate_node_id": "t2_sw_sp_14",
       "boarding_time": "14:40",
       "departure_time": "15:25",
       "gate_display": "SW pier — mock gates 78–82"
