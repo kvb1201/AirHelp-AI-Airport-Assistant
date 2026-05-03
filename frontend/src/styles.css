@@ -774,6 +774,14 @@ body {
   color: var(--on-surface-variant);
 }
 
+.terminal-map-shop-node {
+  display: block;
+  font-size: 9px;
+  color: var(--on-surface-variant);
+  font-family: ui-monospace, monospace;
+  margin-top: 2px;
+}
+
 .terminal-map-field {
   display: flex;
   flex-direction: column;

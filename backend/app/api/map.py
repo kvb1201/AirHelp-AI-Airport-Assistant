@@ -34,8 +34,9 @@ def get_shops_t2(
     category: str | None = Query(None, description="Filter by category e.g. cafe"),
 ):
     """
-    Shop directory for T2 L02: names + normalized map coordinates (0–100).
-    Source: `app/data/shops_t2_l02.csv` — extend or replace with scraped/OSM-derived CSV.
+    Shop directory: names + normalized map coordinates (0–100) and optional `graph_node_id`
+    (navigation node id). Level 3/4 rows align with CSMIA T2 shop/dine card locations; map
+    positions around `t2_l03_postsec` / `t2_l04_postsec` are schematic.
     """
     shops = load_shops_t2_l02()
     if zone:
@@ -47,9 +48,13 @@ def get_shops_t2(
     return {
         "meta": {
             "terminal": "T2",
-            "floor": "L02",
             "coordinate_system": "normalized_xy_0_100",
             "csv": "shops_t2_l02.csv",
+            "directory_refs": [
+                "https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping",
+                "https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining",
+            ],
+            "regenerate": "python3 scripts/generate_csmia_shop_csv.py (pulls full Sitecore Dining/Search results)",
         },
         "count": len(shops),
         "shops": shops,

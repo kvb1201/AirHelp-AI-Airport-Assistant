@@ -276,7 +276,8 @@ export default function TerminalMapView({ location, onLocationChange }) {
                     <title>
                       {s.name_display}
                       {s.category ? ` · ${s.category}` : ''}
-                      {s.zone ? ` · ${s.zone}` : ''}
+                      {s.listing_location ? ` · ${s.listing_location}` : ''}
+                      {s.graph_node_id ? ` · Route: ${s.graph_node_id}` : ''}
                     </title>
                     <rect x={-w / 2} y={-w / 2} width={w} height={w} rx={0.2} fill="#9c27b0" fillOpacity={0.88} stroke="#fff" strokeWidth={0.12} />
                   </g>
@@ -358,9 +359,15 @@ export default function TerminalMapView({ location, onLocationChange }) {
             </summary>
             <ul className="terminal-map-shops-list">
               {shops.map((s) => (
-                <li key={s.shop_id} title={s.near_graph_hint || ''}>
+                <li
+                  key={s.shop_id}
+                  title={[s.listing_location, s.graph_node_id].filter(Boolean).join(' · ')}
+                >
                   <span className="terminal-map-shop-name">{s.name_display}</span>
                   <span className="terminal-map-shop-cat">{s.category}</span>
+                  {s.graph_node_id ? (
+                    <span className="terminal-map-shop-node">{s.graph_node_id}</span>
+                  ) : null}
                 </li>
               ))}
             </ul>

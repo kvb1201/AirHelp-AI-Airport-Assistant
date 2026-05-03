@@ -25,6 +25,9 @@ def load_shops_t2_l02() -> list[dict[str, object]]:
                 yn = float(raw["y_norm"])
             except (KeyError, ValueError):
                 continue
+            gid = (raw.get("graph_node_id") or "").strip()
+            listing = (raw.get("listing_location") or "").strip()
+            hint = (raw.get("near_graph_hint") or "").strip()
             rows.append(
                 {
                     "shop_id": rid,
@@ -37,7 +40,9 @@ def load_shops_t2_l02() -> list[dict[str, object]]:
                     "zone": (raw.get("zone") or "").strip(),
                     "source": (raw.get("source") or "csv").strip(),
                     "confidence": (raw.get("confidence") or "unknown").strip(),
-                    "near_graph_hint": (raw.get("near_graph_hint") or "").strip(),
+                    "graph_node_id": gid,
+                    "listing_location": listing,
+                    "near_graph_hint": hint or gid or listing,
                 }
             )
     return rows

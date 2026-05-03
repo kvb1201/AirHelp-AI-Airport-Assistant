@@ -5,7 +5,7 @@
     "terminal": "T2",
     "floor": "L02",
     "title": "Terminal 2 \u2014 Level 2 walking graph (geometry-derived)",
-    "disclaimer": "Static hackathon graph: node XY is generated on hub+pier centerlines to match the Level 2 butterfly layout (Level_02_Plan_copia.jpg). Not surveyed GIS data.",
+    "disclaimer": "Static hackathon graph: node XY is generated on hub+pier centerlines to match the Level 2 butterfly layout (Level_02_Plan_copia.jpg). Not surveyed GIS data. Level 3/4 post-security hubs are schematic (stacked near the vertical core); shop names and card locations follow the CSMIA T2 directory (shop-and-dine), not surveyed positions.",
     "plan_reference": "Level_02_Plan_copia.jpg; see also mumbai-terminal-2-map.jpg (T2 overview)",
     "coordinate_system": "normalized_xy_0_100_origin_top_left",
     "units": {
@@ -328,6 +328,38 @@
       "x": 50.0,
       "y": 54.5,
       "accessibility_note": "Step-free access (mock)."
+    },
+    "t2_l03_postsec": {
+      "name": "Level 3 \u2014 Post Security Hold Area (retail & dining)",
+      "kind": "junction",
+      "zone": "postsec_airside",
+      "terminal": "T2",
+      "floor": "L03",
+      "x": 50.0,
+      "y": 40.0,
+      "accessibility_note": "Reach via lifts/escalators from Level 2 central core (mock timing).",
+      "directory_ref": "CSMIA Shop & Dine \u2014 T2 Level 3 listings"
+    },
+    "t2_l04_postsec": {
+      "name": "Level 4 \u2014 Post Security Hold Area (retail & dining / foodcourt)",
+      "kind": "junction",
+      "zone": "postsec_airside",
+      "terminal": "T2",
+      "floor": "L04",
+      "x": 50.0,
+      "y": 32.0,
+      "accessibility_note": "Reach via lifts/escalators from Level 3 or Level 2 (mock timing).",
+      "directory_ref": "CSMIA Shop & Dine \u2014 T2 Level 4 listings"
+    },
+    "bom_t1_retail_hub": {
+      "name": "Terminal 1 \u2014 outlets (full directory; not on this T2 Level 2 plan)",
+      "kind": "junction",
+      "zone": "t1_off_plan",
+      "terminal": "T1",
+      "floor": "various",
+      "x": 8.0,
+      "y": 93.0,
+      "accessibility_note": "Symbolic node for T1 listings from CSMIA directory. Inter-terminal transfer not modeled as a real indoor walk on this map."
     },
     "t2_nw_sp_00": {
       "name": "North-West spine \u2014 segment 0/14",
@@ -1563,6 +1595,21 @@
       "t2_se_sp_11",
       "t2_se_fb",
       1
+    ],
+    [
+      "t2_vertical_core",
+      "t2_l03_postsec",
+      4
+    ],
+    [
+      "t2_l03_postsec",
+      "t2_l04_postsec",
+      3
+    ],
+    [
+      "t2_entrance",
+      "bom_t1_retail_hub",
+      20
     ]
   ]
 }
