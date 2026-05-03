@@ -4,6 +4,7 @@ const NAV_ITEMS = [
   { label: 'Home',       icon: 'home',            view: 'home' },
   { label: 'Routes',     icon: 'directions_walk', view: 'nav' },
   { label: 'Facilities', icon: 'apartment',       view: 'facilities' },
+  { label: 'L&F',        icon: 'luggage',         view: 'lostfound' },
   { label: 'Map',        icon: 'map',             view: 'map' },
   { label: 'Profile',    icon: 'account_circle',  view: 'profile' },
 ];

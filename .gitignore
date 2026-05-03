@@ -10,6 +10,9 @@ frontend/dist/
 chroma_db/
 chroma_db_demo/
 
+# Lost & Found demo DB (may contain user-entered text)
+backend/app/data/lost_found.sqlite3
+
 # Piper neural voices (~60MB each; run scripts/download_piper_voices.sh)
 backend/app/data/piper_voices/*.onnx
 backend/app/data/piper_voices/*.onnx.json

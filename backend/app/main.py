@@ -4,7 +4,8 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api import chat, context, guided_navigation, map as map_api, navigation, tts
+from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, tts
+from app.services import lost_found_service as lost_found_storage
 from app.services.rag_service import init_rag
 
 app = FastAPI(title="AI Airport Companion API")
@@ -30,6 +31,7 @@ app.include_router(navigation.router, prefix="/api", tags=["Navigation"])
 app.include_router(guided_navigation.router, prefix="/api", tags=["Guided navigation"])
 app.include_router(context.router, prefix="/api", tags=["Context"])
 app.include_router(map_api.router, prefix="/api", tags=["Map"])
+app.include_router(lost_found.router, prefix="/api", tags=["Lost & Found"])
 app.include_router(tts.router, prefix="/api", tags=["TTS"])
 
 
@@ -59,6 +61,8 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.on_event("startup")
 async def startup_event():
     print("🚀 AI Airport Companion API started")
+    lost_found_storage.init_db()
+    print(f"📦 Lost & Found storage (SQLite on this laptop): {lost_found_storage.get_db_path()}")
 
     try:
         init_rag()   # 🔥 Initialize RAG once
