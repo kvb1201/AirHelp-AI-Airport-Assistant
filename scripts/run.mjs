@@ -72,13 +72,14 @@ function help() {
   npm run setup    first time (Python deps + frontend npm)
   npm run dev      frontend  http://localhost:3000
   npm run api      backend   http://localhost:8000
+  npm run scrape   scrape CSMIA T2 outlets + live flight status (Playwright)
   npm run test     quick check
 `);
 }
 
 function install() {
-  const { pip } = ensureVenv();
-  run(pip, ['install', '--upgrade', 'pip'], { shell: false });
+  const { python, pip } = ensureVenv();
+  run(python, ['-m', 'pip', 'install', '--upgrade', 'pip'], { shell: false });
   run(pip, ['install', '-r', requirements], { shell: false });
 }
 
@@ -88,6 +89,7 @@ function installFrontend() {
 
 function setup() {
   install();
+  run('npm', ['install'], { cwd: REPO, shell: isWin });
   installFrontend();
   console.log('setup done.');
 }
@@ -103,6 +105,21 @@ function api() {
     process.exit(1);
   }
   run(python, ['run.py'], { cwd: backend, shell: false });
+}
+
+function scrape() {
+  const { python } = venvPaths();
+  if (!fs.existsSync(python)) {
+    console.error('Run npm run setup first.');
+    process.exit(1);
+  }
+  run(python, ['scrape_csmia_t2.py'], { cwd: backend, shell: false });
+  run(process.execPath, [path.join(REPO, 'scripts', 'scrape_csmia_flights.mjs')], { cwd: REPO, shell: false });
+  run(
+    python,
+    ['-c', 'from app.services.rag_service import build_knowledge_base; build_knowledge_base()'],
+    { cwd: backend, shell: false },
+  );
 }
 
 function test() {
@@ -130,6 +147,7 @@ const tasks = {
   setup,
   dev,
   api,
+  scrape,
   test,
 };
 

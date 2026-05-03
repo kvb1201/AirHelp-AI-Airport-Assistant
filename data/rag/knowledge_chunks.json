@@ -1,0 +1,730 @@
+[
+  {
+    "id": "chunk_place_food_001",
+    "entity_type": "place",
+    "entity_id": "FOOD_001",
+    "text": "AJ 1881 is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for AJ 1881 in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_002",
+    "entity_type": "place",
+    "entity_id": "FOOD_002",
+    "text": "All Good Deli is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for All Good Deli in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_003",
+    "entity_type": "place",
+    "entity_id": "FOOD_003",
+    "text": "Amreli is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Amreli in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_004",
+    "entity_type": "place",
+    "entity_id": "FOOD_004",
+    "text": "Amul Ice Cream Lounge is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Amul Ice Cream Lounge in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_005",
+    "entity_type": "place",
+    "entity_id": "FOOD_005",
+    "text": "Asia 7 is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Asia 7 in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_006",
+    "entity_type": "place",
+    "entity_id": "FOOD_006",
+    "text": "Baker Street is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Baker Street in Terminal 2. Category: QSR. Location: P10,Level 4, Landside | P10, Level 4, Check in Area | Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_007",
+    "entity_type": "place",
+    "entity_id": "FOOD_007",
+    "text": "Balaji is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Balaji in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area - Gate 68 | P10,Level 4, Landside | P6, Arrival Forecourt | Level 4 , Post Security Hold Area - Gate 65.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_008",
+    "entity_type": "place",
+    "entity_id": "FOOD_008",
+    "text": "BAR FLY is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for BAR FLY in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 40.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_009",
+    "entity_type": "place",
+    "entity_id": "FOOD_009",
+    "text": "Baskin Robbins is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Baskin Robbins in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_010",
+    "entity_type": "place",
+    "entity_id": "FOOD_010",
+    "text": "Boarding Bite is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Boarding Bite in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 52.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_011",
+    "entity_type": "place",
+    "entity_id": "FOOD_011",
+    "text": "Budweiser Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Budweiser Bar in Terminal 2. Category: Bar & Restaurant. Location: Arrival Hall.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_012",
+    "entity_type": "place",
+    "entity_id": "FOOD_012",
+    "text": "Burger King is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Burger King in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area | P10,Level 4, Landside.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_013",
+    "entity_type": "place",
+    "entity_id": "FOOD_013",
+    "text": "Café Ritazza is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Café Ritazza in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_014",
+    "entity_type": "place",
+    "entity_id": "FOOD_014",
+    "text": "Chaipoint is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Chaipoint in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_015",
+    "entity_type": "place",
+    "entity_id": "FOOD_015",
+    "text": "Chef café is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Chef café in Terminal 2. Category: Bar & Restaurant. Location: Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_016",
+    "entity_type": "place",
+    "entity_id": "FOOD_016",
+    "text": "Clink Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Clink Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_017",
+    "entity_type": "place",
+    "entity_id": "FOOD_017",
+    "text": "Costa Coffee is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Costa Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area | Level 3, Post Security Hold Area, Foodcourt | P6, Arrival Forecourt | P10,Level 4, Landside | Level 3 ,Post Security Hold Area - Gate 86 | Level 3 ,Post Security Hold Area - Gate 52.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_018",
+    "entity_type": "place",
+    "entity_id": "FOOD_018",
+    "text": "Dosa Plaza is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Dosa Plaza in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_019",
+    "entity_type": "place",
+    "entity_id": "FOOD_019",
+    "text": "Falafel Express is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Falafel Express in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_020",
+    "entity_type": "place",
+    "entity_id": "FOOD_020",
+    "text": "Flurys is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Flurys in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 46.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_021",
+    "entity_type": "place",
+    "entity_id": "FOOD_021",
+    "text": "Foody's is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Foody's in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 44 | Level 3 ,Post Security Hold Area - Gate 45 | Level 3 ,Post Security Hold Area - Gate 46 | Level 4 , Post Security Hold Area | P10,Level 4, Landside | P6, Arrival Forecourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_022",
+    "entity_type": "place",
+    "entity_id": "FOOD_022",
+    "text": "Fresco is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Fresco in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_023",
+    "entity_type": "place",
+    "entity_id": "FOOD_023",
+    "text": "Good Flippin' Burgers is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Good Flippin' Burgers in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_024",
+    "entity_type": "place",
+    "entity_id": "FOOD_024",
+    "text": "Heineken Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Heineken Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_025",
+    "entity_type": "place",
+    "entity_id": "FOOD_025",
+    "text": "Hoegaarden Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Hoegaarden Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_026",
+    "entity_type": "place",
+    "entity_id": "FOOD_026",
+    "text": "Irish house is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Irish house in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_027",
+    "entity_type": "place",
+    "entity_id": "FOOD_027",
+    "text": "Kailash Parbat is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Kailash Parbat in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_028",
+    "entity_type": "place",
+    "entity_id": "FOOD_028",
+    "text": "MANIS CAFE is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for MANIS CAFE in Terminal 2. Category: Quick Bites. Location: P4, Landside.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_029",
+    "entity_type": "place",
+    "entity_id": "FOOD_029",
+    "text": "Masala Twist is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Masala Twist in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_030",
+    "entity_type": "place",
+    "entity_id": "FOOD_030",
+    "text": "Messo is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Messo in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_031",
+    "entity_type": "place",
+    "entity_id": "FOOD_031",
+    "text": "Mint & Mirchi is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Mint & Mirchi in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 42.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_032",
+    "entity_type": "place",
+    "entity_id": "FOOD_032",
+    "text": "Mitti Café is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Mitti Café in Terminal 2. Category: Coffee Shop. Location: P6, Arrival Forecourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_033",
+    "entity_type": "place",
+    "entity_id": "FOOD_033",
+    "text": "Moti Mahal is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Moti Mahal in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_034",
+    "entity_type": "place",
+    "entity_id": "FOOD_034",
+    "text": "Naashto is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Naashto in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall | Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_035",
+    "entity_type": "place",
+    "entity_id": "FOOD_035",
+    "text": "New York Burrito Company is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for New York Burrito Company in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area | Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 42 | P6, Arrival Forecourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_036",
+    "entity_type": "place",
+    "entity_id": "FOOD_036",
+    "text": "Ottoman Eats is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Ottoman Eats in Terminal 2. Category: QSR. Location: P10,Level 4, Landside.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_037",
+    "entity_type": "place",
+    "entity_id": "FOOD_037",
+    "text": "Pizza Hut is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Pizza Hut in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_038",
+    "entity_type": "place",
+    "entity_id": "FOOD_038",
+    "text": "Shiv Sagar is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Shiv Sagar in Terminal 2. Category: QSR. Location: Arrival Forecourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_039",
+    "entity_type": "place",
+    "entity_id": "FOOD_039",
+    "text": "Squeeze Juice is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Squeeze Juice in Terminal 2. Category: Quick Bites. Location: Level 4, Post Security Hold Area, Foodcourt | Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_040",
+    "entity_type": "place",
+    "entity_id": "FOOD_040",
+    "text": "Street Foods by Punjab Grill is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Street Foods by Punjab Grill in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3 ,Post Security Hold Area | Level 4, Post Security Hold Area, Foodcourt | P10, Level 4, Check in Area | Arrival Hall.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_041",
+    "entity_type": "place",
+    "entity_id": "FOOD_041",
+    "text": "The Cram Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for The Cram Bar in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 49.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_042",
+    "entity_type": "place",
+    "entity_id": "FOOD_042",
+    "text": "Third Wave Coffee is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Third Wave Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_043",
+    "entity_type": "place",
+    "entity_id": "FOOD_043",
+    "text": "TIKG (The Indian Kebab Grill) Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for TIKG (The Indian Kebab Grill) Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_044",
+    "entity_type": "place",
+    "entity_id": "FOOD_044",
+    "text": "Vaango is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Vaango in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_045",
+    "entity_type": "place",
+    "entity_id": "FOOD_045",
+    "text": "Wow Momo is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Wow Momo in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_046",
+    "entity_type": "place",
+    "entity_id": "FOOD_046",
+    "text": "Wrapafella is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Wrapafella in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_food_047",
+    "entity_type": "place",
+    "entity_id": "FOOD_047",
+    "text": "Zambar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Zambar in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall.. Intents: food, quick_stop.",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_place_shop_001",
+    "entity_type": "place",
+    "entity_id": "SHOP_001",
+    "text": "Amrapali is a shop in T2. Type: luxury. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Amrapali in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_002",
+    "entity_type": "place",
+    "entity_id": "SHOP_002",
+    "text": "Armani Exchange is a shop in T2. Type: luxury. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Armani Exchange in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_003",
+    "entity_type": "place",
+    "entity_id": "SHOP_003",
+    "text": "Balenzia is a shop in T2. Type: fashion_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Balenzia in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_004",
+    "entity_type": "place",
+    "entity_id": "SHOP_004",
+    "text": "BIBA is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for BIBA in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_005",
+    "entity_type": "place",
+    "entity_id": "SHOP_005",
+    "text": "Bikaji is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Bikaji in Terminal 2. Category: Sweets / Packed Foods. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_006",
+    "entity_type": "place",
+    "entity_id": "SHOP_006",
+    "text": "Bookscetra (New Store) is a shop in T2. Type: books_convenience. Price level: low. Speed: fast. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Bookscetra (New Store) in Terminal 2. Category: CTN. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_007",
+    "entity_type": "place",
+    "entity_id": "SHOP_007",
+    "text": "Carlton is a shop in T2. Type: luggage_and_bags. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Carlton in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_008",
+    "entity_type": "place",
+    "entity_id": "SHOP_008",
+    "text": "ColorBar is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for ColorBar in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_009",
+    "entity_type": "place",
+    "entity_id": "SHOP_009",
+    "text": "Da Milano is a shop in T2. Type: handbag_and_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Da Milano in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_010",
+    "entity_type": "place",
+    "entity_id": "SHOP_010",
+    "text": "Fab India is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Fab India in Terminal 2. Category: Apparel. Location: Level 3 , Post Security Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_011",
+    "entity_type": "place",
+    "entity_id": "SHOP_011",
+    "text": "Go Colors is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Go Colors in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_012",
+    "entity_type": "place",
+    "entity_id": "SHOP_012",
+    "text": "Gourmet Baklava is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Gourmet Baklava in Terminal 2. Category: Sweets / Packed Foods. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_013",
+    "entity_type": "place",
+    "entity_id": "SHOP_013",
+    "text": "Gute Reise is a shop in T2. Type: luggage_and_bags. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Gute Reise in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_014",
+    "entity_type": "place",
+    "entity_id": "SHOP_014",
+    "text": "Haldirams is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Haldirams in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall | Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_015",
+    "entity_type": "place",
+    "entity_id": "SHOP_015",
+    "text": "Hush Puppies is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Hush Puppies in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_016",
+    "entity_type": "place",
+    "entity_id": "SHOP_016",
+    "text": "Isha Life is a shop in T2. Type: souvenirs_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Isha Life in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_017",
+    "entity_type": "place",
+    "entity_id": "SHOP_017",
+    "text": "Isharya is a shop in T2. Type: jewelry. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Isharya in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_018",
+    "entity_type": "place",
+    "entity_id": "SHOP_018",
+    "text": "IT Luggage is a shop in T2. Type: luggage_and_bags. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for IT Luggage in Terminal 2. Category: Luggage and Bags. Location: Check in Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_019",
+    "entity_type": "place",
+    "entity_id": "SHOP_019",
+    "text": "Kamaayurveda is a shop in T2. Type: health_and_beauty. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Kamaayurveda in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_020",
+    "entity_type": "place",
+    "entity_id": "SHOP_020",
+    "text": "Kompanero is a shop in T2. Type: handbag_and_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Kompanero in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_021",
+    "entity_type": "place",
+    "entity_id": "SHOP_021",
+    "text": "Krishna Pearls is a shop in T2. Type: jewelry. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Krishna Pearls in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_022",
+    "entity_type": "place",
+    "entity_id": "SHOP_022",
+    "text": "Lacoste is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lacoste in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_023",
+    "entity_type": "place",
+    "entity_id": "SHOP_023",
+    "text": "Lakme is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lakme in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_024",
+    "entity_type": "place",
+    "entity_id": "SHOP_024",
+    "text": "Lal Sweets is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lal Sweets in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_025",
+    "entity_type": "place",
+    "entity_id": "SHOP_025",
+    "text": "Lenskart is a shop in T2. Type: sunglasses. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lenskart in Terminal 2. Category: Sunglasses. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_026",
+    "entity_type": "place",
+    "entity_id": "SHOP_026",
+    "text": "Marks and Spencers is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Marks and Spencers in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_027",
+    "entity_type": "place",
+    "entity_id": "SHOP_027",
+    "text": "Mufti is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Mufti in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_028",
+    "entity_type": "place",
+    "entity_id": "SHOP_028",
+    "text": "Nyaka is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Nyaka in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_029",
+    "entity_type": "place",
+    "entity_id": "SHOP_029",
+    "text": "Parcos Luxe is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Parcos Luxe in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_030",
+    "entity_type": "place",
+    "entity_id": "SHOP_030",
+    "text": "Perona is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Perona in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_031",
+    "entity_type": "place",
+    "entity_id": "SHOP_031",
+    "text": "Rare Planet is a shop in T2. Type: souvenirs_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Rare Planet in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_032",
+    "entity_type": "place",
+    "entity_id": "SHOP_032",
+    "text": "Reliance Digital is a shop in T2. Type: electronics. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Reliance Digital in Terminal 2. Category: Electronics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_033",
+    "entity_type": "place",
+    "entity_id": "SHOP_033",
+    "text": "Scentido is a shop in T2. Type: perfumes. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Scentido in Terminal 2. Category: Perfumes. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_034",
+    "entity_type": "place",
+    "entity_id": "SHOP_034",
+    "text": "Shahenaz is a shop in T2. Type: home_decor_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Shahenaz in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_035",
+    "entity_type": "place",
+    "entity_id": "SHOP_035",
+    "text": "Shahenaz Women is a shop in T2. Type: fashion_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Shahenaz Women in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_036",
+    "entity_type": "place",
+    "entity_id": "SHOP_036",
+    "text": "Shaze is a shop in T2. Type: home_decor_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Shaze in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_037",
+    "entity_type": "place",
+    "entity_id": "SHOP_037",
+    "text": "Skechers is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Skechers in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_038",
+    "entity_type": "place",
+    "entity_id": "SHOP_038",
+    "text": "Steve Madden is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Steve Madden in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_039",
+    "entity_type": "place",
+    "entity_id": "SHOP_039",
+    "text": "Superdry is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Superdry in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_040",
+    "entity_type": "place",
+    "entity_id": "SHOP_040",
+    "text": "The Body Shop is a shop in T2. Type: health_and_beauty. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for The Body Shop in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_041",
+    "entity_type": "place",
+    "entity_id": "SHOP_041",
+    "text": "The Bombay Shaving Company is a shop in T2. Type: men's_grooming. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for The Bombay Shaving Company in Terminal 2. Category: Men's Grooming. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_042",
+    "entity_type": "place",
+    "entity_id": "SHOP_042",
+    "text": "The Face Shop is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for The Face Shop in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_043",
+    "entity_type": "place",
+    "entity_id": "SHOP_043",
+    "text": "Theobroma is a shop in T2. Type: confectionary. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Theobroma in Terminal 2. Category: Confectionary. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_044",
+    "entity_type": "place",
+    "entity_id": "SHOP_044",
+    "text": "Tresmode is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Tresmode in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_045",
+    "entity_type": "place",
+    "entity_id": "SHOP_045",
+    "text": "Tribe is a shop in T2. Type: jewelry. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Tribe in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_shop_046",
+    "entity_type": "place",
+    "entity_id": "SHOP_046",
+    "text": "Tynimo is a shop in T2. Type: lifestyle. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Tynimo in Terminal 2. Category: LifeStyle. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Secuirty Hold Area.. Intents: shopping.",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_place_service_001",
+    "entity_type": "place",
+    "entity_id": "SERVICE_001",
+    "text": "Adani Lounge-Loyalty is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable). Intents: utility.",
+    "source_url": "local://data/raw/services.json"
+  },
+  {
+    "id": "chunk_place_service_002",
+    "entity_type": "place",
+    "entity_id": "SERVICE_002",
+    "text": "Adani Lounge-Business Class L3( Airline) is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable). Intents: utility.",
+    "source_url": "local://data/raw/services.json"
+  },
+  {
+    "id": "chunk_place_service_003",
+    "entity_type": "place",
+    "entity_id": "SERVICE_003",
+    "text": "AMEX is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: Hot and Cold à la carte Buffet menu with Jain menu options Complimentary Bar with cocktails and mocktails Free Wi-Fi Phone calls Printing. Intents: utility.",
+    "source_url": "local://data/raw/services.json"
+  },
+  {
+    "id": "chunk_place_service_004",
+    "entity_type": "place",
+    "entity_id": "SERVICE_004",
+    "text": "Aviserv Lounge West is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.. Intents: utility.",
+    "source_url": "local://data/raw/services.json"
+  },
+  {
+    "id": "chunk_place_service_005",
+    "entity_type": "place",
+    "entity_id": "SERVICE_005",
+    "text": "Aviserv Lounge East is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.. Intents: utility.",
+    "source_url": "local://data/raw/services.json"
+  },
+  {
+    "id": "chunk_place_service_006",
+    "entity_type": "place",
+    "entity_id": "SERVICE_006",
+    "text": "Adani Lounge Loyalty is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 4 hours of Lounge Access prior to departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability. Intents: utility.",
+    "source_url": "local://data/raw/services.json"
+  },
+  {
+    "id": "chunk_place_service_007",
+    "entity_type": "place",
+    "entity_id": "SERVICE_007",
+    "text": "Adani Lounge Loyalty (1st Class & Premium business) is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 4 hours of Lounge Access prior to scheduled departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability. Intents: utility.",
+    "source_url": "local://data/raw/services.json"
+  },
+  {
+    "id": "chunk_offer_tbd_offer_feed",
+    "entity_type": "offer",
+    "entity_id": "TBD_OFFER_FEED",
+    "text": "Offers feed pending ingestion. Official airport offer pages have not been normalized yet.. Tags: pending.",
+    "source_url": "local://pending/offers"
+  },
+  {
+    "id": "chunk_raw_raw_food",
+    "entity_type": "raw_document",
+    "entity_id": "raw_food",
+    "text": "[\n  {\n    \"id\": \"food_001\",\n    \"name\": \"AJ 1881\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for AJ 1881 in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_002\",\n    \"name\": \"All Good Deli\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for All Good Deli in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_003\",\n    \"name\": \"Amreli\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Amreli in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_004\",\n    \"name\": \"Amul Ice Cream Lounge\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Amul Ice Cream Lounge in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_005\",\n    \"name\": \"Asia 7\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Asia 7 in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_006\",\n    \"name\": \"Baker Street\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Baker Street in Terminal 2. Category: QSR. Location: P10,Level 4, Landside | P10, Level 4, Check in Area | Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"P10,Level 4, Landside | P10, Level 4, Check in Area | Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_007\",\n    \"name\": \"Balaji\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Balaji in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area - Gate 68 | P10,Level 4, Landside | P6, Arrival Forecourt | Level 4 , Post Security Hold Area - Gate 65.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area - Gate 68 | P10,Level 4, Landside | P6, Arrival Forecourt | Level 4 , Post Security Hold Area - Gate 65\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_008\",\n    \"name\": \"BAR FLY\",\n    \"terminal\": \"T2\",\n    \"category\": \"Quick Bites\",\n    \"description\": \"Official CSMIA listing for BAR FLY in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 40.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area - Gate 40\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_009\",\n    \"name\": \"Baskin Robbins\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Baskin Robbins in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"P6, Arrival Forecourt | Level 3, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_010\",\n    \"name\": \"Boarding Bite\",\n    \"terminal\": \"T2\",\n    \"category\": \"Quick Bites\",\n    \"description\": \"Official CSMIA listing for Boarding Bite in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 52.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area - Gate 52\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_011\",\n    \"name\": \"Budweiser Bar\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Budweiser Bar in Terminal 2. Category: Bar & Restaurant. Location: Arrival Hall.\",\n    \"location_text\": \"Arrival Hall\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_012\",\n    \"name\": \"Burger King\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Burger King in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area | P10,Level 4, Landside.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area | P10,Level 4, Landside\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_013\",\n    \"name\": \"Café Ritazza\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Café Ritazza in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_014\",\n    \"name\": \"Chaipoint\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Chaipoint in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.\",\n    \"location_text\": \"P6, Arrival Forecourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_015\",\n    \"name\": \"Chef café\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Chef café in Terminal 2. Category: Bar & Restaurant. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_016\",\n    \"name\": \"Clink Bar\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Clink Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_017\",\n    \"name\": \"Costa Coffee\",\n    \"terminal\": \"T2\",\n    \"category\": \"Coffee Shop\",\n    \"description\": \"Official CSMIA listing for Costa Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area | Level 3, Post Security Hold Area, Foodcourt | P6, Arrival Forecourt | P10,Level 4, Landside | Level 3 ,Post Security Hold Area - Gate 86 | Level 3 ,Post Security Hold Area - Gate 52.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area | Level 3, Post Security Hold Area, Foodcourt | P6, Arrival Forecourt | P10,Level 4, Landside | Level 3 ,Post Security Hold Area - Gate 86 | Level 3 ,Post Security Hold Area - Gate 52\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_018\",\n    \"name\": \"Dosa Plaza\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Dosa Plaza in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_019\",\n    \"name\": \"Falafel Express\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Falafel Express in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_020\",\n    \"name\": \"Flurys\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Flurys in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 46.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt | Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 46\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_021\",\n    \"name\": \"Foody's\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Foody's in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 44 | Level 3 ,Post Security Hold Area - Gate 45 | Level 3 ,Post Security Hold Area - Gate 46 | Level 4 , Post Security Hold Area | P10,Level 4, Landside | P6, Arrival Forecourt.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 44 | Level 3 ,Post Security Hold Area - Gate 45 | Level 3 ,Post Security Hold Area - Gate 46 | Level 4 , Post Security Hold Area | P10,Level 4, Landside | P6, Arrival Forecourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_022\",\n    \"name\": \"Fresco\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Fresco in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area.\",\n    \"location_text\": \"P10, Level 4, Check in Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_023\",\n    \"name\": \"Good Flippin' Burgers\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Good Flippin' Burgers in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_024\",\n    \"name\": \"Heineken Bar\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Heineken Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_025\",\n    \"name\": \"Hoegaarden Bar\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Hoegaarden Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_026\",\n    \"name\": \"Irish house\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Irish house in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_027\",\n    \"name\": \"Kailash Parbat\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Kailash Parbat in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_028\",\n    \"name\": \"MANIS CAFE\",\n    \"terminal\": \"T2\",\n    \"category\": \"Quick Bites\",\n    \"description\": \"Official CSMIA listing for MANIS CAFE in Terminal 2. Category: Quick Bites. Location: P4, Landside.\",\n    \"location_text\": \"P4, Landside\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_029\",\n    \"name\": \"Masala Twist\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Masala Twist in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_030\",\n    \"name\": \"Messo\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for Messo in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_031\",\n    \"name\": \"Mint & Mirchi\",\n    \"terminal\": \"T2\",\n    \"category\": \"Quick Bites\",\n    \"description\": \"Official CSMIA listing for Mint & Mirchi in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 42.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area - Gate 42\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_032\",\n    \"name\": \"Mitti Café\",\n    \"terminal\": \"T2\",\n    \"category\": \"Coffee Shop\",\n    \"description\": \"Official CSMIA listing for Mitti Café in Terminal 2. Category: Coffee Shop. Location: P6, Arrival Forecourt.\",\n    \"location_text\": \"P6, Arrival Forecourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_033\",\n    \"name\": \"Moti Mahal\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Moti Mahal in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_034\",\n    \"name\": \"Naashto\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Naashto in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall | Level 3 ,Post Security Hold Area.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt | Arrival Hall | Level 3 ,Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_035\",\n    \"name\": \"New York Burrito Company\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for New York Burrito Company in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area | Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 42 | P6, Arrival Forecourt.\",\n    \"location_text\": \"P10, Level 4, Check in Area | Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 42 | P6, Arrival Forecourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_036\",\n    \"name\": \"Ottoman Eats\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Ottoman Eats in Terminal 2. Category: QSR. Location: P10,Level 4, Landside.\",\n    \"location_text\": \"P10,Level 4, Landside\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_037\",\n    \"name\": \"Pizza Hut\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Pizza Hut in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_038\",\n    \"name\": \"Shiv Sagar\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Shiv Sagar in Terminal 2. Category: QSR. Location: Arrival Forecourt.\",\n    \"location_text\": \"Arrival Forecourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_039\",\n    \"name\": \"Squeeze Juice\",\n    \"terminal\": \"T2\",\n    \"category\": \"Quick Bites\",\n    \"description\": \"Official CSMIA listing for Squeeze Juice in Terminal 2. Category: Quick Bites. Location: Level 4, Post Security Hold Area, Foodcourt | Level 3, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt | Level 3, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_040\",\n    \"name\": \"Street Foods by Punjab Grill\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Street Foods by Punjab Grill in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3 ,Post Security Hold Area | Level 4, Post Security Hold Area, Foodcourt | P10, Level 4, Check in Area | Arrival Hall.\",\n    \"location_text\": \"P6, Arrival Forecourt | Level 3 ,Post Security Hold Area | Level 4, Post Security Hold Area, Foodcourt | P10, Level 4, Check in Area | Arrival Hall\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_041\",\n    \"name\": \"The Cram Bar\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for The Cram Bar in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 49.\",\n    \"location_text\": \"Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 49\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_042\",\n    \"name\": \"Third Wave Coffee\",\n    \"terminal\": \"T2\",\n    \"category\": \"Coffee Shop\",\n    \"description\": \"Official CSMIA listing for Third Wave Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_043\",\n    \"name\": \"TIKG (The Indian Kebab Grill) Bar\",\n    \"terminal\": \"T2\",\n    \"category\": \"Bar & Restaurant\",\n    \"description\": \"Official CSMIA listing for TIKG (The Indian Kebab Grill) Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_044\",\n    \"name\": \"Vaango\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Vaango in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt | Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_045\",\n    \"name\": \"Wow Momo\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Wow Momo in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.\",\n    \"location_text\": \"P6, Arrival Forecourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_046\",\n    \"name\": \"Wrapafella\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Wrapafella in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.\",\n    \"location_text\": \"Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  },\n  {\n    \"id\": \"food_047\",\n    \"name\": \"Zambar\",\n    \"terminal\": \"T2\",\n    \"category\": \"QSR\",\n    \"description\": \"Official CSMIA listing for Zambar in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall.\",\n    \"location_text\": \"Level 4, Post Security Hold Area, Foodcourt | Arrival Hall\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/dining\"\n  }\n]",
+    "source_url": "local://data/raw/food.json"
+  },
+  {
+    "id": "chunk_raw_raw_shops",
+    "entity_type": "raw_document",
+    "entity_id": "raw_shops",
+    "text": "[\n  {\n    \"id\": \"shop_001\",\n    \"name\": \"Amrapali\",\n    \"terminal\": \"T2\",\n    \"category\": \"Jewellary\",\n    \"description\": \"Official CSMIA listing for Amrapali in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_002\",\n    \"name\": \"Armani Exchange\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Armani Exchange in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_003\",\n    \"name\": \"Balenzia\",\n    \"terminal\": \"T2\",\n    \"category\": \"Fashion Accessories\",\n    \"description\": \"Official CSMIA listing for Balenzia in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_004\",\n    \"name\": \"BIBA\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for BIBA in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_005\",\n    \"name\": \"Bikaji\",\n    \"terminal\": \"T2\",\n    \"category\": \"Sweets / Packed Foods\",\n    \"description\": \"Official CSMIA listing for Bikaji in Terminal 2. Category: Sweets / Packed Foods. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_006\",\n    \"name\": \"Bookscetra (New Store)\",\n    \"terminal\": \"T2\",\n    \"category\": \"CTN\",\n    \"description\": \"Official CSMIA listing for Bookscetra (New Store) in Terminal 2. Category: CTN. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_007\",\n    \"name\": \"Carlton\",\n    \"terminal\": \"T2\",\n    \"category\": \"Luggage and Bags\",\n    \"description\": \"Official CSMIA listing for Carlton in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_008\",\n    \"name\": \"ColorBar\",\n    \"terminal\": \"T2\",\n    \"category\": \"Makeup and Cosmetics\",\n    \"description\": \"Official CSMIA listing for ColorBar in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_009\",\n    \"name\": \"Da Milano\",\n    \"terminal\": \"T2\",\n    \"category\": \"Handbag and Accessories\",\n    \"description\": \"Official CSMIA listing for Da Milano in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_010\",\n    \"name\": \"Fab India\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Fab India in Terminal 2. Category: Apparel. Location: Level 3 , Post Security Hold Area | Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 3 , Post Security Hold Area | Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_011\",\n    \"name\": \"Go Colors\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Go Colors in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_012\",\n    \"name\": \"Gourmet Baklava\",\n    \"terminal\": \"T2\",\n    \"category\": \"Sweets / Packed Foods\",\n    \"description\": \"Official CSMIA listing for Gourmet Baklava in Terminal 2. Category: Sweets / Packed Foods. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_013\",\n    \"name\": \"Gute Reise\",\n    \"terminal\": \"T2\",\n    \"category\": \"Luggage and Bags\",\n    \"description\": \"Official CSMIA listing for Gute Reise in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_014\",\n    \"name\": \"Haldirams\",\n    \"terminal\": \"T2\",\n    \"category\": \"Sweets / Packed Foods\",\n    \"description\": \"Official CSMIA listing for Haldirams in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall | Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Arrival Hall | Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_015\",\n    \"name\": \"Hush Puppies\",\n    \"terminal\": \"T2\",\n    \"category\": \"Footware\",\n    \"description\": \"Official CSMIA listing for Hush Puppies in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_016\",\n    \"name\": \"Isha Life\",\n    \"terminal\": \"T2\",\n    \"category\": \"Souvenirs / Gifting\",\n    \"description\": \"Official CSMIA listing for Isha Life in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_017\",\n    \"name\": \"Isharya\",\n    \"terminal\": \"T2\",\n    \"category\": \"Jewellary\",\n    \"description\": \"Official CSMIA listing for Isharya in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_018\",\n    \"name\": \"IT Luggage\",\n    \"terminal\": \"T2\",\n    \"category\": \"Luggage and Bags\",\n    \"description\": \"Official CSMIA listing for IT Luggage in Terminal 2. Category: Luggage and Bags. Location: Check in Area.\",\n    \"location_text\": \"Check in Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_019\",\n    \"name\": \"Kamaayurveda\",\n    \"terminal\": \"T2\",\n    \"category\": \"Health and Beauty\",\n    \"description\": \"Official CSMIA listing for Kamaayurveda in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_020\",\n    \"name\": \"Kompanero\",\n    \"terminal\": \"T2\",\n    \"category\": \"Handbag and Accessories\",\n    \"description\": \"Official CSMIA listing for Kompanero in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Security Hold Area.\",\n    \"location_text\": \"Level 3 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_021\",\n    \"name\": \"Krishna Pearls\",\n    \"terminal\": \"T2\",\n    \"category\": \"Jewellary\",\n    \"description\": \"Official CSMIA listing for Krishna Pearls in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_022\",\n    \"name\": \"Lacoste\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Lacoste in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_023\",\n    \"name\": \"Lakme\",\n    \"terminal\": \"T2\",\n    \"category\": \"Makeup and Cosmetics\",\n    \"description\": \"Official CSMIA listing for Lakme in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_024\",\n    \"name\": \"Lal Sweets\",\n    \"terminal\": \"T2\",\n    \"category\": \"Sweets / Packed Foods\",\n    \"description\": \"Official CSMIA listing for Lal Sweets in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall.\",\n    \"location_text\": \"Arrival Hall\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_025\",\n    \"name\": \"Lenskart\",\n    \"terminal\": \"T2\",\n    \"category\": \"Sunglasses\",\n    \"description\": \"Official CSMIA listing for Lenskart in Terminal 2. Category: Sunglasses. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_026\",\n    \"name\": \"Marks and Spencers\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Marks and Spencers in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_027\",\n    \"name\": \"Mufti\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Mufti in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_028\",\n    \"name\": \"Nyaka\",\n    \"terminal\": \"T2\",\n    \"category\": \"Makeup and Cosmetics\",\n    \"description\": \"Official CSMIA listing for Nyaka in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_029\",\n    \"name\": \"Parcos Luxe\",\n    \"terminal\": \"T2\",\n    \"category\": \"Makeup and Cosmetics\",\n    \"description\": \"Official CSMIA listing for Parcos Luxe in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_030\",\n    \"name\": \"Perona\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Perona in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_031\",\n    \"name\": \"Rare Planet\",\n    \"terminal\": \"T2\",\n    \"category\": \"Souvenirs / Gifting\",\n    \"description\": \"Official CSMIA listing for Rare Planet in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_032\",\n    \"name\": \"Reliance Digital\",\n    \"terminal\": \"T2\",\n    \"category\": \"Electronics\",\n    \"description\": \"Official CSMIA listing for Reliance Digital in Terminal 2. Category: Electronics. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_033\",\n    \"name\": \"Scentido\",\n    \"terminal\": \"T2\",\n    \"category\": \"Perfumes\",\n    \"description\": \"Official CSMIA listing for Scentido in Terminal 2. Category: Perfumes. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_034\",\n    \"name\": \"Shahenaz\",\n    \"terminal\": \"T2\",\n    \"category\": \"Home Decor / Gifting\",\n    \"description\": \"Official CSMIA listing for Shahenaz in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_035\",\n    \"name\": \"Shahenaz Women\",\n    \"terminal\": \"T2\",\n    \"category\": \"Fashion Accessories\",\n    \"description\": \"Official CSMIA listing for Shahenaz Women in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_036\",\n    \"name\": \"Shaze\",\n    \"terminal\": \"T2\",\n    \"category\": \"Home Decor / Gifting\",\n    \"description\": \"Official CSMIA listing for Shaze in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.\",\n    \"location_text\": \"Level 4 , Post Security Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_037\",\n    \"name\": \"Skechers\",\n    \"terminal\": \"T2\",\n    \"category\": \"Footware\",\n    \"description\": \"Official CSMIA listing for Skechers in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_038\",\n    \"name\": \"Steve Madden\",\n    \"terminal\": \"T2\",\n    \"category\": \"Footware\",\n    \"description\": \"Official CSMIA listing for Steve Madden in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_039\",\n    \"name\": \"Superdry\",\n    \"terminal\": \"T2\",\n    \"category\": \"Apparel\",\n    \"description\": \"Official CSMIA listing for Superdry in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_040\",\n    \"name\": \"The Body Shop\",\n    \"terminal\": \"T2\",\n    \"category\": \"Health and Beauty\",\n    \"description\": \"Official CSMIA listing for The Body Shop in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_041\",\n    \"name\": \"The Bombay Shaving Company\",\n    \"terminal\": \"T2\",\n    \"category\": \"Men's Grooming\",\n    \"description\": \"Official CSMIA listing for The Bombay Shaving Company in Terminal 2. Category: Men's Grooming. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_042\",\n    \"name\": \"The Face Shop\",\n    \"terminal\": \"T2\",\n    \"category\": \"Makeup and Cosmetics\",\n    \"description\": \"Official CSMIA listing for The Face Shop in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_043\",\n    \"name\": \"Theobroma\",\n    \"terminal\": \"T2\",\n    \"category\": \"Confectionary\",\n    \"description\": \"Official CSMIA listing for Theobroma in Terminal 2. Category: Confectionary. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_044\",\n    \"name\": \"Tresmode\",\n    \"terminal\": \"T2\",\n    \"category\": \"Footware\",\n    \"description\": \"Official CSMIA listing for Tresmode in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_045\",\n    \"name\": \"Tribe\",\n    \"terminal\": \"T2\",\n    \"category\": \"Jewellary\",\n    \"description\": \"Official CSMIA listing for Tribe in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  },\n  {\n    \"id\": \"shop_046\",\n    \"name\": \"Tynimo\",\n    \"terminal\": \"T2\",\n    \"category\": \"LifeStyle\",\n    \"description\": \"Official CSMIA listing for Tynimo in Terminal 2. Category: LifeStyle. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Secuirty Hold Area.\",\n    \"location_text\": \"Level 3 , Post Secuirty Hold Area | Level 4 , Post Secuirty Hold Area\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping\"\n  }\n]",
+    "source_url": "local://data/raw/shops.json"
+  },
+  {
+    "id": "chunk_raw_raw_services",
+    "entity_type": "raw_document",
+    "entity_id": "raw_services",
+    "text": "[\n  {\n    \"id\": \"service_001\",\n    \"name\": \"Adani Lounge-Loyalty\",\n    \"terminal\": \"T2\",\n    \"category\": \"lounge\",\n    \"description\": \"3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable)\",\n    \"location_text\": \"CSMI Airport, Terminal-2, Domestic Departure, Level-3\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/airport-services/lounges\"\n  },\n  {\n    \"id\": \"service_002\",\n    \"name\": \"Adani Lounge-Business Class L3( Airline)\",\n    \"terminal\": \"T2\",\n    \"category\": \"lounge\",\n    \"description\": \"3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable)\",\n    \"location_text\": \"CSMI Airport, Terminal-2, Domestic Departure, Level-3\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/airport-services/lounges\"\n  },\n  {\n    \"id\": \"service_003\",\n    \"name\": \"AMEX\",\n    \"terminal\": \"T2\",\n    \"category\": \"lounge\",\n    \"description\": \"Hot and Cold à la carte Buffet menu with Jain menu options Complimentary Bar with cocktails and mocktails Free Wi-Fi Phone calls Printing\",\n    \"location_text\": \"Terminal 2 Domestic, Level 3, Near Gate 65, Opposite Burger King.\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/airport-services/lounges\"\n  },\n  {\n    \"id\": \"service_004\",\n    \"name\": \"Aviserv Lounge West\",\n    \"terminal\": \"T2\",\n    \"category\": \"lounge\",\n    \"description\": \"Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.\",\n    \"location_text\": \"CSMI Airport, Terminal-2, Arrivals, Nr. Arrival Gate No A, Level-2 West Side\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/airport-services/lounges\"\n  },\n  {\n    \"id\": \"service_005\",\n    \"name\": \"Aviserv Lounge East\",\n    \"terminal\": \"T2\",\n    \"category\": \"lounge\",\n    \"description\": \"Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.\",\n    \"location_text\": \"CSMI Airport, Terminal-2, Arrivals, Nr. Arrival Gate No C, Level-2 East Side\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/airport-services/lounges\"\n  },\n  {\n    \"id\": \"service_006\",\n    \"name\": \"Adani Lounge Loyalty\",\n    \"terminal\": \"T2\",\n    \"category\": \"lounge\",\n    \"description\": \"4 hours of Lounge Access prior to departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability\",\n    \"location_text\": \"CSMI Airport, Terminal-2, International Departure, Level-4\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/airport-services/lounges\"\n  },\n  {\n    \"id\": \"service_007\",\n    \"name\": \"Adani Lounge Loyalty (1st Class & Premium business)\",\n    \"terminal\": \"T2\",\n    \"category\": \"lounge\",\n    \"description\": \"4 hours of Lounge Access prior to scheduled departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability\",\n    \"location_text\": \"CSMI Airport, Terminal-2, International Departure, Level-4\",\n    \"source_type\": \"official\",\n    \"source_name\": \"csmia_adani_airports\",\n    \"source_query\": \"https://csmia-mumbai.adaniairports.com/en/airport-services/lounges\"\n  }\n]",
+    "source_url": "local://data/raw/services.json"
+  }
+]

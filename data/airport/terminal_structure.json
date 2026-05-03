@@ -1,0 +1,26 @@
+{
+  "terminal_id": "T2",
+  "name": "Mumbai Airport Terminal 2",
+  "levels": [
+    {
+      "level_id": "L1",
+      "name": "Arrivals",
+      "zones": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "level_id": "L2",
+      "name": "Departures",
+      "zones": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  ],
+  "source_url": "local://terminal_structure/v1",
+  "last_verified_at": "2026-05-03T12:31:45.971777+00:00",
+  "confidence": 0.9
+}
