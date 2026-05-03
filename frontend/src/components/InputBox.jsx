@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
 /**
- * Fixed input bar at the bottom of the screen.
- * @param {function} onSend    - Called with the trimmed message string
- * @param {boolean}  isLoading - Disables input while awaiting API response
+ * Chat input bar — used in ChatPanel (desktop) and mobile bottom area.
  */
-export default function InputBox({ onSend, isLoading }) {
+export default function InputBox({ onSend, isLoading, placeholder = 'Type your message…' }) {
   const [value, setValue] = useState('');
 
   const handleSubmit = (e) => {
@@ -17,17 +15,16 @@ export default function InputBox({ onSend, isLoading }) {
   };
 
   return (
-    <form className="input-bar" onSubmit={handleSubmit}>
+    <form className="input-bar" onSubmit={handleSubmit} aria-label="Send a message">
       <input
-        id="chat-input"
         className="chat-input"
         type="text"
-        placeholder="Ask about gates, food, services…"
+        placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         disabled={isLoading}
         autoComplete="off"
-        aria-label="Chat message input"
+        aria-label="Chat message"
       />
       <button
         className="send-btn"
@@ -35,10 +32,7 @@ export default function InputBox({ onSend, isLoading }) {
         disabled={!value.trim() || isLoading}
         aria-label="Send message"
       >
-        {/* Send arrow SVG icon */}
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-        </svg>
+        <span className="ms">send</span>
       </button>
     </form>
   );
