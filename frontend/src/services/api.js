@@ -27,6 +27,15 @@ export async function fetchNavigation(start, end) {
   return response.json();
 }
 
+export async function fetchFacilities(params = {}) {
+  const q = new URLSearchParams();
+  if (params.category) q.set('category', params.category);
+  const suffix = q.toString() ? `?${q}` : '';
+  const response = await fetch(`${BASE_URL}/facilities${suffix}`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
 export async function fetchShops(params = {}) {
   const q = new URLSearchParams();
   if (params.zone) q.set('zone', params.zone);

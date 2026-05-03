@@ -782,6 +782,62 @@ body {
   margin-top: 2px;
 }
 
+.terminal-map-facilities-by-node {
+  margin-top: 6px;
+}
+
+.terminal-map-node-facility-block {
+  border-bottom: 1px solid var(--outline-variant);
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+.terminal-map-node-facility-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.terminal-map-node-facility-summary {
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style-position: outside;
+}
+
+.terminal-map-node-facility-title {
+  margin-right: 6px;
+}
+
+.terminal-map-node-facility-meta {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  font-family: ui-monospace, monospace;
+}
+
+.terminal-map-facilities-nested-list {
+  margin-top: 4px;
+  padding-left: 14px;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.terminal-map-facility-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 10px;
+  color: var(--primary);
+}
+
+.terminal-map-legend-facility-icon {
+  display: inline-block;
+  width: 10px;
+  height: 9px;
+  background: #00897b;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  vertical-align: middle;
+}
+
 .terminal-map-field {
   display: flex;
   flex-direction: column;

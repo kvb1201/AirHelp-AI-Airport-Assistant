@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { fetchMapData, fetchNavigation, fetchShops } from '../services/api';
+import { fetchFacilities, fetchMapData, fetchNavigation, fetchShops } from '../services/api';
 
 const KIND_COLORS = {
   entrance: '#735c00',
@@ -14,6 +14,7 @@ const KIND_COLORS = {
   junction: '#78909c',
   baggage: '#5d4037',
   shop: '#9c27b0',
+  facility: '#00897b',
 };
 
 function nodeColor(kind) {
@@ -38,6 +39,8 @@ export default function TerminalMapView({ location, onLocationChange }) {
   const [route, setRoute] = useState(null);
   const [routeErr, setRouteErr] = useState(null);
   const [shops, setShops] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+  const [facilitiesByNode, setFacilitiesByNode] = useState([]);
 
   useEffect(() => {
     fromRef.current = from;
@@ -86,6 +89,17 @@ export default function TerminalMapView({ location, onLocationChange }) {
         setShops(shopBundle.shops || []);
       } catch {
         if (!cancelled) setShops([]);
+      }
+      try {
+        const facBundle = await fetchFacilities();
+        if (cancelled) return;
+        setFacilities(facBundle.facilities || []);
+        setFacilitiesByNode(facBundle.facilities_by_node || []);
+      } catch {
+        if (!cancelled) {
+          setFacilities([]);
+          setFacilitiesByNode([]);
+        }
       }
     })();
     return () => {
@@ -265,6 +279,34 @@ export default function TerminalMapView({ location, onLocationChange }) {
               />
             )}
 
+            <g className="terminal-map-facilities" style={{ pointerEvents: 'none' }} aria-hidden="false">
+              {facilities.map((f) => {
+                const x = Number(f.x_norm);
+                const y = Number(f.y_norm);
+                if (Number.isNaN(x) || Number.isNaN(y)) return null;
+                const h = 0.85;
+                const w = 0.55;
+                const pts = `0,-${h} ${w},${h * 0.55} -${w},${h * 0.55}`;
+                return (
+                  <g key={f.facility_id} className="terminal-map-facility-marker" transform={`translate(${x},${y})`}>
+                    <title>
+                      {f.name_display}
+                      {f.category ? ` · ${f.category}` : ''}
+                      {f.listing_location ? ` · ${f.listing_location}` : ''}
+                      {f.graph_node_id ? ` · Route: ${f.graph_node_id}` : ''}
+                    </title>
+                    <polygon
+                      points={pts}
+                      fill="#00897b"
+                      fillOpacity={0.9}
+                      stroke="#fff"
+                      strokeWidth={0.1}
+                    />
+                  </g>
+                );
+              })}
+            </g>
+
             <g className="terminal-map-shops" style={{ pointerEvents: 'none' }} aria-hidden="false">
               {shops.map((s) => {
                 const x = Number(s.x_norm);
@@ -343,6 +385,10 @@ export default function TerminalMapView({ location, onLocationChange }) {
                 {kind}
               </span>
             ))}
+            <span className="terminal-map-legend-item">
+              <i className="terminal-map-legend-facility-icon" aria-hidden />
+              facility (map)
+            </span>
           </div>
         </div>
 
@@ -350,8 +396,52 @@ export default function TerminalMapView({ location, onLocationChange }) {
           <h2 className="terminal-map-side-title">Route</h2>
           <p className="terminal-map-side-hint">
             <strong>Map:</strong> first tap sets <strong>From</strong>, second tap sets <strong>To</strong> and
-            loads the path. Dropdowns reset the tap sequence to From. Purple diamonds = shops (CSV).
+            loads the path. Dropdowns reset the tap sequence to From.             Teal triangles = airport facilities;
+            purple diamonds = shops. Facilities below are grouped by walking-graph node (every facility appears under its node).
           </p>
+
+          <details className="terminal-map-shops-panel" open>
+            <summary className="terminal-map-shops-summary">
+              Facilities by graph node ({facilities.length} at {facilitiesByNode.length} nodes)
+            </summary>
+            <div className="terminal-map-facilities-by-node">
+              {facilitiesByNode.map(({ graph_node_id: nodeId, node_name: nodeName, facilities: atNode }) => (
+                <details key={nodeId} className="terminal-map-node-facility-block">
+                  <summary className="terminal-map-node-facility-summary">
+                    <span className="terminal-map-node-facility-title">{nodeName}</span>
+                    <span className="terminal-map-node-facility-meta">
+                      {nodeId !== '_unassigned' ? `${nodeId} · ` : ''}
+                      {atNode.length}
+                    </span>
+                  </summary>
+                  <ul className="terminal-map-shops-list terminal-map-facilities-nested-list">
+                    {atNode.map((f) => (
+                      <li
+                        key={f.facility_id}
+                        title={[f.listing_location, f.graph_node_id].filter(Boolean).join(' · ')}
+                      >
+                        <span className="terminal-map-shop-name">{f.name_display}</span>
+                        <span className="terminal-map-shop-cat">
+                          {f.category?.replace(/_/g, ' ')}
+                        </span>
+                        {f.page_url ? (
+                          <a
+                            className="terminal-map-facility-link"
+                            href={f.page_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            CSMIA page
+                          </a>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ))}
+            </div>
+          </details>
 
           <details className="terminal-map-shops-panel" open>
             <summary className="terminal-map-shops-summary">
