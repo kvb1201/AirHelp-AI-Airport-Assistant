@@ -1,5 +1,3 @@
-# backend/app/services/orchestrator.py
-
 import json
 import re
 from typing import Any, Dict, List, Optional
@@ -90,7 +88,7 @@ def _is_followup_query(msg: str) -> bool:
 
 
 # -------------------------------
-# 🔥 Query Rewriting (CRITICAL FIX)
+# 🔥 Query Rewriting
 # -------------------------------
 def _rewrite_query(user_input: str, intent: str, location: Optional[str]) -> Optional[str]:
     msg = user_input.lower()
@@ -188,23 +186,6 @@ def _format_multi_results(results: List[Dict]) -> str:
 
 
 # -------------------------------
-# 🔹 Format Explore
-# -------------------------------
-def _format_explore_response(results: List[Dict], location: Optional[str]) -> str:
-    header = location.replace("_", " ").title() if location else "your area"
-
-    lines = [f"Here are some things to do near {header}:\n"]
-
-    for r in results:
-        line = f"• {r.get('name')}"
-        if r.get("location"):
-            line += f" ({r['location']})"
-        lines.append(line)
-
-    return "\n".join(lines)
-
-
-# -------------------------------
 # 🔹 MAIN ORCHESTRATOR
 # -------------------------------
 async def handle_chat(user_input: str, user_context: Dict[str, Any], language: str = "en") -> Dict[str, Any]:
@@ -226,11 +207,13 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
             "context": user_context,
         }
 
-    # STEP 3: Intent
-    if _is_followup_query(user_input):
+    # -------------------------------
+    # 🔥 STEP 3: SAFE INTENT LOGIC (FIXED)
+    # -------------------------------
+    if _is_followup_query(user_input) and user_context.get("intent"):
         intent = user_context.get("intent")
     else:
-        intent = user_context.get("intent") or detect_intent(user_input)
+        intent = detect_intent(user_input)
 
     intent_type = normalize_intent(intent)
 
@@ -263,19 +246,13 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
             rag_snippets=rag_data,
         )
 
-    elif intent_type in ["explore", "recommendation"]:
+    elif intent_type in ["explore", "recommendation"] and intent:
 
-        # 🔥 FIX: Query rewriting
         rewritten = _rewrite_query(user_input, intent, rag_location)
 
-        if rewritten:
-            print(f"[ORCHESTRATOR] REWRITTEN QUERY: {rewritten}")
-            query = rewritten
-        else:
-            query = _build_search_query(user_input, rag_location, intent_type)
+        query = rewritten if rewritten else _build_search_query(user_input, rag_location, intent_type)
 
-        print(f"[ORCHESTRATOR] CALLING RAG with query: {query}")
-        print(f"[ORCHESTRATOR] Original intent passed to RAG: {intent}")
+        print(f"[ORCHESTRATOR] QUERY: {query}")
 
         rag_data = search(
             query,
@@ -285,7 +262,19 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         )
 
     # -------------------------------
-    # 🔥 RESPONSE ROUTING
+    # 🔥 HARD STOP (NO INTENT = NO RAG)
+    # -------------------------------
+    if not intent:
+        return {
+            "type": "general",
+            "intent": None,
+            "message": "How can I assist you at the airport?",
+            "data": {"navigation": None, "recommendations": None},
+            "context": user_context,
+        }
+
+    # -------------------------------
+    # 🔹 RESPONSE ROUTING
     # -------------------------------
     if nav_data and nav_data.get("ok"):
         return {
@@ -300,13 +289,12 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         return {
             "type": "explore",
             "intent": intent,
-            "message": _format_explore_response(rag_data[:3], rag_location),
+            "message": _format_multi_results(rag_data[:3]),
             "data": {"navigation": None, "recommendations": rag_data[:3]},
             "context": user_context,
         }
 
     if intent_type == "recommendation":
-
         if not rag_data:
             return {
                 "type": "recommendation",
@@ -316,10 +304,7 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
                 "context": user_context,
             }
 
-        multi = _is_followup_query(user_input) or any(x in user_input.lower() for x in [
-            "nearest", "nearby", "options", "list", "all",
-            "restaurants", "lounges", "shops"
-        ])
+        multi = _is_followup_query(user_input)
 
         message = (
             _format_multi_results(rag_data[:3])
@@ -335,35 +320,20 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         }
 
     # -------------------------------
-    # 🔹 Fallback
-    # -------------------------------
-    if ctx_output.get("fallback"):
-        return {
-            "type": "fallback",
-            "intent": intent or "general",
-            "message": "I couldn't determine your location. Here are some general options.",
-            "data": {"navigation": None, "recommendations": rag_data},
-            "context": user_context,
-        }
-
-    # -------------------------------
-    # 🔹 LLM fallback
+    # 🔹 FINAL FALLBACK
     # -------------------------------
     response_text = await call_llm(
         f"""
 {SYSTEM_PROMPT}
 
 USER QUERY: {user_input}
-
-AVAILABLE OPTIONS:
-{json.dumps(rag_data, indent=2) if rag_data else "None"}
-""",
+"""
     )
 
     return {
-        "type": intent or "general",
-        "intent": intent or "general",
+        "type": "general",
+        "intent": intent,
         "message": response_text,
-        "data": {"navigation": nav_data, "recommendations": rag_data},
+        "data": {"navigation": None, "recommendations": None},
         "context": user_context,
     }

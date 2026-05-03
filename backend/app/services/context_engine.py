@@ -1,5 +1,3 @@
-# backend/app/services/context_engine.py
-
 from typing import Dict, Optional
 from app.services.context_signal_engine import extract_signals
 
@@ -20,6 +18,20 @@ def _default_context():
 
 
 # -------------------------------
+# 🔥 NEW: Intent Reset Logic
+# -------------------------------
+def _should_reset_intent(message: str) -> bool:
+    msg = message.lower().strip()
+
+    # greetings / irrelevant inputs
+    return msg in [
+        "hi", "hello", "hey",
+        "ok", "okay",
+        "thanks", "thank you",
+    ]
+
+
+# -------------------------------
 # 🔹 Merge Layer
 # -------------------------------
 def _merge_context(old: Dict, new: Dict) -> Dict:
@@ -33,7 +45,7 @@ def _merge_context(old: Dict, new: Dict) -> Dict:
     if new.get("destination"):
         ctx["destination"] = new["destination"]
 
-    # Intent from locating engine
+    # Intent
     if new.get("intent"):
         if ctx.get("intent") and ctx["intent"] != new["intent"]:
             ctx["destination"] = None  # reset conflicting navigation
@@ -48,7 +60,7 @@ def _merge_context(old: Dict, new: Dict) -> Dict:
 # -------------------------------
 def _apply_consistency(ctx: Dict) -> Dict:
 
-    # Remove invalid source types
+    # ❌ invalid sources
     if ctx.get("source") in ["wifi", "atm", "lounge", "shop"]:
         ctx["source"] = None
 
@@ -56,36 +68,23 @@ def _apply_consistency(ctx: Dict) -> Dict:
 
 
 # -------------------------------
-# 🔹 Signal Layer (FINAL FIXED)
+# 🔹 Signal Layer
 # -------------------------------
 def _apply_signal_extraction(ctx: Dict, message: str) -> Dict:
 
     signals = extract_signals(message)
 
     signal_intent = signals.get("intent")
-    signal_behavior = signals.get("behavior")
 
-    # -------------------------------
-    # 🔥 Behavior FIRST (critical)
-    # -------------------------------
-    if signal_behavior:
-        ctx["behavior"] = signal_behavior
-
-    # -------------------------------
-    # 🔥 Intent logic (improved)
-    # -------------------------------
+    # 🔥 Intent logic
     if signal_intent:
-
-        # Case 1: no intent yet
         if not ctx.get("intent"):
             ctx["intent"] = signal_intent
-
-        # Case 2: override using behavior
         elif ctx.get("behavior") == "relaxed" and signal_intent == "lounge":
             ctx["intent"] = "lounge"
 
-        elif ctx.get("behavior") == "quick" and signal_intent == "food":
-            ctx["intent"] = "food"
+    # Behavior always updates
+    ctx["behavior"] = signals.get("behavior")
 
     return ctx
 
@@ -100,7 +99,7 @@ def _decision(ctx: Dict, prev_ctx: Dict) -> Dict:
     intent = ctx.get("intent")
 
     # -------------------------------
-    # 🔥 HARD RULE: source required
+    # 🔥 HARD RULE: Need source
     # -------------------------------
     if not source:
 
@@ -123,7 +122,9 @@ def _decision(ctx: Dict, prev_ctx: Dict) -> Dict:
             "fallback": False,
         }
 
-    # Navigation case
+    # -------------------------------
+    # Navigation
+    # -------------------------------
     if destination:
         return {
             "context": ctx,
@@ -133,7 +134,9 @@ def _decision(ctx: Dict, prev_ctx: Dict) -> Dict:
             "fallback": False,
         }
 
-    # Recommendation case
+    # -------------------------------
+    # Recommendation / intent present
+    # -------------------------------
     if intent:
         return {
             "context": ctx,
@@ -143,7 +146,9 @@ def _decision(ctx: Dict, prev_ctx: Dict) -> Dict:
             "fallback": False,
         }
 
+    # -------------------------------
     # Missing intent
+    # -------------------------------
     return {
         "context": ctx,
         "ready": False,
@@ -165,16 +170,31 @@ def update_context(
     if not prev_context:
         prev_context = _default_context()
 
-    # Step 1: Merge
+    # -------------------------------
+    # STEP 0: 🔥 RESET (NEW FIX)
+    # -------------------------------
+    if _should_reset_intent(message):
+        prev_context["intent"] = None
+        prev_context["behavior"] = None
+
+    # -------------------------------
+    # STEP 1: Merge
+    # -------------------------------
     ctx = _merge_context(prev_context, locating_output)
 
-    # Step 2: Consistency
+    # -------------------------------
+    # STEP 2: Consistency
+    # -------------------------------
     ctx = _apply_consistency(ctx)
 
-    # Step 3: Signals
+    # -------------------------------
+    # STEP 3: Signals
+    # -------------------------------
     ctx = _apply_signal_extraction(ctx, message)
 
-    # Step 4: Decision
+    # -------------------------------
+    # STEP 4: Decision
+    # -------------------------------
     decision = _decision(ctx, prev_context)
 
     return decision
