@@ -1,20 +1,17 @@
-import requests
+# backend/app/services/llm_service.py
+
+import httpx
 from app.config import OLLAMA_URL, MODEL_NAME
 
-FALLBACK_RESPONSE = "Sorry, I couldn't process that right now."
+FALLBACK_RESPONSE = "Sorry, I couldn't process that right now. Server error"
 
 
-def call_llm(user_input: str) -> str:
+async def call_llm(prompt: str) -> str:
     """
-    Call the local Ollama instance with the Gemma model.
-    Returns the generated text, or a safe fallback on failure.
+    Async call to local Ollama LLM.
+    Expects a fully constructed prompt.
+    Returns generated response or fallback.
     """
-    prompt = (
-        "You are an intelligent airport assistant. "
-        "Help travelers with gates, food, shops, services, and navigation.\n\n"
-        f"User: {user_input}\n\n"
-        "Provide a helpful and concise response."
-    )
 
     payload = {
         "model": MODEL_NAME,
@@ -26,13 +23,17 @@ def call_llm(user_input: str) -> str:
     }
 
     try:
-        resp = requests.post(
-            f"{OLLAMA_URL}/api/generate",
-            json=payload,
-            timeout=30,
-        )
-        resp.raise_for_status()
-        return resp.json()["response"]
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            response = await client.post(
+                f"{OLLAMA_URL}/api/generate",
+                json=payload
+            )
+
+        response.raise_for_status()
+        data = response.json()
+
+        return data.get("response", "").strip() or FALLBACK_RESPONSE
+
     except Exception as e:
         print(f"[LLM ERROR] {e}")
         return FALLBACK_RESPONSE
