@@ -25,7 +25,7 @@ export default function MessageBubble({ text, role, time, utteranceId }) {
     <div className={`msg-row ${role}`}>
       {isBot && (
         <div className="bot-avatar" aria-hidden="true">
-          <span className="ms">smart_toy</span>
+          <span className="bot-avatar-initial">A</span>
         </div>
       )}
 

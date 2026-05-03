@@ -130,8 +130,13 @@ def _flatten_food_courts(food_courts: list[dict]) -> list[dict[str, Any]]:
             else:
                 timings = f"{timings.get('open', '?')} – {timings.get('close', '?')}"
 
+        term = (outlet.get("terminal") or "").strip() or "T2"
+        # RAG terminal filters / ranking look for "t2" or "terminal 2" inside ``location``.
+        meta_location = f"{term} — {location}" if location else term
+
         text = (
             f"Food Outlet '{name}': "
+            f"Terminal: {term}. "
             f"Cuisine: {cuisine}. "
             f"Location: {location}. "
             f"Timings: {timings}. "
@@ -142,9 +147,10 @@ def _flatten_food_courts(food_courts: list[dict]) -> list[dict[str, Any]]:
             "text": text.strip(),
             "metadata": {
                 "category": "food_court",
-                "location": location,
+                "location": meta_location,
                 "name": name,
                 "id": outlet.get("outlet_id") or _extract_id(outlet, "food_court", i),
+                "terminal": term,
             },
         })
     return docs

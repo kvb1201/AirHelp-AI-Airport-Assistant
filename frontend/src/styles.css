@@ -1514,6 +1514,133 @@ body {
   filter: brightness(1.05);
 }
 
+/* ── Lost & Found (baggage match MVP) ── */
+.lf-view {
+  min-height: 100%;
+  background: var(--surface-container-lowest);
+}
+
+.lf-view .fac-dir-header {
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.lf-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.lf-tab {
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-full);
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--on-surface-variant);
+}
+
+.lf-tab.active {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  border-color: transparent;
+}
+
+.lf-card {
+  margin-top: var(--space-md);
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--outline-variant);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-glass);
+}
+
+.lf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.lf-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+}
+
+.lf-field input,
+.lf-field select,
+.lf-field textarea {
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-lowest);
+  color: var(--on-surface);
+}
+
+.lf-field textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.lf-claim-box {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+  font-size: 14px;
+}
+
+.lf-claim-code {
+  font-family: ui-monospace, monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+}
+
+.lf-match-row {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--outline-variant);
+  margin-bottom: 8px;
+  background: var(--surface-container-lowest);
+}
+
+.lf-match-score {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.lf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.lf-muted {
+  font-size: 12px;
+  color: var(--on-surface-variant);
+  line-height: 1.45;
+  margin: 0 0 10px;
+}
+
+.lf-err {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--error-container);
+  color: var(--on-error-container);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
 /* ── Walking directions flow (no map until user asks) ── */
 .nav-flow {
   min-height: 100%;
@@ -2518,48 +2645,7 @@ body {
   background: var(--primary-container);
   border-color: var(--primary-fixed-dim);
   color: var(--on-primary-fixed);
-  transform: translateY(-1px);
   box-shadow: var(--shadow-ambient);
-}
-
-/* ── Hero Illustration ── */
-.hero-illustration {
-  width: 180px;
-  height: 180px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-@media (max-width: 768px) {
-  .hero-illustration {
-    display: none;
-  }
-}
-
-.bot-orb {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-fixed) 0%, var(--primary-container) 60%, var(--secondary-fixed) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 40px rgba(248, 225, 231, 0.5), 0 2px 8px rgba(107, 90, 95, 0.1);
-  animation: float 6s ease-in-out infinite;
-}
-
-.bot-orb .ms {
-  font-size: 72px;
-  color: var(--primary);
-  font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 48;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
 }
 
 /* ── Popular Services ── */
@@ -2643,8 +2729,7 @@ body {
 .service-card:hover {
   background: var(--surface-container-lowest);
   box-shadow: var(--shadow-card);
-  transform: translateY(-3px);
-  border-color: var(--primary-fixed-dim);
+  border-color: var(--outline);
 }
 
 .service-icon {
@@ -2665,6 +2750,11 @@ body {
   background: var(--secondary-fixed);
 }
 
+.service-icon.neutral {
+  background: var(--surface-container-high);
+  border: 1px solid var(--outline-variant);
+}
+
 .service-icon .ms {
   font-size: 24px;
 }
@@ -2675,6 +2765,10 @@ body {
 
 .service-icon.gold .ms {
   color: var(--secondary);
+}
+
+.service-icon.neutral .ms {
+  color: var(--on-surface-variant);
 }
 
 .service-name {
@@ -2693,15 +2787,14 @@ body {
 .assistance-banner {
   margin: 0 var(--margin-desk) var(--space-lg);
   padding: var(--space-md) var(--space-lg);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 225, 231, 0.4) 100%);
-  border: 1px solid rgba(248, 225, 231, 0.7);
-  border-radius: var(--radius-xl);
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-ambient);
+  box-shadow: var(--shadow-glass);
 }
 
 @media (max-width: 768px) {
@@ -2723,7 +2816,8 @@ body {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-md);
-  background: var(--primary-container);
+  background: var(--surface-container-highest);
+  border: 1px solid var(--outline-variant);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2732,7 +2826,7 @@ body {
 
 .assistance-icon .ms {
   font-size: 22px;
-  color: var(--primary);
+  color: var(--on-surface-variant);
 }
 
 .assistance-text h4 {
@@ -3209,17 +3303,21 @@ body {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.chat-panel-avatar .ms {
-  font-size: 18px;
+.chat-panel-avatar-initial {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   color: white;
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  line-height: 1;
 }
 
 .chat-panel-info {
@@ -3353,24 +3451,26 @@ body {
 .msg-row.bot, .msg-row.error { justify-content: flex-start; }
 .msg-row.user { justify-content: flex-end; }
 
-/* ── Bot Avatar ── */
+/* ── Bot Avatar (assistant monogram, no mascot icon) ── */
 .bot-avatar {
   width: 28px;
   height: 28px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--primary-fixed) 0%, var(--primary-container) 100%);
+  background: var(--surface-container-highest);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: var(--shadow-glass);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--outline-variant);
 }
 
-.bot-avatar .ms {
-  font-size: 16px;
-  color: var(--primary);
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+.bot-avatar-initial {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+  line-height: 1;
+  user-select: none;
 }
 
 /* ── Bubbles ── */

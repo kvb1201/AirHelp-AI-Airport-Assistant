@@ -5,6 +5,7 @@ import RightPanel from './components/RightPanel';
 import TerminalMapView from './components/TerminalMapView';
 import NavigationFlowView from './components/NavigationFlowView';
 import FacilitiesDirectoryView from './components/FacilitiesDirectoryView';
+import LostFoundView from './components/LostFoundView';
 import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
@@ -19,7 +20,7 @@ function formatTime() {
 }
 
 const WELCOME = {
-  text: "Hi! I'm here to help you with airport facilities, flights, or any issues. How can I assist you?",
+  text: "You're in AirHelp for Terminal 2. Ask about facilities, flights, walking routes, or issues — or say e.g. “take me to BIBA”.",
   role: 'bot',
   time: formatTime(),
 };
@@ -31,18 +32,27 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState('t2_entrance');
   const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
-  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'map' | 'nav' | 'facilities' | 'profile'
+  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'map' | 'nav' | 'facilities' | 'lostfound' | 'profile'
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
-
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
+  const showLostFound = sidebarNav === 'Lost & Found' || mobileView === 'lostfound';
   const showProfilePlaceholder =
-    !showMap && !showNavFlow && !showFacilities && (sidebarNav === 'Profile' || mobileView === 'profile');
+    !showMap &&
+    !showNavFlow &&
+    !showFacilities &&
+    !showLostFound &&
+    (sidebarNav === 'Profile' || mobileView === 'profile');
   const showDesktopStub =
-    !showMap && !showNavFlow && !showFacilities && !showProfilePlaceholder && SIDEBAR_STUBS.has(sidebarNav);
+    !showMap &&
+    !showNavFlow &&
+    !showFacilities &&
+    !showLostFound &&
+    !showProfilePlaceholder &&
+    SIDEBAR_STUBS.has(sidebarNav);
 
   const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
 
@@ -52,6 +62,7 @@ function App() {
     if (label === 'Map') setMobileView('map');
     else if (label === 'Navigation') setMobileView('nav');
     else if (label === 'Facilities') setMobileView('facilities');
+    else if (label === 'Lost & Found') setMobileView('lostfound');
     else if (label === 'Profile') setMobileView('profile');
     else setMobileView('home');
   }, []);
@@ -67,6 +78,7 @@ function App() {
     if (view === 'map') setSidebarNav('Map');
     else if (view === 'nav') setSidebarNav('Navigation');
     else if (view === 'facilities') setSidebarNav('Facilities');
+    else if (view === 'lostfound') setSidebarNav('Lost & Found');
     else if (view === 'home') setSidebarNav('Home');
     else if (view === 'profile') setSidebarNav('Profile');
     else if (view === 'chat') setSidebarNav('Home');
@@ -105,6 +117,17 @@ function App() {
       const data = await sendChatMessage(text, currentLocation);
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
+
+      const payload = data.data || {};
+      const navStart = payload.start;
+      const navEnd = payload.end;
+      if (
+        (data.type === 'navigation' || data.intent === 'navigation') &&
+        navStart &&
+        navEnd
+      ) {
+        openFloorMap({ fromId: navStart, toId: navEnd, routeIndex: 0 });
+      }
     } catch (err) {
       console.error('API error:', err);
       setMessages((prev) => [
@@ -147,7 +170,7 @@ function App() {
           </button>
           <div className="mobile-header-title">
             <h1>AirHelp</h1>
-            <p>Smart help for your journey</p>
+            <p>Terminal 2 airport information</p>
           </div>
           <button type="button" className="mobile-header-bell" aria-label="Notifications (coming soon)">
             <span className="ms">notifications</span>
@@ -156,7 +179,7 @@ function App() {
 
         {/* Content area */}
         <div
-          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
+          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
         >
           <main className="main-content">
             {showMap ? (
@@ -174,6 +197,8 @@ function App() {
               />
             ) : showFacilities ? (
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
+            ) : showLostFound ? (
+              <LostFoundView location={location} onOpenFloorMap={openFloorMap} />
             ) : showDesktopStub ? (
               <PlaceholderView
                 title={sidebarNav}
@@ -214,7 +239,9 @@ function App() {
             )}
           </main>
 
-          {!showMap && !showNavFlow && !showFacilities && !showDesktopStub && !showProfilePlaceholder && <RightPanel />}
+          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showDesktopStub && !showProfilePlaceholder && (
+          <RightPanel />
+        )}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}
@@ -222,11 +249,7 @@ function App() {
           {mobileView === 'home' && (
             <QuickActions onAction={handleQuickAction} />
           )}
-          <InputBox
-            onSend={handleSend}
-            isLoading={isLoading}
-            placeholder="Ask me anything…"
-          />
+          <InputBox onSend={handleSend} isLoading={isLoading} />
           <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
         </div>
       </div>

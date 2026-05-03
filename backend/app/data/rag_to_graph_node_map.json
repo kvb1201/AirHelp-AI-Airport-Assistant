@@ -1,0 +1,28 @@
+{
+  "about": "RAG airport_data.json uses navigation_nodes with ids like node-t2-entrance. The walking graph uses ids like t2_entrance. Add rows here only — do not edit airport_data.json or mumbai_t2_level02_graph.json.",
+  "rag_to_graph": {
+    "node-t1-entrance": "t2_entrance",
+    "node-t2-entrance": "t2_entrance",
+    "node-t3-entrance": "t2_entrance",
+    "node-checkin-a": "t2_hub_01_02",
+    "node-checkin-b": "t2_hub_02_02",
+    "node-checkin-c": "t2_hub_03_02",
+    "node-security-a": "t2_security_intl",
+    "node-security-b": "t2_security_dom",
+    "node-security-c": "t2_security_merge",
+    "node-gate-a1": "t2_nw_sp_14",
+    "node-gate-a2": "t2_nw_sp_14",
+    "node-gate-b12": "t2_se_sp_14",
+    "node-gate-b3": "t2_sw_sp_14",
+    "node-gate-c5": "t2_ne_sp_14",
+    "node-gate-d3": "t2_sw_sp_14",
+    "node-shuttle-d": "t2_sw_sp_14",
+    "node-food-aroma": "t2_nw_fb",
+    "node-food-runway": "t2_ne_fb",
+    "node-food-quickbite": "t2_sw_fb",
+    "node-food-grabngo": "t2_se_fb",
+    "node-skylounge": "t2_l04_postsec",
+    "node-shop-indiamart": "t2_ne_dutyfree",
+    "node-shop-skymall": "t2_ne_dutyfree"
+  }
+}

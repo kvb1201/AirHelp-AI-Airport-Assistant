@@ -9,11 +9,11 @@ const QUICK_CHIPS = [
 ];
 
 const SERVICES = [
-  { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight',    iconColor: 'pink', message: 'Show me flight status updates.',    location: null },
-  { name: 'Walking routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
-  { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
-  { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
-  { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
+  { name: 'Flight status', sub: 'Schedules and updates', icon: 'flight', iconColor: 'neutral', message: 'Show me flight status updates.', location: null },
+  { name: 'Walking routes', sub: 'Compare paths A to B', icon: 'directions_walk', iconColor: 'neutral', action: 'navigation' },
+  { name: 'Floor map', sub: 'Terminal plan', icon: 'location_on', iconColor: 'neutral', action: 'floor_map' },
+  { name: 'Lounges', sub: 'Locations and access', icon: 'weekend', iconColor: 'neutral', message: 'Where are the airport lounges?', location: null },
+  { name: 'Wi‑Fi', sub: 'Connection information', icon: 'wifi', iconColor: 'neutral', message: 'How do I connect to airport Wi-Fi?', location: null },
 ];
 
 export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }) {
@@ -34,8 +34,8 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
       {/* ── Hero ── */}
       <div className="home-hero">
         <div className="hero-text">
-          <h1 className="hero-greeting">Hello! 👋</h1>
-          <p className="hero-subtitle">Your smart travel companion at every step.</p>
+          <h1 className="hero-greeting">Welcome</h1>
+          <p className="hero-subtitle">Terminal 2 information, walking routes, and services.</p>
 
           {/* Search bar */}
           <div className="hero-search">
@@ -43,7 +43,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
             <input
               className="hero-search-input"
               type="text"
-              placeholder="What can I help you with?"
+              placeholder="Search facilities, flights, or routes"
               aria-label="Search"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && e.target.value.trim()) {
@@ -85,18 +85,12 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
           </div>
         </div>
 
-        {/* Bot illustration (desktop only) */}
-        <div className="hero-illustration" aria-hidden="true">
-          <div className="bot-orb">
-            <span className="ms">smart_toy</span>
-          </div>
-        </div>
       </div>
 
       {/* ── Popular Services ── */}
       <section className="section" aria-label="Popular services">
         <div className="section-header">
-          <h2 className="section-title">Popular Services</h2>
+          <h2 className="section-title">Services</h2>
           <button
             type="button"
             className="section-link"
@@ -165,12 +159,12 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
       {/* ── Need Assistance Banner ── */}
       <div className="assistance-banner" role="complementary" aria-label="Assistance">
         <div className="assistance-info">
-          <div className="assistance-icon">
-            <span className="ms">smart_toy</span>
+          <div className="assistance-icon" aria-hidden="true">
+            <span className="ms">help</span>
           </div>
           <div className="assistance-text">
-            <h4>Need assistance?</h4>
-            <p>Report an issue or request help from our support team.</p>
+            <h4>Support</h4>
+            <p>Report an issue or request assistance.</p>
           </div>
         </div>
         <button
