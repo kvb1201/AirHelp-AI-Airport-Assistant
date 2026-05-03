@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api import chat, navigation, context, map as map_api
+from app.services.rag_service import init_rag
 
 app = FastAPI(title="AI Airport Companion API")
 
@@ -14,7 +15,7 @@ app = FastAPI(title="AI Airport Companion API")
 # ----------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ok for hackathon demo
+    allow_origins=["*"],  # OK for hackathon
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -51,8 +52,14 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 
 # ----------------------------
-# 🔹 Startup Event (optional but useful)
+# 🔹 Startup Event
 # ----------------------------
 @app.on_event("startup")
 async def startup_event():
     print("🚀 AI Airport Companion API started")
+
+    try:
+        init_rag()   # 🔥 Initialize RAG once
+        print("✅ RAG initialized successfully")
+    except Exception as e:
+        print(f"❌ RAG initialization failed: {e}")
