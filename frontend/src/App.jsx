@@ -10,6 +10,7 @@ import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
 import QuickActions from './components/QuickActions';
 import BottomNav from './components/BottomNav';
+import PlaceholderView from './components/PlaceholderView';
 import { sendChatMessage } from './services/api';
 import './styles.css';
 
@@ -22,6 +23,8 @@ const WELCOME = {
   role: 'bot',
   time: formatTime(),
 };
+
+const SIDEBAR_STUBS = new Set(['Flights', 'My Trips', 'Help & Support', 'Settings']);
 
 export default function App() {
   const [messages, setMessages] = useState([WELCOME]);
@@ -36,15 +39,47 @@ export default function App() {
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
+  const showProfilePlaceholder =
+    !showMap && !showNavFlow && !showFacilities && (sidebarNav === 'Profile' || mobileView === 'profile');
+  const showDesktopStub =
+    !showMap && !showNavFlow && !showFacilities && !showProfilePlaceholder && SIDEBAR_STUBS.has(sidebarNav);
 
   const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
 
-  const openFloorMap = useCallback((payload) => {
-    if (payload?.fromId) setLocation(payload.fromId);
-    setMapLaunch(payload || null);
-    setSidebarNav('Map');
-    setMobileView('map');
+  /** Keep sidebar highlight and mobile full-screen view in sync when switching primary areas. */
+  const handleNavSelect = useCallback((label) => {
+    setSidebarNav(label);
+    if (label === 'Map') setMobileView('map');
+    else if (label === 'Navigation') setMobileView('nav');
+    else if (label === 'Facilities') setMobileView('facilities');
+    else if (label === 'Profile') setMobileView('profile');
+    else setMobileView('home');
   }, []);
+
+  const handleNewChat = useCallback(() => {
+    setMessages([{ ...WELCOME, time: formatTime() }]);
+    handleNavSelect('Home');
+    setChatOpen(true);
+  }, [handleNavSelect]);
+
+  const handleMobileViewChange = useCallback((view) => {
+    setMobileView(view);
+    if (view === 'map') setSidebarNav('Map');
+    else if (view === 'nav') setSidebarNav('Navigation');
+    else if (view === 'facilities') setSidebarNav('Facilities');
+    else if (view === 'home') setSidebarNav('Home');
+    else if (view === 'profile') setSidebarNav('Profile');
+    else if (view === 'chat') setSidebarNav('Home');
+  }, []);
+
+  const openFloorMap = useCallback(
+    (payload) => {
+      if (payload?.fromId) setLocation(payload.fromId);
+      setMapLaunch(payload || null);
+      handleNavSelect('Map');
+    },
+    [handleNavSelect],
+  );
 
   const goToFacilityOnMap = useCallback(
     ({ graphNodeId }) => {
@@ -88,14 +123,14 @@ export default function App() {
   return (
     <div className="app-container">
       {/* ── Left Sidebar (Desktop) ── */}
-      <Sidebar activeNav={sidebarNav} onNavChange={setSidebarNav} />
+      <Sidebar activeNav={sidebarNav} onNavChange={handleNavSelect} onNewChat={handleNewChat} />
 
       {/* ── Main Body ── */}
       <div className="app-body">
 
         {/* Desktop Header */}
         <header className="desktop-header" role="banner">
-          <button className="header-lang-btn" aria-label="Change language">
+          <button type="button" className="header-lang-btn" aria-label="Change language">
             <span className="ms" style={{ fontSize: 16 }}>language</span>
             EN
           </button>
@@ -106,14 +141,19 @@ export default function App() {
 
         {/* Mobile Header */}
         <header className="mobile-header" role="banner">
-          <button className="mobile-header-menu" aria-label="Open menu">
+          <button
+            type="button"
+            className="mobile-header-menu"
+            aria-label="Go to Home"
+            onClick={() => handleNavSelect('Home')}
+          >
             <span className="ms">menu</span>
           </button>
           <div className="mobile-header-title">
             <h1>AirHelp</h1>
             <p>Smart help for your journey</p>
           </div>
-          <button className="mobile-header-bell" aria-label="Notifications">
+          <button type="button" className="mobile-header-bell" aria-label="Notifications (coming soon)">
             <span className="ms">notifications</span>
           </button>
         </header>
@@ -138,10 +178,33 @@ export default function App() {
               />
             ) : showFacilities ? (
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
+            ) : showDesktopStub ? (
+              <PlaceholderView
+                title={sidebarNav}
+                onBack={() => handleNavSelect('Home')}
+                backLabel="Back to Home"
+              >
+                <p>
+                  This area is not connected yet. Use <strong>Navigation</strong> or <strong>Map</strong> from the
+                  sidebar for walking directions and the terminal plan.
+                </p>
+              </PlaceholderView>
+            ) : showProfilePlaceholder ? (
+              <PlaceholderView
+                title="Profile"
+                onBack={() => handleNavSelect('Home')}
+                backLabel="Back to Home"
+              >
+                <p>Saved trips, preferences, and account tools will show here in a future update.</p>
+              </PlaceholderView>
             ) : (
               <>
                 <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
-                  <HomeContent onSend={handleSend} onOpenNavigation={() => { setSidebarNav('Navigation'); setMobileView('nav'); }} onOpenFloorMap={openFloorMap} />
+                  <HomeContent
+                    onSend={handleSend}
+                    onOpenNavigation={() => handleNavSelect('Navigation')}
+                    onOpenFloorMap={openFloorMap}
+                  />
                 </div>
 
                 {mobileView === 'chat' && (
@@ -155,7 +218,7 @@ export default function App() {
             )}
           </main>
 
-          {!showMap && !showNavFlow && !showFacilities && <RightPanel />}
+          {!showMap && !showNavFlow && !showFacilities && !showDesktopStub && !showProfilePlaceholder && <RightPanel />}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}
@@ -168,7 +231,7 @@ export default function App() {
             isLoading={isLoading}
             placeholder="Ask me anything…"
           />
-          <BottomNav activeView={mobileView} onViewChange={setMobileView} />
+          <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
         </div>
       </div>
 

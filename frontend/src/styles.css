@@ -551,8 +551,37 @@ body {
 
 .main-content {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding-bottom: 24px;
+}
+
+.placeholder-view {
+  padding: var(--space-lg) var(--margin-desk);
+  max-width: 520px;
+}
+
+@media (max-width: 768px) {
+  .placeholder-view {
+    padding: var(--space-md) var(--margin-mob);
+  }
+}
+
+.placeholder-view-title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.placeholder-view-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--on-surface-variant);
+  margin-bottom: 20px;
+}
+
+.placeholder-view-body p {
+  margin: 0 0 10px;
 }
 
 /* ── Terminal map (T2 L02 graph + plan) ── */

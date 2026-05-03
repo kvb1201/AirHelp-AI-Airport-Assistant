@@ -16,6 +16,7 @@ export default function BottomNav({ activeView, onViewChange }) {
     <nav className="bottom-nav" aria-label="Mobile navigation">
       {NAV_ITEMS.map((item) => (
         <button
+          type="button"
           key={item.label}
           className={`bottom-nav-item ${activeView === item.view ? 'active' : ''}`}
           onClick={() => onViewChange(item.view)}

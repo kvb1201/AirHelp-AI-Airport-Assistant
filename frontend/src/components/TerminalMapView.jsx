@@ -131,6 +131,14 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
     setMapIsPanning(false);
   }, []);
 
+  useEffect(() => {
+    const onBlur = () => {
+      endMapPan(undefined);
+    };
+    window.addEventListener('blur', onBlur);
+    return () => window.removeEventListener('blur', onBlur);
+  }, [endMapPan]);
+
   const onMapPanDoubleClick = useCallback((e) => {
     if (e.target.closest?.('.terminal-map-node')) return;
     setMapPan({ x: 0, y: 0 });

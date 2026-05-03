@@ -109,12 +109,17 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
   const [guidedPhase, setGuidedPhase] = useState('question');
   const [lostObservation, setLostObservation] = useState('');
   const [guidedErr, setGuidedErr] = useState(null);
+  const [notYetHint, setNotYetHint] = useState('');
   const [relocalizeCandidates, setRelocalizeCandidates] = useState([]);
   const [guidedLoading, setGuidedLoading] = useState(false);
 
   useEffect(() => {
     if (location) setFrom(location);
   }, [location]);
+
+  useEffect(() => {
+    setNotYetHint('');
+  }, [guidedStepIndex, guidedPhase, step]);
 
   useEffect(() => {
     try {
@@ -193,6 +198,7 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
     setLostObservation('');
     setRelocalizeCandidates([]);
     setGuidedErr(null);
+    setNotYetHint('');
   };
 
   const openMapForSelection = () => {
@@ -208,6 +214,7 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
     setLostObservation('');
     setRelocalizeCandidates([]);
     setGuidedErr(null);
+    setNotYetHint('');
   };
 
   const startGuidedNav = useCallback(async () => {
@@ -614,6 +621,11 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
 
                 {guidedPhase === 'question' && guidedCur ? (
                   <div className="nav-flow-actions nav-flow-actions--guided">
+                    {notYetHint ? (
+                      <p className="nav-flow-footnote" role="status">
+                        {notYetHint}
+                      </p>
+                    ) : null}
                     <button
                       type="button"
                       className="nav-flow-btn nav-flow-btn--primary"
@@ -622,7 +634,16 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
                     >
                       Yes — I see that
                     </button>
-                    <button type="button" className="nav-flow-btn nav-flow-btn--ghost" disabled={guidedLoading}>
+                    <button
+                      type="button"
+                      className="nav-flow-btn nav-flow-btn--ghost"
+                      disabled={guidedLoading}
+                      onClick={() =>
+                        setNotYetHint(
+                          'No problem — keep following the path. Press Yes when you recognise the cues for this step.',
+                        )
+                      }
+                    >
                       Not yet — still walking
                     </button>
                     <button

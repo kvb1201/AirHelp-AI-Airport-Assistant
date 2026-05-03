@@ -7,11 +7,12 @@ const NAV_ITEMS = [
   { label: 'Navigation', icon: 'directions_walk', active: false },
   { label: 'Map', icon: 'map', active: false },
   { label: 'My Trips', icon: 'work', active: false },
+  { label: 'Profile', icon: 'account_circle', active: false },
   { label: 'Help & Support', icon: 'help', active: false },
   { label: 'Settings', icon: 'settings', active: false },
 ];
 
-export default function Sidebar({ activeNav, onNavChange }) {
+export default function Sidebar({ activeNav, onNavChange, onNewChat }) {
   return (
     <aside className="sidebar" role="navigation" aria-label="Main navigation">
       <div className="sidebar-header">
@@ -22,7 +23,7 @@ export default function Sidebar({ activeNav, onNavChange }) {
           <span className="brand-name">AirHelp</span>
         </div>
 
-        <button className="new-chat-btn" aria-label="Start a new chat">
+        <button type="button" className="new-chat-btn" aria-label="Start a new chat" onClick={() => onNewChat?.()}>
           <span className="ms">add</span>
           New Chat
         </button>

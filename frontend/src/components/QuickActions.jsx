@@ -16,6 +16,7 @@ export default function QuickActions({ onAction }) {
     <div className="mobile-quick-actions" role="toolbar" aria-label="Quick actions">
       {ACTIONS.map((action) => (
         <button
+          type="button"
           key={action.label}
           className="mobile-qa-btn"
           onClick={() => onAction({ message: action.message, location: action.location })}

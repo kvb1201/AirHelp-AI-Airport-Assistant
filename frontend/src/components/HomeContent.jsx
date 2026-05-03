@@ -53,6 +53,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
               }}
             />
             <button
+              type="button"
               className="hero-search-btn"
               aria-label="Submit search"
               onClick={(e) => {
@@ -71,6 +72,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
           <div className="quick-chips" role="toolbar" aria-label="Quick actions">
             {QUICK_CHIPS.map((chip) => (
               <button
+                type="button"
                 key={chip.label}
                 className="quick-chip"
                 onClick={() => handleChip(chip)}
@@ -95,12 +97,20 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
       <section className="section" aria-label="Popular services">
         <div className="section-header">
           <h2 className="section-title">Popular Services</h2>
-          <button className="section-link" aria-label="View all services">View all</button>
+          <button
+            type="button"
+            className="section-link"
+            aria-label="View all services"
+            onClick={() => document.querySelector('.services-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          >
+            View all
+          </button>
         </div>
 
         <div className="services-grid">
           {SERVICES.map((svc) => (
             <button
+              type="button"
               key={svc.name}
               className="service-card"
               onClick={() => {
@@ -129,6 +139,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
           { label: 'Walking directions', sub: 'From / to, then pick one of three routes', icon: 'directions_walk', action: 'navigation' },
         ].map((item) => (
           <button
+            type="button"
             key={item.label}
             className="mobile-quick-item"
             role="listitem"
@@ -163,6 +174,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
           </div>
         </div>
         <button
+          type="button"
           className="assistance-btn"
           onClick={() => onSend && onSend('I need assistance from the support team.', null)}
         >
