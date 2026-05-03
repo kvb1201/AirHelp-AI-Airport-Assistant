@@ -50,11 +50,27 @@ async function collectFromDom(page, tableBodySelector, legType) {
 
           const flightNo = cols[2].textContent.replace(/Flight No/gi, '').replace(/\s+/g, ' ').trim();
           const terminal = cols[3].textContent.replace(/Terminal/gi, '').replace(/\s+/g, ' ').trim();
-          const extraCol = cols[4].textContent
-            .replace(/Baggage Belt/gi, '')
-            .replace(/Gate/gi, '')
-            .replace(/\s+/g, ' ')
-            .trim();
+          let extraCol = cols[4].textContent.replace(/\s+/g, ' ').trim();
+          let gateInfo = '';
+          let baggageBelt = '';
+          
+          // Extract gate number from the end of extraCol for departures
+          // Patterns: "Check-In : ... : 44B" or ": 22"
+          const gateMatch = extraCol.match(/:\s*([A-Z0-9]+)$/);
+          if (gateMatch) {
+            gateInfo = gateMatch[1];
+            extraCol = extraCol.replace(/:\s*[A-Z0-9]+$/, '').trim();
+          }
+          
+          // Extract baggage belt info if present
+          const beltMatch = extraCol.match(/Baggage Belt\s*:\s*([A-Z0-9]+)/i);
+          if (beltMatch) {
+            baggageBelt = beltMatch[1];
+            extraCol = extraCol.replace(/Baggage Belt\s*:\s*[A-Z0-9]+/gi, '').trim();
+          }
+          
+          // Clean remaining extraCol (check-in info)
+          extraCol = extraCol.replace(/Check-In\s*:\s*Check-In\s*[A-Z0-9\-]+/gi, '').replace(/:/g, '').trim();
           const statusBtn = cols[5].querySelector('button.statusButton, button');
           const status = statusBtn
             ? statusBtn.textContent.replace(/\s+/g, ' ').trim()
@@ -73,13 +89,13 @@ async function collectFromDom(page, tableBodySelector, legType) {
           const fid = `${base}_${leg === 'departure' ? 'DEP' : 'ARR'}`.toUpperCase();
 
           if (leg === 'arrival') {
-            timings.baggage_belt = extraCol || '';
+            timings.baggage_belt = baggageBelt || '';
             return {
               flight_id: fid,
               airline: airline || 'Unknown',
               type: 'arrival',
               terminal: terminal || 'T2',
-              gate: null,
+              gate: gateInfo || null,
               check_in: null,
               timings,
               status: status || 'unknown',
@@ -94,8 +110,8 @@ async function collectFromDom(page, tableBodySelector, legType) {
             airline: airline || 'Unknown',
             type: 'departure',
             terminal: terminal || 'T2',
-            gate: extraCol || null,
-            check_in: null,
+            gate: extraCol || null, // The actual gate numbers are in extraCol
+            check_in: gateInfo || null, // Check-in info is what we extracted as gateInfo
             timings,
             status: status || 'unknown',
             category: 'commercial',
