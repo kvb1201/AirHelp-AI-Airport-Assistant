@@ -10,21 +10,60 @@ from app.core.llm.prompts import SYSTEM_PROMPT
 
 
 # -------------------------------
-# 🔹 Intent Detection (keep simple)
+# 🔹 Intent Detection
 # -------------------------------
 def detect_intent(message: str) -> str:
     msg = message.lower()
 
-    if any(word in msg for word in ["gate", "navigate", "direction", "reach", "walk", "how do i get", "where is"]):
+    if any(word in msg for word in [
+        "gate", "navigate", "direction", "reach",
+        "walk", "how do i get", "where is"
+    ]):
         return "navigation"
 
-    if any(word in msg for word in ["food", "eat", "coffee", "restaurant"]):
+    if any(word in msg for word in [
+        "food", "eat", "coffee", "restaurant"
+    ]):
         return "recommendation"
 
-    if any(word in msg for word in ["time", "late", "delay"]):
+    if any(word in msg for word in [
+        "time", "late", "delay"
+    ]):
         return "time_check"
 
     return "general"
+
+
+# -------------------------------
+# 🔹 Format RAG Response Safely
+# -------------------------------
+def _format_rag_response(top: Dict[str, Any]) -> str:
+    name = top.get("name") or "A place"
+    location = top.get("location")
+
+    if location:
+        message = f"{name} is located at {location}."
+    else:
+        message = f"{name} is available."
+
+    if top.get("description"):
+        message += f" {top.get('description')}"
+
+    return message
+
+
+# -------------------------------
+# 🔹 Format Navigation Response
+# -------------------------------
+def _format_navigation(nav_data: Dict[str, Any]) -> str:
+    steps = nav_data.get("steps", [])
+
+    if not steps:
+        return "I couldn't generate a route."
+
+    return "Here is your route:\n" + "\n".join(
+        [f"{i+1}. {step}" for i, step in enumerate(steps)]
+    )
 
 
 # -------------------------------
@@ -48,6 +87,7 @@ async def handle_chat(
     # -------------------------------
     if intent == "navigation":
         rag_data = search(user_input, location)
+
         nav_data = plan_navigation_from_chat(
             user_message=user_input,
             location_label=location,
@@ -59,13 +99,10 @@ async def handle_chat(
         rag_data = search(user_input, location)
 
     # -------------------------------
-    # 🔥 Deterministic Fallback (IMPORTANT)
+    # 🔥 1. Deterministic Navigation
     # -------------------------------
     if nav_data and nav_data.get("ok"):
-        steps = nav_data.get("steps", [])
-        message = "Here is your route:\n" + "\n".join(
-            [f"{i+1}. {step}" for i, step in enumerate(steps)]
-        )
+        message = _format_navigation(nav_data)
 
         return {
             "type": "navigation",
@@ -84,7 +121,28 @@ async def handle_chat(
         }
 
     # -------------------------------
-    # 🔹 Build Better Prompt
+    # 🔥 2. Deterministic RAG (CRITICAL)
+    # -------------------------------
+    if intent == "recommendation" and rag_data:
+        message = _format_rag_response(rag_data[0])
+
+        return {
+            "type": "recommendation",
+            "intent": "recommendation",
+            "message": message,
+            "data": {
+                "navigation": nav_data,
+                "recommendations": rag_data,
+            },
+            "context": {
+                **user_context,
+                "location": location,
+                "last_recommendations": rag_data,
+            },
+        }
+
+    # -------------------------------
+    # 🔹 LLM Fallback (ONLY when needed)
     # -------------------------------
     nav_block = json.dumps(nav_data, indent=2) if nav_data else "None"
     rag_block = json.dumps(rag_data, indent=2) if rag_data else "None"
@@ -92,29 +150,19 @@ async def handle_chat(
     prompt = f"""
 {SYSTEM_PROMPT}
 
-CURRENT USER STATE:
-- Location: {location}
-- Destination: {destination}
+USER LOCATION:
+{location}
 
-AVAILABLE OPTIONS (ONLY USE THESE):
+AVAILABLE OPTIONS:
 {rag_block}
 
-NAVIGATION PLAN (ONLY USE IF ok=true):
+NAVIGATION DATA:
 {nav_block}
 
 USER QUERY:
 {user_input}
-
-Instructions:
-- Do NOT invent places
-- Prefer nearby options
-- If navigation exists, guide step-by-step
-- Keep answer concise
 """
 
-    # -------------------------------
-    # 🔹 LLM Call
-    # -------------------------------
     response_text = await call_llm(prompt)
 
     # -------------------------------
@@ -126,10 +174,6 @@ Instructions:
 
     if destination:
         updated_context["destination"] = destination
-
-    if nav_data and nav_data.get("ok"):
-        updated_context["last_route"] = nav_data
-        updated_context["destination"] = nav_data.get("goal_id")
 
     if rag_data:
         updated_context["last_recommendations"] = rag_data
