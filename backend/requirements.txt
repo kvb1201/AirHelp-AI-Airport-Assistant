@@ -18,5 +18,10 @@ faiss-cpu==1.9.0.post1
 # Graph support
 networkx==3.3
 
+# OCR for image processing (boarding pass extraction)
+opencv-python==4.10.0
+pytesseract==0.3.10
+Pillow==10.4.0
+
 # Offline TTS (PyPI Piper — `pip install piper-tts`; see app/services/tts_service.py)
 piper-tts>=1.4.0,<2
