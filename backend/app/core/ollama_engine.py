@@ -10,6 +10,7 @@ from typing import Optional, Dict
 from normalization import clean_input
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from app.utils.logger import logger
+from app.core.slang_normalizer import clean_airport_slang
 
 # ── OFFLINE MODE CONFIGURATION ──────────────────────────────────────────────────
 # Set Hugging Face to use local cache only (no internet calls)
@@ -318,7 +319,11 @@ class AirportAI:
         else:
             processed_text = user_input
 
-        # 2. Fast path: English-only processing (skip translation and LLM for simple cases)
+        # 2. Apply slang normalization for all inputs (especially Hinglish/Hindi)
+        slang_result = clean_airport_slang(processed_text)
+        processed_text = slang_result
+        
+        # 3. Fast path: English-only processing (skip translation and LLM for simple cases)
         if self.lang == "en":
             logger.info("🚀 English-only mode - checking if LLM is needed")
             cleaned_text = clean_input(processed_text)

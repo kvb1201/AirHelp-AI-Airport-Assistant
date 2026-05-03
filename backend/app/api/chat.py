@@ -10,6 +10,7 @@ from app.services.context_service import (
     get_user_context,
     update_user_context,
 )
+from app.core.slang_normalizer import clean_airport_slang
 
 router = APIRouter()
 
@@ -45,10 +46,15 @@ async def chat_endpoint(request: ChatRequest):
         update_user_context(request.user_id, patch)
 
     # ----------------------------
+    # 🔹 Step 2.5: Clean slang from user message
+    # ----------------------------
+    cleaned_message = clean_airport_slang(request.message)
+
+    # ----------------------------
     # 🔹 Step 3: Call orchestrator
     # ----------------------------
     result = await handle_chat(
-        user_input=request.message,
+        user_input=cleaned_message,
         user_context=context,
         language=request.language or "en",
     )

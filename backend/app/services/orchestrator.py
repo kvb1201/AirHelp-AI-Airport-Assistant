@@ -10,6 +10,7 @@ from app.services.rag_service import search
 from app.services.locating_engine import locate_from_query
 from app.services.context_engine import update_context
 from app.core.llm.prompts import SYSTEM_PROMPT
+from app.core.slang_normalizer import clean_airport_slang
 
 
 # -------------------------------
@@ -198,12 +199,16 @@ def _format_navigation(nav_data: Dict[str, Any]) -> str:
 # -------------------------------
 async def handle_chat(user_input: str, user_context: Dict[str, Any], language: str = "en") -> Dict[str, Any]:
 
-    extracted = locate_from_query(user_input)
+    # Clean slang from user input first
+    cleaned_input = clean_airport_slang(user_input)
+    
+    extracted = locate_from_query(cleaned_input)
     extracted["raw_query"] = user_input
+    extracted["cleaned_query"] = cleaned_input
 
     user_context = update_context(user_context, extracted)
 
-    intent = detect_intent(user_input)
+    intent = detect_intent(cleaned_input)
 
     location = extracted.get("location") or user_context.get("location")
     destination = user_context.get("destination")
@@ -217,17 +222,17 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
     # 🔹 SERVICE CALLS
     # -------------------------------
     if intent == "navigation":
-        rag_data = search(user_input, location=None, intent=intent)
+        rag_data = search(cleaned_input, location=None, intent=intent)
 
         nav_data = plan_navigation_from_chat(
-            user_message=user_input,
+            user_message=cleaned_input,
             location_label=location,
             destination_label=destination,
             rag_snippets=rag_data,
         )
 
     elif intent in ["explore", "recommendation"]:
-        query = _build_search_query(user_input, rag_location, intent)
+        query = _build_search_query(cleaned_input, rag_location, intent)
         rag_data = search(query, location=rag_location, intent=intent)
 
     # -------------------------------
@@ -281,6 +286,7 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
 {SYSTEM_PROMPT}
 
 USER QUERY: {user_input}
+CLEANED QUERY: {cleaned_input}
 AVAILABLE OPTIONS:
 {json.dumps(rag_data, indent=2) if rag_data else "None"}
 """,
