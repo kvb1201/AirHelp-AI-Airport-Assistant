@@ -1,0 +1,152 @@
+{
+  "meta": {
+    "terminal": "T2",
+    "floor": "L02",
+    "note": "Mock catalog for hackathon — categories A–G subset."
+  },
+  "flights": [
+    {
+      "airline": "Air India",
+      "flight_number": "AI 143",
+      "domestic_international": "domestic",
+      "terminal": "T2",
+      "check_in_row": "A12–A18",
+      "gate_node_id": "t2_gate_ne",
+      "boarding_time": "11:20",
+      "departure_time": "12:05",
+      "gate_display": "NE pier — mock gates 73–77"
+    },
+    {
+      "airline": "IndiGo",
+      "flight_number": "6E 201",
+      "domestic_international": "domestic",
+      "terminal": "T2",
+      "check_in_row": "B04–B09",
+      "gate_node_id": "t2_gate_sw",
+      "boarding_time": "14:40",
+      "departure_time": "15:25",
+      "gate_display": "SW pier — mock gates 78–82"
+    }
+  ],
+  "food_outlets": [
+    {
+      "name": "Cafe Coffee Day — NW",
+      "category": "cafe",
+      "cuisine": "coffee_snacks",
+      "veg_nonveg": "veg_options",
+      "price_range": "₹₹",
+      "open_hours": "24h (mock)",
+      "near_node_id": "t2_fb_nw",
+      "terminal": "T2",
+      "floor": "L02"
+    },
+    {
+      "name": "Street Food Co — SW",
+      "category": "quick_service",
+      "cuisine": "north_indian",
+      "veg_nonveg": "both",
+      "price_range": "₹₹",
+      "open_hours": "05:00–23:00 (mock)",
+      "near_node_id": "t2_fb_sw",
+      "terminal": "T2",
+      "floor": "L02"
+    }
+  ],
+  "shops_dutyfree": [
+    {
+      "store_name": "Duty Free Mumbai — NE",
+      "category": "duty_free",
+      "location_node_id": "t2_duty_ne",
+      "skus_articles": ["Perfumes", "Liquor", "Chocolates", "Tobacco (intl only mock)"],
+      "brand": "DFS",
+      "price": "duty_free_pricing",
+      "offer": "20% off perfumes on purchases above ₹8000 (mock)"
+    },
+    {
+      "store_name": "Fashion & Accessories — NW",
+      "category": "retail",
+      "location_node_id": "t2_retail_nw",
+      "skus_articles": ["Bags", "Sunglasses", "Watches"],
+      "brand": "Mixed",
+      "price": "₹₹₹",
+      "offer": "Buy 2 get 10% off (mock)"
+    }
+  ],
+  "services": [
+    {
+      "name": "Wheelchair assistance",
+      "category": "mobility",
+      "location_node_id": "t2_information",
+      "hours": "24h desk (mock)",
+      "notes": "Book at least 45 min before flight (mock)."
+    },
+    {
+      "name": "Baby care room",
+      "category": "family",
+      "location_node_id": "t2_wc_central",
+      "hours": "24h (mock)",
+      "notes": "Nursing + changing stations."
+    },
+    {
+      "name": "Medical room",
+      "category": "health",
+      "location_node_id": "t2_medical",
+      "hours": "24h (mock)",
+      "notes": "First aid + referral."
+    },
+    {
+      "name": "Forex",
+      "category": "financial",
+      "location_node_id": "t2_forex",
+      "hours": "06:00–23:00 (mock)",
+      "notes": "Major currencies."
+    },
+    {
+      "name": "Luggage wrapping",
+      "category": "baggage",
+      "location_node_id": "t2_entrance",
+      "hours": "24h (mock)",
+      "notes": "Near south entry (mock)."
+    },
+    {
+      "name": "Charging stations",
+      "category": "comfort",
+      "location_node_id": "t2_hub_central",
+      "hours": "n/a",
+      "notes": "USB-A/C towers along mall spine (mock)."
+    },
+    {
+      "name": "Lost & found",
+      "category": "support",
+      "location_node_id": "t2_lost_found",
+      "hours": "24h (mock)",
+      "notes": "ID required for pickup."
+    }
+  ],
+  "offers_rewards": [
+    {
+      "title": "Festive duty-free",
+      "type": "festive_discount",
+      "location_node_id": "t2_duty_ne",
+      "detail": "Extra 5% off spirits weekend bundle (mock)."
+    },
+    {
+      "title": "Coffee combo",
+      "type": "combo_meal",
+      "location_node_id": "t2_fb_nw",
+      "detail": "Sandwich + large coffee ₹349 (mock)."
+    },
+    {
+      "title": "Lounge upgrade",
+      "type": "premium_lounge",
+      "location_node_id": "t2_vertical_core",
+      "detail": "500 loyalty points = 1 lounge pass (mock)."
+    },
+    {
+      "title": "BOGO retail",
+      "type": "buy_one_get_one",
+      "location_node_id": "t2_retail_se",
+      "detail": "Select accessories — buy 1 get 1 50% off (mock)."
+    }
+  ]
+}

@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
+import HomeContent from './components/HomeContent';
+import RightPanel from './components/RightPanel';
+import TerminalMapView from './components/TerminalMapView';
+import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
 import QuickActions from './components/QuickActions';
+import BottomNav from './components/BottomNav';
 import { sendChatMessage } from './services/api';
 import './styles.css';
 
-const WELCOME = {
-  text: "Hello, Priya! 👋 I'm your AirHelp Assistant. Ask me about your flights, facilities, or let me know how I can help.",
-  role: 'bot',
-  time: formatTime(),
-};
-
-/** Returns a short HH:MM timestamp string. */
 function formatTime() {
   return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
+const WELCOME = {
+  text: "Hi Priya! I'm here to help you with airport facilities, flights, or any issues. How can I assist you?",
+  role: 'bot',
+  time: formatTime(),
+};
+
 export default function App() {
   const [messages, setMessages] = useState([WELCOME]);
   const [isLoading, setIsLoading] = useState(false);
-  const [location, setLocation] = useState('entrance');
+  const [location, setLocation] = useState('t2_entrance');
+  const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
+  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'trips' | 'map' | 'profile'
+  const [sidebarNav, setSidebarNav] = useState('Home');
 
-  /**
-   * Core send function — adds user message, calls API, appends bot reply.
-   */
+  const showMap = sidebarNav === 'Map' || mobileView === 'map';
+
   const handleSend = async (text, loc = null) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
@@ -33,10 +39,13 @@ export default function App() {
     setMessages((prev) => [...prev, userMsg]);
     setIsLoading(true);
 
+    // Switch mobile to chat view when user sends a message
+    setMobileView('chat');
+    // Ensure desktop panel is open
+    setChatOpen(true);
+
     try {
       const data = await sendChatMessage(text, currentLocation);
-      console.log('API response:', data);
-
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
     } catch (err) {
@@ -56,26 +65,85 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* ── Left Navigation Sidebar ── */}
-      <Sidebar />
+      {/* ── Left Sidebar (Desktop) ── */}
+      <Sidebar activeNav={sidebarNav} onNavChange={setSidebarNav} />
 
-      {/* ── Main Chat Area ── */}
-      <main className="chat-main">
-        {/* Mobile Header (Hidden on Desktop) */}
-        <header className="chat-header-mobile">
-          <h1>AirHelp</h1>
-          <div className="brand-logo" style={{width: 32, height: 32, fontSize: 16}}>✈️</div>
+      {/* ── Main Body ── */}
+      <div className="app-body">
+
+        {/* Desktop Header */}
+        <header className="desktop-header" role="banner">
+          <button className="header-lang-btn" aria-label="Change language">
+            <span className="ms" style={{ fontSize: 16 }}>language</span>
+            EN
+          </button>
+          <div className="header-avatar" role="button" tabIndex={0} aria-label="User account">
+            P
+          </div>
         </header>
 
-        {/* Scrollable Message List */}
-        <ChatWindow messages={messages} isLoading={isLoading} />
+        {/* Mobile Header */}
+        <header className="mobile-header" role="banner">
+          <button className="mobile-header-menu" aria-label="Open menu">
+            <span className="ms">menu</span>
+          </button>
+          <div className="mobile-header-title">
+            <h1>AirHelp</h1>
+            <p>Smart help for your journey</p>
+          </div>
+          <button className="mobile-header-bell" aria-label="Notifications">
+            <span className="ms">notifications</span>
+          </button>
+        </header>
 
-        {/* Input Area anchored to the bottom center */}
-        <div className="input-area-wrapper">
-          <QuickActions onAction={handleQuickAction} />
-          <InputBox onSend={handleSend} isLoading={isLoading} />
+        {/* Content area */}
+        <div className={`content-area${showMap ? ' content-area--map' : ''}`}>
+          <main className="main-content">
+            {showMap ? (
+              <TerminalMapView location={location} onLocationChange={setLocation} />
+            ) : (
+              <>
+                <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
+                  <HomeContent onSend={handleSend} />
+                </div>
+
+                {mobileView === 'chat' && (
+                  <div className="mobile-chat-history">
+                    <div style={{ paddingTop: 16 }}>
+                      <ChatWindow messages={messages} isLoading={isLoading} />
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+
+          {!showMap && <RightPanel />}
         </div>
-      </main>
+
+        {/* ── Mobile Bottom Area (fixed) ── */}
+        <div className="mobile-bottom">
+          {mobileView === 'home' && (
+            <QuickActions onAction={handleQuickAction} />
+          )}
+          <InputBox
+            onSend={handleSend}
+            isLoading={isLoading}
+            placeholder="Ask me anything…"
+          />
+          <BottomNav activeView={mobileView} onViewChange={setMobileView} />
+        </div>
+      </div>
+
+      {/* ── Floating Chat Panel (Desktop only) ── */}
+      <ChatPanel
+        messages={messages}
+        isLoading={isLoading}
+        onSend={handleSend}
+        isOpen={chatOpen}
+        onToggle={() => setChatOpen((prev) => !prev)}
+        onClose={() => setChatOpen(false)}
+      />
     </div>
   );
 }

@@ -1,20 +1,20 @@
 import React from 'react';
 
 /**
- * A single chat bubble with optional timestamp.
- * @param {string} text              - Message text
- * @param {'user'|'bot'|'error'} role - Who sent it
- * @param {string} [time]            - Optional display timestamp
+ * Single chat bubble with timestamp.
  */
 export default function MessageBubble({ text, role, time }) {
+  const isBot = role === 'bot' || role === 'error';
+
   return (
     <div className={`msg-row ${role}`}>
-      {/* Bot avatar — only shown for bot/error messages */}
-      {(role === 'bot' || role === 'error') && (
-        <div className="bot-avatar" aria-hidden="true">✈️</div>
+      {isBot && (
+        <div className="bot-avatar" aria-hidden="true">
+          <span className="ms">smart_toy</span>
+        </div>
       )}
 
-      <div>
+      <div className="bubble-wrap">
         <div className="bubble">{text}</div>
         {time && <div className="msg-time">{time}</div>}
       </div>

@@ -1,41 +1,54 @@
 import React from 'react';
 
-const MENU_ITEMS = [
-  { label: 'Home', icon: '🏠' },
-  { label: 'Flights', icon: '✈️' },
-  { label: 'Facilities', icon: '🏢' },
-  { label: 'Map', icon: '🗺️' },
-  { label: 'My Trips', icon: '🎒' },
-  { label: 'Help & Support', icon: '❓' },
-  { label: 'Settings', icon: '⚙️' },
+const NAV_ITEMS = [
+  { label: 'Home', icon: 'home', active: true },
+  { label: 'Flights', icon: 'flight_takeoff', active: false },
+  { label: 'Facilities', icon: 'apartment', active: false },
+  { label: 'Map', icon: 'map', active: false },
+  { label: 'My Trips', icon: 'work', active: false },
+  { label: 'Help & Support', icon: 'help', active: false },
+  { label: 'Settings', icon: 'settings', active: false },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ activeNav, onNavChange }) {
   return (
-    <aside className="sidebar">
+    <aside className="sidebar" role="navigation" aria-label="Main navigation">
       <div className="sidebar-header">
         <div className="brand">
-          <div className="brand-logo">✈️</div>
-          <h2>AirHelp</h2>
+          <div className="brand-logo" aria-hidden="true">
+            <span className="ms">flight</span>
+          </div>
+          <span className="brand-name">AirHelp</span>
         </div>
-        <button className="new-chat-btn">
-          <span>+</span> New Chat
+
+        <button className="new-chat-btn" aria-label="Start a new chat">
+          <span className="ms">add</span>
+          New Chat
         </button>
       </div>
 
       <nav className="sidebar-nav">
-        {MENU_ITEMS.map((item) => (
-          <button key={item.label} className="nav-btn">
-            <span className="nav-icon" aria-hidden="true">{item.icon}</span>
+        {NAV_ITEMS.map((item) => (
+          <button
+            key={item.label}
+            type="button"
+            className={`nav-item ${activeNav === item.label ? 'active' : ''}`}
+            onClick={() => onNavChange(item.label)}
+            aria-current={activeNav === item.label ? 'page' : undefined}
+          >
+            <span className="ms">{item.icon}</span>
             {item.label}
           </button>
         ))}
       </nav>
 
       <div className="sidebar-footer">
-        <div className="user-profile">
-          <div className="avatar">P</div>
-          <span className="username">Priya</span>
+        <div className="user-profile" role="button" tabIndex={0} aria-label="User profile">
+          <div className="user-avatar" aria-hidden="true">P</div>
+          <div>
+            <div className="user-name">Priya</div>
+            <div className="user-email">priya@airhelp.in</div>
+          </div>
         </div>
       </div>
     </aside>

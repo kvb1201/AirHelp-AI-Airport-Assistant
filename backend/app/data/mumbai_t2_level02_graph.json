@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "airport": "BOM",
+    "airport_name": "Chhatrapati Shivaji Maharaj International Airport",
+    "terminal": "T2",
+    "floor": "L02",
+    "title": "Terminal 2 — Level 2 (mock graph)",
+    "disclaimer": "Static hackathon dataset inspired by public T2 Level 2 circulation; not official CSIAA data.",
+    "plan_reference": "Level_02_Plan_copia.jpg",
+    "coordinate_system": "normalized_xy_0_100",
+    "units": { "edge_weight": "walk_minutes" }
+  },
+  "nodes": {
+    "t2_entrance": {
+      "name": "Level 2 — Main public entry (south)",
+      "kind": "entrance",
+      "zone": "south_entry",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 50,
+      "y": 78,
+      "accessibility_note": "Step-free access to hub; lifts at vertical core."
+    },
+    "t2_security_intl": {
+      "name": "Security — International departures",
+      "kind": "security",
+      "zone": "security_band",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 46,
+      "y": 64,
+      "accessibility_note": "Dedicated assistance lane (mock)."
+    },
+    "t2_security_dom": {
+      "name": "Security — Domestic departures",
+      "kind": "security",
+      "zone": "security_band",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 54,
+      "y": 64,
+      "accessibility_note": "Dedicated assistance lane (mock)."
+    },
+    "t2_hub_central": {
+      "name": "Central concourse (retail spine)",
+      "kind": "corridor",
+      "zone": "central_mall",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 50,
+      "y": 48,
+      "accessibility_note": "Wide circulation; seating pockets along sides."
+    },
+    "t2_information": {
+      "name": "Information & customer service",
+      "kind": "service",
+      "zone": "central_mall",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 42,
+      "y": 46,
+      "accessibility_note": "Lower counter available (mock)."
+    },
+    "t2_medical": {
+      "name": "Medical station",
+      "kind": "service",
+      "zone": "central_mall",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 58,
+      "y": 46,
+      "accessibility_note": "Wheelchair accessible (mock)."
+    },
+    "t2_lost_found": {
+      "name": "Lost & found",
+      "kind": "service",
+      "zone": "central_mall",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 44,
+      "y": 52,
+      "accessibility_note": "Near vertical core."
+    },
+    "t2_forex": {
+      "name": "Currency exchange",
+      "kind": "service",
+      "zone": "central_mall",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 56,
+      "y": 52,
+      "accessibility_note": "Step-free."
+    },
+    "t2_wc_central": {
+      "name": "Restrooms — central",
+      "kind": "restroom",
+      "zone": "central_mall",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 48,
+      "y": 42,
+      "accessibility_note": "Accessible WC (mock)."
+    },
+    "t2_vertical_core": {
+      "name": "Lifts / escalators — other levels",
+      "kind": "vertical",
+      "zone": "central_mall",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 50,
+      "y": 56,
+      "accessibility_note": "8 lifts, 4 escalators (mock counts)."
+    },
+    "t2_junction_nw": {
+      "name": "Pier junction — North-West",
+      "kind": "junction",
+      "zone": "pier_nw",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 38,
+      "y": 38,
+      "accessibility_note": null
+    },
+    "t2_retail_nw": {
+      "name": "Retail cluster — NW pier",
+      "kind": "shopping",
+      "zone": "pier_nw",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 30,
+      "y": 30,
+      "accessibility_note": null
+    },
+    "t2_fb_nw": {
+      "name": "F&B — NW pier",
+      "kind": "food",
+      "zone": "pier_nw",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 24,
+      "y": 24,
+      "accessibility_note": null
+    },
+    "t2_gate_nw": {
+      "name": "Gate lounge — NW pier (gates 68–72 mock)",
+      "kind": "gate",
+      "zone": "pier_nw",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 14,
+      "y": 12,
+      "accessibility_note": "Priority boarding zone A (mock)."
+    },
+    "t2_junction_ne": {
+      "name": "Pier junction — North-East",
+      "kind": "junction",
+      "zone": "pier_ne",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 62,
+      "y": 38,
+      "accessibility_note": null
+    },
+    "t2_duty_ne": {
+      "name": "Duty-free — NE pier",
+      "kind": "shopping",
+      "zone": "pier_ne",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 70,
+      "y": 28,
+      "accessibility_note": null
+    },
+    "t2_gate_ne": {
+      "name": "Gate lounge — NE pier (gates 73–77 mock)",
+      "kind": "gate",
+      "zone": "pier_ne",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 86,
+      "y": 12,
+      "accessibility_note": null
+    },
+    "t2_junction_sw": {
+      "name": "Pier junction — South-West",
+      "kind": "junction",
+      "zone": "pier_sw",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 38,
+      "y": 58,
+      "accessibility_note": null
+    },
+    "t2_fb_sw": {
+      "name": "F&B — SW pier",
+      "kind": "food",
+      "zone": "pier_sw",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 28,
+      "y": 68,
+      "accessibility_note": null
+    },
+    "t2_gate_sw": {
+      "name": "Gate lounge — SW pier (gates 78–82 mock)",
+      "kind": "gate",
+      "zone": "pier_sw",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 14,
+      "y": 86,
+      "accessibility_note": null
+    },
+    "t2_junction_se": {
+      "name": "Pier junction — South-East",
+      "kind": "junction",
+      "zone": "pier_se",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 62,
+      "y": 58,
+      "accessibility_note": null
+    },
+    "t2_retail_se": {
+      "name": "Retail cluster — SE pier",
+      "kind": "shopping",
+      "zone": "pier_se",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 72,
+      "y": 68,
+      "accessibility_note": null
+    },
+    "t2_gate_se": {
+      "name": "Gate lounge — SE pier (gates 83–88 mock)",
+      "kind": "gate",
+      "zone": "pier_se",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 86,
+      "y": 86,
+      "accessibility_note": null
+    },
+    "t2_baggage_claim": {
+      "name": "Baggage reclaim hall (arrivals side mock)",
+      "kind": "baggage",
+      "zone": "south_entry",
+      "terminal": "T2",
+      "floor": "L02",
+      "x": 50,
+      "y": 70,
+      "accessibility_note": "Carousel step-free viewing (mock)."
+    }
+  },
+  "edges": [
+    ["t2_entrance", "t2_baggage_claim", 2],
+    ["t2_baggage_claim", "t2_security_intl", 4],
+    ["t2_baggage_claim", "t2_security_dom", 4],
+    ["t2_security_intl", "t2_hub_central", 5],
+    ["t2_security_dom", "t2_hub_central", 5],
+    ["t2_hub_central", "t2_information", 2],
+    ["t2_hub_central", "t2_medical", 2],
+    ["t2_hub_central", "t2_lost_found", 2],
+    ["t2_hub_central", "t2_forex", 2],
+    ["t2_hub_central", "t2_wc_central", 2],
+    ["t2_hub_central", "t2_vertical_core", 2],
+    ["t2_hub_central", "t2_junction_nw", 4],
+    ["t2_hub_central", "t2_junction_ne", 4],
+    ["t2_hub_central", "t2_junction_sw", 4],
+    ["t2_hub_central", "t2_junction_se", 4],
+    ["t2_junction_nw", "t2_retail_nw", 3],
+    ["t2_retail_nw", "t2_fb_nw", 3],
+    ["t2_fb_nw", "t2_gate_nw", 4],
+    ["t2_junction_ne", "t2_duty_ne", 4],
+    ["t2_duty_ne", "t2_gate_ne", 5],
+    ["t2_junction_sw", "t2_fb_sw", 3],
+    ["t2_fb_sw", "t2_gate_sw", 5],
+    ["t2_junction_se", "t2_retail_se", 3],
+    ["t2_retail_se", "t2_gate_se", 5]
+  ]
+}

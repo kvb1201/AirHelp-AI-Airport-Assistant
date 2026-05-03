@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api import chat, navigation, context
+from app.api import chat, navigation, context, map as map_api
 
 app = FastAPI(title="AI Airport Companion API")
 
@@ -27,6 +27,7 @@ app.add_middleware(
 app.include_router(chat.router, prefix="/api", tags=["Chat"])
 app.include_router(navigation.router, prefix="/api", tags=["Navigation"])
 app.include_router(context.router, prefix="/api", tags=["Context"])
+app.include_router(map_api.router, prefix="/api", tags=["Map"])
 
 
 # ----------------------------

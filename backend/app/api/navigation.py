@@ -9,24 +9,24 @@ router = APIRouter()
 
 @router.get("/navigate")
 def navigate(
-    start: str = Query(..., description="Starting location"),
-    end: str = Query(..., description="Destination location")
+    start: str = Query(..., description="Start zone (e.g. entrance, security, gate_a1)"),
+    end: str = Query(..., description="Goal zone or gate (e.g. gate_b12, food_court)"),
 ):
     """
-    Navigation endpoint (mainly for testing/debugging).
-    Returns structured route data.
+    Debug / mobile map: graph shortest path in minutes between two semantic nodes.
     """
-
     route = get_route(start, end)
+    ok = route.get("ok", False)
+    msg = (
+        f"Route computed ({route.get('total_time_minutes')} min)"
+        if ok
+        else route.get("hint") or route.get("error", "navigation error")
+    )
 
     return {
         "type": "navigation",
         "intent": "navigation",
-        "message": f"Route from {start} to {end}",
-
-        "data": {
-            "navigation": route
-        },
-
-        "context": {}
+        "message": msg,
+        "data": {"navigation": route},
+        "context": {},
     }
