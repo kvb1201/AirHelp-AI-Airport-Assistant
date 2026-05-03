@@ -1,86 +1,764 @@
 {
+  "coordinate_system": {
+    "airport": "CSIA Mumbai - Chhatrapati Shivaji Maharaj International Airport",
+    "reference": "T2 Main Entrance = (0, 0)",
+    "unit": "meters",
+    "axis": {
+      "x": "East-West (positive = East wing)",
+      "y": "North-South (positive = deeper into terminal)"
+    },
+    "floors": {
+      "L0": "Arrivals & Baggage Claim",
+      "L1": "Ground Transport & Shuttle",
+      "L2": "Departures Check-in & Baggage Drop",
+      "L3": "Post-Security Gates, Retail & Food",
+      "L4": "Lounges & Premium Services"
+    },
+    "map_image_ref": "assets/maps/t2_floor_{level}.png",
+    "pixel_to_meter_ratio": 0.5
+  },
+  "airport_alerts": [
+    {
+      "alert_id": "alert-001",
+      "type": "infrastructure",
+      "affected_area": "B-wing elevator, T2 Level 3",
+      "affected_facility_ids": [
+        "gate-b12",
+        "gate-b10",
+        "gate-b8"
+      ],
+      "description": "B-wing elevator is under maintenance",
+      "impact": "Use C-wing elevator or stairs. Add 5 minutes to travel time.",
+      "extra_time_minutes": 5,
+      "active": true,
+      "start_time": "2024-12-01T08:00:00",
+      "estimated_resolution": "2024-12-01T18:00:00",
+      "severity": "low"
+    },
+    {
+      "alert_id": "alert-002",
+      "type": "security_queue",
+      "affected_area": "T2 Security Checkpoint Zone B",
+      "affected_facility_ids": [
+        "security-zone-b"
+      ],
+      "description": "High passenger volume at Zone B security",
+      "impact": "Expected wait time 15 minutes. Consider Zone A security instead.",
+      "extra_time_minutes": 15,
+      "active": true,
+      "severity": "medium"
+    }
+  ],
+  "flights": [
+    {
+      "flight_id": "AI-101",
+      "flight_number": "AI101",
+      "airline": "Air India",
+      "airline_code": "AI",
+      "terminal": "T1",
+      "origin": "BOM",
+      "destination": "LHR",
+      "destination_city": "London",
+      "flight_type": "international",
+      "departure_time": "14:30",
+      "boarding_starts": "13:45",
+      "boarding_gate_closes": "14:15",
+      "status": "on_time",
+      "delay_minutes": 0,
+      "gate_number": "A1",
+      "gate_id": "gate-a1",
+      "gate_zone": "A",
+      "check_in_counter_range": "A1-A10",
+      "check_in_zone_id": "checkin-zone-a",
+      "check_in_closes": "12:30",
+      "baggage_drop_counter": "A5-A8",
+      "baggage_drop_closes": "12:45",
+      "baggage_belt": null,
+      "aircraft_type": "Boeing 777",
+      "seat_classes": [
+        "economy",
+        "business",
+        "first"
+      ],
+      "meal_service": true,
+      "notes": "International flight. Duty-free shopping available post-security at SkyMall."
+    },
+    {
+      "flight_id": "EK-512",
+      "flight_number": "EK512",
+      "airline": "Emirates",
+      "airline_code": "EK",
+      "terminal": "T1",
+      "origin": "BOM",
+      "destination": "DXB",
+      "destination_city": "Dubai",
+      "flight_type": "international",
+      "departure_time": "16:00",
+      "boarding_starts": "15:20",
+      "boarding_gate_closes": "15:50",
+      "status": "on_time",
+      "delay_minutes": 0,
+      "gate_number": "A2",
+      "gate_id": "gate-a2",
+      "gate_zone": "A",
+      "check_in_counter_range": "A11-A20",
+      "check_in_zone_id": "checkin-zone-a",
+      "check_in_closes": "14:00",
+      "baggage_drop_counter": "A12-A15",
+      "baggage_drop_closes": "14:15",
+      "baggage_belt": null,
+      "aircraft_type": "Airbus A380",
+      "seat_classes": [
+        "economy",
+        "business",
+        "first"
+      ],
+      "meal_service": true,
+      "notes": "International flight. Emirates lounge access for business/first class at SkyLounge."
+    },
+    {
+      "flight_id": "6E-401",
+      "flight_number": "6E401",
+      "airline": "IndiGo",
+      "airline_code": "6E",
+      "terminal": "T2",
+      "origin": "BOM",
+      "destination": "DEL",
+      "destination_city": "New Delhi",
+      "flight_type": "domestic",
+      "departure_time": "11:00",
+      "boarding_starts": "10:30",
+      "boarding_gate_closes": "10:50",
+      "status": "on_time",
+      "delay_minutes": 0,
+      "gate_number": "B12",
+      "gate_id": "gate-b12",
+      "gate_zone": "B",
+      "check_in_counter_range": "B1-B10",
+      "check_in_zone_id": "checkin-zone-b",
+      "check_in_closes": "09:30",
+      "baggage_drop_counter": "B5-B8",
+      "baggage_drop_closes": "09:45",
+      "baggage_belt": "belt-3",
+      "aircraft_type": "Airbus A320",
+      "seat_classes": [
+        "economy"
+      ],
+      "meal_service": false,
+      "notes": "Carry-on limit 7kg. Web check-in strongly recommended."
+    },
+    {
+      "flight_id": "SG-305",
+      "flight_number": "SG305",
+      "airline": "SpiceJet",
+      "airline_code": "SG",
+      "terminal": "T2",
+      "origin": "BOM",
+      "destination": "BLR",
+      "destination_city": "Bengaluru",
+      "flight_type": "domestic",
+      "departure_time": "09:15",
+      "boarding_starts": "08:45",
+      "boarding_gate_closes": "09:05",
+      "status": "delayed",
+      "delay_minutes": 20,
+      "gate_number": "B12",
+      "gate_id": "gate-b12",
+      "gate_zone": "B",
+      "check_in_counter_range": "B11-B20",
+      "check_in_zone_id": "checkin-zone-b",
+      "check_in_closes": "08:00",
+      "baggage_drop_counter": "B13-B16",
+      "baggage_drop_closes": "08:15",
+      "baggage_belt": "belt-3",
+      "aircraft_type": "Boeing 737",
+      "seat_classes": [
+        "economy"
+      ],
+      "meal_service": false,
+      "notes": "Flight delayed by 20 minutes due to late incoming aircraft."
+    },
+    {
+      "flight_id": "UK-890",
+      "flight_number": "UK890",
+      "airline": "Vistara",
+      "airline_code": "UK",
+      "terminal": "T2",
+      "origin": "BOM",
+      "destination": "CCU",
+      "destination_city": "Kolkata",
+      "flight_type": "domestic",
+      "departure_time": "13:45",
+      "boarding_starts": "13:15",
+      "boarding_gate_closes": "13:35",
+      "status": "on_time",
+      "delay_minutes": 0,
+      "gate_number": "C5",
+      "gate_id": "gate-c5",
+      "gate_zone": "C",
+      "check_in_counter_range": "C40-C50",
+      "check_in_zone_id": "checkin-zone-c",
+      "check_in_closes": "12:15",
+      "baggage_drop_counter": "C42-C45",
+      "baggage_drop_closes": "12:30",
+      "baggage_belt": "belt-3",
+      "aircraft_type": "Airbus A321",
+      "seat_classes": [
+        "economy",
+        "business"
+      ],
+      "meal_service": true,
+      "notes": "Vistara Club Vistara members can use priority check-in at counter C40."
+    },
+    {
+      "flight_id": "G8-201",
+      "flight_number": "G8201",
+      "airline": "GoFirst",
+      "airline_code": "G8",
+      "terminal": "T3",
+      "origin": "BOM",
+      "destination": "HYD",
+      "destination_city": "Hyderabad",
+      "flight_type": "domestic",
+      "departure_time": "07:30",
+      "boarding_starts": "07:00",
+      "boarding_gate_closes": "07:20",
+      "status": "on_time",
+      "delay_minutes": 0,
+      "gate_number": "D3",
+      "gate_id": "gate-d3",
+      "gate_zone": "D",
+      "check_in_counter_range": "C55-C60",
+      "check_in_zone_id": "checkin-zone-c",
+      "check_in_closes": "06:00",
+      "baggage_drop_counter": "C57-C59",
+      "baggage_drop_closes": "06:15",
+      "baggage_belt": null,
+      "aircraft_type": "Airbus A320",
+      "seat_classes": [
+        "economy"
+      ],
+      "meal_service": false,
+      "notes": "Gate D3 is far. Take shuttle train from T3 main terminal to D-concourse."
+    }
+  ],
   "gates": [
     {
-      "gate": "A1",
-      "terminal": "Terminal 1",
+      "gate_id": "gate-a1",
+      "gate_number": "A1",
+      "terminal": "T1",
+      "zone": "A",
+      "level": 2,
+      "wing": "A-wing",
+      "gate_type": "international",
       "description": "Gate A1 is located at the far north end of Terminal 1, near the international departures wing. It serves wide-body aircraft including Boeing 777 and Airbus A380 flights.",
-      "walking_time_from_security": "5 minutes",
-      "nearby_facilities": ["Café Aroma", "Duty-Free Zone A", "Accessible Restrooms", "Charging Stations"],
-      "status": "Operational"
+      "seating_capacity": 120,
+      "has_charging_points": true,
+      "has_accessible_seating": true,
+      "status": "Operational",
+      "nearby_facility_ids": [
+        "food-101",
+        "shop-201",
+        "restroom-a1-l2",
+        "facility-charging"
+      ],
+      "nearby_facilities": [
+        "Café Aroma",
+        "Duty-Free Zone A",
+        "Accessible Restrooms",
+        "Charging Stations"
+      ],
+      "navigation": {
+        "landmark_description": "Near the large Mumbai mosaic mural, north end of T1 Level 2",
+        "from_security_t1": {
+          "walking_time_minutes": 5,
+          "accessible_walking_time_minutes": 8,
+          "distance_meters": 280,
+          "route": [
+            "Exit T1 security Zone A",
+            "Follow green 'A Gates' signs",
+            "Walk straight 280m",
+            "Gate A1 on left"
+          ],
+          "accessible_route": [
+            "Exit T1 security Zone A",
+            "Take elevator to Level 2",
+            "Follow accessible corridor signs north",
+            "Gate A1 on left"
+          ]
+        },
+        "from_main_entrance_t1": {
+          "walking_time_minutes": 15,
+          "distance_meters": 750,
+          "route": [
+            "Enter T1 main entrance Level 2",
+            "Proceed to International Check-in Zone A",
+            "Clear security",
+            "Follow A-wing signs north",
+            "Gate A1"
+          ]
+        },
+        "from_gate_a2": {
+          "walking_time_minutes": 2,
+          "distance_meters": 80,
+          "route": [
+            "Walk north from Gate A2",
+            "Gate A1 immediately ahead"
+          ]
+        }
+      },
+      "known_delays": [],
+      "coordinates": {
+        "x": -200,
+        "y": 300,
+        "floor": 2,
+        "pixel_x": 112,
+        "pixel_y": 340
+      }
     },
     {
-      "gate": "A2",
-      "terminal": "Terminal 1",
+      "gate_id": "gate-a2",
+      "gate_number": "A2",
+      "terminal": "T1",
+      "zone": "A",
+      "level": 2,
+      "wing": "A-wing",
+      "gate_type": "international",
       "description": "Gate A2 is adjacent to Gate A1 in Terminal 1, positioned right after the first set of escalators. It handles mid-range international routes.",
-      "walking_time_from_security": "7 minutes",
-      "nearby_facilities": ["SkyLounge Premium Lounge", "Restrooms", "Vending Machines"],
-      "status": "Operational"
+      "seating_capacity": 100,
+      "has_charging_points": true,
+      "has_accessible_seating": true,
+      "status": "Operational",
+      "nearby_facility_ids": [
+        "service-lounge-sky",
+        "restroom-a1-l2",
+        "facility-charging"
+      ],
+      "nearby_facilities": [
+        "SkyLounge Premium Lounge",
+        "Restrooms",
+        "Vending Machines"
+      ],
+      "navigation": {
+        "landmark_description": "First set of escalators, A-wing, Level 2, Terminal 1",
+        "from_security_t1": {
+          "walking_time_minutes": 7,
+          "accessible_walking_time_minutes": 11,
+          "distance_meters": 380,
+          "route": [
+            "Exit T1 security Zone A",
+            "Follow green 'A Gates' signs",
+            "Pass escalators on left",
+            "Gate A2 on right"
+          ],
+          "accessible_route": [
+            "Exit T1 security Zone A",
+            "Take elevator to Level 2",
+            "Follow accessible corridor signs",
+            "Gate A2 on right"
+          ]
+        },
+        "from_main_entrance_t1": {
+          "walking_time_minutes": 17,
+          "distance_meters": 850,
+          "route": [
+            "Enter T1 main entrance",
+            "International Check-in Zone A",
+            "Clear security",
+            "Follow A-wing signs",
+            "Gate A2"
+          ]
+        },
+        "from_skylounge": {
+          "walking_time_minutes": 3,
+          "distance_meters": 100,
+          "route": [
+            "Exit SkyLounge Level 3",
+            "Take escalator down to Level 2",
+            "Gate A2 immediately on left"
+          ]
+        }
+      },
+      "known_delays": [],
+      "coordinates": {
+        "x": -180,
+        "y": 300,
+        "floor": 2,
+        "pixel_x": 152,
+        "pixel_y": 340
+      }
     },
     {
-      "gate": "B12",
-      "terminal": "Terminal 2",
+      "gate_id": "gate-b12",
+      "gate_number": "B12",
+      "terminal": "T2",
+      "zone": "B",
+      "level": 2,
+      "wing": "B-wing",
+      "gate_type": "domestic",
       "description": "Gate B12 is located in Terminal 2, on Level 2, accessible via the central elevator bank or escalators from the B-concourse entrance. Follow the blue 'B Gates' signs from the security checkpoint. It primarily serves domestic and regional flights.",
-      "walking_time_from_security": "10 minutes",
-      "nearby_facilities": ["The Runway Grill", "IndiaMart Convenience Store", "Family Restrooms", "Kids Play Area"],
-      "status": "Operational"
+      "seating_capacity": 80,
+      "has_charging_points": true,
+      "has_accessible_seating": true,
+      "status": "Operational",
+      "nearby_facility_ids": [
+        "food-102",
+        "shop-203",
+        "facility-kids-play",
+        "restroom-b-l2",
+        "facility-charging"
+      ],
+      "nearby_facilities": [
+        "The Runway Grill",
+        "IndiaMart Convenience Store",
+        "Family Restrooms",
+        "Kids Play Area"
+      ],
+      "navigation": {
+        "landmark_description": "Level 2 B-wing, follow blue 'B Gates' signs from T2 security",
+        "from_security_t2": {
+          "walking_time_minutes": 10,
+          "accessible_walking_time_minutes": 16,
+          "distance_meters": 520,
+          "route": [
+            "Exit T2 security Zone B",
+            "Take escalator to Level 2",
+            "Follow blue 'B Gates' signs",
+            "Walk 300m east",
+            "Gate B12 on right"
+          ],
+          "accessible_route": [
+            "Exit T2 security Zone B",
+            "Use C-wing elevator (B-wing elevator under maintenance)",
+            "Follow accessible corridor east",
+            "Gate B12 on right"
+          ]
+        },
+        "from_main_entrance_t2": {
+          "walking_time_minutes": 22,
+          "distance_meters": 980,
+          "route": [
+            "Enter T2 main entrance Level 2",
+            "Proceed to Check-in Zone B",
+            "Clear security",
+            "Take escalator Level 2",
+            "Follow B Gates signs",
+            "Gate B12"
+          ]
+        },
+        "from_runway_grill": {
+          "walking_time_minutes": 4,
+          "distance_meters": 160,
+          "route": [
+            "Exit The Runway Grill",
+            "Turn right",
+            "Walk 160m east",
+            "Gate B12 on right"
+          ]
+        }
+      },
+      "known_delays": [
+        {
+          "delay_id": "delay-b-elev-01",
+          "description": "B-wing elevator under maintenance",
+          "impact": "Use C-wing elevator or stairs instead",
+          "extra_time_minutes": 5,
+          "active": true
+        }
+      ],
+      "coordinates": {
+        "x": 140,
+        "y": 380,
+        "floor": 2,
+        "pixel_x": 792,
+        "pixel_y": 180
+      }
     },
     {
-      "gate": "C5",
-      "terminal": "Terminal 3",
+      "gate_id": "gate-c5",
+      "gate_number": "C5",
+      "terminal": "T3",
+      "zone": "C",
+      "level": 1,
+      "wing": "C-concourse",
+      "gate_type": "domestic",
       "description": "Gate C5 is in the south wing of Terminal 3, accessible via the moving walkway from the main Terminal 3 security exit. It serves low-cost carrier domestic flights.",
-      "walking_time_from_security": "8 minutes",
-      "nearby_facilities": ["QuickBite Fast Food", "ATM", "Restrooms"],
-      "status": "Operational"
+      "seating_capacity": 60,
+      "has_charging_points": true,
+      "has_accessible_seating": true,
+      "status": "Operational",
+      "nearby_facility_ids": [
+        "food-104",
+        "facility-atm-t3",
+        "restroom-c-l1"
+      ],
+      "nearby_facilities": [
+        "QuickBite Fast Food",
+        "ATM",
+        "Restrooms"
+      ],
+      "navigation": {
+        "landmark_description": "South wing of Terminal 3, via moving walkway from main T3 security",
+        "from_security_t3": {
+          "walking_time_minutes": 8,
+          "accessible_walking_time_minutes": 10,
+          "distance_meters": 400,
+          "route": [
+            "Exit T3 security",
+            "Step onto moving walkway south",
+            "Follow C-concourse signs",
+            "Gate C5 on left"
+          ],
+          "accessible_route": [
+            "Exit T3 security",
+            "Take accessible corridor south (parallel to moving walkway)",
+            "Gate C5 on left"
+          ]
+        },
+        "from_main_entrance_t3": {
+          "walking_time_minutes": 18,
+          "distance_meters": 850,
+          "route": [
+            "Enter T3 main entrance",
+            "Check-in Zone C",
+            "Clear security",
+            "Moving walkway south",
+            "Gate C5"
+          ]
+        }
+      },
+      "known_delays": [],
+      "coordinates": {
+        "x": -60,
+        "y": 420,
+        "floor": 1,
+        "pixel_x": 392,
+        "pixel_y": 100
+      }
     },
     {
-      "gate": "D3",
-      "terminal": "Terminal 3",
+      "gate_id": "gate-d3",
+      "gate_number": "D3",
+      "terminal": "T3",
+      "zone": "D",
+      "level": 1,
+      "wing": "D-concourse",
+      "gate_type": "domestic",
       "description": "Gate D3 is at the end of the D-concourse in Terminal 3. It is the furthest gate from security — take the shuttle train from the main terminal or walk 15 minutes. Serves charter and cargo-mixed flights.",
-      "walking_time_from_security": "15 minutes (or 4 minutes by shuttle train)",
-      "nearby_facilities": ["Business Lounge Horizon", "Grab & Go Kiosk", "Restrooms"],
-      "status": "Operational"
+      "seating_capacity": 50,
+      "has_charging_points": false,
+      "has_accessible_seating": true,
+      "status": "Operational",
+      "nearby_facility_ids": [
+        "service-lounge-horizon",
+        "food-105",
+        "restroom-d-l1"
+      ],
+      "nearby_facilities": [
+        "Business Lounge Horizon",
+        "Grab & Go Kiosk",
+        "Restrooms"
+      ],
+      "navigation": {
+        "landmark_description": "End of D-concourse, Terminal 3. Take shuttle train from T3 main terminal.",
+        "from_security_t3": {
+          "walking_time_minutes": 15,
+          "accessible_walking_time_minutes": 20,
+          "distance_meters": 900,
+          "route": [
+            "Exit T3 security",
+            "Walk to shuttle train platform (4 min)",
+            "Board shuttle train to D-concourse (4 min)",
+            "Exit shuttle at D-concourse",
+            "Gate D3 straight ahead"
+          ],
+          "accessible_route": [
+            "Exit T3 security",
+            "Accessible path to shuttle train platform",
+            "Board shuttle train",
+            "Accessible exit at D-concourse",
+            "Gate D3 straight ahead"
+          ],
+          "shuttle_available": true,
+          "shuttle_time_minutes": 4,
+          "shuttle_frequency_minutes": 8
+        },
+        "from_main_entrance_t3": {
+          "walking_time_minutes": 28,
+          "distance_meters": 1400,
+          "route": [
+            "Enter T3 main entrance",
+            "Check-in Zone C",
+            "Clear security",
+            "Shuttle train to D-concourse",
+            "Gate D3"
+          ]
+        }
+      },
+      "known_delays": [],
+      "coordinates": {
+        "x": 200,
+        "y": 350,
+        "floor": 1,
+        "pixel_x": 912,
+        "pixel_y": 240
+      }
     }
   ],
   "terminals": [
     {
+      "terminal_id": "T1",
       "name": "Terminal 1",
       "code": "T1",
+      "full_name": "CSIA Terminal 1 - International Departures",
+      "handles": [
+        "international"
+      ],
+      "airlines_operating": [
+        "Air India",
+        "Emirates",
+        "British Airways",
+        "Lufthansa",
+        "Singapore Airlines",
+        "Qatar Airways"
+      ],
       "description": "Terminal 1 is the international departures terminal, handling all intercontinental and long-haul international flights. It features a world-class duty-free mall, premium lounges, and fine dining. The terminal spans four levels connected by escalators, elevators, and moving walkways.",
-      "facilities": [
+      "levels": {
+        "L0": "Arrivals, Baggage Claim, Customs, Immigration",
+        "L1": "Ground Transport, Taxi, Metro Connection",
+        "L2": "International Departures Check-in, Security, Gates A1-A20",
+        "L3": "Post-Security Retail, Food Courts, SkyLounge, Business Centre"
+      },
+      "zones": [
+        "A"
+      ],
+      "total_gates": 20,
+      "facilities_summary": [
         "Premium Duty-Free Mall",
         "SkyLounge Premium Lounge",
         "Café Aroma",
+        "Spice Garden",
         "Currency Exchange",
         "Medical Center",
-        "Family Prayer Rooms",
         "Baby Care Rooms",
+        "Family Prayer Rooms",
         "Business Centre",
-        "Multiple Restrooms on every floor"
+        "Restrooms on every floor"
       ],
-      "access": "Enter via the International Departures main entrance on Level 1. Dedicated drop-off zone on the ground floor. Sky Bridge connects to the hotel on Level 3."
+      "access": "Enter via the International Departures main entrance on Level 2. Dedicated drop-off zone on ground floor. Sky Bridge connects to the hotel on Level 3.",
+      "navigation": {
+        "from_metro": {
+          "walking_time_minutes": 10,
+          "route": [
+            "Exit Mumbai Metro Line 1 Sahar Station",
+            "Follow airport T1 signs",
+            "Enter T1 Departures Level 2"
+          ],
+          "distance_meters": 500
+        },
+        "from_t2_to_t1": {
+          "transport": "road",
+          "travel_time_minutes": 12,
+          "notes": "No direct shuttle between T1 and T2. Use taxi or airport transfer service."
+        }
+      },
+      "coordinates": {
+        "x": -300,
+        "y": 0,
+        "floor": 2,
+        "pixel_x": 112,
+        "pixel_y": 500
+      }
     },
     {
+      "terminal_id": "T2",
       "name": "Terminal 2",
       "code": "T2",
+      "full_name": "CSIA Terminal 2 - Domestic & Short-Haul",
+      "handles": [
+        "domestic",
+        "short_haul_international"
+      ],
+      "airlines_operating": [
+        "IndiGo",
+        "SpiceJet",
+        "Air India Express",
+        "Vistara",
+        "Akasa Air"
+      ],
       "description": "Terminal 2 handles domestic and short-haul international flights. It is modern and compact, designed for fast boarding. It features a food court, shopping, and quick-service lounges. Security is typically faster here than Terminal 1.",
-      "facilities": [
-        "The Runway Grill Restaurant",
+      "levels": {
+        "L0": "Arrivals, Baggage Claim",
+        "L1": "Ground Transport, Metro Access",
+        "L2": "Departures Check-in, Security, Gates B1-B20"
+      },
+      "zones": [
+        "B"
+      ],
+      "total_gates": 20,
+      "facilities_summary": [
+        "The Runway Grill",
         "IndiaMart Convenience Store",
         "Sky Connect Lounge",
         "ATM Cluster",
         "Pharmacy",
         "Kids Play Zone",
-        "Charging Stations throughout",
+        "Charging Stations",
         "Restrooms on Levels 1 and 2"
       ],
-      "access": "Enter via Terminal 2 Departure Hall on Level 1. Shared parking structure with Terminal 1. Shuttle bus connects Terminal 2 to Terminal 3 every 10 minutes."
+      "access": "Enter via Terminal 2 Departure Hall on Level 2. Shared parking structure with Terminal 1. Shuttle bus connects Terminal 2 to Terminal 3 every 10 minutes.",
+      "navigation": {
+        "from_metro": {
+          "walking_time_minutes": 5,
+          "route": [
+            "Exit Mumbai Metro Line 1 Sahar Station",
+            "Follow airport T2 signs",
+            "Enter T2 Departures Level 2"
+          ],
+          "distance_meters": 300
+        },
+        "from_t2_to_t3": {
+          "transport": "shuttle_bus",
+          "shuttle_frequency_minutes": 10,
+          "travel_time_minutes": 15,
+          "pickup_point": "T2 main entrance ground level, Bay 3",
+          "dropoff_point": "T3 main entrance ground level"
+        }
+      },
+      "coordinates": {
+        "x": 0,
+        "y": 0,
+        "floor": 2,
+        "pixel_x": 512,
+        "pixel_y": 500
+      }
     },
     {
+      "terminal_id": "T3",
       "name": "Terminal 3",
       "code": "T3",
+      "full_name": "CSIA Terminal 3 - Low-Cost & Regional",
+      "handles": [
+        "domestic",
+        "regional"
+      ],
+      "airlines_operating": [
+        "GoFirst",
+        "StarAir",
+        "Blue Dart Aviation"
+      ],
       "description": "Terminal 3 is a dedicated low-cost carrier and regional terminal. It offers basic amenities with budget-friendly food and retail options. The terminal has two concourses, C and D, with D-concourse served by an automated shuttle train.",
-      "facilities": [
-        "QuickBite Fast Food Court",
+      "levels": {
+        "L0": "Arrivals",
+        "L1": "Departures Check-in, Security, Gates C1-C10, D-concourse via shuttle"
+      },
+      "zones": [
+        "C",
+        "D"
+      ],
+      "total_gates": 15,
+      "facilities_summary": [
+        "QuickBite Fast Food",
         "Grab & Go Kiosk",
         "Business Lounge Horizon",
         "ATM",
@@ -88,226 +766,2542 @@
         "Restrooms in both concourses",
         "Shuttle Train to D-concourse"
       ],
-      "access": "Accessible via the Airport Ring Road on Level 1. Terminal 3 has its own dedicated check-in counters (rows 40–60). Shuttle bus from Terminal 2 stops at the T3 main entrance."
+      "access": "Accessible via the Airport Ring Road on Level 1. Terminal 3 has its own dedicated check-in counters (rows C40-C60). Shuttle bus from Terminal 2 stops at the T3 main entrance.",
+      "navigation": {
+        "from_t3_to_t2": {
+          "transport": "shuttle_bus",
+          "shuttle_frequency_minutes": 10,
+          "travel_time_minutes": 15,
+          "pickup_point": "T3 main entrance ground level",
+          "dropoff_point": "T2 main entrance ground level, Bay 3"
+        }
+      },
+      "coordinates": {
+        "x": 300,
+        "y": 0,
+        "floor": 1,
+        "pixel_x": 912,
+        "pixel_y": 500
+      }
     }
   ],
-  "food_courts": [
+  "food_outlets": [
     {
+      "outlet_id": "food-101",
       "name": "Café Aroma",
-      "cuisine": "Café & Bakery",
-      "location": "Terminal 1, Level 2, near Gate A1",
-      "timings": "04:00 AM – 11:59 PM (daily)",
-      "price_range": "₹200 – ₹800 per person",
+      "brand": "Café Aroma",
+      "category": "cafe",
+      "cuisine": [
+        "beverages",
+        "bakery",
+        "sandwiches",
+        "light bites"
+      ],
+      "terminal": "T1",
+      "level": 2,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 2, near Gate A1",
+      "landmark": "Right beside Gate A1 entrance",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "timings": {
+        "open": "04:00",
+        "close": "23:59",
+        "open_24h": false
+      },
+      "average_wait_time_minutes": 5,
+      "seating_capacity": 40,
+      "price_range": "₹200–₹800",
+      "price_tier": "mid",
+      "accepts_upi": true,
+      "accepts_card": true,
+      "accepts_cash": true,
+      "family_friendly": true,
+      "veg_options": true,
+      "vegan_options": true,
+      "jain_options": false,
+      "halal_certified": false,
+      "popular_items": [
+        "Espresso",
+        "Freshly baked croissants",
+        "Sandwiches",
+        "Gluten-free muffins"
+      ],
       "description": "Café Aroma serves artisan coffees, fresh-baked pastries, sandwiches, and light bites. Perfect for a quick snack before a long international flight. Offers specialty blends from three continents.",
-      "highlights": ["Espresso bar", "Freshly baked croissants", "Gluten-free options available"]
+      "highlights": [
+        "Espresso bar",
+        "Freshly baked croissants",
+        "Gluten-free options available"
+      ],
+      "current_offers": [
+        {
+          "offer_id": "aroma-offer-01",
+          "title": "Buy any hot beverage, get a pastry at 50% off",
+          "valid_until": "2024-12-31",
+          "applicable_items": [
+            "Espresso",
+            "Cappuccino",
+            "Latte"
+          ],
+          "promo_code": "AROMAFLY"
+        }
+      ],
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": "Comfortable seating, quiet ambience, easy menu",
+          "adult": "Great espresso and quick meal before boarding",
+          "child": "Pastries and juices available"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Grab a packaged pastry and go",
+          "under_45_min": "Quick coffee and sandwich",
+          "over_45_min": "Sit-down espresso and full breakfast"
+        },
+        "flight_type_relevance": {
+          "international": "high",
+          "domestic": "medium"
+        },
+        "popularity_score": 4.3,
+        "peak_hour_wait_minutes": 10,
+        "off_peak_wait_minutes": 3,
+        "trending_items": [
+          "Cold Brew Coffee",
+          "Avocado Sandwich"
+        ]
+      },
+      "navigation": {
+        "from_gate_a1": {
+          "walking_time_minutes": 1,
+          "distance_meters": 30,
+          "route": [
+            "Café Aroma is right next to Gate A1"
+          ]
+        },
+        "from_gate_a2": {
+          "walking_time_minutes": 3,
+          "distance_meters": 120,
+          "route": [
+            "Walk south from Gate A2",
+            "Café Aroma on left"
+          ]
+        },
+        "from_security_t1": {
+          "walking_time_minutes": 6,
+          "distance_meters": 300,
+          "route": [
+            "Exit T1 security",
+            "Follow A Gates signs",
+            "Café Aroma beside Gate A1"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -195,
+        "y": 295,
+        "floor": 2,
+        "pixel_x": 122,
+        "pixel_y": 350
+      }
     },
     {
+      "outlet_id": "food-102",
       "name": "The Runway Grill",
-      "cuisine": "Multi-Cuisine (Indian, Continental, Chinese)",
-      "location": "Terminal 2, Level 2, near Gate B12",
-      "timings": "05:30 AM – 11:00 PM (daily)",
-      "price_range": "₹350 – ₹1200 per person",
+      "brand": "The Runway Grill",
+      "category": "restaurant",
+      "cuisine": [
+        "Indian",
+        "Continental",
+        "Chinese"
+      ],
+      "terminal": "T2",
+      "level": 2,
+      "zone": "B",
+      "location_description": "Terminal 2, Level 2, near Gate B12",
+      "landmark": "Window seating with airside views near Gate B12",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "timings": {
+        "open": "05:30",
+        "close": "23:00",
+        "open_24h": false
+      },
+      "average_wait_time_minutes": 10,
+      "seating_capacity": 80,
+      "price_range": "₹350–₹1200",
+      "price_tier": "mid",
+      "accepts_upi": true,
+      "accepts_card": true,
+      "accepts_cash": true,
+      "family_friendly": true,
+      "veg_options": true,
+      "vegan_options": false,
+      "jain_options": true,
+      "halal_certified": true,
+      "popular_items": [
+        "Butter Chicken Thali",
+        "Live Pasta",
+        "Chinese Noodles",
+        "Kids Meal"
+      ],
       "description": "The Runway Grill is the main sit-down restaurant in Terminal 2. It offers a full menu spanning Indian curries and thalis, continental mains, pasta, and a dedicated Chinese corner. Great choice for families.",
-      "highlights": ["Live pasta counter", "Thali meals", "Children's menu", "Window seating with airside views"]
+      "highlights": [
+        "Live pasta counter",
+        "Thali meals",
+        "Children's menu",
+        "Window seating with airside views"
+      ],
+      "current_offers": [
+        {
+          "offer_id": "runway-offer-01",
+          "title": "Family Combo - 2 Thalis + 2 Kids Meals at ₹999",
+          "valid_until": "2024-12-31",
+          "applicable_items": [
+            "Thali",
+            "Kids Meal"
+          ],
+          "promo_code": "FAMILYFLY"
+        }
+      ],
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": "Comfortable seating, soft food options, thali meals easy to order",
+          "adult": "Full menu with Indian and continental options",
+          "child": "Dedicated kids menu, play-friendly environment near kids zone"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Skip — take something from IndiaMart instead",
+          "under_45_min": "Order thali, it comes quickly",
+          "over_45_min": "Full dining experience recommended"
+        },
+        "flight_type_relevance": {
+          "international": "low",
+          "domestic": "high"
+        },
+        "popularity_score": 4.5,
+        "peak_hour_wait_minutes": 20,
+        "off_peak_wait_minutes": 8,
+        "trending_items": [
+          "Butter Chicken Thali",
+          "Live Pasta Arrabiata"
+        ],
+        "frequently_bought_together": [
+          "shop-203"
+        ]
+      },
+      "navigation": {
+        "from_gate_b12": {
+          "walking_time_minutes": 4,
+          "distance_meters": 160,
+          "route": [
+            "From Gate B12",
+            "Walk west 160m",
+            "The Runway Grill on left"
+          ]
+        },
+        "from_security_t2": {
+          "walking_time_minutes": 8,
+          "distance_meters": 380,
+          "route": [
+            "Exit T2 security Zone B",
+            "Take escalator Level 2",
+            "Follow food signs",
+            "The Runway Grill near B12"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": 110,
+        "y": 310,
+        "floor": 2,
+        "pixel_x": 732,
+        "pixel_y": 320
+      }
     },
     {
-      "name": "QuickBite Fast Food",
-      "cuisine": "Fast Food & Snacks",
-      "location": "Terminal 3, Level 1, C-concourse entrance",
-      "timings": "24 hours (daily)",
-      "price_range": "₹100 – ₹450 per person",
-      "description": "QuickBite is a 24-hour fast food outlet offering burgers, wraps, fries, cold beverages, and meal combos. Ideal for budget travellers seeking a fast and filling option.",
-      "highlights": ["Veg and non-veg options", "Meal combos available", "Digital self-ordering kiosks"]
-    },
-    {
+      "outlet_id": "food-103",
       "name": "Spice Garden",
-      "cuisine": "South Indian & Tandoor",
-      "location": "Terminal 1, Level 3, Food Court Zone",
-      "timings": "06:00 AM – 10:00 PM (daily)",
-      "price_range": "₹250 – ₹900 per person",
+      "brand": "Spice Garden",
+      "category": "restaurant",
+      "cuisine": [
+        "South Indian",
+        "North Indian",
+        "Tandoor"
+      ],
+      "terminal": "T1",
+      "level": 3,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 3, Food Court Zone",
+      "landmark": "Level 3 food court, central zone T1",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "timings": {
+        "open": "06:00",
+        "close": "22:00",
+        "open_24h": false
+      },
+      "average_wait_time_minutes": 8,
+      "seating_capacity": 100,
+      "price_range": "₹250–₹900",
+      "price_tier": "mid",
+      "accepts_upi": true,
+      "accepts_card": true,
+      "accepts_cash": true,
+      "family_friendly": true,
+      "veg_options": true,
+      "vegan_options": false,
+      "jain_options": true,
+      "halal_certified": false,
+      "popular_items": [
+        "Masala Dosa",
+        "Biryani",
+        "Live Tandoor Roti",
+        "Filter Coffee"
+      ],
       "description": "Spice Garden specialises in authentic South Indian breakfast items (idli, dosa, vada) as well as North Indian tandoori dishes and biryanis for lunch and dinner.",
-      "highlights": ["Masala dosa", "Biryani counter from noon", "Live tandoor station"]
+      "highlights": [
+        "Masala dosa",
+        "Biryani counter from noon",
+        "Live tandoor station"
+      ],
+      "current_offers": [],
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": "Soft idli and dosa easy to eat, familiar Indian flavours",
+          "adult": "Hearty biryani or tandoor meals before long flights",
+          "child": "Plain dosa and lassi popular with kids"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Quick idli-vada takeaway available",
+          "under_45_min": "Dosa or biryani — 15 min wait",
+          "over_45_min": "Full sit-down meal recommended"
+        },
+        "flight_type_relevance": {
+          "international": "high",
+          "domestic": "medium"
+        },
+        "popularity_score": 4.6,
+        "peak_hour_wait_minutes": 15,
+        "off_peak_wait_minutes": 5,
+        "trending_items": [
+          "Hyderabadi Biryani",
+          "Masala Dosa"
+        ]
+      },
+      "navigation": {
+        "from_gate_a1": {
+          "walking_time_minutes": 8,
+          "distance_meters": 300,
+          "route": [
+            "From Gate A1",
+            "Take escalator to Level 3",
+            "Follow food court signs",
+            "Spice Garden in central zone"
+          ]
+        },
+        "from_security_t1": {
+          "walking_time_minutes": 10,
+          "distance_meters": 420,
+          "route": [
+            "Exit T1 security",
+            "Take escalator to Level 3",
+            "Food court signs to Spice Garden"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -100,
+        "y": 260,
+        "floor": 3,
+        "pixel_x": 312,
+        "pixel_y": 420
+      }
+    },
+    {
+      "outlet_id": "food-104",
+      "name": "QuickBite Fast Food",
+      "brand": "QuickBite",
+      "category": "fast_food",
+      "cuisine": [
+        "fast food",
+        "snacks",
+        "beverages"
+      ],
+      "terminal": "T3",
+      "level": 1,
+      "zone": "C",
+      "location_description": "Terminal 3, Level 1, C-concourse entrance",
+      "landmark": "Right at C-concourse entrance, Terminal 3",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "average_wait_time_minutes": 5,
+      "seating_capacity": 40,
+      "price_range": "₹100–₹450",
+      "price_tier": "budget",
+      "accepts_upi": true,
+      "accepts_card": true,
+      "accepts_cash": true,
+      "family_friendly": true,
+      "veg_options": true,
+      "vegan_options": false,
+      "jain_options": false,
+      "halal_certified": true,
+      "popular_items": [
+        "Burger",
+        "Wraps",
+        "Fries",
+        "Cold beverages",
+        "Meal combos"
+      ],
+      "description": "QuickBite is a 24-hour fast food outlet offering burgers, wraps, fries, cold beverages, and meal combos. Ideal for budget travellers seeking a fast and filling option.",
+      "highlights": [
+        "Veg and non-veg options",
+        "Meal combos available",
+        "Digital self-ordering kiosks"
+      ],
+      "current_offers": [
+        {
+          "offer_id": "qb-offer-01",
+          "title": "Meal Combo (Burger + Fries + Drink) at ₹299",
+          "valid_until": "2024-12-31",
+          "applicable_items": [
+            "Meal Combo"
+          ],
+          "promo_code": null
+        }
+      ],
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": "Simple menu, quick service, sitting area available",
+          "adult": "Fast and affordable meal before boarding",
+          "child": "Kid-friendly burgers and fries"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Self-order kiosk — fastest option in T3",
+          "under_45_min": "Meal combo quick and filling",
+          "over_45_min": "Consider Grab & Go at D3 if heading to D-concourse"
+        },
+        "flight_type_relevance": {
+          "international": "low",
+          "domestic": "high"
+        },
+        "popularity_score": 4.0,
+        "peak_hour_wait_minutes": 10,
+        "off_peak_wait_minutes": 3,
+        "trending_items": [
+          "Veggie Burger Combo",
+          "Masala Fries"
+        ]
+      },
+      "navigation": {
+        "from_gate_c5": {
+          "walking_time_minutes": 5,
+          "distance_meters": 220,
+          "route": [
+            "From Gate C5",
+            "Walk north on C-concourse",
+            "QuickBite at concourse entrance on right"
+          ]
+        },
+        "from_security_t3": {
+          "walking_time_minutes": 3,
+          "distance_meters": 120,
+          "route": [
+            "Exit T3 security",
+            "QuickBite immediately at C-concourse entrance"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -65,
+        "y": 415,
+        "floor": 1,
+        "pixel_x": 382,
+        "pixel_y": 110
+      }
+    },
+    {
+      "outlet_id": "food-105",
+      "name": "Grab & Go Kiosk",
+      "brand": "Grab & Go",
+      "category": "kiosk",
+      "cuisine": [
+        "snacks",
+        "beverages",
+        "packaged food"
+      ],
+      "terminal": "T3",
+      "level": 1,
+      "zone": "D",
+      "location_description": "Terminal 3, D-concourse near Gate D3",
+      "landmark": "Near shuttle train exit at D-concourse, beside Gate D3",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "timings": {
+        "open": "05:00",
+        "close": "23:00",
+        "open_24h": false
+      },
+      "average_wait_time_minutes": 2,
+      "seating_capacity": 10,
+      "price_range": "₹80–₹300",
+      "price_tier": "budget",
+      "accepts_upi": true,
+      "accepts_card": false,
+      "accepts_cash": true,
+      "family_friendly": true,
+      "veg_options": true,
+      "vegan_options": false,
+      "jain_options": false,
+      "halal_certified": false,
+      "popular_items": [
+        "Packaged snacks",
+        "Bottled water",
+        "Energy drinks",
+        "Sandwiches"
+      ],
+      "description": "Grab & Go Kiosk near Gate D3 offering quick packaged snacks, beverages, and light bites. Best for last-minute purchases before boarding.",
+      "highlights": [
+        "Fastest option near Gate D3",
+        "UPI payments accepted"
+      ],
+      "current_offers": [],
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": "Simple grab-and-go, no wait",
+          "adult": "Quick snack before boarding",
+          "child": "Packaged chips and juices"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Only option near D3 — grab something quickly",
+          "under_45_min": "Quick snack and drink",
+          "over_45_min": "Go back to QuickBite in C-concourse for fuller meal"
+        },
+        "flight_type_relevance": {
+          "international": "low",
+          "domestic": "high"
+        },
+        "popularity_score": 3.8,
+        "peak_hour_wait_minutes": 5,
+        "off_peak_wait_minutes": 1,
+        "trending_items": [
+          "Lay's Chips",
+          "Bisleri Water 1L"
+        ]
+      },
+      "navigation": {
+        "from_gate_d3": {
+          "walking_time_minutes": 1,
+          "distance_meters": 30,
+          "route": [
+            "Grab & Go is right beside Gate D3"
+          ]
+        },
+        "from_shuttle_exit_d": {
+          "walking_time_minutes": 1,
+          "distance_meters": 40,
+          "route": [
+            "Exit shuttle at D-concourse",
+            "Grab & Go on right before Gate D3"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": 198,
+        "y": 348,
+        "floor": 1,
+        "pixel_x": 908,
+        "pixel_y": 244
+      }
     }
   ],
   "shops": [
     {
+      "shop_id": "shop-201",
       "name": "SkyMall Duty-Free",
-      "location": "Terminal 1, Level 2, post-security (International Departures)",
-      "sku_categories": [
-        "Perfumes & Fragrances",
-        "Wines & Spirits",
-        "Tobacco",
-        "Chocolates & Confectionery",
-        "Cosmetics & Skincare",
-        "Electronics",
-        "Luxury Accessories"
+      "brand": "SkyMall",
+      "category": "duty_free",
+      "sub_category": [
+        "perfumes",
+        "wines_spirits",
+        "tobacco",
+        "chocolates",
+        "cosmetics",
+        "electronics",
+        "luxury_accessories"
+      ],
+      "terminal": "T1",
+      "level": 2,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 2, post-security, International Departures",
+      "landmark": "Largest retail space in T1, immediately after security Zone A",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "applicable_flight_types": [
+        "international"
+      ],
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "price_range": "₹500–₹1,00,000",
+      "price_tier": "premium",
+      "accepts_upi": true,
+      "accepts_card": true,
+      "accepts_cash": true,
+      "accepts_foreign_currency": true,
+      "tax_free": true,
+      "description": "SkyMall is the flagship duty-free store in Terminal 1. It is the largest retail space in the airport, spanning 4,000 sq ft, stocking global luxury and lifestyle brands. Open to all international departing passengers.",
+      "skus": [
+        {
+          "sku_id": "SM-PF-001",
+          "name": "Chanel No. 5 EDP 100ml",
+          "category": "perfume",
+          "brand": "Chanel",
+          "price_inr": 12000,
+          "duty_free_saving_percent": 30,
+          "in_stock": true,
+          "age_restricted": false
+        },
+        {
+          "sku_id": "SM-PF-002",
+          "name": "Dior Sauvage EDT 100ml",
+          "category": "perfume",
+          "brand": "Dior",
+          "price_inr": 8500,
+          "duty_free_saving_percent": 28,
+          "in_stock": true,
+          "age_restricted": false
+        },
+        {
+          "sku_id": "SM-LQ-001",
+          "name": "Johnnie Walker Black Label 1L",
+          "category": "liquor",
+          "brand": "Johnnie Walker",
+          "price_inr": 3200,
+          "duty_free_saving_percent": 35,
+          "in_stock": true,
+          "age_restricted": true,
+          "min_age": 25
+        },
+        {
+          "sku_id": "SM-CH-001",
+          "name": "Toblerone Gift Pack 360g",
+          "category": "chocolate",
+          "brand": "Toblerone",
+          "price_inr": 950,
+          "duty_free_saving_percent": 20,
+          "in_stock": true,
+          "age_restricted": false
+        },
+        {
+          "sku_id": "SM-EL-001",
+          "name": "Sony WH-1000XM5 Headphones",
+          "category": "electronics",
+          "brand": "Sony",
+          "price_inr": 28000,
+          "duty_free_saving_percent": 15,
+          "in_stock": true,
+          "age_restricted": false
+        }
       ],
       "current_offers": [
-        "Buy 2 get 1 free on selected perfumes (Chanel, Dior)",
-        "15% off on all single malt Scotch whiskies above ₹5000",
-        "Complimentary luxury gift wrapping on purchases above ₹3000"
+        {
+          "offer_id": "sm-offer-01",
+          "title": "Buy 2 get 1 free on selected perfumes (Chanel, Dior)",
+          "valid_until": "2024-12-31",
+          "applicable_categories": [
+            "perfumes"
+          ],
+          "promo_code": "PERFUME3"
+        },
+        {
+          "offer_id": "sm-offer-02",
+          "title": "15% off on all single malt Scotch whiskies above ₹5000",
+          "valid_until": "2024-12-31",
+          "applicable_categories": [
+            "wines_spirits"
+          ],
+          "promo_code": "MALT15"
+        },
+        {
+          "offer_id": "sm-offer-03",
+          "title": "Complimentary luxury gift wrapping on purchases above ₹3000",
+          "valid_until": "2024-12-31",
+          "applicable_categories": [
+            "all"
+          ],
+          "promo_code": null
+        }
       ],
-      "description": "SkyMall is the flagship duty-free store in Terminal 1. It is the largest retail space in the airport, spanning 4,000 sq ft, stocking global luxury and lifestyle brands. Open to all international departing passengers."
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": [
+            "chocolates",
+            "perfumes"
+          ],
+          "adult": [
+            "perfumes",
+            "liquor",
+            "electronics"
+          ],
+          "child": [
+            "chocolates",
+            "gift_sets"
+          ]
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Grab chocolates or a pre-packaged gift set — quick checkout",
+          "under_45_min": "Browse perfumes or pick a bottle of whisky",
+          "over_45_min": "Full shopping — electronics, perfumes, liquor, gifts"
+        },
+        "flight_type_relevance": {
+          "international": "high",
+          "domestic": "not_applicable"
+        },
+        "frequently_bought_together": [
+          "food-101"
+        ],
+        "popularity_score": 4.7,
+        "peak_hour_wait_minutes": 15,
+        "off_peak_wait_minutes": 3,
+        "trending_items": [
+          "Chanel No. 5",
+          "Toblerone Gift Pack",
+          "Dior Sauvage"
+        ]
+      },
+      "navigation": {
+        "from_security_t1": {
+          "walking_time_minutes": 2,
+          "distance_meters": 60,
+          "route": [
+            "Exit T1 security Zone A",
+            "SkyMall Duty-Free immediately on left"
+          ]
+        },
+        "from_gate_a1": {
+          "walking_time_minutes": 6,
+          "distance_meters": 260,
+          "route": [
+            "Walk south from Gate A1",
+            "Pass restrooms",
+            "SkyMall on right"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -160,
+        "y": 240,
+        "floor": 2,
+        "pixel_x": 192,
+        "pixel_y": 460
+      }
     },
     {
+      "shop_id": "shop-202",
       "name": "World Spirits & Wines",
-      "location": "Terminal 1, Level 2, near Gate A2",
-      "sku_categories": [
-        "Single Malt Whiskies",
-        "Blended Scotch",
-        "Champagne & Sparkling Wines",
-        "Red & White Wines",
-        "Craft Gins & Vodkas",
-        "Rum & Brandy"
+      "brand": "World Spirits & Wines",
+      "category": "specialty_liquor",
+      "sub_category": [
+        "single_malt",
+        "blended_scotch",
+        "champagne",
+        "wine",
+        "gin",
+        "vodka",
+        "rum"
+      ],
+      "terminal": "T1",
+      "level": 2,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 2, near Gate A2",
+      "landmark": "Specialist liquor boutique beside Gate A2, T1",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "applicable_flight_types": [
+        "international"
+      ],
+      "timings": {
+        "open": "05:00",
+        "close": "23:30",
+        "open_24h": false
+      },
+      "price_range": "₹2000–₹80,000",
+      "price_tier": "premium",
+      "accepts_upi": true,
+      "accepts_card": true,
+      "accepts_cash": true,
+      "accepts_foreign_currency": true,
+      "tax_free": true,
+      "description": "World Spirits & Wines is a specialist liquor boutique offering curated collections of premium spirits from Scotland, France, Ireland, and more. Expert staff offer tasting recommendations.",
+      "skus": [
+        {
+          "sku_id": "WSW-SM-001",
+          "name": "Glenfiddich 18 Year Old 700ml",
+          "category": "single_malt",
+          "brand": "Glenfiddich",
+          "price_inr": 9500,
+          "duty_free_saving_percent": 32,
+          "in_stock": true,
+          "age_restricted": true,
+          "min_age": 25
+        },
+        {
+          "sku_id": "WSW-CH-001",
+          "name": "Moët & Chandon Brut 750ml",
+          "category": "champagne",
+          "brand": "Moët & Chandon",
+          "price_inr": 5200,
+          "duty_free_saving_percent": 25,
+          "in_stock": true,
+          "age_restricted": true,
+          "min_age": 25
+        },
+        {
+          "sku_id": "WSW-GN-001",
+          "name": "Hendrick's Gin 700ml",
+          "category": "gin",
+          "brand": "Hendrick's",
+          "price_inr": 4800,
+          "duty_free_saving_percent": 20,
+          "in_stock": true,
+          "age_restricted": true,
+          "min_age": 25
+        }
       ],
       "current_offers": [
-        "Buy any 2 bottles and get a premium whisky glass set free",
-        "10% extra discount when you spend over ₹8000",
-        "Special pricing on Moët & Chandon Champagne this week"
+        {
+          "offer_id": "wsw-offer-01",
+          "title": "Buy any 2 bottles and get a premium whisky glass set free",
+          "valid_until": "2024-12-31",
+          "applicable_categories": [
+            "all"
+          ],
+          "promo_code": "GLASS2"
+        },
+        {
+          "offer_id": "wsw-offer-02",
+          "title": "10% extra discount when you spend over ₹8000",
+          "valid_until": "2024-12-31",
+          "applicable_categories": [
+            "all"
+          ],
+          "promo_code": "SPIRIT10"
+        },
+        {
+          "offer_id": "wsw-offer-03",
+          "title": "Special pricing on Moët & Chandon Champagne this week",
+          "valid_until": "2024-12-07",
+          "applicable_categories": [
+            "champagne"
+          ],
+          "promo_code": null
+        }
       ],
-      "description": "World Spirits & Wines is a specialist liquor boutique offering curated collections of premium spirits from Scotland, France, Ireland, and more. Expert staff offer tasting recommendations."
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": [
+            "wine",
+            "champagne"
+          ],
+          "adult": [
+            "single_malt",
+            "gin",
+            "champagne"
+          ],
+          "child": "Not applicable — age-restricted store"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Skip — browsing takes time, go to gate",
+          "under_45_min": "Pick a pre-selected bottle quickly",
+          "over_45_min": "Full tasting recommendations from expert staff"
+        },
+        "flight_type_relevance": {
+          "international": "high",
+          "domestic": "not_applicable"
+        },
+        "frequently_bought_together": [
+          "shop-201"
+        ],
+        "popularity_score": 4.5,
+        "peak_hour_wait_minutes": 8,
+        "off_peak_wait_minutes": 2,
+        "trending_items": [
+          "Glenfiddich 18 Year",
+          "Moët & Chandon Brut"
+        ]
+      },
+      "navigation": {
+        "from_gate_a2": {
+          "walking_time_minutes": 2,
+          "distance_meters": 80,
+          "route": [
+            "Walk south from Gate A2",
+            "World Spirits & Wines on left"
+          ]
+        },
+        "from_security_t1": {
+          "walking_time_minutes": 8,
+          "distance_meters": 380,
+          "route": [
+            "Exit T1 security",
+            "Follow A Gates signs",
+            "World Spirits beside Gate A2"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -175,
+        "y": 270,
+        "floor": 2,
+        "pixel_x": 162,
+        "pixel_y": 400
+      }
     },
     {
+      "shop_id": "shop-203",
       "name": "IndiaMart Convenience Store",
-      "location": "Terminal 2, Level 2, near Gate B12",
-      "sku_categories": [
-        "Snacks & Chips",
-        "Beverages (Bottled Water, Juices, Energy Drinks)",
-        "Reading Material (Books, Magazines)",
-        "Travel Accessories",
-        "Electronics (Cables, Earphones, Power Banks)",
-        "Medicines & First Aid"
+      "brand": "IndiaMart",
+      "category": "convenience",
+      "sub_category": [
+        "snacks",
+        "beverages",
+        "reading_material",
+        "travel_accessories",
+        "electronics",
+        "medicines"
+      ],
+      "terminal": "T2",
+      "level": 2,
+      "zone": "B",
+      "location_description": "Terminal 2, Level 2, near Gate B12",
+      "landmark": "Convenience store opposite Gate B12, T2",
+      "is_post_security": true,
+      "is_pre_security": false,
+      "applicable_flight_types": [
+        "domestic",
+        "international"
+      ],
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "price_range": "₹50–₹5000",
+      "price_tier": "budget",
+      "accepts_upi": true,
+      "accepts_card": true,
+      "accepts_cash": true,
+      "accepts_foreign_currency": false,
+      "tax_free": false,
+      "description": "IndiaMart is the go-to convenience store in Terminal 2, stocking everything a traveller might need at the last minute — from medicines and snacks to phone chargers and neck pillows.",
+      "skus": [
+        {
+          "sku_id": "IM-SN-001",
+          "name": "Lay's Classic Salted 52g",
+          "category": "snack",
+          "brand": "Lay's",
+          "price_inr": 30,
+          "duty_free_saving_percent": 0,
+          "in_stock": true,
+          "age_restricted": false
+        },
+        {
+          "sku_id": "IM-EL-001",
+          "name": "Anker USB-C Power Bank 10000mAh",
+          "category": "electronics",
+          "brand": "Anker",
+          "price_inr": 1800,
+          "duty_free_saving_percent": 0,
+          "in_stock": true,
+          "age_restricted": false
+        },
+        {
+          "sku_id": "IM-MD-001",
+          "name": "Combiflam Strip (10 tablets)",
+          "category": "medicine",
+          "brand": "Combiflam",
+          "price_inr": 45,
+          "duty_free_saving_percent": 0,
+          "in_stock": true,
+          "age_restricted": false
+        },
+        {
+          "sku_id": "IM-TR-001",
+          "name": "Travel Neck Pillow",
+          "category": "travel_accessory",
+          "brand": "Generic",
+          "price_inr": 350,
+          "duty_free_saving_percent": 0,
+          "in_stock": true,
+          "age_restricted": false
+        }
       ],
       "current_offers": [
-        "3 for ₹100 on selected snack packs",
-        "20% off on all power banks this week"
+        {
+          "offer_id": "im-offer-01",
+          "title": "3 snack packs for ₹100",
+          "valid_until": "2024-12-31",
+          "applicable_categories": [
+            "snacks"
+          ],
+          "promo_code": null
+        },
+        {
+          "offer_id": "im-offer-02",
+          "title": "20% off on all power banks this week",
+          "valid_until": "2024-12-07",
+          "applicable_categories": [
+            "electronics"
+          ],
+          "promo_code": "POWER20"
+        }
       ],
-      "description": "IndiaMart is the go-to convenience store in Terminal 2, stocking everything a traveller might need at the last minute — from medicines and snacks to phone chargers and neck pillows."
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": [
+            "medicines",
+            "travel_accessories",
+            "reading_material"
+          ],
+          "adult": [
+            "electronics",
+            "snacks",
+            "beverages"
+          ],
+          "child": [
+            "snacks",
+            "beverages",
+            "comics_magazines"
+          ]
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Quick grab of snacks or medicine — self-checkout fast",
+          "under_45_min": "Browse electronics, travel accessories",
+          "over_45_min": "Full browse recommended"
+        },
+        "flight_type_relevance": {
+          "international": "medium",
+          "domestic": "high"
+        },
+        "frequently_bought_together": [
+          "food-102"
+        ],
+        "popularity_score": 4.2,
+        "peak_hour_wait_minutes": 8,
+        "off_peak_wait_minutes": 2,
+        "trending_items": [
+          "Anker Power Bank",
+          "Travel Neck Pillow",
+          "Combiflam"
+        ]
+      },
+      "navigation": {
+        "from_gate_b12": {
+          "walking_time_minutes": 2,
+          "distance_meters": 60,
+          "route": [
+            "IndiaMart is directly opposite Gate B12"
+          ]
+        },
+        "from_security_t2": {
+          "walking_time_minutes": 10,
+          "distance_meters": 500,
+          "route": [
+            "Exit T2 security Zone B",
+            "Take escalator Level 2",
+            "Follow B Gates signs",
+            "IndiaMart opposite Gate B12"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": 135,
+        "y": 375,
+        "floor": 2,
+        "pixel_x": 782,
+        "pixel_y": 190
+      }
     }
   ],
   "services": [
     {
+      "service_id": "service-lounge-sky",
       "name": "SkyLounge Premium Lounge",
-      "type": "Airport Lounge",
-      "location": "Terminal 1, Level 3, near Gate A2",
-      "description": "SkyLounge offers premium travellers a quiet, comfortable environment with unlimited food and beverages, high-speed Wi-Fi, private shower suites, massage chairs, and a business centre. Accessible with eligible credit cards, airline status, or day-pass purchase.",
-      "hours": "04:30 AM – 01:00 AM (daily)",
-      "access": "Credit card (Priority Pass, Amex Platinum, HDFC Infinia), Airline Business/First Class boarding pass, or Day Pass (₹2500)"
+      "type": "lounge",
+      "terminal": "T1",
+      "level": 3,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 3, near Gate A2",
+      "landmark": "Level 3, above Gate A2 area, T1",
+      "is_post_security": true,
+      "timings": {
+        "open": "04:30",
+        "close": "01:00",
+        "open_24h": false
+      },
+      "access_types": [
+        "business_class",
+        "first_class",
+        "priority_pass",
+        "credit_card",
+        "pay_per_use"
+      ],
+      "supported_cards": [
+        "Amex Platinum",
+        "HDFC Infinia",
+        "Priority Pass",
+        "Diners Club"
+      ],
+      "pay_per_use_price_inr": 2500,
+      "amenities": [
+        "Unlimited food & beverages",
+        "High-speed Wi-Fi",
+        "Private shower suites",
+        "Massage chairs",
+        "Business centre",
+        "TV",
+        "Quiet zones"
+      ],
+      "accessible": true,
+      "family_friendly": false,
+      "capacity": 150,
+      "description": "SkyLounge offers premium travellers a quiet, comfortable environment with unlimited food and beverages, high-speed Wi-Fi, private shower suites, massage chairs, and a business centre.",
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": "Very comfortable seating, quiet, good food — highly recommended",
+          "adult": "Business class experience, great for long waits",
+          "child": "Not ideal — no kids facilities"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Skip — not worth the entry process",
+          "under_45_min": "Quick refresh and food if you have access",
+          "over_45_min": "Highly recommended — relax and eat well"
+        }
+      },
+      "navigation": {
+        "from_gate_a2": {
+          "walking_time_minutes": 3,
+          "distance_meters": 100,
+          "route": [
+            "From Gate A2",
+            "Take escalator to Level 3",
+            "SkyLounge signage on left"
+          ]
+        },
+        "from_security_t1": {
+          "walking_time_minutes": 10,
+          "distance_meters": 450,
+          "route": [
+            "Exit T1 security",
+            "Take escalator to Level 3",
+            "Follow SkyLounge signs"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -170,
+        "y": 240,
+        "floor": 3,
+        "pixel_x": 172,
+        "pixel_y": 460
+      }
     },
     {
+      "service_id": "service-lounge-connect",
       "name": "Sky Connect Lounge",
-      "type": "Airport Lounge",
-      "location": "Terminal 2, Level 2, near central security exit",
-      "description": "A mid-tier lounge in Terminal 2 offering hot and cold buffet, complimentary soft drinks and juices, Wi-Fi, and comfortable seating. Suitable for domestic travellers seeking respite before departure.",
-      "hours": "05:00 AM – 11:30 PM (daily)",
-      "access": "Select credit cards, Lounge Key membership, or Day Pass (₹1200)"
+      "type": "lounge",
+      "terminal": "T2",
+      "level": 2,
+      "zone": "B",
+      "location_description": "Terminal 2, Level 2, near central security exit",
+      "landmark": "Just past T2 security exit, central area",
+      "is_post_security": true,
+      "timings": {
+        "open": "05:00",
+        "close": "23:30",
+        "open_24h": false
+      },
+      "access_types": [
+        "credit_card",
+        "lounge_key",
+        "pay_per_use"
+      ],
+      "supported_cards": [
+        "HDFC Regalia",
+        "SBI Elite",
+        "Axis Magnus",
+        "Lounge Key"
+      ],
+      "pay_per_use_price_inr": 1200,
+      "amenities": [
+        "Hot & cold buffet",
+        "Soft drinks & juices",
+        "Wi-Fi",
+        "Comfortable seating",
+        "TV"
+      ],
+      "accessible": true,
+      "family_friendly": true,
+      "capacity": 80,
+      "description": "A mid-tier lounge in Terminal 2 offering hot and cold buffet, complimentary soft drinks and juices, Wi-Fi, and comfortable seating. Suitable for domestic travellers.",
+      "suggestions": {
+        "best_for_age_groups": {
+          "elderly": "Quiet and comfortable, easy food access",
+          "adult": "Good value at ₹1200 for domestic waits",
+          "child": "Family friendly — simple food options"
+        },
+        "time_sensitive_recommendation": {
+          "under_20_min": "Skip — not worth it",
+          "under_45_min": "Quick buffet and rest if you have access",
+          "over_45_min": "Good option for domestic terminal waits"
+        }
+      },
+      "navigation": {
+        "from_security_t2": {
+          "walking_time_minutes": 2,
+          "distance_meters": 80,
+          "route": [
+            "Exit T2 security central",
+            "Sky Connect Lounge immediately on right"
+          ]
+        },
+        "from_gate_b12": {
+          "walking_time_minutes": 8,
+          "distance_meters": 380,
+          "route": [
+            "Walk west from Gate B12",
+            "Sky Connect Lounge near security exit"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": 0,
+        "y": 220,
+        "floor": 2,
+        "pixel_x": 512,
+        "pixel_y": 500
+      }
     },
     {
+      "service_id": "service-lounge-horizon",
+      "name": "Business Lounge Horizon",
+      "type": "lounge",
+      "terminal": "T3",
+      "level": 1,
+      "zone": "D",
+      "location_description": "Terminal 3, D-concourse near Gate D3",
+      "landmark": "Only lounge in T3, near Gate D3",
+      "is_post_security": true,
+      "timings": {
+        "open": "05:00",
+        "close": "22:00",
+        "open_24h": false
+      },
+      "access_types": [
+        "pay_per_use",
+        "credit_card"
+      ],
+      "supported_cards": [
+        "HDFC Regalia",
+        "Lounge Key"
+      ],
+      "pay_per_use_price_inr": 800,
+      "amenities": [
+        "Snacks & beverages",
+        "Wi-Fi",
+        "Seating"
+      ],
+      "accessible": false,
+      "family_friendly": false,
+      "capacity": 30,
+      "description": "Basic lounge in Terminal 3 D-concourse. Limited amenities but offers a quiet space near Gate D3.",
+      "navigation": {
+        "from_gate_d3": {
+          "walking_time_minutes": 2,
+          "distance_meters": 60,
+          "route": [
+            "Walk past Gate D3",
+            "Business Lounge Horizon on left"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": 195,
+        "y": 345,
+        "floor": 1,
+        "pixel_x": 902,
+        "pixel_y": 250
+      }
+    },
+    {
+      "service_id": "service-medical",
       "name": "Airport Medical Center",
-      "type": "Medical",
-      "location": "Terminal 1, Level 1, Arrival Hall, near Exit Gate 3",
-      "description": "The Airport Medical Centre provides 24-hour emergency first aid, general consultations, vaccination certificates, blood pressure checks, and basic medicines. A licensed doctor and nurse are on duty at all times.",
-      "hours": "24 hours, 7 days a week",
-      "access": "Open to all airport visitors. No appointment needed for emergencies."
+      "type": "medical",
+      "terminal": "T1",
+      "level": 0,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 0, Arrival Hall near Exit Gate 3",
+      "landmark": "Near Exit Gate 3, Arrivals Hall, T1",
+      "is_post_security": false,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "services": [
+        "First Aid",
+        "Emergency Consultation",
+        "Vaccination Certificates",
+        "Blood Pressure Check",
+        "Basic Medicines",
+        "Wheelchair Assistance",
+        "Doctor on call"
+      ],
+      "wheelchair_available": true,
+      "wheelchair_cost": "free",
+      "emergency": true,
+      "contact": "+91-22-6685-1010",
+      "description": "The Airport Medical Centre provides 24-hour emergency first aid, general consultations, vaccination certificates, blood pressure checks, and basic medicines.",
+      "navigation": {
+        "from_t1_main_entrance": {
+          "walking_time_minutes": 5,
+          "distance_meters": 200,
+          "route": [
+            "Enter T1 Arrivals Level 0",
+            "Follow medical signs",
+            "Exit Gate 3 direction",
+            "Medical Center on right"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -180,
+        "y": 50,
+        "floor": 0,
+        "pixel_x": 152,
+        "pixel_y": 800
+      }
     },
     {
+      "service_id": "service-forex",
       "name": "ForexNow Currency Exchange",
-      "type": "Currency Exchange",
-      "location": "Terminal 1, Level 1, near Customs Exit; Terminal 2, Level 1, Check-in Hall",
-      "description": "ForexNow offers competitive exchange rates for over 30 currencies. Services include currency exchange, travel cards (multi-currency prepaid), and international money transfers. Zero commission on orders above USD 500 equivalent.",
-      "hours": "05:00 AM – 12:00 AM (daily)",
-      "access": "Open to all travellers. Bring valid passport and boarding pass."
-    },
-    {
-      "name": "Restrooms — Terminal 2 Level 1",
-      "type": "Restroom",
-      "location": "Terminal 2, Level 1, near Check-in counters B20–B30",
-      "description": "Fully accessible restrooms with separate male, female, and gender-neutral facilities. Includes baby changing stations, accessible stalls for wheelchair users, and a lactation room.",
-      "hours": "24 hours",
-      "access": "Free, open to all airport users."
-    },
-    {
-      "name": "Restrooms — Terminal 1 Level 2",
-      "type": "Restroom",
-      "location": "Terminal 1, Level 2, midway between Gate A1 and Gate A2",
-      "description": "Premium restrooms featuring automatic flushing, electronic hand dryers, and vanity stations. Accessible restroom available. Separate prayer room adjacent.",
-      "hours": "24 hours",
-      "access": "Free, open to all airside passengers."
+      "type": "currency_exchange",
+      "terminal": "T1",
+      "level": 0,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 0, near Customs Exit; Terminal 2, Level 1, Check-in Hall",
+      "landmark": "Near Customs Exit T1 and Check-in Hall T2",
+      "is_post_security": false,
+      "timings": {
+        "open": "05:00",
+        "close": "00:00",
+        "open_24h": false
+      },
+      "currencies_supported": [
+        "USD",
+        "EUR",
+        "GBP",
+        "AED",
+        "SGD",
+        "JPY",
+        "THB",
+        "CAD",
+        "AUD"
+      ],
+      "services": [
+        "Currency Exchange",
+        "Multi-currency Travel Card",
+        "International Money Transfer"
+      ],
+      "description": "ForexNow offers competitive exchange rates for over 30 currencies. Zero commission on orders above USD 500 equivalent.",
+      "navigation": {
+        "from_t1_customs_exit": {
+          "walking_time_minutes": 2,
+          "distance_meters": 60,
+          "route": [
+            "Exit T1 Customs",
+            "ForexNow on left near Exit Gate 1"
+          ]
+        },
+        "from_t2_checkin_hall": {
+          "walking_time_minutes": 3,
+          "distance_meters": 100,
+          "route": [
+            "Enter T2 Check-in Hall Level 1",
+            "ForexNow near central column"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -150,
+        "y": 80,
+        "floor": 0,
+        "pixel_x": 212,
+        "pixel_y": 740
+      }
     }
   ],
   "facilities": [
     {
+      "facility_id": "facility-kids-play",
+      "type": "family_facility",
       "name": "Kids Play Area",
-      "type": "Family Facility",
-      "location": "Terminal 2, Level 2, near Gate B12",
-      "description": "A safe, supervised play zone for children aged 2–12. Features soft-play structures, toy stations, and interactive digital games. Monitored by airport staff."
+      "terminal": "T2",
+      "level": 2,
+      "zone": "B",
+      "location_description": "Terminal 2, Level 2, near Gate B12",
+      "landmark": "Adjacent to IndiaMart Convenience Store near Gate B12",
+      "is_post_security": true,
+      "timings": {
+        "open": "06:00",
+        "close": "22:00",
+        "open_24h": false
+      },
+      "description": "A safe, supervised play zone for children aged 2-12. Features soft-play structures, toy stations, and interactive digital games. Monitored by airport staff.",
+      "accessible": true,
+      "navigation": {
+        "from_gate_b12": {
+          "walking_time_minutes": 2,
+          "distance_meters": 70,
+          "route": [
+            "From Gate B12",
+            "Walk west 70m",
+            "Kids Play Area beside IndiaMart"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": 128,
+        "y": 372,
+        "floor": 2,
+        "pixel_x": 768,
+        "pixel_y": 196
+      }
     },
     {
+      "facility_id": "facility-baby-care",
+      "type": "family_facility",
       "name": "Baby Care Room",
-      "type": "Family Facility",
-      "location": "Terminal 1, Level 2, near Gate A1; Terminal 2, Level 1, near Check-in Hall",
-      "description": "Private nursing and feeding room with comfortable seating, a changing table, warm water access, and a microwave. Free to use, no booking required."
+      "terminal": "T1",
+      "level": 2,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 2, near Gate A1; Terminal 2, Level 1, near Check-in Hall",
+      "landmark": "Near Gate A1 T1 and near Check-in Hall T2",
+      "is_post_security": true,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "description": "Private nursing and feeding room with comfortable seating, changing table, warm water access, and microwave. Free to use.",
+      "accessible": true,
+      "navigation": {
+        "from_gate_a1": {
+          "walking_time_minutes": 1,
+          "distance_meters": 40,
+          "route": [
+            "Baby Care Room immediately beside Gate A1 corridor"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -198,
+        "y": 302,
+        "floor": 2,
+        "pixel_x": 116,
+        "pixel_y": 336
+      }
     },
     {
+      "facility_id": "facility-business-centre",
+      "type": "business_facility",
       "name": "Business Centre",
-      "type": "Business Facility",
-      "location": "Terminal 1, Level 3, SkyLounge area",
-      "description": "Fully equipped business centre with private meeting pods, printing, scanning, video-conferencing facilities, and high-speed fibre internet. Available to lounge members and day-pass holders."
+      "terminal": "T1",
+      "level": 3,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 3, SkyLounge area",
+      "landmark": "Inside SkyLounge Level 3, T1",
+      "is_post_security": true,
+      "timings": {
+        "open": "05:00",
+        "close": "23:00",
+        "open_24h": false
+      },
+      "description": "Fully equipped business centre with private meeting pods, printing, scanning, video-conferencing facilities, and high-speed fibre internet. Available to lounge members and day-pass holders.",
+      "accessible": true,
+      "navigation": {
+        "from_security_t1": {
+          "walking_time_minutes": 10,
+          "distance_meters": 450,
+          "route": [
+            "Exit T1 security",
+            "Escalator to Level 3",
+            "SkyLounge area",
+            "Business Centre inside lounge"
+          ]
+        }
+      },
+      "coordinates": {
+        "x": -168,
+        "y": 238,
+        "floor": 3,
+        "pixel_x": 176,
+        "pixel_y": 464
+      }
     },
     {
+      "facility_id": "facility-charging",
+      "type": "utility",
       "name": "Charging Stations",
-      "type": "Utility",
-      "location": "Available at all gates in Terminal 1 and Terminal 2; Terminal 3 near C-concourse entrance",
-      "description": "Free multi-standard charging stations (USB-A, USB-C, Type-B, wireless Qi charging pads) located throughout all terminals. Just plug in your device."
+      "terminal": "ALL",
+      "level": null,
+      "zone": null,
+      "location_description": "Available at all gates in Terminal 1 and Terminal 2; Terminal 3 near C-concourse entrance",
+      "landmark": "At every gate seating area",
+      "is_post_security": true,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "description": "Free multi-standard charging stations (USB-A, USB-C, Type-B, wireless Qi charging pads) throughout all terminals.",
+      "accessible": true,
+      "coordinates": null
+    },
+    {
+      "facility_id": "restroom-a1-l2",
+      "type": "restroom",
+      "name": "Restrooms — Terminal 1 Level 2 (Gate A1/A2 area)",
+      "terminal": "T1",
+      "level": 2,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 2, midway between Gate A1 and Gate A2",
+      "landmark": "Between Gate A1 and Gate A2, Level 2 T1",
+      "is_post_security": true,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "accessible": true,
+      "family_restroom": true,
+      "baby_changing": true,
+      "description": "Premium restrooms with automatic flushing, electronic hand dryers, and vanity stations. Accessible restroom and separate prayer room adjacent.",
+      "coordinates": {
+        "x": -188,
+        "y": 298,
+        "floor": 2,
+        "pixel_x": 136,
+        "pixel_y": 344
+      }
+    },
+    {
+      "facility_id": "restroom-b-l2",
+      "type": "restroom",
+      "name": "Restrooms — Terminal 2 Level 2 (Gate B12 area)",
+      "terminal": "T2",
+      "level": 2,
+      "zone": "B",
+      "location_description": "Terminal 2, Level 2, between Gate B10 and B12",
+      "landmark": "Between Gate B10 and B12, Level 2 T2",
+      "is_post_security": true,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "accessible": true,
+      "family_restroom": true,
+      "baby_changing": true,
+      "description": "Fully accessible restrooms with separate male, female, and gender-neutral facilities. Baby changing stations and accessible stalls available.",
+      "coordinates": {
+        "x": 120,
+        "y": 375,
+        "floor": 2,
+        "pixel_x": 752,
+        "pixel_y": 190
+      }
+    },
+    {
+      "facility_id": "restroom-t2-l1",
+      "type": "restroom",
+      "name": "Restrooms — Terminal 2 Level 1 (Check-in area)",
+      "terminal": "T2",
+      "level": 1,
+      "zone": "B",
+      "location_description": "Terminal 2, Level 1, near Check-in counters B20-B30",
+      "landmark": "Near check-in counters B20-B30, T2 Level 1",
+      "is_post_security": false,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "accessible": true,
+      "family_restroom": true,
+      "baby_changing": true,
+      "description": "Fully accessible restrooms with baby changing stations and lactation room near check-in area.",
+      "coordinates": {
+        "x": 20,
+        "y": 80,
+        "floor": 1,
+        "pixel_x": 552,
+        "pixel_y": 740
+      }
+    },
+    {
+      "facility_id": "restroom-c-l1",
+      "type": "restroom",
+      "name": "Restrooms — Terminal 3 C-concourse",
+      "terminal": "T3",
+      "level": 1,
+      "zone": "C",
+      "location_description": "Terminal 3, Level 1, C-concourse midpoint",
+      "is_post_security": true,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "accessible": true,
+      "family_restroom": false,
+      "baby_changing": true,
+      "description": "Standard restrooms in C-concourse, T3.",
+      "coordinates": {
+        "x": -40,
+        "y": 410,
+        "floor": 1,
+        "pixel_x": 432,
+        "pixel_y": 120
+      }
+    },
+    {
+      "facility_id": "restroom-d-l1",
+      "type": "restroom",
+      "name": "Restrooms — Terminal 3 D-concourse",
+      "terminal": "T3",
+      "level": 1,
+      "zone": "D",
+      "location_description": "Terminal 3, D-concourse near Gate D3",
+      "is_post_security": true,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "accessible": false,
+      "family_restroom": false,
+      "baby_changing": false,
+      "description": "Basic restrooms near Gate D3 in D-concourse.",
+      "coordinates": {
+        "x": 192,
+        "y": 352,
+        "floor": 1,
+        "pixel_x": 896,
+        "pixel_y": 236
+      }
+    },
+    {
+      "facility_id": "facility-atm-t2",
+      "type": "atm",
+      "name": "ATM Cluster — Terminal 2",
+      "terminal": "T2",
+      "level": 1,
+      "zone": "B",
+      "location_description": "Terminal 2, Level 1, Check-in Hall central area",
+      "is_post_security": false,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "banks": [
+        "SBI",
+        "HDFC",
+        "ICICI"
+      ],
+      "description": "ATM cluster with three banks in T2 check-in hall.",
+      "coordinates": {
+        "x": -20,
+        "y": 70,
+        "floor": 1,
+        "pixel_x": 472,
+        "pixel_y": 760
+      }
+    },
+    {
+      "facility_id": "facility-atm-t3",
+      "type": "atm",
+      "name": "ATM — Terminal 3",
+      "terminal": "T3",
+      "level": 1,
+      "zone": "C",
+      "location_description": "Terminal 3, Level 1, C-concourse entrance",
+      "is_post_security": false,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "banks": [
+        "SBI"
+      ],
+      "description": "Single SBI ATM near C-concourse entrance, Terminal 3.",
+      "coordinates": {
+        "x": -62,
+        "y": 412,
+        "floor": 1,
+        "pixel_x": 388,
+        "pixel_y": 116
+      }
+    },
+    {
+      "facility_id": "facility-baggage-wrap",
+      "type": "baggage_service",
+      "name": "Baggage Wrap Service",
+      "terminal": "T3",
+      "level": 1,
+      "zone": "C",
+      "location_description": "Terminal 3, Level 1, near check-in counters C40",
+      "is_post_security": false,
+      "timings": {
+        "open": "05:00",
+        "close": "23:00",
+        "open_24h": false
+      },
+      "price_range": "₹150–₹300 per bag",
+      "description": "Baggage wrapping service to protect luggage during transit.",
+      "coordinates": {
+        "x": 250,
+        "y": 60,
+        "floor": 1,
+        "pixel_x": 1012,
+        "pixel_y": 780
+      }
+    },
+    {
+      "facility_id": "facility-prayer-t1",
+      "type": "prayer_room",
+      "name": "Family Prayer Room — T1",
+      "terminal": "T1",
+      "level": 2,
+      "zone": "A",
+      "location_description": "Terminal 1, Level 2, adjacent to Restrooms near Gate A1",
+      "is_post_security": true,
+      "timings": {
+        "open": "00:00",
+        "close": "23:59",
+        "open_24h": true
+      },
+      "description": "Quiet, multi-faith prayer and meditation room. Available to all passengers.",
+      "coordinates": {
+        "x": -186,
+        "y": 296,
+        "floor": 2,
+        "pixel_x": 140,
+        "pixel_y": 348
+      }
     }
   ],
   "check_in_counters": [
     {
+      "counter_id": "checkin-zone-a",
       "name": "International Check-in Zone A",
-      "terminal": "Terminal 1",
-      "airlines": ["Air India", "Emirates", "British Airways", "Lufthansa", "Singapore Airlines", "Qatar Airways"],
-      "counter_range": "Counters A1 – A40",
-      "description": "All international airline check-in counters are located in Terminal 1, Hall A. Self-check-in kiosks are available at the entrance. Web check-in is recommended; counters open 4 hours before departure.",
-      "hours": "Open as per flight schedules"
+      "terminal": "T1",
+      "level": 2,
+      "zone": "A",
+      "airlines": [
+        "Air India",
+        "Emirates",
+        "British Airways",
+        "Lufthansa",
+        "Singapore Airlines",
+        "Qatar Airways"
+      ],
+      "counter_range": "A1–A40",
+      "self_checkin_kiosks": true,
+      "opens_hours_before_departure": 4,
+      "closes_hours_before_departure": 1,
+      "description": "All international airline check-in counters in Terminal 1, Hall A. Self-check-in kiosks at entrance. Counters open 4 hours before departure.",
+      "coordinates": {
+        "x": -100,
+        "y": 80,
+        "floor": 2,
+        "pixel_x": 312,
+        "pixel_y": 740
+      }
     },
     {
+      "counter_id": "checkin-zone-b",
       "name": "Domestic Check-in Zone B",
-      "terminal": "Terminal 2",
-      "airlines": ["IndiGo", "SpiceJet", "Air India Express", "Vistara", "Akasa Air"],
-      "counter_range": "Counters B1 – B35",
-      "description": "Domestic airline check-in counters in Terminal 2. Bag drop counters are available for passengers who have completed web check-in. Counters open 2.5 hours before departure.",
-      "hours": "Open as per flight schedules"
+      "terminal": "T2",
+      "level": 2,
+      "zone": "B",
+      "airlines": [
+        "IndiGo",
+        "SpiceJet",
+        "Air India Express",
+        "Vistara",
+        "Akasa Air"
+      ],
+      "counter_range": "B1–B35",
+      "self_checkin_kiosks": true,
+      "opens_hours_before_departure": 2.5,
+      "closes_hours_before_departure": 0.75,
+      "description": "Domestic airline check-in counters in Terminal 2. Bag drop available for web check-in passengers. Counters open 2.5 hours before departure.",
+      "coordinates": {
+        "x": 0,
+        "y": 80,
+        "floor": 2,
+        "pixel_x": 512,
+        "pixel_y": 740
+      }
     },
     {
+      "counter_id": "checkin-zone-c",
       "name": "Budget Carrier Check-in Zone C",
-      "terminal": "Terminal 3",
-      "airlines": ["GoFirst", "StarAir", "Blue Dart Aviation"],
-      "counter_range": "Counters C40 – C60",
-      "description": "Low-cost carrier check-in counters in Terminal 3. Strict baggage weight limits apply. Self-service kiosks are available near the entrance.",
-      "hours": "Open 3 hours before first flight of the day until final departure"
+      "terminal": "T3",
+      "level": 1,
+      "zone": "C",
+      "airlines": [
+        "GoFirst",
+        "StarAir",
+        "Blue Dart Aviation"
+      ],
+      "counter_range": "C40–C60",
+      "self_checkin_kiosks": true,
+      "opens_hours_before_departure": 3,
+      "closes_hours_before_departure": 1,
+      "description": "Low-cost carrier check-in counters in Terminal 3. Strict baggage weight limits apply. Self-service kiosks near entrance.",
+      "coordinates": {
+        "x": 250,
+        "y": 60,
+        "floor": 1,
+        "pixel_x": 1012,
+        "pixel_y": 780
+      }
     }
   ],
   "baggage_belts": [
     {
+      "belt_id": "belt-1",
       "belt_number": "Belt 1",
-      "terminal": "Terminal 1",
-      "flights": ["AI101", "AI202", "EK512"],
-      "location": "Terminal 1, Arrivals Hall, Level 0, south end",
-      "description": "International arrivals baggage belt for Air India and Emirates long-haul flights. Oversized baggage collection point is adjacent to Belt 1."
+      "terminal": "T1",
+      "level": 0,
+      "zone": "A",
+      "location_description": "Terminal 1, Arrivals Hall, Level 0, south end",
+      "flights": [
+        "AI101",
+        "AI202",
+        "EK512"
+      ],
+      "description": "International arrivals baggage belt for Air India and Emirates long-haul flights. Oversized baggage collection point adjacent to Belt 1.",
+      "coordinates": {
+        "x": -100,
+        "y": 100,
+        "floor": 0,
+        "pixel_x": 312,
+        "pixel_y": 700
+      }
     },
     {
+      "belt_id": "belt-2",
       "belt_number": "Belt 2",
-      "terminal": "Terminal 1",
-      "flights": ["BA117", "LH761", "QR555"],
-      "location": "Terminal 1, Arrivals Hall, Level 0, north end",
-      "description": "International arrivals belt for British Airways, Lufthansa, and Qatar Airways. Priority baggage is marked and arrives first."
+      "terminal": "T1",
+      "level": 0,
+      "zone": "A",
+      "location_description": "Terminal 1, Arrivals Hall, Level 0, north end",
+      "flights": [
+        "BA117",
+        "LH761",
+        "QR555"
+      ],
+      "description": "International arrivals belt for British Airways, Lufthansa, and Qatar Airways. Priority baggage arrives first.",
+      "coordinates": {
+        "x": -60,
+        "y": 100,
+        "floor": 0,
+        "pixel_x": 392,
+        "pixel_y": 700
+      }
     },
     {
+      "belt_id": "belt-3",
       "belt_number": "Belt 3",
-      "terminal": "Terminal 2",
-      "flights": ["6E401", "SG305", "UK890"],
-      "location": "Terminal 2, Arrivals, Level 0, central",
-      "description": "Domestic arrivals baggage belt serving IndiGo, SpiceJet, and Vistara flights. Digital display above belt shows assigned flight numbers in real time."
+      "terminal": "T2",
+      "level": 0,
+      "zone": "B",
+      "location_description": "Terminal 2, Arrivals, Level 0, central",
+      "flights": [
+        "6E401",
+        "SG305",
+        "UK890"
+      ],
+      "description": "Domestic arrivals baggage belt serving IndiGo, SpiceJet, and Vistara flights. Digital display shows assigned flight numbers in real time.",
+      "coordinates": {
+        "x": 0,
+        "y": 100,
+        "floor": 0,
+        "pixel_x": 512,
+        "pixel_y": 700
+      }
     }
-  ]
+  ],
+  "navigation_nodes": [
+    {
+      "node_id": "node-t1-entrance",
+      "label": "T1 Main Entrance",
+      "type": "entrance",
+      "terminal": "T1",
+      "floor": 2,
+      "x": -300,
+      "y": 0,
+      "connected_nodes": [
+        {
+          "node_id": "node-checkin-a",
+          "walking_time_minutes": 5,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-t2-entrance",
+      "label": "T2 Main Entrance",
+      "type": "entrance",
+      "terminal": "T2",
+      "floor": 2,
+      "x": 0,
+      "y": 0,
+      "connected_nodes": [
+        {
+          "node_id": "node-checkin-b",
+          "walking_time_minutes": 3,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-t3-entrance",
+      "label": "T3 Main Entrance",
+      "type": "entrance",
+      "terminal": "T3",
+      "floor": 1,
+      "x": 300,
+      "y": 0,
+      "connected_nodes": [
+        {
+          "node_id": "node-checkin-c",
+          "walking_time_minutes": 3,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-checkin-a",
+      "label": "Check-in Zone A T1",
+      "type": "checkin",
+      "terminal": "T1",
+      "floor": 2,
+      "x": -100,
+      "y": 80,
+      "connected_nodes": [
+        {
+          "node_id": "node-security-a",
+          "walking_time_minutes": 5,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-checkin-b",
+      "label": "Check-in Zone B T2",
+      "type": "checkin",
+      "terminal": "T2",
+      "floor": 2,
+      "x": 0,
+      "y": 80,
+      "connected_nodes": [
+        {
+          "node_id": "node-security-b",
+          "walking_time_minutes": 5,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-checkin-c",
+      "label": "Check-in Zone C T3",
+      "type": "checkin",
+      "terminal": "T3",
+      "floor": 1,
+      "x": 250,
+      "y": 60,
+      "connected_nodes": [
+        {
+          "node_id": "node-security-c",
+          "walking_time_minutes": 4,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-security-a",
+      "label": "Security T1 Zone A",
+      "type": "security",
+      "terminal": "T1",
+      "floor": 2,
+      "x": -100,
+      "y": 180,
+      "connected_nodes": [
+        {
+          "node_id": "node-gate-a1",
+          "walking_time_minutes": 5,
+          "accessible": true
+        },
+        {
+          "node_id": "node-gate-a2",
+          "walking_time_minutes": 7,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-security-b",
+      "label": "Security T2 Zone B",
+      "type": "security",
+      "terminal": "T2",
+      "floor": 2,
+      "x": 0,
+      "y": 180,
+      "connected_nodes": [
+        {
+          "node_id": "node-gate-b12",
+          "walking_time_minutes": 10,
+          "accessible": false
+        }
+      ]
+    },
+    {
+      "node_id": "node-security-c",
+      "label": "Security T3 Zone C",
+      "type": "security",
+      "terminal": "T3",
+      "floor": 1,
+      "x": 250,
+      "y": 100,
+      "connected_nodes": [
+        {
+          "node_id": "node-gate-c5",
+          "walking_time_minutes": 8,
+          "accessible": true
+        },
+        {
+          "node_id": "node-shuttle-d",
+          "walking_time_minutes": 4,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-gate-a1",
+      "label": "Gate A1",
+      "type": "gate",
+      "terminal": "T1",
+      "floor": 2,
+      "x": -200,
+      "y": 300,
+      "connected_nodes": [
+        {
+          "node_id": "node-gate-a2",
+          "walking_time_minutes": 2,
+          "accessible": true
+        },
+        {
+          "node_id": "node-food-aroma",
+          "walking_time_minutes": 1,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-gate-a2",
+      "label": "Gate A2",
+      "type": "gate",
+      "terminal": "T1",
+      "floor": 2,
+      "x": -180,
+      "y": 300,
+      "connected_nodes": [
+        {
+          "node_id": "node-gate-a1",
+          "walking_time_minutes": 2,
+          "accessible": true
+        },
+        {
+          "node_id": "node-skylounge",
+          "walking_time_minutes": 3,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-gate-b12",
+      "label": "Gate B12",
+      "type": "gate",
+      "terminal": "T2",
+      "floor": 2,
+      "x": 140,
+      "y": 380,
+      "connected_nodes": [
+        {
+          "node_id": "node-food-runway",
+          "walking_time_minutes": 4,
+          "accessible": true
+        },
+        {
+          "node_id": "node-shop-indiamart",
+          "walking_time_minutes": 2,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-gate-c5",
+      "label": "Gate C5",
+      "type": "gate",
+      "terminal": "T3",
+      "floor": 1,
+      "x": -60,
+      "y": 420,
+      "connected_nodes": [
+        {
+          "node_id": "node-food-quickbite",
+          "walking_time_minutes": 5,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-gate-d3",
+      "label": "Gate D3",
+      "type": "gate",
+      "terminal": "T3",
+      "floor": 1,
+      "x": 200,
+      "y": 350,
+      "connected_nodes": [
+        {
+          "node_id": "node-food-grabngo",
+          "walking_time_minutes": 1,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-shuttle-d",
+      "label": "Shuttle Train to D-concourse",
+      "type": "transport",
+      "terminal": "T3",
+      "floor": 1,
+      "x": 150,
+      "y": 100,
+      "connected_nodes": [
+        {
+          "node_id": "node-gate-d3",
+          "walking_time_minutes": 4,
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "node_id": "node-food-aroma",
+      "label": "Café Aroma",
+      "type": "food",
+      "terminal": "T1",
+      "floor": 2,
+      "x": -195,
+      "y": 295
+    },
+    {
+      "node_id": "node-food-runway",
+      "label": "The Runway Grill",
+      "type": "food",
+      "terminal": "T2",
+      "floor": 2,
+      "x": 110,
+      "y": 310
+    },
+    {
+      "node_id": "node-food-quickbite",
+      "label": "QuickBite Fast Food",
+      "type": "food",
+      "terminal": "T3",
+      "floor": 1,
+      "x": -65,
+      "y": 415
+    },
+    {
+      "node_id": "node-food-grabngo",
+      "label": "Grab & Go Kiosk",
+      "type": "food",
+      "terminal": "T3",
+      "floor": 1,
+      "x": 198,
+      "y": 348
+    },
+    {
+      "node_id": "node-skylounge",
+      "label": "SkyLounge Premium Lounge",
+      "type": "lounge",
+      "terminal": "T1",
+      "floor": 3,
+      "x": -170,
+      "y": 240
+    },
+    {
+      "node_id": "node-shop-indiamart",
+      "label": "IndiaMart Convenience Store",
+      "type": "shop",
+      "terminal": "T2",
+      "floor": 2,
+      "x": 135,
+      "y": 375
+    },
+    {
+      "node_id": "node-shop-skymall",
+      "label": "SkyMall Duty-Free",
+      "type": "shop",
+      "terminal": "T1",
+      "floor": 2,
+      "x": -160,
+      "y": 240
+    }
+  ],
+  "spatial_index": {
+    "description": "Flat list of all named places for nearest-neighbor coordinate lookup",
+    "places": [
+      {
+        "place_id": "gate-a1",
+        "name": "Gate A1",
+        "floor": 2,
+        "x": -200,
+        "y": 300,
+        "category": "gate",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "gate-a2",
+        "name": "Gate A2",
+        "floor": 2,
+        "x": -180,
+        "y": 300,
+        "category": "gate",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "gate-b12",
+        "name": "Gate B12",
+        "floor": 2,
+        "x": 140,
+        "y": 380,
+        "category": "gate",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "gate-c5",
+        "name": "Gate C5",
+        "floor": 1,
+        "x": -60,
+        "y": 420,
+        "category": "gate",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "gate-d3",
+        "name": "Gate D3",
+        "floor": 1,
+        "x": 200,
+        "y": 350,
+        "category": "gate",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "food-101",
+        "name": "Café Aroma",
+        "floor": 2,
+        "x": -195,
+        "y": 295,
+        "category": "food",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "food-102",
+        "name": "The Runway Grill",
+        "floor": 2,
+        "x": 110,
+        "y": 310,
+        "category": "food",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "food-103",
+        "name": "Spice Garden",
+        "floor": 3,
+        "x": -100,
+        "y": 260,
+        "category": "food",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "food-104",
+        "name": "QuickBite Fast Food",
+        "floor": 1,
+        "x": -65,
+        "y": 415,
+        "category": "food",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "food-105",
+        "name": "Grab & Go Kiosk",
+        "floor": 1,
+        "x": 198,
+        "y": 348,
+        "category": "food",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "shop-201",
+        "name": "SkyMall Duty-Free",
+        "floor": 2,
+        "x": -160,
+        "y": 240,
+        "category": "duty_free",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "shop-202",
+        "name": "World Spirits & Wines",
+        "floor": 2,
+        "x": -175,
+        "y": 270,
+        "category": "duty_free",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "shop-203",
+        "name": "IndiaMart Convenience Store",
+        "floor": 2,
+        "x": 135,
+        "y": 375,
+        "category": "shop",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "service-lounge-sky",
+        "name": "SkyLounge Premium Lounge",
+        "floor": 3,
+        "x": -170,
+        "y": 240,
+        "category": "lounge",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "service-lounge-connect",
+        "name": "Sky Connect Lounge",
+        "floor": 2,
+        "x": 0,
+        "y": 220,
+        "category": "lounge",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "service-lounge-horizon",
+        "name": "Business Lounge Horizon",
+        "floor": 1,
+        "x": 195,
+        "y": 345,
+        "category": "lounge",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "service-medical",
+        "name": "Airport Medical Center",
+        "floor": 0,
+        "x": -180,
+        "y": 50,
+        "category": "medical",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "service-forex",
+        "name": "ForexNow Currency Exchange",
+        "floor": 0,
+        "x": -150,
+        "y": 80,
+        "category": "currency",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "restroom-a1-l2",
+        "name": "Restrooms T1 L2 Gate A area",
+        "floor": 2,
+        "x": -188,
+        "y": 298,
+        "category": "restroom",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "restroom-b-l2",
+        "name": "Restrooms T2 L2 Gate B area",
+        "floor": 2,
+        "x": 120,
+        "y": 375,
+        "category": "restroom",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "restroom-t2-l1",
+        "name": "Restrooms T2 L1 Check-in",
+        "floor": 1,
+        "x": 20,
+        "y": 80,
+        "category": "restroom",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "restroom-c-l1",
+        "name": "Restrooms T3 C-concourse",
+        "floor": 1,
+        "x": -40,
+        "y": 410,
+        "category": "restroom",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "restroom-d-l1",
+        "name": "Restrooms T3 D-concourse",
+        "floor": 1,
+        "x": 192,
+        "y": 352,
+        "category": "restroom",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "facility-kids-play",
+        "name": "Kids Play Area",
+        "floor": 2,
+        "x": 128,
+        "y": 372,
+        "category": "family",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "facility-baby-care",
+        "name": "Baby Care Room T1",
+        "floor": 2,
+        "x": -198,
+        "y": 302,
+        "category": "family",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "facility-atm-t2",
+        "name": "ATM Cluster T2",
+        "floor": 1,
+        "x": -20,
+        "y": 70,
+        "category": "atm",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "facility-atm-t3",
+        "name": "ATM T3",
+        "floor": 1,
+        "x": -62,
+        "y": 412,
+        "category": "atm",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "facility-prayer-t1",
+        "name": "Prayer Room T1",
+        "floor": 2,
+        "x": -186,
+        "y": 296,
+        "category": "prayer_room",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "facility-baggage-wrap",
+        "name": "Baggage Wrap Service T3",
+        "floor": 1,
+        "x": 250,
+        "y": 60,
+        "category": "baggage",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "checkin-zone-a",
+        "name": "Check-in Zone A T1",
+        "floor": 2,
+        "x": -100,
+        "y": 80,
+        "category": "checkin",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "checkin-zone-b",
+        "name": "Check-in Zone B T2",
+        "floor": 2,
+        "x": 0,
+        "y": 80,
+        "category": "checkin",
+        "terminal": "T2"
+      },
+      {
+        "place_id": "checkin-zone-c",
+        "name": "Check-in Zone C T3",
+        "floor": 1,
+        "x": 250,
+        "y": 60,
+        "category": "checkin",
+        "terminal": "T3"
+      },
+      {
+        "place_id": "belt-1",
+        "name": "Baggage Belt 1 T1",
+        "floor": 0,
+        "x": -100,
+        "y": 100,
+        "category": "baggage_belt",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "belt-2",
+        "name": "Baggage Belt 2 T1",
+        "floor": 0,
+        "x": -60,
+        "y": 100,
+        "category": "baggage_belt",
+        "terminal": "T1"
+      },
+      {
+        "place_id": "belt-3",
+        "name": "Baggage Belt 3 T2",
+        "floor": 0,
+        "x": 0,
+        "y": 100,
+        "category": "baggage_belt",
+        "terminal": "T2"
+      }
+    ]
+  }
 }
