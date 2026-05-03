@@ -14,7 +14,13 @@ export default function ChatWindow({ messages, isLoading }) {
   return (
     <div className="chat-window" role="log" aria-live="polite" aria-label="Chat history">
       {messages.map((msg, i) => (
-        <MessageBubble key={i} text={msg.text} role={msg.role} time={msg.time} />
+        <MessageBubble
+          key={`${msg.time}-${i}`}
+          utteranceId={`msg-${i}-${msg.time}`}
+          text={msg.text}
+          role={msg.role}
+          time={msg.time}
+        />
       ))}
 
       {isLoading && (

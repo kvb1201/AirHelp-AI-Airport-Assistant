@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchFacilities, fetchMapData, fetchNavigation, fetchShops } from '../services/api';
+import TtsMiniBar from './TtsMiniBar';
 import { formatRouteTimeCompact, formatRouteTimeLine } from '../utils/routeEstimate';
+import { buildRouteSpeechText } from '../utils/routeSpeech';
 import { buildTerminalPlanProjection, PLAN_H, PLAN_W } from '../utils/terminalPlanGeometry';
 
 const BUSY_TERMINAL_STORAGE_KEY = 'airhelp_busy_terminal';
@@ -902,13 +904,32 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
 
               {Array.isArray(route.simple_journey?.bullets) && route.simple_journey.bullets.length > 0 ? (
                 <>
-                  <div className="terminal-map-journey-heading">Your route</div>
+                  <div className="terminal-map-journey-heading terminal-map-journey-heading--row">
+                    <span>Your route</span>
+                    {buildRouteSpeechText(route) ? (
+                      <TtsMiniBar
+                        sessionId="map-route-side"
+                        text={buildRouteSpeechText(route)}
+                        buttonClass="terminal-map-tts-btn"
+                        wrapClass="terminal-map-tts-wrap"
+                      />
+                    ) : null}
+                  </div>
                   <ul className="terminal-map-journey-bullets">
                     {route.simple_journey.bullets.map((line, i) => (
                       <li key={i}>{line}</li>
                     ))}
                   </ul>
                 </>
+              ) : buildRouteSpeechText(route) ? (
+                <div className="terminal-map-read-row">
+                  <TtsMiniBar
+                    sessionId="map-route-side"
+                    text={buildRouteSpeechText(route)}
+                    buttonClass="terminal-map-tts-btn"
+                    wrapClass="terminal-map-tts-wrap"
+                  />
+                </div>
               ) : null}
 
               {Array.isArray(route.shops_along_route?.picks) && route.shops_along_route.picks.length > 0 ? (

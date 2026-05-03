@@ -49,7 +49,8 @@ async def chat_endpoint(request: ChatRequest):
     # ----------------------------
     result = await handle_chat(
         user_input=request.message,
-        user_context=context
+        user_context=context,
+        language=request.language or "en",
     )
 
     # ----------------------------

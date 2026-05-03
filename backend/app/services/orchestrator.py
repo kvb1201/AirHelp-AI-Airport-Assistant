@@ -196,7 +196,7 @@ def _format_navigation(nav_data: Dict[str, Any]) -> str:
 # -------------------------------
 # 🔹 MAIN ORCHESTRATOR
 # -------------------------------
-async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+async def handle_chat(user_input: str, user_context: Dict[str, Any], language: str = "en") -> Dict[str, Any]:
 
     extracted = locate_from_query(user_input)
     extracted["raw_query"] = user_input
@@ -276,13 +276,15 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str
     # -------------------------------
     # 🔹 FALLBACK
     # -------------------------------
-    response_text = await call_llm(f"""
+    response_text = await call_llm(
+        f"""
 {SYSTEM_PROMPT}
 
 USER QUERY: {user_input}
 AVAILABLE OPTIONS:
 {json.dumps(rag_data, indent=2) if rag_data else "None"}
-""")
+""",
+    )
 
     return {
         "type": intent,
