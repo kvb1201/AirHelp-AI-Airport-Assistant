@@ -17,6 +17,9 @@ from app.services.rag_service import init_rag
 async def lifespan(app: FastAPI):
     print("🚀 AI Airport Companion API starting...")
 
+    lost_found_storage.init_db()
+    print(f"📦 Lost & Found storage (SQLite on this laptop): {lost_found_storage.get_db_path()}")
+
     try:
         init_rag()
         print("✅ RAG initialized successfully")
@@ -79,25 +82,4 @@ async def global_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
         status_code=500,
         content={"message": "Internal server error"},
-    )
-
-
-# ----------------------------
-# 🔹 Startup Event
-# ----------------------------
-@app.on_event("startup")
-async def startup_event():
-    print("🚀 AI Airport Companion API started")
-    lost_found_storage.init_db()
-    print(f"📦 Lost & Found storage (SQLite on this laptop): {lost_found_storage.get_db_path()}")
-
-    try:
-        init_rag()   # 🔥 Initialize RAG once
-        print("✅ RAG initialized successfully")
-    except Exception as e:
-        print(f"❌ RAG initialization failed: {e}")
-        content={
-            "message": "Internal server error",
-            "details": str(exc),  # 🔥 helpful during dev (remove in prod)
-        },
     )
