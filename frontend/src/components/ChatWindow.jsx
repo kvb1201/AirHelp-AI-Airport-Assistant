@@ -26,7 +26,7 @@ export default function ChatWindow({ messages, isLoading }) {
       {isLoading && (
         <div className="typing-row">
           <div className="bot-avatar" aria-hidden="true">
-            <span className="ms">smart_toy</span>
+            <span className="bot-avatar-initial">A</span>
           </div>
           <div className="typing-bubble" aria-label="Assistant is typing">
             <span /><span /><span />

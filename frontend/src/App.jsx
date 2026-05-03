@@ -20,7 +20,7 @@ function formatTime() {
 }
 
 const WELCOME = {
-  text: "Hi! I'm here to help you with airport facilities, flights, or any issues. How can I assist you?",
+  text: 'Ask about Terminal 2 facilities, flights, walking routes, or issues. How can we help?',
   role: 'bot',
   time: formatTime(),
 };
@@ -160,7 +160,7 @@ function App() {
           </button>
           <div className="mobile-header-title">
             <h1>AirHelp</h1>
-            <p>Smart help for your journey</p>
+            <p>Terminal 2 airport information</p>
           </div>
           <button type="button" className="mobile-header-bell" aria-label="Notifications (coming soon)">
             <span className="ms">notifications</span>
@@ -242,7 +242,7 @@ function App() {
           <InputBox
             onSend={handleSend}
             isLoading={isLoading}
-            placeholder="Ask me anything…"
+            placeholder="Type your question…"
           />
           <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
         </div>
