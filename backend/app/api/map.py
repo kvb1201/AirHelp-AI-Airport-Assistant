@@ -5,7 +5,8 @@ from pathlib import Path
 
 from fastapi import APIRouter, Query
 
-from app.core.graph.airport_data import EDGES, GRAPH_META, NODES
+from app.core.graph.airport_data import NODES
+from app.core.graph.load_layout import load_graph_bundle
 from app.services.facilities_loader import load_facilities_bom
 from app.services.route_narrative import passenger_place_name
 from app.services.shops_loader import load_shops_t2_l02
@@ -55,13 +56,14 @@ def _group_facilities_by_graph_node(facilities: list[dict]) -> list[dict]:
 @router.get("/map")
 def get_terminal_map():
     """Nodes with x/y for SVG + edges for optional drawing."""
+    nodes_dict, edges_list, graph_meta = load_graph_bundle()
     nodes: list[dict] = []
-    for nid, meta in NODES.items():
+    for nid, meta in nodes_dict.items():
         row = {"id": nid, **meta}
         row["passenger_name"] = passenger_place_name(row)
         nodes.append(row)
-    edges = [{"from": a, "to": b, "minutes": m} for a, b, m in EDGES]
-    return {"meta": GRAPH_META, "nodes": nodes, "edges": edges}
+    edges = [{"from": a, "to": b, "minutes": m} for a, b, m in edges_list]
+    return {"meta": graph_meta, "nodes": nodes, "edges": edges}
 
 
 @router.get("/catalog")

@@ -162,7 +162,7 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
   };
 
   return (
-    <div className="nav-flow">
+    <div className={`nav-flow nav-flow--full-bleed${step === 'detail' ? ' nav-flow--step-detail' : ''}`}>
       <header className="nav-flow-header">
         <div>
           <h1 className="nav-flow-title">Walking directions</h1>

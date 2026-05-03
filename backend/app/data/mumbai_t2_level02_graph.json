@@ -11,6 +11,17 @@
     "units": {
       "edge_weight": "walk_minutes",
       "xy": "0-100 normalized to terminal bounding box"
+    },
+    "plan_image_transform": {
+      "tx_px": -122,
+      "ty_px": 18,
+      "scale_x": 1.018,
+      "scale_y": 0.998,
+      "about": "Applied in the map UI only to the floor JPEG (1609×2033 viewBox). Graph 0–100 coordinates stay as in this file (from scripts/build_mumbai_t2_l02_graph.py). Adjust these until corridor art lines up with dots; optional URL override still wins: ?mapCalib=tx,ty,kx,ky"
+    },
+    "plan_graph_to_image": {
+      "flip_180": true,
+      "about": "When true, plot graph/shops/facilities/route at (100−x, 100−y) so quadrants match the official Level_02 plan (same bytes as public/mumbai-t2-l2-plan.jpg). The build script uses a schematic butterfly with origin top-left; the raster is oriented so a 180° mapping aligns landside/baggage with the artwork."
     }
   },
   "nodes": {

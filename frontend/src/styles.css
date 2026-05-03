@@ -602,10 +602,18 @@ body {
 .terminal-map-body {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr minmax(240px, 300px);
+  grid-template-columns: minmax(0, 1.85fr) minmax(260px, 360px);
   gap: var(--space-md);
-  padding: var(--space-md) var(--margin-desk);
+  padding: var(--space-md) max(16px, calc((100vw - 1440px) / 2 + 16px)) var(--space-md);
   overflow: hidden;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .terminal-map-body {
+    grid-template-columns: 1fr minmax(240px, 320px);
+    padding: var(--space-md) var(--margin-desk);
+  }
 }
 
 @media (max-width: 900px) {
@@ -622,19 +630,24 @@ body {
   position: relative;
   margin-inline: auto;
   box-sizing: border-box;
-  width: min(100%, calc(min(72vh, 640px) * (1609 / 2033)));
+  width: min(100%, calc(min(88vh, 920px) * (1609 / 2033)));
   max-width: 100%;
   aspect-ratio: 1609 / 2033;
-  max-height: min(72vh, 640px);
+  max-height: min(88vh, 920px);
   flex: 0 0 auto;
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--outline-variant);
   background: var(--surface-container-low);
+  min-width: 0;
 }
 
-.terminal-map-bg,
-.terminal-map-svg-overlay {
+.terminal-map-stack--route-focus {
+  box-shadow: 0 0 0 2px rgba(115, 92, 0, 0.35);
+}
+
+/* Single SVG: viewBox matches JPEG pixels; graph uses nx/ny in JS — no HTML/SVG drift. */
+.terminal-map-svg-full {
   position: absolute;
   left: 0;
   top: 0;
@@ -643,21 +656,16 @@ body {
   display: block;
 }
 
-.terminal-map-bg {
-  object-fit: contain;
-  object-position: center;
+.terminal-map-floor-image {
   pointer-events: none;
-  user-select: none;
 }
 
-.terminal-map-svg-overlay {
-  pointer-events: auto;
-  z-index: 1;
+.terminal-map-route-line--focus {
+  filter: drop-shadow(0 1px 2px rgba(115, 92, 0, 0.45));
 }
 
 .terminal-map-route-line {
   stroke: #735c00;
-  stroke-width: 0.55px;
 }
 
 .terminal-map-node-label {
@@ -716,13 +724,25 @@ body {
   display: inline-block;
 }
 
+.terminal-map-legend--route-focus {
+  max-width: 100%;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.terminal-map-legend-route-msg {
+  display: block;
+  color: var(--on-surface);
+  font-weight: 500;
+}
+
 .terminal-map-side {
   padding: var(--space-sm);
   border-radius: var(--radius-lg);
   border: 1px solid var(--outline-variant);
   background: rgba(255, 255, 255, 0.75);
   align-self: start;
-  max-height: min(72vh, 640px);
+  max-height: min(88vh, 920px);
   overflow-y: auto;
 }
 
@@ -879,6 +899,17 @@ body {
 .terminal-map-btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.terminal-map-btn--secondary {
+  margin-top: 8px;
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+}
+
+.terminal-map-btn--secondary:hover {
+  background: var(--primary-container);
 }
 
 .terminal-map-side-error {
@@ -1102,6 +1133,29 @@ body {
 .nav-flow {
   min-height: 100%;
   background: var(--surface-container-lowest);
+}
+
+/* Use full main column width instead of a narrow 720px column. */
+.nav-flow--full-bleed .nav-flow-body {
+  max-width: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-flow--full-bleed .nav-flow-lead {
+  max-width: none;
+}
+
+.nav-flow--full-bleed .nav-flow-panel {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+@media (min-width: 900px) {
+  .nav-flow--full-bleed .nav-flow-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .nav-flow-header {
