@@ -36,6 +36,8 @@ function App() {
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
+  /** When chat triggers navigation: `{ start, end }`. Consumed by NavigationFlowView. */
+  const [chatNav, setChatNav] = useState(null);
 
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
@@ -118,6 +120,12 @@ function App() {
       const data = await sendChatMessage(text, currentLocation);
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
+
+      // 🚀 Navigation intercept: auto-redirect to Navigation view
+      if (data.type === 'navigation' && data.data?.start && data.data?.end) {
+        setChatNav({ start: data.data.start, end: data.data.end });
+        handleNavSelect('Navigation');
+      }
     } catch (err) {
       console.error('API error:', err);
       setMessages((prev) => [
@@ -184,6 +192,9 @@ function App() {
                 location={location}
                 onLocationChange={setLocation}
                 onOpenFloorMap={openFloorMap}
+                chatNavStart={chatNav?.start || null}
+                chatNavEnd={chatNav?.end || null}
+                onChatNavConsumed={() => setChatNav(null)}
               />
             ) : showFacilities ? (
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />

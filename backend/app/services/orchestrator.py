@@ -3,7 +3,7 @@ import re
 from typing import Any, Dict, List, Optional
 
 from app.services.llm_service import call_llm
-from app.services.navigation_service import plan_navigation_from_chat
+from app.services.navigation_service import plan_navigation_from_chat, get_route
 from app.services.rag_service import search
 from app.services.locating_engine import locate_from_query
 from app.services.context_engine import update_context
@@ -223,9 +223,175 @@ def _format_multi_results(results: List[Dict]) -> str:
     return "\n".join(lines)
 
 
+# ===============================
+# 🚀 NAVIGATION INTEGRATION
+# ===============================
+
+
 # -------------------------------
+# 1. Navigation Trigger Detection
+# -------------------------------
+def _is_navigation_request(msg: str) -> bool:
+    """Detect if the user is asking for navigation/directions."""
+    m = msg.lower().strip()
+    triggers = [
+        "navigate",
+        "take me",
+        "directions",
+        "how do i go",
+        "route",
+        "how do i get to",
+        "walk me to",
+        "guide me to",
+    ]
+    return any(t in m for t in triggers)
+
+
+# -------------------------------
+# 2. Node Mapping
+# -------------------------------
+def _map_to_node(location_str: str) -> str:
+    """
+    Map human-readable location strings to graph node IDs.
+    RAG returns names like 'Gate D3', 'food court', etc.
+    The navigation graph uses snake_case IDs.
+    """
+    if not location_str:
+        return "entrance"
+
+    loc = location_str.strip().lower()
+
+    # Direct gate pattern: "gate d3" → "gate_d3", "gate b12" → "gate_b12"
+    gate_match = re.match(r"gate\s+([a-z]?\d+)", loc)
+    if gate_match:
+        return f"gate_{gate_match.group(1)}"
+
+    # Known landmark mappings
+    known = {
+        "food court": "food_court",
+        "food_court": "food_court",
+        "security": "security",
+        "security checkpoint": "security",
+        "entrance": "entrance",
+        "main entrance": "entrance",
+        "baggage claim": "baggage",
+        "baggage": "baggage",
+        "check-in": "checkin",
+        "checkin": "checkin",
+        "check in": "checkin",
+        "restroom": "restroom",
+        "washroom": "restroom",
+        "toilet": "restroom",
+        "lounge": "lounge",
+        "duty free": "duty_free",
+        "duty-free": "duty_free",
+        "information": "info",
+        "info desk": "info",
+        "medical": "medical",
+        "atm": "atm",
+    }
+
+    if loc in known:
+        return known[loc]
+
+    # Generic: replace spaces/hyphens with underscores
+    normalized = re.sub(r"[\s\-]+", "_", loc)
+    normalized = re.sub(r"[^a-z0-9_]", "", normalized)
+
+    return normalized if normalized else "entrance"
+
+
+# -------------------------------
+# 3. Destination Resolution
+# -------------------------------
+def _resolve_destination(msg: str, context: Dict[str, Any]) -> Optional[str]:
+    """
+    Resolve destination from message or context.
+
+    CASE A: "navigate" alone → use context["selected"]
+    CASE B: "navigate to gate b12" → extract from message
+    CASE C: "navigate to option 2" → use context["last_results"][index]
+    """
+    m = msg.lower().strip()
+
+    # CASE C: "option N" or "navigate to option N"
+    option_match = re.search(r"option\s+(\d+)", m)
+    if option_match:
+        idx = int(option_match.group(1)) - 1  # 1-indexed → 0-indexed
+        last_results = context.get("last_results", [])
+        if 0 <= idx < len(last_results):
+            result = last_results[idx]
+            return result.get("name") or result.get("location", "")
+        return None
+
+    # CASE B: "navigate to <destination>" / "take me to <destination>"
+    dest_patterns = [
+        r"navigate\s+to\s+(.+)",
+        r"take\s+me\s+to\s+(.+)",
+        r"directions\s+to\s+(.+)",
+        r"route\s+to\s+(.+)",
+        r"how\s+do\s+i\s+go\s+to\s+(.+)",
+        r"how\s+do\s+i\s+get\s+to\s+(.+)",
+        r"walk\s+me\s+to\s+(.+)",
+        r"guide\s+me\s+to\s+(.+)",
+    ]
+    for pattern in dest_patterns:
+        match = re.search(pattern, m)
+        if match:
+            return match.group(1).strip()
+
+    # CASE A: bare "navigate" / "directions" → use context["selected"]
+    selected = context.get("selected")
+    if selected:
+        return selected.get("name") or selected.get("location", "")
+
+    return None
+
+
+# -------------------------------
+# 4. Navigation API Call
+# -------------------------------
+def _call_navigation_api(start: str, end: str) -> Dict[str, Any]:
+    """
+    Call the navigation service directly (same process).
+    Uses get_route which resolves labels → graph nodes → shortest path.
+    """
+    print(f"[NAV] Calling get_route: start={start}, end={end}")
+
+    return get_route(
+        start,
+        end,
+        local_hour=12,
+        busy_terminal=False,
+    )
+
+
+# -------------------------------
+# 5. Format Navigation Response
+# -------------------------------
+def _format_navigation_response(nav_data: Dict[str, Any]) -> str:
+    """Convert navigation API output into readable step-by-step directions."""
+    if not nav_data.get("ok"):
+        hint = nav_data.get("hint", "")
+        error = nav_data.get("error", "unknown")
+        if hint:
+            return f"I couldn't generate a route. {hint}"
+        return f"I couldn't generate a route ({error})."
+
+    steps = nav_data.get("steps", [])
+    if not steps:
+        return "I couldn't generate a route."
+
+    total_time = nav_data.get("total_time_minutes", "?")
+    header = f"Here is your route (~{total_time} min walk):\n"
+    step_lines = "\n".join([f"{i+1}. {s}" for i, s in enumerate(steps)])
+
+    return header + step_lines
+
+
+# ===============================
 # 🔹 MAIN ORCHESTRATOR
-# -------------------------------
+# ===============================
 async def handle_chat(user_input: str, user_context: Dict[str, Any], language: str = "en") -> Dict[str, Any]:
 
     # STEP 1: Locate
@@ -245,9 +411,69 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
             "context": user_context,
         }
 
-    # -------------------------------
-    # 🔥 STEP 3: SAFE INTENT LOGIC (FIXED)
-    # -------------------------------
+    # ===============================
+    # 🚀 NAVIGATION INTERCEPT (BEFORE RAG)
+    # ===============================
+    if _is_navigation_request(user_input):
+        print(f"[ORCHESTRATOR] Navigation request detected: {user_input}")
+
+        location = user_context.get("source")
+        destination_raw = _resolve_destination(user_input, user_context)
+
+        # --- Validate source ---
+        if not location:
+            return {
+                "type": "clarification",
+                "intent": "navigation",
+                "message": "Where are you currently?",
+                "data": {"navigation": None, "recommendations": None},
+                "context": user_context,
+            }
+
+        # --- Validate destination ---
+        if not destination_raw:
+            return {
+                "type": "clarification",
+                "intent": "navigation",
+                "message": "Where would you like to go?",
+                "data": {"navigation": None, "recommendations": None},
+                "context": user_context,
+            }
+
+        # --- Map to node IDs ---
+        start_node = _map_to_node(location)
+        end_node = _map_to_node(destination_raw)
+
+        print(f"[NAV] Resolved: '{location}' → {start_node}, '{destination_raw}' → {end_node}")
+
+        # --- Call navigation ---
+        nav_data = _call_navigation_api(start_node, end_node)
+
+        # --- Update context ---
+        user_context["mode"] = "navigation"
+
+        # --- Format response ---
+        if nav_data.get("ok"):
+            message = _format_navigation_response(nav_data)
+            return {
+                "type": "navigation",
+                "intent": "navigation",
+                "message": message,
+                "data": {"navigation": nav_data, "start": start_node, "end": end_node},
+                "context": user_context,
+            }
+        else:
+            return {
+                "type": "navigation",
+                "intent": "navigation",
+                "message": _format_navigation_response(nav_data),
+                "data": {"navigation": nav_data, "start": start_node, "end": end_node},
+                "context": user_context,
+            }
+
+    # ===============================
+    # 🔥 STEP 3: SAFE INTENT LOGIC (EXISTING)
+    # ===============================
     if _is_followup_query(user_input) and user_context.get("intent"):
         intent = user_context.get("intent")
     else:
@@ -316,11 +542,13 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
     # 🔹 RESPONSE ROUTING
     # -------------------------------
     if nav_data and nav_data.get("ok"):
+        start_id = nav_data.get("start_id", "")
+        goal_id = nav_data.get("goal_id", "")
         return {
             "type": "navigation",
             "intent": intent,
             "message": _format_navigation(nav_data),
-            "data": {"navigation": nav_data, "recommendations": rag_data},
+            "data": {"navigation": nav_data, "recommendations": rag_data, "start": start_id, "end": goal_id},
             "context": user_context,
         }
 
@@ -350,11 +578,20 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
             if multi else _format_single_result(rag_data[0])
         )
 
+        # 🔥 STORE SELECTED RESULT
+        if rag_data:
+            user_context["selected"] = rag_data[0]
+            user_context["last_results"] = rag_data
+
         return {
             "type": "recommendation",
             "intent": intent,
             "message": message,
-            "data": {"navigation": nav_data, "recommendations": rag_data},
+            "data": {
+                "navigation": nav_data,
+                "recommendations": rag_data,
+                "selected": rag_data[0] if rag_data else None   # 👈 IMPORTANT
+            },
             "context": user_context,
         }
 
