@@ -217,7 +217,7 @@ def pick_milestone_indices(path_nodes: list[dict[str, Any]]) -> list[int]:
         kind = str(p.get("kind") or "")
         zone_break = p.get("zone") != prev.get("zone")
         landmark = kind in MILESTONE_KINDS
-        long_leg = (i - last_kept) >= 9
+        long_leg = (i - last_kept) >= 14
         if landmark or zone_break or long_leg:
             ms.append(i)
             last_kept = i
@@ -233,6 +233,19 @@ def segment_minutes(edges: list[dict[str, Any]], i_from: int, i_to_idx: int) -> 
         if e < len(edges):
             total += int(edges[e].get("minutes", 0))
     return max(total, 0)
+
+
+def _merge_adjacent_same_label(segments: list[tuple[str, int]]) -> list[tuple[str, int]]:
+    out: list[tuple[str, int]] = []
+    for lab, m in segments:
+        if m <= 0:
+            continue
+        if out and out[-1][0] == lab:
+            prev_lab, prev_m = out[-1]
+            out[-1] = (prev_lab, prev_m + m)
+        else:
+            out.append((lab, m))
+    return out
 
 
 def build_simple_journey(
@@ -253,34 +266,51 @@ def build_simple_journey(
             "milestone_count": 1,
         }
 
-    bullets.append(
-        f"Start at {_short_label(path_nodes[0])}. The whole walk is about {total_time_minutes} minutes."
-    )
-    last_dest_label = _short_label(path_nodes[0])
+    start_l = _short_label(path_nodes[0])
+    end_l = _short_label(path_nodes[-1])
+    bullets.append(f"About {total_time_minutes} min walk: {start_l} → {end_l}.")
+
+    segments: list[tuple[str, int]] = []
     for s in range(len(ms) - 1):
         a, b = ms[s], ms[s + 1]
         m = segment_minutes(edges, a, b)
         dest = path_nodes[b]
         lab = _short_label(dest)
-        main_repeat = lab.startswith("Main hall —") and last_dest_label.startswith("Main hall —")
-        if main_repeat:
-            tail = lab.removeprefix("Main hall —").strip()
-            if s == len(ms) - 2:
-                bullets.append(
-                    f"Then move further through the main hall ({tail}) — about {m} more minutes."
-                )
+        segments.append((lab, m))
+
+    merged = _merge_adjacent_same_label(segments)
+    # At most three extra lines so the block stays easy to scan on a phone.
+    _MAX_WALK_LINES = 3
+    if not merged:
+        pass
+    elif len(merged) == 1:
+        lab, m = merged[0]
+        bullets.append(f"Head toward {lab} (~{m} min).")
+    elif len(merged) <= _MAX_WALK_LINES:
+        for i, (lab, m) in enumerate(merged):
+            if i == len(merged) - 1:
+                bullets.append(f"Last: {lab} (~{m} min).")
             else:
-                bullets.append(
-                    f"Continue through the main hall ({tail}) — about {m} minutes on this part."
-                )
-        elif s == len(ms) - 2:
-            bullets.append(f"Then head to {lab} — about {m} more minutes.")
+                bullets.append(f"Then: {lab} (~{m} min).")
+    else:
+        *middle, last = merged
+        mid_total = sum(x[1] for x in middle)
+        # Shorten middle labels for one summary line (avoid a wall of text).
+        uniq: list[str] = []
+        for lab, _ in middle:
+            if not uniq or uniq[-1] != lab:
+                uniq.append(lab)
+        if len(uniq) > 4:
+            summary = "reclaim, security, main hall & piers"
         else:
-            bullets.append(f"Continue toward {lab} — about {m} minutes on this part.")
-        last_dest_label = lab
+            summary = " · ".join(uniq)
+        bullets.append(f"Middle of the route ({summary}) — about {mid_total} min total.")
+        lb, lm = last
+        bullets.append(f"Finish: {lb} (~{lm} min).")
+
     return {
         "title": f"About {total_time_minutes} min",
-        "subtitle": f"{_short_label(path_nodes[0])} → {_short_label(path_nodes[-1])}",
+        "subtitle": f"{start_l} → {end_l}",
         "bullets": bullets,
         "milestone_count": len(ms),
     }
