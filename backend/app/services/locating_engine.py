@@ -1,138 +1,135 @@
 # backend/app/services/locating_engine.py
 
-import re
 from typing import Dict, Optional
 
-
-# -------------------------------
-# 🔹 Normalize Helpers
-# -------------------------------
-def _normalize_terminal(num: str) -> str:
-    return f"terminal_{num}"
-
-
-def _normalize_gate(letter: str, number: str) -> str:
-    return f"gate_{letter.upper()}{number}"
+from app.services.location_semantic_engine import semantic_resolve
+from app.services.location_mapping_engine import map_locations
 
 
 # -------------------------------
-# 🔹 Extract Terminal
+# 🔹 Intent Keywords
 # -------------------------------
-def extract_terminal(text: str) -> Optional[str]:
-    match = re.search(r"\bterminal\s*([1-3])\b", text.lower())
-    if match:
-        return _normalize_terminal(match.group(1))
-    return None
-
-
-# -------------------------------
-# 🔹 Extract Gate
-# -------------------------------
-def extract_gate(text: str) -> Optional[str]:
-    match = re.search(r"\bgate\s*([a-zA-Z])(\d+)\b", text.lower())
-    if match:
-        return _normalize_gate(match.group(1), match.group(2))
-    return None
+INTENT_KEYWORDS = {
+    "food": ["food", "eat", "restaurant"],
+    "coffee": ["coffee", "cafe"],
+    "lounge": ["lounge"],
+    "atm": ["atm", "cash"],
+    "wifi": ["wifi", "internet"],
+    "shop": ["shop", "buy"],
+}
 
 
 # -------------------------------
-# 🔹 Detect Directional Intent
+# 🔹 Detect Query Type
 # -------------------------------
-def extract_direction(text: str) -> Dict[str, Optional[str]]:
-    text = text.lower()
+def _detect_query_type(text: str) -> str:
+    t = text.lower()
 
-    result = {
-        "source": None,
-        "destination": None,
-    }
+    if any(x in t for x in ["go to", "navigate", "where is", "find"]):
+        return "destination"
 
-    # Example: "from terminal 1 to gate B12"
-    from_match = re.search(r"from\s+(.*?)(to|$)", text)
-    to_match = re.search(r"to\s+(.*)", text)
+    if any(x in t for x in ["i am", "near", "at", "currently"]):
+        return "source"
 
-    if from_match:
-        result["source"] = extract_location(from_match.group(1))
-
-    if to_match:
-        result["destination"] = extract_location(to_match.group(1))
-
-    return result
+    return "intent"
 
 
 # -------------------------------
-# 🔹 Extract Location (fallback)
+# 🔹 Extract Intent
 # -------------------------------
-def extract_location(text: str) -> Optional[str]:
-    # priority: gate > terminal
-    gate = extract_gate(text)
-    if gate:
-        return gate
+def _extract_intent(text: str) -> Optional[str]:
+    t = text.lower()
 
-    terminal = extract_terminal(text)
-    if terminal:
-        return terminal
+    for intent, keywords in INTENT_KEYWORDS.items():
+        if any(k in t for k in keywords):
+            return intent
 
     return None
 
 
 # -------------------------------
-# 🔹 Detect "near" bias
-# -------------------------------
-def extract_near(text: str) -> Optional[str]:
-    match = re.search(r"near\s+(.*)", text.lower())
-    if match:
-        return extract_location(match.group(1))
-    return None
-
-
-# -------------------------------
-# 🔹 Main Locating Engine
+# 🔹 MAIN LOCATING ENGINE
 # -------------------------------
 def locate_from_query(message: str) -> Dict:
     """
-    Extract structured location + navigation signals.
-
-    Returns:
-    {
-        "location": inferred current location,
-        "destination": inferred target,
-        "explicit": bool (user explicitly mentioned location)
-    }
+    Final decision engine:
+    Combines semantic + mapping + logic layer
     """
 
-    message = message.lower()
+    # -------------------------------
+    # STEP 1: Query Type
+    # -------------------------------
+    query_type = _detect_query_type(message)
 
-    direction = extract_direction(message)
-    near_location = extract_near(message)
+    # -------------------------------
+    # STEP 2: Intent
+    # -------------------------------
+    intent = _extract_intent(message)
 
-    fallback_location = extract_location(message)
+    # -------------------------------
+    # STEP 3: Semantic Layer
+    # -------------------------------
+    semantic_output = semantic_resolve(message)
 
-    location = None
+    # -------------------------------
+    # STEP 4: Mapping Layer
+    # -------------------------------
+    mapping_output = map_locations(
+        query=message,
+        source_candidates=None,  # regex layer can be added later
+        semantic_candidates=semantic_output,
+    )
+
+    print("MAPPING OUTPUT:", mapping_output)
+
+    # -------------------------------
+    # STEP 5: Decision Layer (FIXED)
+    # -------------------------------
+    source = None
     destination = None
-    explicit = False
+
+    # 🔥 TRUST mapping (critical fix)
+    mapped_location = mapping_output.get("source")
+
+    if mapped_location:
+
+        if query_type == "destination":
+            destination = mapped_location
+        else:
+            source = mapped_location
 
     # -------------------------------
-    # 🔥 Priority Logic
+    # STEP 6: Clarification Logic
     # -------------------------------
+    if source is None and destination is None:
+        return {
+            "source": None,
+            "destination": None,
+            "intent": intent,
+            "needs_clarification": True,
+            "clarification_message": "Where are you currently? For example: Terminal 1, Gate A1.",
+            "confidence": 0.0,
+        }
 
-    # Case 1: "from X to Y"
-    if direction["source"] or direction["destination"]:
-        location = direction["source"]
-        destination = direction["destination"]
-        explicit = True
+    # -------------------------------
+    # STEP 7: Confidence
+    # -------------------------------
+    confidence_map = {
+        "high": 0.9,
+        "medium": 0.7,
+        "low": 0.4,
+    }
 
-    # Case 2: "near X"
-    elif near_location:
-        location = near_location
-        explicit = True
+    confidence = confidence_map.get(mapping_output.get("confidence"), 0.5)
 
-    # Case 3: only one location mentioned
-    elif fallback_location:
-        location = fallback_location
-        explicit = True
-
+    # -------------------------------
+    # STEP 8: Final Output
+    # -------------------------------
     return {
-        "location": location,
+        "source": source,
         "destination": destination,
-        "explicit": explicit,
+        "intent": intent,
+        "needs_clarification": False,
+        "clarification_message": None,
+        "confidence": confidence,
     }
