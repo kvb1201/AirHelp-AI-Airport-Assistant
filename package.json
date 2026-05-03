@@ -8,7 +8,10 @@
     "scrape": "node scripts/run.mjs scrape",
     "scrape:flights": "node scripts/scrape_csmia_flights.mjs",
     "test": "node scripts/run.mjs test",
-    "build:graph": "python3 scripts/build_mumbai_t2_l02_graph.py"
+    "build:graph": "python3 scripts/build_mumbai_t2_l02_graph.py",
+    "piper:voices": "node scripts/run.mjs piper-voices",
+    "piper:install": "node scripts/run.mjs piper-install",
+    "piper:setup": "node scripts/run.mjs piper-setup"
   },
   "devDependencies": {
     "playwright": "^1.49.1"
