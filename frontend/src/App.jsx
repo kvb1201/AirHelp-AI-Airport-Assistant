@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import HomeContent from './components/HomeContent';
 import RightPanel from './components/RightPanel';
+import TerminalMapView from './components/TerminalMapView';
 import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
@@ -23,9 +24,12 @@ const WELCOME = {
 export default function App() {
   const [messages, setMessages] = useState([WELCOME]);
   const [isLoading, setIsLoading] = useState(false);
-  const [location, setLocation] = useState('entrance');
+  const [location, setLocation] = useState('t2_entrance');
   const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
   const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'trips' | 'map' | 'profile'
+  const [sidebarNav, setSidebarNav] = useState('Home');
+
+  const showMap = sidebarNav === 'Map' || mobileView === 'map';
 
   const handleSend = async (text, loc = null) => {
     const currentLocation = loc ?? location;
@@ -62,7 +66,7 @@ export default function App() {
   return (
     <div className="app-container">
       {/* ── Left Sidebar (Desktop) ── */}
-      <Sidebar />
+      <Sidebar activeNav={sidebarNav} onNavChange={setSidebarNav} />
 
       {/* ── Main Body ── */}
       <div className="app-body">
@@ -93,25 +97,28 @@ export default function App() {
         </header>
 
         {/* Content area */}
-        <div className="content-area">
+        <div className={`content-area${showMap ? ' content-area--map' : ''}`}>
           <main className="main-content">
-            {/* Home screen — always visible on desktop; on mobile only when mobileView is 'home' */}
-            <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
-              <HomeContent onSend={handleSend} />
-            </div>
-
-            {/* Mobile chat history — shown when user has been chatting */}
-            {mobileView === 'chat' && (
-              <div className="mobile-chat-history">
-                <div style={{ paddingTop: 16 }}>
-                  <ChatWindow messages={messages} isLoading={isLoading} />
+            {showMap ? (
+              <TerminalMapView location={location} onLocationChange={setLocation} />
+            ) : (
+              <>
+                <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
+                  <HomeContent onSend={handleSend} />
                 </div>
-              </div>
+
+                {mobileView === 'chat' && (
+                  <div className="mobile-chat-history">
+                    <div style={{ paddingTop: 16 }}>
+                      <ChatWindow messages={messages} isLoading={isLoading} />
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </main>
 
-          {/* Right Panel (desktop) */}
-          <RightPanel />
+          {!showMap && <RightPanel />}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}

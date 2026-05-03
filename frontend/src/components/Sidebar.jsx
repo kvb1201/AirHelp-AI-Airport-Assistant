@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const NAV_ITEMS = [
-  { label: 'Home',         icon: 'home',          active: true },
-  { label: 'Flights',      icon: 'flight_takeoff', active: false },
-  { label: 'Facilities',   icon: 'apartment',      active: false },
-  { label: 'Map',          icon: 'map',            active: false },
-  { label: 'My Trips',     icon: 'work',           active: false },
-  { label: 'Help & Support', icon: 'help',         active: false },
-  { label: 'Settings',     icon: 'settings',       active: false },
+  { label: 'Home', icon: 'home', active: true },
+  { label: 'Flights', icon: 'flight_takeoff', active: false },
+  { label: 'Facilities', icon: 'apartment', active: false },
+  { label: 'Map', icon: 'map', active: false },
+  { label: 'My Trips', icon: 'work', active: false },
+  { label: 'Help & Support', icon: 'help', active: false },
+  { label: 'Settings', icon: 'settings', active: false },
 ];
 
-export default function Sidebar() {
-  const [activeItem, setActiveItem] = useState('Home');
-
+export default function Sidebar({ activeNav, onNavChange }) {
   return (
     <aside className="sidebar" role="navigation" aria-label="Main navigation">
-      {/* Brand */}
       <div className="sidebar-header">
         <div className="brand">
           <div className="brand-logo" aria-hidden="true">
@@ -30,14 +27,14 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {/* Navigation */}
       <nav className="sidebar-nav">
         {NAV_ITEMS.map((item) => (
           <button
             key={item.label}
-            className={`nav-item ${activeItem === item.label ? 'active' : ''}`}
-            onClick={() => setActiveItem(item.label)}
-            aria-current={activeItem === item.label ? 'page' : undefined}
+            type="button"
+            className={`nav-item ${activeNav === item.label ? 'active' : ''}`}
+            onClick={() => onNavChange(item.label)}
+            aria-current={activeNav === item.label ? 'page' : undefined}
           >
             <span className="ms">{item.icon}</span>
             {item.label}
@@ -45,7 +42,6 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* User Profile */}
       <div className="sidebar-footer">
         <div className="user-profile" role="button" tabIndex={0} aria-label="User profile">
           <div className="user-avatar" aria-hidden="true">P</div>
