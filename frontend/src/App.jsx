@@ -1,45 +1,73 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import Sidebar from './components/Sidebar';
+import HomeContent from './components/HomeContent';
+import RightPanel from './components/RightPanel';
+import TerminalMapView from './components/TerminalMapView';
+import NavigationFlowView from './components/NavigationFlowView';
+import FacilitiesDirectoryView from './components/FacilitiesDirectoryView';
+import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
 import QuickActions from './components/QuickActions';
+import BottomNav from './components/BottomNav';
 import { sendChatMessage } from './services/api';
 import './styles.css';
 
-const WELCOME = {
-  text: "Hi! I'm your AI Airport Companion. Ask me about gates, food, services, or let me know where you are.",
-  role: 'bot',
-  time: formatTime(),
-};
-
-/** Returns a short HH:MM timestamp string. */
 function formatTime() {
   return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
+const WELCOME = {
+  text: "Hi! I'm here to help you with airport facilities, flights, or any issues. How can I assist you?",
+  role: 'bot',
+  time: formatTime(),
+};
+
 export default function App() {
   const [messages, setMessages] = useState([WELCOME]);
   const [isLoading, setIsLoading] = useState(false);
-  const [location, setLocation] = useState('entrance');
+  const [location, setLocation] = useState('t2_entrance');
+  const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
+  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'map' | 'nav' | 'facilities' | 'profile'
+  const [sidebarNav, setSidebarNav] = useState('Home');
+  /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
+  const [mapLaunch, setMapLaunch] = useState(null);
 
-  /**
-   * Core send function — adds user message, calls API, appends bot reply.
-   * @param {string} text       - Message text
-   * @param {string|null} loc   - Optional location override from quick actions
-   */
+  const showMap = sidebarNav === 'Map' || mobileView === 'map';
+  const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
+  const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
+
+  const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
+
+  const openFloorMap = useCallback((payload) => {
+    if (payload?.fromId) setLocation(payload.fromId);
+    setMapLaunch(payload || null);
+    setSidebarNav('Map');
+    setMobileView('map');
+  }, []);
+
+  const goToFacilityOnMap = useCallback(
+    ({ graphNodeId }) => {
+      openFloorMap({ fromId: location, toId: graphNodeId, routeIndex: 0 });
+    },
+    [location, openFloorMap],
+  );
+
   const handleSend = async (text, loc = null) => {
-    // Resolve location: quick action may carry a location update
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
 
-    // Append user message immediately
     const userMsg = { text, role: 'user', time: formatTime() };
     setMessages((prev) => [...prev, userMsg]);
     setIsLoading(true);
 
+    // Switch mobile to chat view when user sends a message
+    setMobileView('chat');
+    // Ensure desktop panel is open
+    setChatOpen(true);
+
     try {
       const data = await sendChatMessage(text, currentLocation);
-      console.log('API response:', data); // Log full response for debugging
-
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
     } catch (err) {
@@ -53,30 +81,107 @@ export default function App() {
     }
   };
 
-  // Called when a quick action button is clicked
   const handleQuickAction = ({ message, location: actionLocation }) => {
     handleSend(message, actionLocation);
   };
 
   return (
-    <div className="app">
-      {/* ── Header ── */}
-      <header className="app-header">
-        <div className="header-icon" aria-hidden="true">✈️</div>
-        <div className="header-text">
-          <h1>Airport Companion</h1>
-          <p className="subtitle">AI-powered airport assistant</p>
+    <div className="app-container">
+      {/* ── Left Sidebar (Desktop) ── */}
+      <Sidebar activeNav={sidebarNav} onNavChange={setSidebarNav} />
+
+      {/* ── Main Body ── */}
+      <div className="app-body">
+
+        {/* Desktop Header */}
+        <header className="desktop-header" role="banner">
+          <button className="header-lang-btn" aria-label="Change language">
+            <span className="ms" style={{ fontSize: 16 }}>language</span>
+            EN
+          </button>
+          <div className="header-avatar" role="button" tabIndex={0} aria-label="User account">
+            G
+          </div>
+        </header>
+
+        {/* Mobile Header */}
+        <header className="mobile-header" role="banner">
+          <button className="mobile-header-menu" aria-label="Open menu">
+            <span className="ms">menu</span>
+          </button>
+          <div className="mobile-header-title">
+            <h1>AirHelp</h1>
+            <p>Smart help for your journey</p>
+          </div>
+          <button className="mobile-header-bell" aria-label="Notifications">
+            <span className="ms">notifications</span>
+          </button>
+        </header>
+
+        {/* Content area */}
+        <div
+          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
+        >
+          <main className="main-content">
+            {showMap ? (
+              <TerminalMapView
+                location={location}
+                onLocationChange={setLocation}
+                launchRoute={mapLaunch}
+                onLaunchRouteConsumed={clearMapLaunch}
+              />
+            ) : showNavFlow ? (
+              <NavigationFlowView
+                location={location}
+                onLocationChange={setLocation}
+                onOpenFloorMap={openFloorMap}
+              />
+            ) : showFacilities ? (
+              <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
+            ) : (
+              <>
+                <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
+                  <HomeContent onSend={handleSend} onOpenNavigation={() => { setSidebarNav('Navigation'); setMobileView('nav'); }} onOpenFloorMap={openFloorMap} />
+                </div>
+
+                {mobileView === 'chat' && (
+                  <div className="mobile-chat-history">
+                    <div style={{ paddingTop: 16 }}>
+                      <ChatWindow messages={messages} isLoading={isLoading} />
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+
+          {!showMap && !showNavFlow && !showFacilities && <RightPanel />}
         </div>
-      </header>
 
-      {/* ── Scrollable chat area ── */}
-      <ChatWindow messages={messages} isLoading={isLoading} />
+        {/* ── Mobile Bottom Area (fixed) ── */}
+        <div className="mobile-bottom">
+          {mobileView === 'home' && (
+            <QuickActions onAction={handleQuickAction} />
+          )}
+          <InputBox
+            onSend={handleSend}
+            isLoading={isLoading}
+            placeholder="Ask me anything…"
+          />
+          <BottomNav activeView={mobileView} onViewChange={setMobileView} />
+        </div>
+      </div>
 
-      {/* ── Quick action pills ── */}
-      <QuickActions onAction={handleQuickAction} />
-
-      {/* ── Fixed input bar ── */}
-      <InputBox onSend={handleSend} isLoading={isLoading} />
+      {/* ── Floating Chat Panel (Desktop only) ── */}
+      <ChatPanel
+        messages={messages}
+        isLoading={isLoading}
+        onSend={handleSend}
+        isOpen={chatOpen}
+        onToggle={() => setChatOpen((prev) => !prev)}
+        onClose={() => setChatOpen(false)}
+        mapMode={showMap}
+      />
     </div>
   );
 }

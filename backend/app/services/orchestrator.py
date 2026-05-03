@@ -1,92 +1,186 @@
 # backend/app/services/orchestrator.py
 
+import json
 from typing import Any, Dict
 
 from app.services.llm_service import call_llm
-from app.services.rag_service import get_relevant_context
+from app.services.navigation_service import plan_navigation_from_chat
+from app.services.rag_service import search
+from app.core.llm.prompts import SYSTEM_PROMPT
 
 
+# -------------------------------
+# 🔹 Intent Detection
+# -------------------------------
 def detect_intent(message: str) -> str:
-    """Classify the user's message into one of the current backend flows."""
     msg = message.lower()
 
-    if any(word in msg for word in ["gate", "navigate", "direction", "reach"]):
+    if any(word in msg for word in [
+        "gate", "navigate", "direction", "reach",
+        "walk", "how do i get", "where is"
+    ]):
         return "navigation"
 
-    if any(
-        word in msg
-        for word in ["food", "eat", "coffee", "restaurant", "shop", "buy", "lounge", "service", "forex"]
-    ):
+    if any(word in msg for word in [
+        "food", "eat", "coffee", "restaurant"
+    ]):
         return "recommendation"
 
-    if any(word in msg for word in ["time", "late", "delay", "flight", "boarding"]):
+    if any(word in msg for word in [
+        "time", "late", "delay"
+    ]):
         return "time_check"
 
     return "general"
 
 
-async def handle_chat(user_input: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
-    """Route the chat request and ground the prompt in structured airport data."""
+# -------------------------------
+# 🔹 Format RAG Response Safely
+# -------------------------------
+def _format_rag_response(top: Dict[str, Any]) -> str:
+    name = top.get("name") or "A place"
+    location = top.get("location")
+
+    if location:
+        message = f"{name} is located at {location}."
+    else:
+        message = f"{name} is available."
+
+    if top.get("description"):
+        message += f" {top.get('description')}"
+
+    return message
+
+
+# -------------------------------
+# 🔹 Format Navigation Response
+# -------------------------------
+def _format_navigation(nav_data: Dict[str, Any]) -> str:
+    steps = nav_data.get("steps", [])
+
+    if not steps:
+        return "I couldn't generate a route."
+
+    return "Here is your route:\n" + "\n".join(
+        [f"{i+1}. {step}" for i, step in enumerate(steps)]
+    )
+
+
+# -------------------------------
+# 🔹 Main Orchestrator
+# -------------------------------
+async def handle_chat(
+    user_input: str,
+    user_context: Dict[str, Any],
+) -> Dict[str, Any]:
+
     intent = detect_intent(user_input)
+
+    location = user_context.get("location") or "entrance"
+    destination = user_context.get("destination")
 
     nav_data = None
     rag_data = None
-    rag_context = get_relevant_context(user_input)
 
+    # -------------------------------
+    # 🔹 Service Calls
+    # -------------------------------
     if intent == "navigation":
-        nav_data = {
-            "path": ["security", "corridor_A", "gate_B12"],
-            "total_time": 6,
-            "steps": [
-                "Walk straight from security",
-                "Enter Corridor A",
-                "Continue to Gate B12",
-            ],
+        rag_data = search(user_input, location)
+
+        nav_data = plan_navigation_from_chat(
+            user_message=user_input,
+            location_label=location,
+            destination_label=destination,
+            rag_snippets=rag_data if rag_data else None,
+        )
+
+    elif intent == "recommendation":
+        rag_data = search(user_input, location)
+
+    # -------------------------------
+    # 🔥 1. Deterministic Navigation
+    # -------------------------------
+    if nav_data and nav_data.get("ok"):
+        message = _format_navigation(nav_data)
+
+        return {
+            "type": "navigation",
+            "intent": "navigation",
+            "message": message,
+            "data": {
+                "navigation": nav_data,
+                "recommendations": rag_data,
+            },
+            "context": {
+                **user_context,
+                "location": location,
+                "destination": nav_data.get("goal_id"),
+                "last_route": nav_data,
+            },
         }
 
-    elif intent in {"recommendation", "general", "time_check"}:
-        # Recommendation data now comes from the compiled knowledge base instead
-        # of hardcoded mock values, so the prompt stays grounded in repo data.
-        rag_data = rag_context["places"]
+    # -------------------------------
+    # 🔥 2. Deterministic RAG (CRITICAL)
+    # -------------------------------
+    if intent == "recommendation" and rag_data:
+        message = _format_rag_response(rag_data[0])
 
-    location = user_context.get("location", "unknown")
-    destination = user_context.get("destination", None)
+        return {
+            "type": "recommendation",
+            "intent": "recommendation",
+            "message": message,
+            "data": {
+                "navigation": nav_data,
+                "recommendations": rag_data,
+            },
+            "context": {
+                **user_context,
+                "location": location,
+                "last_recommendations": rag_data,
+            },
+        }
+
+    # -------------------------------
+    # 🔹 LLM Fallback (ONLY when needed)
+    # -------------------------------
+    nav_block = json.dumps(nav_data, indent=2) if nav_data else "None"
+    rag_block = json.dumps(rag_data, indent=2) if rag_data else "None"
 
     prompt = f"""
-You are an intelligent airport assistant.
+{SYSTEM_PROMPT}
 
-STRICT RULES:
-- Do NOT make up information
-- ONLY use the provided data
-- If unsure, say "I don't have that information"
+USER LOCATION:
+{location}
 
-USER CONTEXT:
-Location: {location}
-Destination: {destination}
+AVAILABLE OPTIONS:
+{rag_block}
 
 NAVIGATION DATA:
-{nav_data}
-
-STRUCTURED PLACE DATA:
-{rag_data}
-
-RETRIEVED KNOWLEDGE CHUNKS:
-{rag_context["chunks"]}
+{nav_block}
 
 USER QUERY:
 {user_input}
-
-Provide a helpful, concise response.
 """
 
     response_text = await call_llm(prompt)
 
+    # -------------------------------
+    # 🔹 Context Update
+    # -------------------------------
     updated_context = dict(user_context)
-    if intent == "navigation":
-        updated_context["destination"] = "gate_B12"
-    if location:
-        updated_context["location"] = location
 
+    updated_context["location"] = location
+
+    if destination:
+        updated_context["destination"] = destination
+
+    if rag_data:
+        updated_context["last_recommendations"] = rag_data
+
+    # -------------------------------
+    # 🔹 Final Response
+    # -------------------------------
     return {
         "type": intent,
         "intent": intent,
@@ -94,8 +188,6 @@ Provide a helpful, concise response.
         "data": {
             "navigation": nav_data,
             "recommendations": rag_data,
-            "knowledge_chunks": rag_context["chunks"],
         },
         "context": updated_context,
     }
-

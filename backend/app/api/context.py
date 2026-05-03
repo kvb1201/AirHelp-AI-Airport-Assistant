@@ -5,4 +5,4 @@ router = APIRouter()
 
 @router.get("/context/{user_id}")
 def get_context(user_id: str):
-    return get_user_context(user_id)
+    return get_user_context(user_id) or {}

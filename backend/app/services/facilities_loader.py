@@ -1,0 +1,53 @@
+"""Load CSMIA airport facilities overlay CSV (normalized x,y + graph node hints)."""
+
+from __future__ import annotations
+
+import csv
+from pathlib import Path
+
+_FACILITIES_CSV = Path(__file__).resolve().parents[1] / "data" / "facilities_bom.csv"
+
+
+def load_facilities_bom() -> list[dict[str, object]]:
+    if not _FACILITIES_CSV.is_file():
+        return []
+    rows: list[dict[str, object]] = []
+    with _FACILITIES_CSV.open(encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for raw in reader:
+            rid = (raw.get("facility_id") or "").strip()
+            if not rid:
+                continue
+            try:
+                xn = float(raw["x_norm"])
+                yn = float(raw["y_norm"])
+            except (KeyError, ValueError):
+                continue
+            gid = (raw.get("graph_node_id") or "").strip()
+            listing = (raw.get("listing_location") or "").strip()
+            hint = (raw.get("near_graph_hint") or "").strip()
+            terminal = (raw.get("terminal") or "").strip()
+            traffic_type = (raw.get("traffic_type") or "").strip()
+            landmark = (raw.get("landmark") or "").strip()
+            rows.append(
+                {
+                    "facility_id": rid,
+                    "name_display": (raw.get("name_display") or "").strip(),
+                    "name_normalized": (raw.get("name_normalized") or "").strip(),
+                    "category": (raw.get("category") or "").strip(),
+                    "x_norm": round(xn, 4),
+                    "y_norm": round(yn, 4),
+                    "floor": (raw.get("floor") or "L02").strip(),
+                    "zone": (raw.get("zone") or "").strip(),
+                    "source": (raw.get("source") or "csv").strip(),
+                    "confidence": (raw.get("confidence") or "unknown").strip(),
+                    "graph_node_id": gid,
+                    "listing_location": listing,
+                    "near_graph_hint": hint or gid or listing,
+                    "page_url": (raw.get("page_url") or "").strip(),
+                    "terminal": terminal,
+                    "traffic_type": traffic_type,
+                    "landmark": landmark,
+                }
+            )
+    return rows

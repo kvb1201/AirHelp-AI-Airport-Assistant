@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "security_extra_boost_minutes": 0,
+  "notes": "Ops / nightly job: raise security_extra_boost_minutes when aggregated telemetry suggests heavier queues (e.g. +2). Ships with the app or via CDN download for hybrid offline clients."
+}

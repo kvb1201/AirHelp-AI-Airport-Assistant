@@ -34,11 +34,15 @@ async def chat_endpoint(request: ChatRequest):
     # ----------------------------
     # 🔹 Step 2: Update context (location etc.)
     # ----------------------------
+    patch = {}
     if request.location:
-        update_user_context(request.user_id, {
-            "location": request.location
-        })
+        patch["location"] = request.location
         context["location"] = request.location
+    if request.destination is not None:
+        patch["destination"] = request.destination
+        context["destination"] = request.destination
+    if patch:
+        update_user_context(request.user_id, patch)
 
     # ----------------------------
     # 🔹 Step 3: Call orchestrator

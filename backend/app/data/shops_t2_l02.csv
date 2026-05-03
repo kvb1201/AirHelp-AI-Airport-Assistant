@@ -1,0 +1,272 @@
+shop_id,name_display,name_normalized,category,x_norm,y_norm,floor,zone,source,confidence,graph_node_id,listing_location,near_graph_hint
+csmia_60543eee9a7312,Amrapali,amrapali,jewellary,50.6308,32.0615,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_90e66c7ed23b6f,Armani Exchange,armani_exchange,apparel,50.2769,40.6923,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_39c06d18f61708,Balenzia,balenzia,fashion_accessories,49.5385,30.4615,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_3f8b5735571dcb,BIBA,biba,apparel,50.6308,39.4,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_85862d785790d4,Bikaji,bikaji,sweets_/_packed_foods,51.6923,32.5077,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_00a815a43d239a,Bookscetra (New Store),bookscetra_new_store,ctn,51.2462,40.5846,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_2dbc2681ad6fab,Carlton,carlton,luggage_and_bags,50.4,41.6769,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_a53386f695d11e,Carlton,carlton,luggage_and_bags,50.6,33.3538,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_38a4933c227186,Chitale Bandhu,chitale_bandhu,sweets_/_packed_foods,8.9077,94.1077,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_64e026d0beb0f5,Cococart,cococart,confectionary,9.0154,94.1692,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Arrival Hall,bom_t1_retail_hub
+csmia_bd01d7e63427ee,Cococart,cococart,confectionary,6.3538,92.7077,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_af850e05c035e3,Cococart,cococart,confectionary,9.0769,92.8,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_c6a0926602a760,Cococart,cococart,confectionary,50.7846,75.0769,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_189ec60aec4010,Cococart,cococart,confectionary,51.7692,40.9846,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_6fbcf901dabdc8,Cococart,cococart,confectionary,49.9385,40.2615,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_f1f4c2da81f00a,ColorBar,colorbar,makeup_and_cosmetics,9.0462,91.8154,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Level 3 , Post Secuirty Hold Area",bom_t1_retail_hub
+csmia_b7c1b66cd33b78,Crocs,crocs,footware,8.8308,93.9692,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_0cdce808b927ca,Crocs,crocs,footware,51.5538,40.2462,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_35a68ae52d16ea,Crocs,crocs,footware,50.8923,31.7846,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Secuirty Hold Area",t2_l04_postsec
+csmia_5fa9387360add4,Crossword,crossword,footware,6.6615,93.1538,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Check in Area,bom_t1_retail_hub
+csmia_f08aae65fc910a,Crossword,crossword,footware,6.4615,93.4769,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_0989c917fc9aff,Crossword,crossword,footware,50.1846,30.8923,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_35e602f40ee1eb,Crossword,crossword,footware,48.4769,38.3692,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_6af653dd4a5e0d,Crossword,crossword,footware,48.8615,41.8308,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area - Gate 87",t2_l03_postsec
+csmia_b0b4f1d43f8021,Da Milano,da_milano,handbag_and_accessories,50.6,39.4154,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_b29926fe9755b0,Da Milano,da_milano,handbag_and_accessories,48.1538,32.7538,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_f95b44ec63e6f4,Divine Cosmetics,divine_cosmetics,perfumes,6.9077,94.3385,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_3a5b1ea9831cc7,Divine Cosmetics,divine_cosmetics,perfumes,51.0,40.4923,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Security Hold Area",t2_l03_postsec
+csmia_45661bb6bc6d88,Fab India,fab_india,apparel,51.6769,39.9231,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Security Hold Area",t2_l03_postsec
+csmia_2b2da6f7551b69,Fab India,fab_india,apparel,50.1846,31.8,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_8c67d51bf448a8,Forest Essential,forest_essential,health_and_beauty,48.5692,57.6769,L02,airside_l02,csmia_shopping_api,high,t2_post_security,"Terminal 2; Gate No 09-20, Post Security Hold Area",t2_post_security
+csmia_f662e779bd0ba1,Forest Essential,forest_essential,health_and_beauty,49.6154,59.4769,L02,airside_l02,csmia_shopping_api,high,t2_post_security,"Terminal 2; Gate No 21-28, Post Security Hold Area",t2_post_security
+csmia_c3acf96924c9fb,Forest Essential,forest_essential,health_and_beauty,49.3538,32.6308,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_b6cf5346d7dfd2,Forest Essential,forest_essential,health_and_beauty,49.8923,39.1231,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_7e3f0dac5a0be6,Go Colors,go_colors,apparel,51.3538,39.5231,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_d9b270e59bac86,Gourmet Baklava,gourmet_baklava,sweets_/_packed_foods,48.1692,40.8769,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_648a0610d035f0,Gute Reise,gute_reise,luggage_and_bags,50.7231,40.4923,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_20addfbe3edadb,Haldirams,haldirams,sweets_/_packed_foods,49.3231,76.6615,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_8ab2d00879f00d,Haldirams,haldirams,sweets_/_packed_foods,50.8769,39.2462,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_7cd014e050241f,Haldirams,haldirams,sweets_/_packed_foods,51.4154,31.2462,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_ed56542236a0dc,Hamleys,hamleys,toys_and_games,8.5385,94.7692,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Arrival Hall,bom_t1_retail_hub
+csmia_38c89396c0d0d1,Hamleys,hamleys,toys_and_games,8.8462,92.7077,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_8f866c64f5759b,Hamleys,hamleys,toys_and_games,51.2462,40.0154,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_42b68842d5f8ce,Hamleys,hamleys,toys_and_games,51.6,76.5538,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_fd88262cfdf618,Hamleys,hamleys,toys_and_games,50.2615,41.6154,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_2c6c8b606ebe67,Helios,helios,watches,6.3846,92.1538,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_6a104b0c97472a,Hidesign,hidesign,handbag_and_accessories,6.5077,92.7538,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Check in Area,bom_t1_retail_hub
+csmia_c20791ed85a30f,Hush Puppies,hush_puppies,footware,49.4462,38.8,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_cc0db8389f4e8a,Isha Life,isha_life,souvenirs_/_gifting,50.6308,32.7538,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_1b62c5bf5831b4,Isharya,isharya,jewellary,50.6,32.5231,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_feb1e571711a8b,IT Luggage,it_luggage,luggage_and_bags,48.2462,87.4923,L02,checkin_l02,csmia_shopping_api,high,t2_entrance,Terminal 2; Check in Area,t2_entrance
+csmia_c7e8a93778621b,Kamaayurveda,kamaayurveda,health_and_beauty,48.7846,39.8308,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_07f35a17e85a8c,Kompanero,kompanero,handbag_and_accessories,50.3538,40.3692,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Security Hold Area",t2_l03_postsec
+csmia_7644d91998154d,Krishna Pearls,krishna_pearls,jewellary,50.3231,38.2923,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_ba7b05a5dcc118,Krishna Pearls,krishna_pearls,jewellary,50.3846,32.2769,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_a2b8801b8e00ad,Lacoste,lacoste,apparel,50.1385,39.3692,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_1d6e5e0272287a,Lakme,lakme,makeup_and_cosmetics,50.6615,39.7846,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_73c78ce7fb1bd8,Lal Sweets,lal_sweets,sweets_/_packed_foods,51.6308,77.6308,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_c42b4182443b49,Lenskart,lenskart,sunglasses,50.1692,38.7385,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_962791b5f0ec37,Living Liquidz,living_liquidz,wines_/_liquor,9.1538,92.9538,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Arrival Hall,bom_t1_retail_hub
+csmia_2b00c9810a68c2,Living Liquidz,living_liquidz,wines_/_liquor,6.9846,94.2,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Check in Area,bom_t1_retail_hub
+csmia_d531307a840130,Living Liquidz,living_liquidz,wines_/_liquor,48.6154,39.8462,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_ea62f00023b4f7,Living Liquidz,living_liquidz,wines_/_liquor,49.6462,76.4769,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_cb1b9200be96fb,Madame,madame,apparel,6.6615,92.9077,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_b5a3ccc80317f0,Marks and Spencers,marks_and_spencers,apparel,49.8462,39.2308,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_384afb9d70b1b3,Mufti,mufti,apparel,50.3538,32.7692,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_62aa3ae0937a01,NS Style Salon,ns_style_salon,salon_/_spa,8.6,92.0923,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_235174cf54fdf9,NS Style Salon,ns_style_salon,salon_/_spa,51.2923,41.7538,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_a260c13bf3cb9c,Nyaka,nyaka,makeup_and_cosmetics,50.2154,39.3385,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_4ff3d5cf87d979,Opium,opium,sunglasses,7.3077,94.8154,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_67776f43fe6554,Opium,opium,sunglasses,50.8,31.0154,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_98c0fcbec5b6ce,Opium,opium,sunglasses,49.4769,39.3231,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_e928f761b8ca2a,Opium,opium,sunglasses,48.4769,75.4769,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_725732631942f4,Parcos,parcos,perfumes,6.9692,92.2923,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_56e76fb0d25668,Parcos,parcos,perfumes,8.6,91.1846,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Arrival Hall,bom_t1_retail_hub
+csmia_70ff9b294352a8,Parcos,parcos,perfumes,49.4615,40.4308,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_46981c115b3bfb,Parcos,parcos,perfumes,48.2,76.9692,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_96a64fcfd5f292,Parcos Luxe,parcos_luxe,makeup_and_cosmetics,49.5538,40.0,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_b69df618da8bc4,Perona,perona,apparel,50.9077,32.2308,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_1bc50f48418685,Rare Planet,rare_planet,souvenirs_/_gifting,49.1385,32.1692,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_7d1030a66d3443,Reene Cosmetics,reene_cosmetics,makeup_and_cosmetics,6.6462,93.5077,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_ba3ec6b2c0a113,Relay,relay,ctn,8.8154,93.3538,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_0717aea9cd8578,Relay,relay,ctn,6.2769,93.8769,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_bc8aca55955e8e,Relay,relay,ctn,50.1692,74.4615,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_bf9262cfefba74,Relay,relay,ctn,48.3692,75.0154,L02,arrivals_l02,csmia_shopping_api,high,t2_baggage_claim,Terminal 2; Arrival Hall - Baggage Area,t2_baggage_claim
+csmia_3ebae5de135a71,Relay,relay,ctn,48.4615,38.6769,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_c52b694098ae41,Reliance Digital,reliance_digital,electronics,50.9846,38.8615,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_4c08baaa036be5,Scentido,scentido,perfumes,48.4,38.6308,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_9418a6734e1baa,Shahenaz,shahenaz,home_decor_/_gifting,51.2308,33.6154,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_ebc5d2d2da67eb,Shahenaz Women,shahenaz_women,fashion_accessories,51.2615,30.3846,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_7fbd71e2a936fd,Shaze,shaze,home_decor_/_gifting,51.6769,33.2769,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_5ca4951410a73f,Sitara,sitara,fashion_accessories,9.3077,93.8462,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_b4918c90dd024f,Skechers,skechers,footware,49.7538,41.2615,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_c2d5fe30d46b4f,Smoor,smoor,premium_bakery,8.6462,91.4923,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_06f348940b4938,Smoor,smoor,premium_bakery,9.8154,93.6,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_26f80b0c620158,Smoor,smoor,premium_bakery,49.7385,40.0769,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_609869b03d51d5,Steve Madden,steve_madden,footware,50.2769,39.7538,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_ea7c5e82c0d4df,Sunglass Hut,sunglass_hut,sunglasses,6.6308,92.3538,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_c0ae8e3ba7a490,Sunglass Hut,sunglass_hut,sunglasses,7.3692,94.4,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_ceb7513c644986,Sunglass Hut,sunglass_hut,sunglasses,9.8462,94.0615,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,Terminal 1; Arrival Hall,bom_t1_retail_hub
+csmia_511c2393fcee67,Sunglass Hut,sunglass_hut,sunglasses,49.1385,39.3538,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_72bb4bdc517a43,Superdry,superdry,apparel,50.5231,39.0923,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_c5ef2077179626,Swarovski,swarovski,home_decor_/_gifting,7.7692,91.2615,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_00dbdac2d6197b,Sweet Dream,sweet_dream,loungewear_and_sleepwear,9.2462,91.4154,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_48ca05c9976144,Sweet Dream,sweet_dream,loungewear_and_sleepwear,48.2769,33.1077,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_4819d6f5f07426,The Body Shop,the_body_shop,health_and_beauty,51.7692,41.8462,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_90622dccf40dcf,The Bombay Shaving Company,the_bombay_shaving_company,men's_grooming,50.8923,39.8769,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_0cbb7ea0dab9de,The Face Shop,the_face_shop,makeup_and_cosmetics,48.6769,41.3692,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_cd5885c7c0b8ca,Theobroma,theobroma,confectionary,48.5692,41.7385,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_a97603a486e831,Tresmode,tresmode,footware,50.8769,39.3385,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_696b4b4b5bc093,Tribe,tribe,jewellary,49.3077,39.0923,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_819352f458ec4e,Tynimo,tynimo,lifestyle,51.4615,38.2769,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_cb321473c04415,Tynimo,tynimo,lifestyle,49.0615,33.3846,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Secuirty Hold Area",t2_l04_postsec
+csmia_de8df4cb7edec2,W,w,apparel,8.3385,94.3385,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_3406ff7f9ded97,W,w,apparel,6.9538,93.2308,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_3bb39743bd67fc,W,w,apparel,48.2923,39.3385,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_0ccffa9ff1f75a,William penn,william_penn,writing_instruments,8.1077,94.7846,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_50e48433c62df3,William penn,william_penn,writing_instruments,50.4615,40.2308,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_a23ba6918681ff,ZOOT,zoot,mobile_accessories,8.7077,92.8308,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_417c3a6c9f3ac2,ZOOT,zoot,mobile_accessories,6.5077,91.1692,T1,t1_directory,csmia_shopping_api,high,bom_t1_retail_hub,"Terminal 1; Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_e693764ff6f0bb,ZOOT,zoot,mobile_accessories,51.3692,41.6462,L03,postsec_l03,csmia_shopping_api,high,t2_l03_postsec,"Terminal 2; Level 3 , Post Secuirty Hold Area",t2_l03_postsec
+csmia_e1b3cceacc1e25,ZOOT,zoot,mobile_accessories,50.8154,30.6615,L04,postsec_l04,csmia_shopping_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_3bcbc170cac746,AJ 1881,aj_1881,qsr,49.0615,32.3231,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_523f351536f962,All Good Deli,all_good_deli,qsr,50.1692,40.9385,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_e8ab0d3424e72c,Amcha Katta,amcha_katta,snacks,8.5077,92.1846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Check-in Area,bom_t1_retail_hub
+csmia_e076b0d89f9b2f,Amreli,amreli,qsr,51.6615,39.3538,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_da58ccc41a34d0,Amul Ice Cream Lounge,amul_ice_cream_lounge,qsr,50.2769,31.8,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_fb27a40c0e2c67,Asia 7,asia_7,qsr,50.7846,31.3385,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_f9765f100261be,Baker Street,baker_street,qsr,48.8154,31.7846,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_062c91d2988849,Baker Street,baker_street,qsr,48.1538,31.8,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10, Level 4, Check in Area",t2_l04_postsec
+csmia_f230c13b86a98d,Baker Street,baker_street,qsr,48.4308,41.4,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_4de4d83b7cff77,Baker Street,baker_street,qsr,51.3846,31.4615,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_c17084af5bc42e,Balaji,balaji,qsr,49.2923,32.8769,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area - Gate 68",t2_l04_postsec
+csmia_26ff39aae4246f,Balaji,balaji,qsr,49.9385,32.4615,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_462aba5a7429fe,Balaji,balaji,qsr,49.8308,75.4,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_357bfe06c6f518,Balaji,balaji,qsr,51.4462,31.7385,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area - Gate 65",t2_l04_postsec
+csmia_f7355df5f21ff1,Balaji Andhra Bhojanalaya,balaji_andhra_bhojanalaya,qsr,7.3077,92.5385,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Landside,bom_t1_retail_hub
+csmia_209d8e251bd0ee,Balaji Andhra Bhojanalaya,balaji_andhra_bhojanalaya,qsr,50.7538,75.1231,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_f93b8b8a7e2627,BAR FLY,bar_fly,quick_bites,49.4154,38.3846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 40",t2_l03_postsec
+csmia_1433e2de4a891e,Baskin Robbins,baskin_robbins,qsr,50.6923,76.8308,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_06cf30712b3dc9,Baskin Robbins,baskin_robbins,qsr,50.8923,41.6154,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_b95bc975d37289,Bira 91 Taproom,bira_91_taproom,bar_&_restaurant,8.8308,92.8923,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_0c7fffccfcfd89,BLACK DOG BAR,black_dog_bar,bar_&_restaurant,7.4,93.8769,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_257427f2f43409,Blackberry,blackberry,bar_&_restaurant,9.4308,94.2769,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Landside,bom_t1_retail_hub
+csmia_9f6cfc8532e039,Boarding Bite,boarding_bite,quick_bites,50.8462,40.1692,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 52",t2_l03_postsec
+csmia_22c33b92f65f80,Budweiser Bar,budweiser_bar,bar_&_restaurant,49.9077,75.9846,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_0912fb6a4c6120,Burger King,burger_king,qsr,51.5077,38.6923,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_bc7f35343b5468,Burger King,burger_king,qsr,51.3538,30.2,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_3aae18fd17e9ba,Burger King,burger_king,qsr,49.0154,31.1231,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_a339c2f8a59e8e,BURGER TACO CO,burger_taco_co,snacks,9.8462,91.8154,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_e7cb98667cb4f5,Cafe 2.0,cafe_2_0,snacks,7.5077,91.6769,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C,Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_6d143e5082885c,Cafe 2.0,cafe_2_0,snacks,7.3231,92.8769,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_edd77b62860edd,Cafe 2.0,cafe_2_0,snacks,51.0154,40.7692,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_0e791b56bf203a,Cafe 2.0,cafe_2_0,snacks,48.3846,76.6615,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_aa92101addb280,Cafe 2.0,cafe_2_0,snacks,48.5846,41.2308,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 86",t2_l03_postsec
+csmia_17b1e951df1b5d,Cafe 2.0,cafe_2_0,snacks,48.8308,32.0154,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_08632d7b4d1afe,Café Ritazza,caf_ritazza,bar_&_restaurant,51.0154,41.0308,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_3bf9146f342388,Cafeccino,cafeccino,qsr,7.7077,93.8462,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Check-in Area,bom_t1_retail_hub
+csmia_1e2824f6368d6e,Cafeccino,cafeccino,qsr,8.8615,91.3846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_e2c8e9914c5b13,Cafeccino,cafeccino,qsr,8.9846,94.1846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C, Food Court, Post Security Hold Area",bom_t1_retail_hub
+csmia_efe045bea52252,Cafelicious,cafelicious,qsr,6.9077,92.4308,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_2bf621b726cbc1,Cafelicious,cafelicious,qsr,50.6,32.5846,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area - Gate 67",t2_l04_postsec
+csmia_ca8ce42ac7add5,CCD,ccd,coffee_shop,9.5231,92.9231,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_49e3d789f771d0,Chaipoint,chaipoint,qsr,6.8308,94.0769,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; P6, Arrival Forecourt",bom_t1_retail_hub
+csmia_fc07b1ad1ed093,Chef café,chef_caf,bar_&_restaurant,49.3231,30.6462,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_be2f12207e4e7d,Clink Bar,clink_bar,bar_&_restaurant,51.5692,31.2923,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_bd7a2a35d1dfa5,Coffee & More,coffee_more,qsr,8.0769,91.8308,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Hall,bom_t1_retail_hub
+csmia_3436bd57dfde57,Coffee Bean & Tea Leaf (CBTL),coffee_bean_tea_leaf_cbtl,coffee_shop,8.9538,92.7385,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C,Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_43aa7d0965e2e3,Costa Coffee,costa_coffee,coffee_shop,51.1538,33.5538,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_96edc572052570,Costa Coffee,costa_coffee,coffee_shop,50.4615,38.6308,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_81854ad823276a,Costa Coffee,costa_coffee,coffee_shop,48.9231,38.9077,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_9d39437235ed2e,Costa Coffee,costa_coffee,coffee_shop,50.0462,75.8769,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_479089f8e03eb7,Costa Coffee,costa_coffee,coffee_shop,49.2308,30.4308,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_f8bba345591680,Costa Coffee,costa_coffee,coffee_shop,48.3231,40.8923,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 86",t2_l03_postsec
+csmia_1aa54a029068cc,Costa Coffee,costa_coffee,coffee_shop,51.0,41.2462,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 52",t2_l03_postsec
+csmia_129668c37f8007,Craverie,craverie,snacks,7.6308,91.8,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_b3c43c324bc505,Craverie,craverie,snacks,8.6462,91.7846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C,Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_9524135f00c994,Craverie,craverie,snacks,51.1385,32.6923,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area - Gate 75",t2_l04_postsec
+csmia_ced8f8420ece96,Curry Kitchen,curry_kitchen,qsr,6.9846,93.9692,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C, Food Court, Post Security Hold Area",bom_t1_retail_hub
+csmia_4b6f080ee161be,Domino's,domino_s,qsr,8.0,93.7538,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C, Food Court, Post Security Hold Area",bom_t1_retail_hub
+csmia_c524f008615ae2,DONNA ITALIA,donna_italia,qsr,7.6308,94.4462,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_75585597415d03,Dosa Plaza,dosa_plaza,qsr,50.2308,38.7692,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_2ab7418210054c,Falafel Express,falafel_express,qsr,50.4154,41.3077,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_2d4776f2977bad,Flurys,flurys,qsr,51.2,39.2154,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_c74e5eab3d0c8c,Flurys,flurys,qsr,48.9231,39.4769,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 41",t2_l03_postsec
+csmia_e66884f3d4d8dd,Flurys,flurys,qsr,49.1692,39.9692,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 46",t2_l03_postsec
+csmia_d443a56b776d81,Foody's,foody_s,qsr,48.6923,39.7231,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 41",t2_l03_postsec
+csmia_15ec85dd58e593,Foody's,foody_s,qsr,50.4308,41.5538,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_491aa506adc343,Foody's,foody_s,qsr,51.3846,40.9846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 44",t2_l03_postsec
+csmia_c845e636996a31,Foody's,foody_s,qsr,51.0769,40.5846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 45",t2_l03_postsec
+csmia_88a015651b011e,Foody's,foody_s,qsr,50.6308,39.8,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 46",t2_l03_postsec
+csmia_62589730bc9940,Foody's,foody_s,qsr,48.7538,30.6615,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_f5900f6c70039f,Foody's,foody_s,qsr,51.2615,33.8154,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_dae3bed258b8aa,Foody's,foody_s,qsr,50.1231,74.9846,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_875a039bbca36d,Fresco,fresco,qsr,49.6923,32.0923,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10, Level 4, Check in Area",t2_l04_postsec
+csmia_a8ca150cd4d7c9,Good Flippin' Burgers,good_flippin_burgers,qsr,50.5385,31.3385,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_81ee98c5e2fde1,Haldiram's,haldiram_s,qsr,6.2,91.2462,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_d9e19dfaa6c7a0,Haldiram's,haldiram_s,qsr,9.0154,94.7231,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_e3aba0f8e83c8d,Heineken Bar,heineken_bar,bar_&_restaurant,50.2923,40.5077,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_95330efb0118c8,Hoegaarden Bar,hoegaarden_bar,bar_&_restaurant,48.6923,32.3538,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_a4e0fa4e1e24e8,Idli.com,idli_com,snacks,8.7231,93.8154,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Check-in Area,bom_t1_retail_hub
+csmia_ad44fdc30e5a2d,Irish house,irish_house,bar_&_restaurant,50.9692,39.7846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_16978502056f9e,Joshh,joshh,qsr,7.4615,94.3538,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_9956c3fd630f69,Joshh,joshh,qsr,48.5692,31.3385,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_137a8befcab5a2,Jumbo King,jumbo_king,qsr,50.4615,76.3538,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_263d0f508e58e0,Jumbo King,jumbo_king,qsr,49.5385,40.1385,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_d0003348645959,Kailash Parbat,kailash_parbat,qsr,49.4,41.4308,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_232b03452ee42f,KFC,kfc,qsr,8.9846,93.3538,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C, Food Court, Post Security Hold Area",bom_t1_retail_hub
+csmia_2bd0bc67b5b236,KFC,kfc,qsr,50.0,31.8615,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_795ea6ab17c9a9,KFC,kfc,qsr,49.2769,40.8615,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_960653ed22d630,Mad Over Donuts,mad_over_donuts,quick_bites,7.5385,94.7846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Check-in Area,bom_t1_retail_hub
+csmia_999fae81cafa34,MADRAS COFFEE HOUSE,madras_coffee_house,coffee_shop,7.8,93.3538,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_cd78c7b6842172,MANIS CAFE,manis_cafe,quick_bites,48.2462,57.5077,L02,airside_l02,csmia_dining_api,high,t2_post_security,"Terminal 2; P4, Landside",t2_post_security
+csmia_40f361a7d963c3,Masala Twist,masala_twist,qsr,51.3538,40.3385,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_f61ea179ccdd47,McDonald's,mcdonald_s,qsr,8.2,94.3385,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_9d9a25042c4f68,McDonald's,mcdonald_s,qsr,50.9231,33.0462,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 ,Post Security Hold Area",t2_l04_postsec
+csmia_6dc27a0a2faed8,McDonald's,mcdonald_s,qsr,48.9231,30.3846,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_7d9372f41ecfa2,McDonald's,mcdonald_s,qsr,51.3692,40.8923,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_4659ad6a6776e8,Messo,messo,bar_&_restaurant,50.3385,39.3077,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_f1ecce5dcc3fc2,Mint & Mirchi,mint_mirchi,quick_bites,50.1538,38.9077,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 42",t2_l03_postsec
+csmia_84fd2408ca2903,Mitti Café,mitti_caf,coffee_shop,48.2462,74.2,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_fb1da3d6291da3,Moti Mahal,moti_mahal,qsr,48.7077,38.2923,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_187b2c02b46faf,Mumbai Se,mumbai_se,qsr,8.6769,93.3538,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_484c1d8f1f455a,Mumbai Se,mumbai_se,qsr,8.5692,93.8462,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Check-in Area,bom_t1_retail_hub
+csmia_61ea449c2dbe16,Mumbai Snacks,mumbai_snacks,snacks,8.9231,93.5692,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1B,Gate No 09-20, Post Security Hold Area",bom_t1_retail_hub
+csmia_5c59b4b8f4de2b,Naashto,naashto,qsr,49.7846,31.0462,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_3dd3558b9dc0fa,Naashto,naashto,qsr,48.5692,77.3231,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_50e4b79e46f160,Naashto,naashto,qsr,49.0462,41.0769,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_7cad464debdfa7,Naturals,naturals,qsr,8.7692,91.2308,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_f7eef3b0857a0a,New York Burrito Company,new_york_burrito_company,qsr,48.4462,33.0462,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10, Level 4, Check in Area",t2_l04_postsec
+csmia_8696359fa68182,New York Burrito Company,new_york_burrito_company,qsr,50.2154,32.3231,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_6bd816f68ddf59,New York Burrito Company,new_york_burrito_company,qsr,49.9846,40.8615,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 42",t2_l03_postsec
+csmia_88a2d1a05cac5f,New York Burrito Company,new_york_burrito_company,qsr,49.9385,76.1231,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_05a33f9517964a,NOURISH,nourish,qsr,8.8923,92.9846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_cc2efff74f6387,Ottoman Eats,ottoman_eats,qsr,50.7077,31.0923,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_53a2b5dab68a1f,Pasta Station,pasta_station,qsr,8.9692,94.4308,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C, Food Court, Post Security Hold Area",bom_t1_retail_hub
+csmia_24078adedd0f19,Pizza Hut,pizza_hut,qsr,48.8769,39.7538,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_fc266dbb04eab1,Pizza Hut,pizza_hut,qsr,48.4615,33.1692,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_e6f1d04d884c74,RAJU OMLET,raju_omlet,qsr,6.9692,92.6615,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_9ae89c10655e95,SALAD BAR,salad_bar,quick_bites,6.2,93.9077,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C,Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_163362f71dd6e0,SHAWARMA SHACK,shawarma_shack,snacks,9.2308,94.4,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_9f3930109e02c0,Shiv Sagar,shiv_sagar,qsr,51.6,74.5077,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,Terminal 2; Arrival Forecourt,t2_baggage_claim
+csmia_063e4765902a34,SOCIETY TEA,society_tea,quick_bites,8.9231,92.7231,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_e0547d8ba83452,SOCIETY TEA,society_tea,quick_bites,50.7846,32.8769,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10,Level 4, Landside",t2_l04_postsec
+csmia_8f498e90931781,Squeeze Juice,squeeze_juice,quick_bites,48.8308,33.2154,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_5a5857245db320,Squeeze Juice,squeeze_juice,quick_bites,48.5077,41.8,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_830061a542090d,Starbucks,starbucks,coffee_shop,7.1385,94.6769,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_104a8efcd3957a,Starbucks,starbucks,coffee_shop,48.2923,41.3846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_985b4228a939da,Starbucks,starbucks,coffee_shop,51.3538,32.1077,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_0a2661af49c1b0,Street Foods by Punjab Grill,street_foods_by_punjab_grill,qsr,49.2,77.4769,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_ebab6198d281cb,Street Foods by Punjab Grill,street_foods_by_punjab_grill,qsr,49.2308,39.0,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area",t2_l03_postsec
+csmia_47f9a0c51d4a05,Street Foods by Punjab Grill,street_foods_by_punjab_grill,qsr,50.1538,32.5692,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_d43d3fd491fc44,Street Foods by Punjab Grill,street_foods_by_punjab_grill,qsr,50.4923,30.9077,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; P10, Level 4, Check in Area",t2_l04_postsec
+csmia_91c102ac8234a9,Street Foods by Punjab Grill,street_foods_by_punjab_grill,qsr,50.4769,75.3692,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim
+csmia_29ff555457edf1,Subway,subway,qsr,9.4154,92.3385,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Arrival Forecourt,bom_t1_retail_hub
+csmia_7f407a9624b23d,Subway,subway,qsr,49.9846,33.2615,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_f842f14be4f278,Subway,subway,qsr,51.7077,40.1846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_8fbc5c11df249b,The Cram Bar,the_cram_bar,qsr,51.5231,39.4923,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 41",t2_l03_postsec
+csmia_07401c7acfe19f,The Cram Bar,the_cram_bar,qsr,48.2615,39.4615,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3 ,Post Security Hold Area - Gate 49",t2_l03_postsec
+csmia_b8e49a52d2557b,Third Wave Coffee,third_wave_coffee,coffee_shop,50.2,33.8154,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_ed31fe0ac1a4a3,TIBBS FRANKIE,tibbs_frankie,qsr,8.3077,94.7692,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,Terminal 1; Landside,bom_t1_retail_hub
+csmia_d62112b2e92b39,TIBBS FRANKIE,tibbs_frankie,qsr,50.2154,74.6308,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_4c4eecfb301532,TIKG (The Indian Kebab Grill) Bar,tikg_the_indian_kebab_grill_bar,bar_&_restaurant,51.3692,39.3846,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_e8592795fdc953,Ultra Bar,ultra_bar,bar_&_restaurant,6.5231,94.3846,T1,t1_directory,csmia_dining_api,high,bom_t1_retail_hub,"Terminal 1; 1C,Gate No 21-28, Post Security Hold Area",bom_t1_retail_hub
+csmia_744e4ecc8ce524,Vaango,vaango,qsr,48.1692,41.8462,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_ceda63658dba85,Vaango,vaango,qsr,51.7231,31.4769,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4 , Post Security Hold Area",t2_l04_postsec
+csmia_dc1e5cd6f5d2f5,Wow Momo,wow_momo,qsr,50.1385,74.9846,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,"Terminal 2; P6, Arrival Forecourt",t2_baggage_claim
+csmia_9f07b8f3af0f78,Wrapafella,wrapafella,qsr,50.5846,39.2,L03,postsec_l03,csmia_dining_api,high,t2_l03_postsec,"Terminal 2; Level 3, Post Security Hold Area, Foodcourt",t2_l03_postsec
+csmia_23820a25a01c3c,Wrapafella,wrapafella,qsr,49.2308,33.0923,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_0c9ad753e9561f,Zambar,zambar,qsr,50.2,30.2308,L04,postsec_l04,csmia_dining_api,high,t2_l04_postsec,"Terminal 2; Level 4, Post Security Hold Area, Foodcourt",t2_l04_postsec
+csmia_b2e5e8d15007f3,Zambar,zambar,qsr,51.2769,75.2923,L02,arrivals_l02,csmia_dining_api,high,t2_baggage_claim,Terminal 2; Arrival Hall,t2_baggage_claim

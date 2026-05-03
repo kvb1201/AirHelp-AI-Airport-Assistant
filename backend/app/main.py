@@ -4,31 +4,44 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api import chat, context, navigation
-from app.services.rag_service import build_knowledge_base
+from app.api import chat, navigation, context, map as map_api
+from app.services.rag_service import init_rag
 
 app = FastAPI(title="AI Airport Companion API")
 
 
+# ----------------------------
+# 🔹 CORS (for frontend)
+# ----------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # OK for hackathon
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
+# ----------------------------
+# 🔹 Routers
+# ----------------------------
 app.include_router(chat.router, prefix="/api", tags=["Chat"])
 app.include_router(navigation.router, prefix="/api", tags=["Navigation"])
 app.include_router(context.router, prefix="/api", tags=["Context"])
+app.include_router(map_api.router, prefix="/api", tags=["Map"])
 
 
+# ----------------------------
+# 🔹 Health Check
+# ----------------------------
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
 
 
+# ----------------------------
+# 🔹 Global Error Handler
+# ----------------------------
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     print(f"[ERROR] {exc}")
@@ -38,10 +51,15 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 
+# ----------------------------
+# 🔹 Startup Event
+# ----------------------------
 @app.on_event("startup")
 async def startup_event():
-    # Build normalized place and RAG files at startup so the backend can answer
-    # structured airport questions from the raw dataset without manual steps.
-    build_knowledge_base()
-    print("AI Airport Companion API started")
+    print("🚀 AI Airport Companion API started")
 
+    try:
+        init_rag()   # 🔥 Initialize RAG once
+        print("✅ RAG initialized successfully")
+    except Exception as e:
+        print(f"❌ RAG initialization failed: {e}")
