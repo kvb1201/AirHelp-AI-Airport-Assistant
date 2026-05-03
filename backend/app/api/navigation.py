@@ -17,11 +17,11 @@ def navigate(
     """
     route = get_route(start, end)
     ok = route.get("ok", False)
-    msg = (
-        f"Route computed ({route.get('total_time_minutes')} min)"
-        if ok
-        else route.get("hint") or route.get("error", "navigation error")
-    )
+    if ok:
+        sj = route.get("simple_journey") or {}
+        msg = sj.get("subtitle") or f"About {route.get('total_time_minutes')} min walk"
+    else:
+        msg = route.get("hint") or route.get("error", "navigation error")
 
     return {
         "type": "navigation",

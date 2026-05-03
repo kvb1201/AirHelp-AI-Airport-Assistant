@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import HomeContent from './components/HomeContent';
 import RightPanel from './components/RightPanel';
 import TerminalMapView from './components/TerminalMapView';
+import NavigationFlowView from './components/NavigationFlowView';
 import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
@@ -16,7 +17,7 @@ function formatTime() {
 }
 
 const WELCOME = {
-  text: "Hi Priya! I'm here to help you with airport facilities, flights, or any issues. How can I assist you?",
+  text: "Hi! I'm here to help you with airport facilities, flights, or any issues. How can I assist you?",
   role: 'bot',
   time: formatTime(),
 };
@@ -26,10 +27,22 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState('t2_entrance');
   const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
-  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'trips' | 'map' | 'profile'
+  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'trips' | 'map' | 'nav' | 'profile'
   const [sidebarNav, setSidebarNav] = useState('Home');
+  /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
+  const [mapLaunch, setMapLaunch] = useState(null);
 
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
+  const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
+
+  const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
+
+  const openFloorMap = useCallback((payload) => {
+    if (payload?.fromId) setLocation(payload.fromId);
+    setMapLaunch(payload || null);
+    setSidebarNav('Map');
+    setMobileView('map');
+  }, []);
 
   const handleSend = async (text, loc = null) => {
     const currentLocation = loc ?? location;
@@ -78,7 +91,7 @@ export default function App() {
             EN
           </button>
           <div className="header-avatar" role="button" tabIndex={0} aria-label="User account">
-            P
+            G
           </div>
         </header>
 
@@ -100,11 +113,22 @@ export default function App() {
         <div className={`content-area${showMap ? ' content-area--map' : ''}`}>
           <main className="main-content">
             {showMap ? (
-              <TerminalMapView location={location} onLocationChange={setLocation} />
+              <TerminalMapView
+                location={location}
+                onLocationChange={setLocation}
+                launchRoute={mapLaunch}
+                onLaunchRouteConsumed={clearMapLaunch}
+              />
+            ) : showNavFlow ? (
+              <NavigationFlowView
+                location={location}
+                onLocationChange={setLocation}
+                onOpenFloorMap={openFloorMap}
+              />
             ) : (
               <>
                 <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
-                  <HomeContent onSend={handleSend} />
+                  <HomeContent onSend={handleSend} onOpenNavigation={() => { setSidebarNav('Navigation'); setMobileView('nav'); }} onOpenFloorMap={openFloorMap} />
                 </div>
 
                 {mobileView === 'chat' && (
@@ -118,7 +142,7 @@ export default function App() {
             )}
           </main>
 
-          {!showMap && <RightPanel />}
+          {!showMap && !showNavFlow && <RightPanel />}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}
@@ -143,6 +167,7 @@ export default function App() {
         isOpen={chatOpen}
         onToggle={() => setChatOpen((prev) => !prev)}
         onClose={() => setChatOpen(false)}
+        mapMode={showMap}
       />
     </div>
   );

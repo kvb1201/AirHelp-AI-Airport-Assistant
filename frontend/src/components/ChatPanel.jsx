@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ChatWindow from './ChatWindow';
 import InputBox from './InputBox';
 
@@ -11,12 +11,24 @@ const SUGGESTED = [
 /**
  * Floating chat widget — desktop only (hidden on mobile via CSS).
  */
-export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggle, onClose }) {
-  const showSuggestions = messages.length <= 1;
+export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggle, onClose, mapMode }) {
+  const showSuggestions = !mapMode && messages.length <= 1;
+
+  const mapLastExchange = useMemo(() => {
+    let lastUser = null;
+    let lastAssistant = null;
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const m = messages[i];
+      if (!lastAssistant && (m.role === 'bot' || m.role === 'error')) lastAssistant = m;
+      if (!lastUser && m.role === 'user') lastUser = m;
+      if (lastUser && lastAssistant) break;
+    }
+    return { lastUser, lastAssistant };
+  }, [messages]);
 
   return (
     <div
-      className={`chat-panel ${isOpen ? '' : 'minimized'}`}
+      className={`chat-panel ${isOpen ? '' : 'minimized'}${mapMode ? ' chat-panel--map' : ''}`}
       role="complementary"
       aria-label="AirHelp Assistant chat"
     >
@@ -53,26 +65,53 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
       {/* ── Panel Body ── */}
       {isOpen && (
         <div className="chat-panel-body">
-          {/* Suggested replies (only when chat is fresh) */}
-          {showSuggestions && (
-            <div className="suggested-replies" aria-label="Suggested questions">
-              {SUGGESTED.map((s) => (
-                <button
-                  key={s}
-                  className="suggested-reply"
-                  onClick={() => onSend(s, null)}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
+          {mapMode ? (
+            <>
+              <p className="chat-panel-map-hint">
+                Quick questions while you use the map — your walking route stays in the panel on the right.
+              </p>
+              {(mapLastExchange.lastUser || mapLastExchange.lastAssistant || isLoading) && (
+                <div className="chat-panel-map-exchange" aria-label="Latest reply">
+                  {mapLastExchange.lastUser ? (
+                    <div className="chat-panel-map-line chat-panel-map-line--user">
+                      <span className="chat-panel-map-kicker">You</span>
+                      <span className="chat-panel-map-text">{mapLastExchange.lastUser.text}</span>
+                    </div>
+                  ) : null}
+                  {isLoading ? (
+                    <div className="chat-panel-map-line chat-panel-map-line--bot">
+                      <span className="chat-panel-map-kicker">AirHelp</span>
+                      <span className="chat-panel-map-text chat-panel-map-typing">Thinking…</span>
+                    </div>
+                  ) : mapLastExchange.lastAssistant ? (
+                    <div className="chat-panel-map-line chat-panel-map-line--bot">
+                      <span className="chat-panel-map-kicker">AirHelp</span>
+                      <span className="chat-panel-map-text">{mapLastExchange.lastAssistant.text}</span>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+              <InputBox onSend={onSend} isLoading={isLoading} placeholder="Ask facilities, gates, delays…" />
+            </>
+          ) : (
+            <>
+              {showSuggestions && (
+                <div className="suggested-replies" aria-label="Suggested questions">
+                  {SUGGESTED.map((s) => (
+                    <button
+                      key={s}
+                      className="suggested-reply"
+                      onClick={() => onSend(s, null)}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <ChatWindow messages={messages} isLoading={isLoading} />
+              <InputBox onSend={onSend} isLoading={isLoading} />
+            </>
           )}
-
-          {/* Message list */}
-          <ChatWindow messages={messages} isLoading={isLoading} />
-
-          {/* Input */}
-          <InputBox onSend={onSend} isLoading={isLoading} />
         </div>
       )}
     </div>

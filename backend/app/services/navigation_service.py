@@ -12,6 +12,11 @@ from typing import Any
 from app.core.graph.airport_data import NODES
 from app.core.graph.graph_builder import build_airport_graph
 from app.core.graph.path_finder import PathFinder
+from app.services.route_narrative import (
+    build_simple_journey,
+    passenger_place_name,
+    shops_along_path,
+)
 
 
 @lru_cache(maxsize=1)
@@ -137,23 +142,7 @@ def extract_goal_node_hint(message: str) -> str | None:
     return None
 
 
-def build_route_payload(
-    start_id: str,
-    goal_id: str,
-    *,
-    rag_hints: list[dict[str, Any]] | None = None,
-) -> dict[str, Any]:
-    _ = rag_hints
-    result = _finder().find_path(start_id, goal_id)
-    if not result.get("ok"):
-        return {
-            "ok": False,
-            "error": result.get("error", "path_error"),
-            "start_id": start_id,
-            "goal_id": goal_id,
-        }
-
-    node_ids: list[str] = result["node_ids"]
+def _path_nodes_from_ids(node_ids: list[str]) -> list[dict[str, Any]]:
     path_nodes: list[dict[str, Any]] = []
     for nid in node_ids:
         meta = NODES[nid]
@@ -171,23 +160,92 @@ def build_route_payload(
         if meta.get("accessibility_note"):
             pn["accessibility_note"] = meta["accessibility_note"]
         path_nodes.append(pn)
+    return path_nodes
 
+
+def _route_option(
+    start_id: str,
+    goal_id: str,
+    *,
+    node_ids: list[str],
+    edges: list[dict[str, Any]],
+    total_minutes: int,
+    option_index: int,
+    option_label: str,
+) -> dict[str, Any]:
+    path_nodes = _path_nodes_from_ids(node_ids)
     steps: list[str] = []
-    for edge in result["edges"]:
-        u = NODES[edge["from"]]["name"]
-        v = NODES[edge["to"]]["name"]
+    for edge in edges:
+        um = dict(NODES[edge["from"]])
+        um["id"] = edge["from"]
+        vm = dict(NODES[edge["to"]])
+        vm["id"] = edge["to"]
+        u = passenger_place_name(um)
+        v = passenger_place_name(vm)
         minutes = edge["minutes"]
         steps.append(f"{u} → {v} (~{minutes} min walk)")
 
+    journey = build_simple_journey(path_nodes, edges, int(total_minutes))
+    shop_along = shops_along_path(node_ids, max_total=10)
+
     return {
+        "option_index": option_index,
+        "option_label": option_label,
+        "path": path_nodes,
+        "edges": edges,
+        "total_time_minutes": int(total_minutes),
+        "node_count": len(path_nodes),
+        "steps": steps,
+        "simple_journey": journey,
+        "shops_along_route": shop_along,
+    }
+
+
+def build_route_payload(
+    start_id: str,
+    goal_id: str,
+    *,
+    rag_hints: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    _ = rag_hints
+    k_paths = _finder().find_k_paths(start_id, goal_id, k=3)
+    if not k_paths:
+        probe = _finder().find_path(start_id, goal_id)
+        if not probe.get("ok"):
+            return {
+                "ok": False,
+                "error": probe.get("error", "path_error"),
+                "start_id": start_id,
+                "goal_id": goal_id,
+            }
+        k_paths = [probe]
+
+    labels = ["Fastest route", "Alternative 2", "Alternative 3"]
+    routes: list[dict[str, Any]] = []
+    for i, pr in enumerate(k_paths):
+        lab = labels[i] if i < len(labels) else f"Option {i + 1}"
+        routes.append(
+            _route_option(
+                start_id,
+                goal_id,
+                node_ids=pr["node_ids"],
+                edges=pr["edges"],
+                total_minutes=pr["total_minutes"],
+                option_index=i,
+                option_label=lab,
+            )
+        )
+
+    primary = routes[0]
+    out: dict[str, Any] = {
         "ok": True,
         "start_id": start_id,
         "goal_id": goal_id,
-        "path": path_nodes,
-        "edges": result["edges"],
-        "total_time_minutes": result["total_minutes"],
-        "steps": steps,
+        "route_count": len(routes),
+        "routes": routes,
     }
+    out.update(primary)
+    return out
 
 
 def get_route(

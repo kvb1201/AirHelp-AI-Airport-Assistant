@@ -4,6 +4,7 @@ const NAV_ITEMS = [
   { label: 'Home', icon: 'home', active: true },
   { label: 'Flights', icon: 'flight_takeoff', active: false },
   { label: 'Facilities', icon: 'apartment', active: false },
+  { label: 'Navigation', icon: 'directions_walk', active: false },
   { label: 'Map', icon: 'map', active: false },
   { label: 'My Trips', icon: 'work', active: false },
   { label: 'Help & Support', icon: 'help', active: false },
@@ -44,10 +45,10 @@ export default function Sidebar({ activeNav, onNavChange }) {
 
       <div className="sidebar-footer">
         <div className="user-profile" role="button" tabIndex={0} aria-label="User profile">
-          <div className="user-avatar" aria-hidden="true">P</div>
+          <div className="user-avatar" aria-hidden="true">G</div>
           <div>
-            <div className="user-name">Priya</div>
-            <div className="user-email">priya@airhelp.in</div>
+            <div className="user-name">Guest</div>
+            <div className="user-email">guest@example.com</div>
           </div>
         </div>
       </div>

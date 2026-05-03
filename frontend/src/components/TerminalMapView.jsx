@@ -21,7 +21,7 @@ function nodeColor(kind) {
   return KIND_COLORS[kind] || '#6b5a5f';
 }
 
-export default function TerminalMapView({ location, onLocationChange }) {
+export default function TerminalMapView({ location, onLocationChange, launchRoute, onLaunchRouteConsumed }) {
   const [meta, setMeta] = useState(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -36,8 +36,19 @@ export default function TerminalMapView({ location, onLocationChange }) {
   const fromRef = useRef(from);
   const prevLocationRef = useRef(undefined);
   const [loading, setLoading] = useState(false);
-  const [route, setRoute] = useState(null);
+  /** Full navigation API payload (may include `routes` array for alternatives). */
+  const [navPayload, setNavPayload] = useState(null);
+  const [activeRouteIdx, setActiveRouteIdx] = useState(0);
   const [routeErr, setRouteErr] = useState(null);
+
+  const route = useMemo(() => {
+    if (!navPayload?.ok) return null;
+    const list = navPayload.routes;
+    if (Array.isArray(list) && list.length > 0) {
+      return list[activeRouteIdx] ?? list[0];
+    }
+    return navPayload;
+  }, [navPayload, activeRouteIdx]);
   const [shops, setShops] = useState([]);
   const [facilities, setFacilities] = useState([]);
   const [facilitiesByNode, setFacilitiesByNode] = useState([]);
@@ -108,14 +119,28 @@ export default function TerminalMapView({ location, onLocationChange }) {
   }, []);
 
   const sortedNodes = useMemo(
-    () => [...nodes].sort((a, b) => (a.name || '').localeCompare(b.name || '')),
+    () =>
+      [...nodes].sort((a, b) =>
+        (a.passenger_name || a.name || '').localeCompare(b.passenger_name || b.name || '', undefined, {
+          sensitivity: 'base',
+        }),
+      ),
     [nodes],
   );
 
+  /** Draw From/To on top of other nodes so rings and labels stay readable. */
+  const nodesRenderOrder = useMemo(() => {
+    const rest = sortedNodes.filter((n) => n.id !== from && n.id !== to);
+    const ends = sortedNodes.filter((n) => n.id === from || n.id === to);
+    return [...rest, ...ends];
+  }, [sortedNodes, from, to]);
+
   const fetchRoute = useCallback(
-    async (startId, endId) => {
+    async (startId, endId, opts = {}) => {
+      const prefer = typeof opts.preferRouteIdx === 'number' ? opts.preferRouteIdx : 0;
       setLoading(true);
-      setRoute(null);
+      setNavPayload(null);
+      setActiveRouteIdx(prefer);
       setRouteErr(null);
       try {
         const data = await fetchNavigation(startId, endId);
@@ -124,7 +149,10 @@ export default function TerminalMapView({ location, onLocationChange }) {
           setRouteErr(nav?.hint || nav?.error || 'No route');
           return;
         }
-        setRoute(nav);
+        setNavPayload(nav);
+        const list = nav.routes;
+        const maxIdx = Array.isArray(list) && list.length ? list.length - 1 : 0;
+        setActiveRouteIdx(Math.min(Math.max(prefer, 0), maxIdx));
         if (onLocationChange) onLocationChange(startId);
       } catch (e) {
         setRouteErr(e.message || 'API error');
@@ -134,6 +162,25 @@ export default function TerminalMapView({ location, onLocationChange }) {
     },
     [onLocationChange],
   );
+
+  useEffect(() => {
+    if (!launchRoute?.fromId || !launchRoute?.toId) return;
+    const ri = typeof launchRoute.routeIndex === 'number' ? launchRoute.routeIndex : 0;
+    prevLocationRef.current = launchRoute.fromId;
+    setFrom(launchRoute.fromId);
+    setTo(launchRoute.toId);
+    fromRef.current = launchRoute.fromId;
+    setTapPhase('from');
+    tapPhaseRef.current = 'from';
+    let cancelled = false;
+    void (async () => {
+      await fetchRoute(launchRoute.fromId, launchRoute.toId, { preferRouteIdx: ri });
+      if (!cancelled) onLaunchRouteConsumed?.();
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [launchRoute, fetchRoute, onLaunchRouteConsumed]);
 
   const runRoute = useCallback(() => {
     fetchRoute(from, to);
@@ -146,7 +193,7 @@ export default function TerminalMapView({ location, onLocationChange }) {
         tapPhaseRef.current = 'to';
         setFrom(id);
         setTapPhase('to');
-        setRoute(null);
+        setNavPayload(null);
         setRouteErr(null);
         return;
       }
@@ -157,6 +204,8 @@ export default function TerminalMapView({ location, onLocationChange }) {
     },
     [fetchRoute],
   );
+
+  const routeOptions = navPayload?.routes;
 
   const pathIds = useMemo(() => new Set((route?.path || []).map((p) => p.id)), [route]);
 
@@ -173,14 +222,14 @@ export default function TerminalMapView({ location, onLocationChange }) {
     setFrom(v);
     fromRef.current = v;
     setTapPhase('from');
-    setRoute(null);
+    setNavPayload(null);
     setRouteErr(null);
   };
 
   const onDropdownTo = (e) => {
     setTo(e.target.value);
     setTapPhase('from');
-    setRoute(null);
+    setNavPayload(null);
     setRouteErr(null);
   };
 
@@ -215,7 +264,7 @@ export default function TerminalMapView({ location, onLocationChange }) {
           <svg
             className="terminal-map-svg-overlay"
             viewBox="0 0 100 100"
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="none"
             role="presentation"
           >
             <defs>
@@ -327,23 +376,52 @@ export default function TerminalMapView({ location, onLocationChange }) {
               })}
             </g>
 
-            {sortedNodes.map((n) => {
+            {nodesRenderOrder.map((n) => {
               if (n.x == null || n.y == null) return null;
               const onPath = pathIds.has(n.id);
               const isFrom = n.id === from;
               const isTo = n.id === to;
-              const r = onPath ? 1.35 : isFrom || isTo ? 1.2 : 0.85;
+              const endpoint = isFrom || isTo;
+              const r = endpoint ? 2.15 : onPath ? 1.35 : 0.85;
               const phaseHint = tapPhase === 'from' ? 'Set as From' : 'Set as To and run route';
+              const fill = endpoint ? (isFrom ? '#ffc107' : '#29b6f6') : nodeColor(n.kind);
+              const stroke = endpoint ? (isFrom ? '#5d4037' : '#0d47a1') : 'rgba(255,255,255,0.9)';
+              const strokeW = endpoint ? 0.52 : onPath ? 0.22 : 0.2;
               return (
-                <g key={n.id} className="terminal-map-node">
+                <g key={n.id} className={`terminal-map-node${endpoint ? ' terminal-map-node--endpoint' : ''}`}>
+                  {endpoint ? (
+                    <>
+                      <circle
+                        cx={n.x}
+                        cy={n.y}
+                        r={r + 0.75}
+                        fill="none"
+                        stroke={isFrom ? '#ff8f00' : '#81d4fa'}
+                        strokeWidth="0.42"
+                        opacity="0.95"
+                        style={{ pointerEvents: 'none' }}
+                        aria-hidden
+                      />
+                      <circle
+                        cx={n.x}
+                        cy={n.y}
+                        r={r + 0.35}
+                        fill="none"
+                        stroke={isFrom ? '#fff8e1' : '#e1f5fe'}
+                        strokeWidth="0.22"
+                        style={{ pointerEvents: 'none' }}
+                        aria-hidden
+                      />
+                    </>
+                  ) : null}
                   <circle
                     cx={n.x}
                     cy={n.y}
                     r={r}
-                    fill={nodeColor(n.kind)}
-                    stroke={isTo ? '#ffffff' : isFrom ? '#fed65b' : 'rgba(255,255,255,0.9)'}
-                    strokeWidth={isFrom || isTo ? 0.45 : 0.2}
-                    filter={onPath ? 'url(#node-glow)' : undefined}
+                    fill={fill}
+                    stroke={stroke}
+                    strokeWidth={strokeW}
+                    filter={onPath && !endpoint ? 'url(#node-glow)' : undefined}
                     style={{ cursor: 'pointer' }}
                     onClick={() => onPickNode(n.id)}
                     role="button"
@@ -354,21 +432,25 @@ export default function TerminalMapView({ location, onLocationChange }) {
                         onPickNode(n.id);
                       }
                     }}
-                    aria-label={`${n.name}. ${phaseHint}.`}
+                    aria-label={`${n.passenger_name || n.name}. ${phaseHint}.`}
                   />
-                  {(isFrom || isTo) && (
+                  {endpoint ? (
                     <text
                       x={n.x}
-                      y={n.y - r - 0.85}
+                      y={n.y - r - 1.15}
                       textAnchor="middle"
-                      className="terminal-map-node-label"
-                      fill="#1b1c1c"
-                      fontSize="2.1px"
-                      fontWeight="600"
+                      className="terminal-map-node-label terminal-map-node-label--endpoint"
+                      fill={isFrom ? '#3e2723' : '#01579b'}
+                      stroke="#ffffff"
+                      strokeWidth="0.38"
+                      paintOrder="stroke fill"
+                      fontSize="3.15"
+                      fontWeight="800"
+                      style={{ pointerEvents: 'none' }}
                     >
-                      {isFrom ? 'From' : 'To'}
+                      {isFrom ? 'FROM' : 'TO'}
                     </text>
-                  )}
+                  ) : null}
                 </g>
               );
             })}
@@ -468,7 +550,7 @@ export default function TerminalMapView({ location, onLocationChange }) {
             <select className="terminal-map-select" value={from} onChange={onDropdownFrom}>
               {sortedNodes.map((n) => (
                 <option key={n.id} value={n.id}>
-                  {n.name}
+                  {n.passenger_name || n.name}
                 </option>
               ))}
             </select>
@@ -478,7 +560,7 @@ export default function TerminalMapView({ location, onLocationChange }) {
             <select className="terminal-map-select" value={to} onChange={onDropdownTo}>
               {sortedNodes.map((n) => (
                 <option key={`t-${n.id}`} value={n.id}>
-                  {n.name}
+                  {n.passenger_name || n.name}
                 </option>
               ))}
             </select>
@@ -499,16 +581,116 @@ export default function TerminalMapView({ location, onLocationChange }) {
             </p>
           )}
 
-          {route?.ok && (
+          {navPayload?.ok && route && (
             <div className="terminal-map-result">
+              {Array.isArray(routeOptions) && routeOptions.length > 1 ? (
+                <div className="terminal-map-route-options" role="tablist" aria-label="Route choices">
+                  <div className="terminal-map-route-options-title">Pick a way to walk</div>
+                  <p className="terminal-map-route-options-hint">
+                    We show up to three different walking paths. Fastest is first; others may add a few minutes but can
+                    feel less crowded.
+                  </p>
+                  <div className="terminal-map-route-options-row">
+                    {routeOptions.map((opt, idx) => {
+                      const base = routeOptions[0]?.total_time_minutes ?? 0;
+                      const delta = (opt.total_time_minutes ?? 0) - base;
+                      const hint =
+                        idx === 0
+                          ? 'Shortest time'
+                          : delta === 0
+                            ? 'Same time, different path'
+                            : `About +${delta} min`;
+                      return (
+                        <button
+                          key={`${opt.option_index ?? idx}-${opt.total_time_minutes}`}
+                          type="button"
+                          className={`terminal-map-route-opt${idx === activeRouteIdx ? ' terminal-map-route-opt--active' : ''}`}
+                          onClick={() => setActiveRouteIdx(idx)}
+                          role="tab"
+                          aria-selected={idx === activeRouteIdx}
+                        >
+                          <span className="terminal-map-route-opt-label">
+                            {opt.option_label || `Route ${idx + 1}`}
+                          </span>
+                          <span className="terminal-map-route-opt-time">{opt.total_time_minutes} min</span>
+                          <span className="terminal-map-route-opt-hint">{hint}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+
               <div className="terminal-map-result-meta">
-                <strong>{route.total_time_minutes}</strong> min · {route.path?.length} nodes
+                {Array.isArray(routeOptions) && routeOptions.length > 1 ? (
+                  <>
+                    Following <strong>{route.option_label || 'selected route'}</strong> — about{' '}
+                    <strong>{route.total_time_minutes}</strong> minutes.
+                  </>
+                ) : (
+                  <>
+                    About <strong>{route.total_time_minutes}</strong> minutes walking — plain-language steps below (no
+                    staff gate codes).
+                  </>
+                )}
               </div>
-              <ol className="terminal-map-steps">
-                {(route.steps || []).map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
-              </ol>
+
+              {Array.isArray(route.shops_along_route?.tips) && route.shops_along_route.tips.length > 0 ? (
+                <section className="terminal-map-route-callout" aria-label="Food and shopping near your walk">
+                  <div className="terminal-map-route-callout-kicker">While you walk</div>
+                  <h3 className="terminal-map-route-callout-title">Places you could stop</h3>
+                  <p className="terminal-map-route-callout-lead">
+                    These sit on the same general path (same area as your route). You can skip them or dip in if you
+                    have time.
+                  </p>
+                  <ul className="terminal-map-recommendations-tips">
+                    {route.shops_along_route.tips.map((t, i) => (
+                      <li key={i}>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+
+              {route.simple_journey?.subtitle ? (
+                <p className="terminal-map-journey-line">{route.simple_journey.subtitle}</p>
+              ) : null}
+
+              {Array.isArray(route.simple_journey?.bullets) && route.simple_journey.bullets.length > 0 ? (
+                <>
+                  <div className="terminal-map-journey-heading">Your route</div>
+                  <ul className="terminal-map-journey-bullets">
+                    {route.simple_journey.bullets.map((line, i) => (
+                      <li key={i}>{line}</li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
+
+              {Array.isArray(route.shops_along_route?.picks) && route.shops_along_route.picks.length > 0 ? (
+                <details className="terminal-map-tech-details">
+                  <summary>Shop stops on this path ({route.shops_along_route.count_on_path || 0})</summary>
+                  <ul className="terminal-map-picks-list">
+                    {route.shops_along_route.picks.map((p) => (
+                      <li key={p.shop_id}>
+                        <span className="terminal-map-pick-name">{p.name_display}</span>
+                        <span className="terminal-map-pick-meta">
+                          {p.bucket_label}
+                          {p.floor_display || p.floor ? ` · ${p.floor_display || p.floor}` : ''}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : null}
+
+              <details className="terminal-map-tech-details">
+                <summary>Technical step-by-step (every graph edge)</summary>
+                <ol className="terminal-map-steps">
+                  {(route.steps || []).map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ol>
+              </details>
             </div>
           )}
         </aside>
