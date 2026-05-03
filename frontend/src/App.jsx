@@ -249,11 +249,7 @@ function App() {
           {mobileView === 'home' && (
             <QuickActions onAction={handleQuickAction} />
           )}
-          <InputBox
-            onSend={handleSend}
-            isLoading={isLoading}
-            placeholder="Type your question…"
-          />
+          <InputBox onSend={handleSend} isLoading={isLoading} />
           <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
         </div>
       </div>

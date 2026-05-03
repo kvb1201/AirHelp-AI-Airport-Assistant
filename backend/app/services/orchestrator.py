@@ -15,6 +15,7 @@ from app.services.locating_engine import SERVICE_LABELS, locate_from_query
 from app.services.context_engine import update_context
 from app.services.context_normalizer import normalize_chat_context
 from app.services.query_preprocess import compose_navigation_message, prepare_for_locate_and_context
+from app.services.special_assistance_intents import try_special_assistance_response
 from app.core.graph.node_mapper import coerce_to_graph_node_id
 from app.core.llm.prompts import SYSTEM_PROMPT
 
@@ -836,6 +837,11 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
     # STEP 2: Context Engine
     ctx_output = update_context(user_context, extracted, loc_msg)
     user_context = normalize_chat_context(ctx_output["context"])
+
+    # Safety / assistance (medical, lost property, disoriented) — rules + map, no RAG.
+    crisis = try_special_assistance_response(loc_msg=loc_msg, user_context=user_context)
+    if crisis is not None:
+        return crisis
 
     ptp_a, ptp_b = _parse_place_to_place(nav_msg)
     is_ptp = _is_place_to_place_request(nav_msg) and bool(ptp_a and ptp_b)

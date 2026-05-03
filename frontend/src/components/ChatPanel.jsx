@@ -104,7 +104,7 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
                   ) : null}
                 </div>
               )}
-              <InputBox onSend={onSend} isLoading={isLoading} placeholder="Ask facilities, gates, delays…" />
+              <InputBox onSend={onSend} isLoading={isLoading} />
             </>
           ) : (
             <>
