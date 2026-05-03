@@ -75,5 +75,16 @@
     "source_type": "official",
     "source_name": "csmia_adani_airports",
     "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_008",
+    "name": "Duty Free Mumbai — NE Pier",
+    "terminal": "T2",
+    "category": "duty_free",
+    "description": "Duty-free shopping with premium brands and selections. Categories: Perfumes, Liquor, Chocolates, and Tobacco (international passengers only). Special offer: 20% off perfumes on purchases above ₹8000. Operated by DFS.",
+    "location_text": "Terminal-2, NE Pier, Post Security Hold Area",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping"
   }
 ]
