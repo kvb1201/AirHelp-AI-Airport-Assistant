@@ -3,700 +3,700 @@
     "id": "chunk_place_food_001",
     "entity_type": "place",
     "entity_id": "FOOD_001",
-    "text": "AJ 1881 is a food in T2. Type: fast_food. Level: L4. Near: POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for AJ 1881 in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area.",
+    "text": "AJ 1881 is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for AJ 1881 in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_002",
     "entity_type": "place",
     "entity_id": "FOOD_002",
-    "text": "All Good Deli is a food in T2. Type: fast_food. Level: L3. Near: POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for All Good Deli in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.",
+    "text": "All Good Deli is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for All Good Deli in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_003",
     "entity_type": "place",
     "entity_id": "FOOD_003",
-    "text": "Amreli is a food in T2. Type: fast_food. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Amreli in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.",
+    "text": "Amreli is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Amreli in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_004",
     "entity_type": "place",
     "entity_id": "FOOD_004",
-    "text": "Amul Ice Cream Lounge is a food in T2. Type: fast_food. Level: L4. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Amul Ice Cream Lounge in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.",
+    "text": "Amul Ice Cream Lounge is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Amul Ice Cream Lounge in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_005",
     "entity_type": "place",
     "entity_id": "FOOD_005",
-    "text": "Asia 7 is a food in T2. Type: fast_food. Level: L4. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Asia 7 in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.",
+    "text": "Asia 7 is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Asia 7 in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_006",
     "entity_type": "place",
     "entity_id": "FOOD_006",
-    "text": "Baker Street is a food in T2. Type: fast_food. Level: L4. Near: PIER_10, CHECK_IN_AREA, LANDSIDE, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Baker Street in Terminal 2. Category: QSR. Location: P10,Level 4, Landside | P10, Level 4, Check in Area | Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area.",
+    "text": "Baker Street is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Baker Street in Terminal 2. Category: QSR. Location: P10,Level 4, Landside | P10, Level 4, Check in Area | Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_007",
     "entity_type": "place",
     "entity_id": "FOOD_007",
-    "text": "Balaji is a food in T2. Type: fast_food. Level: L4. Near: GATE_68, GATE_65, PIER_10, PIER_6, ARRIVAL_FORECOURT, LANDSIDE, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, jain_friendly. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=80, quick_stop=90. Description: Official CSMIA listing for Balaji in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area - Gate 68 | P10,Level 4, Landside | P6, Arrival Forecourt | Level 4 , Post Security Hold Area - Gate 65.",
+    "text": "Balaji is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Balaji in Terminal 2. Category: QSR. Location: Level 4 , Post Security Hold Area - Gate 68 | P10,Level 4, Landside | P6, Arrival Forecourt | Level 4 , Post Security Hold Area - Gate 65.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_008",
     "entity_type": "place",
     "entity_id": "FOOD_008",
-    "text": "BAR FLY is a food in T2. Type: fine_dining. Level: L3. Near: GATE_40, POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for BAR FLY in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 40.",
+    "text": "BAR FLY is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for BAR FLY in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 40.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_009",
     "entity_type": "place",
     "entity_id": "FOOD_009",
-    "text": "Baskin Robbins is a food in T2. Type: fast_food. Level: L3. Near: PIER_6, FOODCOURT, ARRIVAL_FORECOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Baskin Robbins in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3, Post Security Hold Area, Foodcourt.",
+    "text": "Baskin Robbins is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Baskin Robbins in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_010",
     "entity_type": "place",
     "entity_id": "FOOD_010",
-    "text": "Boarding Bite is a food in T2. Type: fast_food. Level: L3. Near: GATE_52, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Boarding Bite in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 52.",
+    "text": "Boarding Bite is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Boarding Bite in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 52.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_011",
     "entity_type": "place",
     "entity_id": "FOOD_011",
-    "text": "Budweiser Bar is a food in T2. Type: fine_dining. Level: unknown. Near: ARRIVAL_HALL. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for Budweiser Bar in Terminal 2. Category: Bar & Restaurant. Location: Arrival Hall.",
+    "text": "Budweiser Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Budweiser Bar in Terminal 2. Category: Bar & Restaurant. Location: Arrival Hall.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_012",
     "entity_type": "place",
     "entity_id": "FOOD_012",
-    "text": "Burger King is a food in T2. Type: fast_food. Level: L3. Near: PIER_10, LANDSIDE, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=60, quick_stop=90. Description: Official CSMIA listing for Burger King in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area | P10,Level 4, Landside.",
+    "text": "Burger King is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Burger King in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area | Level 4 , Post Security Hold Area | P10,Level 4, Landside.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_013",
     "entity_type": "place",
     "entity_id": "FOOD_013",
-    "text": "Café Ritazza is a food in T2. Type: restaurant. Level: L3. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 6 minutes. Avg time spent: 20 minutes. Food preferences: fine_dining, veg, non_veg, restaurant. Shopping preferences: none. Best for age groups: young, adult, elderly. Travel types: solo, family, business. Interests: relax, explore. Scores youth=40, luxury=20, family=65, quick_stop=35. Description: Official CSMIA listing for Café Ritazza in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.",
+    "text": "Café Ritazza is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Café Ritazza in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_014",
     "entity_type": "place",
     "entity_id": "FOOD_014",
-    "text": "Chaipoint is a food in T2. Type: coffee. Level: unknown. Near: PIER_6, ARRIVAL_FORECOURT. Budget level: low. Speed: fast. Queue time: 3 minutes. Avg time spent: 10 minutes. Food preferences: coffee, veg, jain_friendly. Shopping preferences: none. Best for age groups: young, adult, elderly. Travel types: solo, family. Interests: quick_exit. Scores youth=70, luxury=20, family=55, quick_stop=80. Description: Official CSMIA listing for Chaipoint in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.",
+    "text": "Chaipoint is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Chaipoint in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_015",
     "entity_type": "place",
     "entity_id": "FOOD_015",
-    "text": "Chef café is a food in T2. Type: restaurant. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 6 minutes. Avg time spent: 20 minutes. Food preferences: fine_dining, veg, non_veg, restaurant. Shopping preferences: none. Best for age groups: young, adult, elderly. Travel types: solo, family, business. Interests: relax, explore. Scores youth=40, luxury=20, family=65, quick_stop=35. Description: Official CSMIA listing for Chef café in Terminal 2. Category: Bar & Restaurant. Location: Level 4 , Post Security Hold Area.",
+    "text": "Chef café is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Chef café in Terminal 2. Category: Bar & Restaurant. Location: Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_016",
     "entity_type": "place",
     "entity_id": "FOOD_016",
-    "text": "Clink Bar is a food in T2. Type: fine_dining. Level: L4. Near: FOODCOURT, POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for Clink Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.",
+    "text": "Clink Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Clink Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_017",
     "entity_type": "place",
     "entity_id": "FOOD_017",
-    "text": "Costa Coffee is a food in T2. Type: coffee. Level: L4. Near: GATE_86, GATE_52, PIER_6, PIER_10, FOODCOURT, ARRIVAL_FORECOURT, LANDSIDE, POST_SECURITY. Budget level: high. Speed: fast. Queue time: 4 minutes. Avg time spent: 15 minutes. Food preferences: coffee, veg, non_veg. Shopping preferences: none. Best for age groups: young, adult. Travel types: solo, business. Interests: explore, quick_exit. Scores youth=75, luxury=55, family=45, quick_stop=80. Description: Official CSMIA listing for Costa Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area | Level 3, Post Security Hold Area, Foodcourt | P6, Arrival Forecourt | P10,Level 4, Landside | Level 3 ,Post Security Hold Area - Gate 86 | Level 3 ,Post Security Hold Area - Gate 52.",
+    "text": "Costa Coffee is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Costa Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area | Level 3, Post Security Hold Area, Foodcourt | P6, Arrival Forecourt | P10,Level 4, Landside | Level 3 ,Post Security Hold Area - Gate 86 | Level 3 ,Post Security Hold Area - Gate 52.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_018",
     "entity_type": "place",
     "entity_id": "FOOD_018",
-    "text": "Dosa Plaza is a food in T2. Type: fast_food. Level: L3. Near: POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, jain_friendly. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=80, quick_stop=90. Description: Official CSMIA listing for Dosa Plaza in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.",
+    "text": "Dosa Plaza is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Dosa Plaza in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_019",
     "entity_type": "place",
     "entity_id": "FOOD_019",
-    "text": "Falafel Express is a food in T2. Type: fast_food. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Falafel Express in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.",
+    "text": "Falafel Express is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Falafel Express in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_020",
     "entity_type": "place",
     "entity_id": "FOOD_020",
-    "text": "Flurys is a food in T2. Type: fast_food. Level: L3. Near: GATE_41, GATE_46, FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Flurys in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 46.",
+    "text": "Flurys is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Flurys in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 46.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_021",
     "entity_type": "place",
     "entity_id": "FOOD_021",
-    "text": "Foody's is a food in T2. Type: fast_food. Level: L3. Near: GATE_41, GATE_44, GATE_45, GATE_46, PIER_10, PIER_6, ARRIVAL_FORECOURT, LANDSIDE, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Foody's in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 44 | Level 3 ,Post Security Hold Area - Gate 45 | Level 3 ,Post Security Hold Area - Gate 46 | Level 4 , Post Security Hold Area | P10,Level 4, Landside | P6, Arrival Forecourt.",
+    "text": "Foody's is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Foody's in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 44 | Level 3 ,Post Security Hold Area - Gate 45 | Level 3 ,Post Security Hold Area - Gate 46 | Level 4 , Post Security Hold Area | P10,Level 4, Landside | P6, Arrival Forecourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_022",
     "entity_type": "place",
     "entity_id": "FOOD_022",
-    "text": "Fresco is a food in T2. Type: fast_food. Level: L4. Near: PIER_10, CHECK_IN_AREA. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Fresco in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area.",
+    "text": "Fresco is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Fresco in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_023",
     "entity_type": "place",
     "entity_id": "FOOD_023",
-    "text": "Good Flippin' Burgers is a food in T2. Type: fast_food. Level: L4. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=60, quick_stop=90. Description: Official CSMIA listing for Good Flippin' Burgers in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.",
+    "text": "Good Flippin' Burgers is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Good Flippin' Burgers in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_024",
     "entity_type": "place",
     "entity_id": "FOOD_024",
-    "text": "Heineken Bar is a food in T2. Type: fine_dining. Level: L3. Near: POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for Heineken Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.",
+    "text": "Heineken Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Heineken Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_025",
     "entity_type": "place",
     "entity_id": "FOOD_025",
-    "text": "Hoegaarden Bar is a food in T2. Type: fine_dining. Level: L4. Near: FOODCOURT, POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for Hoegaarden Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.",
+    "text": "Hoegaarden Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Hoegaarden Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_026",
     "entity_type": "place",
     "entity_id": "FOOD_026",
-    "text": "Irish house is a food in T2. Type: fine_dining. Level: L3. Near: POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for Irish house in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.",
+    "text": "Irish house is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Irish house in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_027",
     "entity_type": "place",
     "entity_id": "FOOD_027",
-    "text": "Kailash Parbat is a food in T2. Type: fast_food. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, jain_friendly. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=80, quick_stop=90. Description: Official CSMIA listing for Kailash Parbat in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.",
+    "text": "Kailash Parbat is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Kailash Parbat in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_028",
     "entity_type": "place",
     "entity_id": "FOOD_028",
-    "text": "MANIS CAFE is a food in T2. Type: restaurant. Level: unknown. Near: PIER_4, LANDSIDE. Budget level: medium. Speed: medium. Queue time: 6 minutes. Avg time spent: 20 minutes. Food preferences: veg, non_veg, restaurant. Shopping preferences: none. Best for age groups: young, adult, elderly. Travel types: solo, family, business. Interests: relax, explore. Scores youth=40, luxury=20, family=65, quick_stop=35. Description: Official CSMIA listing for MANIS CAFE in Terminal 2. Category: Quick Bites. Location: P4, Landside.",
+    "text": "MANIS CAFE is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for MANIS CAFE in Terminal 2. Category: Quick Bites. Location: P4, Landside.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_029",
     "entity_type": "place",
     "entity_id": "FOOD_029",
-    "text": "Masala Twist is a food in T2. Type: fast_food. Level: L3. Near: POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Masala Twist in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.",
+    "text": "Masala Twist is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Masala Twist in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_030",
     "entity_type": "place",
     "entity_id": "FOOD_030",
-    "text": "Messo is a food in T2. Type: restaurant. Level: L3. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 6 minutes. Avg time spent: 20 minutes. Food preferences: fine_dining, non_veg, restaurant. Shopping preferences: none. Best for age groups: young, adult, elderly. Travel types: solo, family, business. Interests: relax, explore. Scores youth=40, luxury=20, family=55, quick_stop=35. Description: Official CSMIA listing for Messo in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.",
+    "text": "Messo is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Messo in Terminal 2. Category: Bar & Restaurant. Location: Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_031",
     "entity_type": "place",
     "entity_id": "FOOD_031",
-    "text": "Mint & Mirchi is a food in T2. Type: fast_food. Level: L3. Near: GATE_42, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Mint & Mirchi in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 42.",
+    "text": "Mint & Mirchi is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Mint & Mirchi in Terminal 2. Category: Quick Bites. Location: Level 3 ,Post Security Hold Area - Gate 42.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_032",
     "entity_type": "place",
     "entity_id": "FOOD_032",
-    "text": "Mitti Café is a food in T2. Type: restaurant. Level: unknown. Near: PIER_6, ARRIVAL_FORECOURT. Budget level: medium. Speed: medium. Queue time: 6 minutes. Avg time spent: 20 minutes. Food preferences: veg, non_veg, restaurant. Shopping preferences: none. Best for age groups: young, adult, elderly. Travel types: solo, family, business. Interests: relax, explore. Scores youth=40, luxury=20, family=65, quick_stop=35. Description: Official CSMIA listing for Mitti Café in Terminal 2. Category: Coffee Shop. Location: P6, Arrival Forecourt.",
+    "text": "Mitti Café is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Mitti Café in Terminal 2. Category: Coffee Shop. Location: P6, Arrival Forecourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_033",
     "entity_type": "place",
     "entity_id": "FOOD_033",
-    "text": "Moti Mahal is a food in T2. Type: fast_food. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Moti Mahal in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.",
+    "text": "Moti Mahal is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Moti Mahal in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_034",
     "entity_type": "place",
     "entity_id": "FOOD_034",
-    "text": "Naashto is a food in T2. Type: fast_food. Level: L4. Near: FOODCOURT, ARRIVAL_HALL, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, jain_friendly. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=80, quick_stop=90. Description: Official CSMIA listing for Naashto in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall | Level 3 ,Post Security Hold Area.",
+    "text": "Naashto is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Naashto in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall | Level 3 ,Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_035",
     "entity_type": "place",
     "entity_id": "FOOD_035",
-    "text": "New York Burrito Company is a food in T2. Type: fast_food. Level: L4. Near: GATE_42, PIER_10, PIER_6, ARRIVAL_FORECOURT, CHECK_IN_AREA, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=60, quick_stop=90. Description: Official CSMIA listing for New York Burrito Company in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area | Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 42 | P6, Arrival Forecourt.",
+    "text": "New York Burrito Company is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for New York Burrito Company in Terminal 2. Category: QSR. Location: P10, Level 4, Check in Area | Level 4 , Post Security Hold Area | Level 3 ,Post Security Hold Area - Gate 42 | P6, Arrival Forecourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_036",
     "entity_type": "place",
     "entity_id": "FOOD_036",
-    "text": "Ottoman Eats is a food in T2. Type: fast_food. Level: L4. Near: PIER_10, LANDSIDE. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=60, quick_stop=90. Description: Official CSMIA listing for Ottoman Eats in Terminal 2. Category: QSR. Location: P10,Level 4, Landside.",
+    "text": "Ottoman Eats is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Ottoman Eats in Terminal 2. Category: QSR. Location: P10,Level 4, Landside.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_037",
     "entity_type": "place",
     "entity_id": "FOOD_037",
-    "text": "Pizza Hut is a food in T2. Type: fast_food. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=60, quick_stop=90. Description: Official CSMIA listing for Pizza Hut in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.",
+    "text": "Pizza Hut is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Pizza Hut in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_038",
     "entity_type": "place",
     "entity_id": "FOOD_038",
-    "text": "Shiv Sagar is a food in T2. Type: fast_food. Level: unknown. Near: ARRIVAL_FORECOURT. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, jain_friendly. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=80, quick_stop=90. Description: Official CSMIA listing for Shiv Sagar in Terminal 2. Category: QSR. Location: Arrival Forecourt.",
+    "text": "Shiv Sagar is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Shiv Sagar in Terminal 2. Category: QSR. Location: Arrival Forecourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_039",
     "entity_type": "place",
     "entity_id": "FOOD_039",
-    "text": "Squeeze Juice is a food in T2. Type: fast_food. Level: L4. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Squeeze Juice in Terminal 2. Category: Quick Bites. Location: Level 4, Post Security Hold Area, Foodcourt | Level 3, Post Security Hold Area, Foodcourt.",
+    "text": "Squeeze Juice is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Squeeze Juice in Terminal 2. Category: Quick Bites. Location: Level 4, Post Security Hold Area, Foodcourt | Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_040",
     "entity_type": "place",
     "entity_id": "FOOD_040",
-    "text": "Street Foods by Punjab Grill is a food in T2. Type: fast_food. Level: L3. Near: PIER_6, PIER_10, FOODCOURT, ARRIVAL_FORECOURT, ARRIVAL_HALL, CHECK_IN_AREA, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Street Foods by Punjab Grill in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3 ,Post Security Hold Area | Level 4, Post Security Hold Area, Foodcourt | P10, Level 4, Check in Area | Arrival Hall.",
+    "text": "Street Foods by Punjab Grill is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Street Foods by Punjab Grill in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt | Level 3 ,Post Security Hold Area | Level 4, Post Security Hold Area, Foodcourt | P10, Level 4, Check in Area | Arrival Hall.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_041",
     "entity_type": "place",
     "entity_id": "FOOD_041",
-    "text": "The Cram Bar is a food in T2. Type: fine_dining. Level: L3. Near: GATE_41, GATE_49, POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for The Cram Bar in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 49.",
+    "text": "The Cram Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for The Cram Bar in Terminal 2. Category: QSR. Location: Level 3 ,Post Security Hold Area - Gate 41 | Level 3 ,Post Security Hold Area - Gate 49.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_042",
     "entity_type": "place",
     "entity_id": "FOOD_042",
-    "text": "Third Wave Coffee is a food in T2. Type: restaurant. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 6 minutes. Avg time spent: 20 minutes. Food preferences: veg, non_veg, restaurant. Shopping preferences: none. Best for age groups: young, adult, elderly. Travel types: solo, family, business. Interests: relax, explore. Scores youth=40, luxury=20, family=65, quick_stop=35. Description: Official CSMIA listing for Third Wave Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area.",
+    "text": "Third Wave Coffee is a food in T2. Type: coffee. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Third Wave Coffee in Terminal 2. Category: Coffee Shop. Location: Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_043",
     "entity_type": "place",
     "entity_id": "FOOD_043",
-    "text": "TIKG (The Indian Kebab Grill) Bar is a food in T2. Type: fine_dining. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for TIKG (The Indian Kebab Grill) Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3, Post Security Hold Area, Foodcourt.",
+    "text": "TIKG (The Indian Kebab Grill) Bar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for TIKG (The Indian Kebab Grill) Bar in Terminal 2. Category: Bar & Restaurant. Location: Level 3, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_044",
     "entity_type": "place",
     "entity_id": "FOOD_044",
-    "text": "Vaango is a food in T2. Type: fast_food. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Vaango in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4 , Post Security Hold Area.",
+    "text": "Vaango is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Vaango in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4 , Post Security Hold Area.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_045",
     "entity_type": "place",
     "entity_id": "FOOD_045",
-    "text": "Wow Momo is a food in T2. Type: fast_food. Level: unknown. Near: PIER_6, ARRIVAL_FORECOURT. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Wow Momo in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.",
+    "text": "Wow Momo is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Wow Momo in Terminal 2. Category: QSR. Location: P6, Arrival Forecourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_046",
     "entity_type": "place",
     "entity_id": "FOOD_046",
-    "text": "Wrapafella is a food in T2. Type: fast_food. Level: L3. Near: FOODCOURT, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 5 minutes. Avg time spent: 10 minutes. Food preferences: fast_food, veg, non_veg. Shopping preferences: none. Best for age groups: child, young, adult. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=70, quick_stop=90. Description: Official CSMIA listing for Wrapafella in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.",
+    "text": "Wrapafella is a food in T2. Type: quick_bites. Price level: low. Speed: fast. Recommended for age groups: child, young, adult. Description: Official CSMIA listing for Wrapafella in Terminal 2. Category: QSR. Location: Level 3, Post Security Hold Area, Foodcourt | Level 4, Post Security Hold Area, Foodcourt.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_food_047",
     "entity_type": "place",
     "entity_id": "FOOD_047",
-    "text": "Zambar is a food in T2. Type: fine_dining. Level: L4. Near: FOODCOURT, ARRIVAL_HALL, POST_SECURITY. Budget level: high. Speed: slow. Queue time: 8 minutes. Avg time spent: 35 minutes. Food preferences: fine_dining, non_veg. Shopping preferences: none. Best for age groups: adult. Travel types: business, solo. Interests: relax. Scores youth=25, luxury=70, family=35, quick_stop=15. Description: Official CSMIA listing for Zambar in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall.",
+    "text": "Zambar is a food in T2. Type: bar_restaurant. Price level: high. Speed: slow. Recommended for age groups: adult. Description: Official CSMIA listing for Zambar in Terminal 2. Category: QSR. Location: Level 4, Post Security Hold Area, Foodcourt | Arrival Hall.. Intents: food, quick_stop.",
     "source_url": "local://data/raw/food.json"
   },
   {
     "id": "chunk_place_shop_001",
     "entity_type": "place",
     "entity_id": "SHOP_001",
-    "text": "Amrapali is a shop in T2. Type: luxury. Level: L4. Near: POST_SECURITY. Budget level: high. Speed: slow. Queue time: 3 minutes. Avg time spent: 25 minutes. Food preferences: none. Shopping preferences: luxury. Best for age groups: young, adult. Travel types: solo, business. Interests: explore, relax. Scores youth=60, luxury=75, family=35, quick_stop=35. Description: Official CSMIA listing for Amrapali in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.",
+    "text": "Amrapali is a shop in T2. Type: luxury. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Amrapali in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_002",
     "entity_type": "place",
     "entity_id": "SHOP_002",
-    "text": "Armani Exchange is a shop in T2. Type: luxury. Level: L3. Near: not specified. Budget level: high. Speed: slow. Queue time: 3 minutes. Avg time spent: 25 minutes. Food preferences: none. Shopping preferences: luxury. Best for age groups: young, adult. Travel types: solo, business. Interests: explore, relax. Scores youth=60, luxury=75, family=35, quick_stop=35. Description: Official CSMIA listing for Armani Exchange in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Armani Exchange is a shop in T2. Type: luxury. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Armani Exchange in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_003",
     "entity_type": "place",
     "entity_id": "SHOP_003",
-    "text": "Balenzia is a shop in T2. Type: fashion. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Balenzia in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.",
+    "text": "Balenzia is a shop in T2. Type: fashion_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Balenzia in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_004",
     "entity_type": "place",
     "entity_id": "SHOP_004",
-    "text": "BIBA is a shop in T2. Type: fashion. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for BIBA in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "BIBA is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for BIBA in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_005",
     "entity_type": "place",
     "entity_id": "SHOP_005",
-    "text": "Bikaji is a shop in T2. Type: budget. Level: L4. Near: POST_SECURITY. Budget level: low. Speed: fast. Queue time: 2 minutes. Avg time spent: 10 minutes. Food preferences: none. Shopping preferences: budget, local. Best for age groups: young, adult, elderly. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=55, quick_stop=75. Description: Official CSMIA listing for Bikaji in Terminal 2. Category: Sweets / Packed Foods. Location: Level 4 , Post Security Hold Area.",
+    "text": "Bikaji is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Bikaji in Terminal 2. Category: Sweets / Packed Foods. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_006",
     "entity_type": "place",
     "entity_id": "SHOP_006",
-    "text": "Bookscetra (New Store) is a shop in T2. Type: budget. Level: L3. Near: not specified. Budget level: low. Speed: fast. Queue time: 2 minutes. Avg time spent: 10 minutes. Food preferences: none. Shopping preferences: budget, local. Best for age groups: young, adult, elderly. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=55, quick_stop=75. Description: Official CSMIA listing for Bookscetra (New Store) in Terminal 2. Category: CTN. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Bookscetra (New Store) is a shop in T2. Type: books_convenience. Price level: low. Speed: fast. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Bookscetra (New Store) in Terminal 2. Category: CTN. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_007",
     "entity_type": "place",
     "entity_id": "SHOP_007",
-    "text": "Carlton is a shop in T2. Type: travel_accessories. Level: L3. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, travel_accessories. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Carlton in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.",
+    "text": "Carlton is a shop in T2. Type: luggage_and_bags. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Carlton in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_008",
     "entity_type": "place",
     "entity_id": "SHOP_008",
-    "text": "ColorBar is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for ColorBar in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "ColorBar is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for ColorBar in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_009",
     "entity_type": "place",
     "entity_id": "SHOP_009",
-    "text": "Da Milano is a shop in T2. Type: mid_range. Level: L3. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Da Milano in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.",
+    "text": "Da Milano is a shop in T2. Type: handbag_and_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Da Milano in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_010",
     "entity_type": "place",
     "entity_id": "SHOP_010",
-    "text": "Fab India is a shop in T2. Type: fashion. Level: L3. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Fab India in Terminal 2. Category: Apparel. Location: Level 3 , Post Security Hold Area | Level 4 , Post Security Hold Area.",
+    "text": "Fab India is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Fab India in Terminal 2. Category: Apparel. Location: Level 3 , Post Security Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_011",
     "entity_type": "place",
     "entity_id": "SHOP_011",
-    "text": "Go Colors is a shop in T2. Type: fashion. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Go Colors in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Go Colors is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Go Colors in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_012",
     "entity_type": "place",
     "entity_id": "SHOP_012",
-    "text": "Gourmet Baklava is a shop in T2. Type: budget. Level: L3. Near: not specified. Budget level: low. Speed: fast. Queue time: 2 minutes. Avg time spent: 10 minutes. Food preferences: none. Shopping preferences: budget, local. Best for age groups: young, adult, elderly. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=55, quick_stop=75. Description: Official CSMIA listing for Gourmet Baklava in Terminal 2. Category: Sweets / Packed Foods. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Gourmet Baklava is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Gourmet Baklava in Terminal 2. Category: Sweets / Packed Foods. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_013",
     "entity_type": "place",
     "entity_id": "SHOP_013",
-    "text": "Gute Reise is a shop in T2. Type: travel_accessories. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, travel_accessories. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Gute Reise in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Gute Reise is a shop in T2. Type: luggage_and_bags. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Gute Reise in Terminal 2. Category: Luggage and Bags. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_014",
     "entity_type": "place",
     "entity_id": "SHOP_014",
-    "text": "Haldirams is a shop in T2. Type: budget. Level: L3. Near: ARRIVAL_HALL, POST_SECURITY. Budget level: low. Speed: fast. Queue time: 2 minutes. Avg time spent: 10 minutes. Food preferences: none. Shopping preferences: budget, local. Best for age groups: young, adult, elderly. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=55, quick_stop=75. Description: Official CSMIA listing for Haldirams in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall | Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.",
+    "text": "Haldirams is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Haldirams in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall | Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_015",
     "entity_type": "place",
     "entity_id": "SHOP_015",
-    "text": "Hush Puppies is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Hush Puppies in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Hush Puppies is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Hush Puppies in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_016",
     "entity_type": "place",
     "entity_id": "SHOP_016",
-    "text": "Isha Life is a shop in T2. Type: mid_range. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Isha Life in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.",
+    "text": "Isha Life is a shop in T2. Type: souvenirs_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Isha Life in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_017",
     "entity_type": "place",
     "entity_id": "SHOP_017",
-    "text": "Isharya is a shop in T2. Type: luxury. Level: L4. Near: POST_SECURITY. Budget level: high. Speed: slow. Queue time: 3 minutes. Avg time spent: 25 minutes. Food preferences: none. Shopping preferences: luxury. Best for age groups: young, adult. Travel types: solo, business. Interests: explore, relax. Scores youth=60, luxury=75, family=35, quick_stop=35. Description: Official CSMIA listing for Isharya in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.",
+    "text": "Isharya is a shop in T2. Type: jewelry. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Isharya in Terminal 2. Category: Jewellary. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_018",
     "entity_type": "place",
     "entity_id": "SHOP_018",
-    "text": "IT Luggage is a shop in T2. Type: travel_accessories. Level: unknown. Near: CHECK_IN_AREA. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, travel_accessories. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for IT Luggage in Terminal 2. Category: Luggage and Bags. Location: Check in Area.",
+    "text": "IT Luggage is a shop in T2. Type: luggage_and_bags. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for IT Luggage in Terminal 2. Category: Luggage and Bags. Location: Check in Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_019",
     "entity_type": "place",
     "entity_id": "SHOP_019",
-    "text": "Kamaayurveda is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Kamaayurveda in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Kamaayurveda is a shop in T2. Type: health_and_beauty. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Kamaayurveda in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_020",
     "entity_type": "place",
     "entity_id": "SHOP_020",
-    "text": "Kompanero is a shop in T2. Type: mid_range. Level: L3. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Kompanero in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Security Hold Area.",
+    "text": "Kompanero is a shop in T2. Type: handbag_and_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Kompanero in Terminal 2. Category: Handbag and Accessories. Location: Level 3 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_021",
     "entity_type": "place",
     "entity_id": "SHOP_021",
-    "text": "Krishna Pearls is a shop in T2. Type: luxury. Level: L3. Near: POST_SECURITY. Budget level: high. Speed: slow. Queue time: 3 minutes. Avg time spent: 25 minutes. Food preferences: none. Shopping preferences: luxury. Best for age groups: young, adult. Travel types: solo, business. Interests: explore, relax. Scores youth=60, luxury=75, family=35, quick_stop=35. Description: Official CSMIA listing for Krishna Pearls in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.",
+    "text": "Krishna Pearls is a shop in T2. Type: jewelry. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Krishna Pearls in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_022",
     "entity_type": "place",
     "entity_id": "SHOP_022",
-    "text": "Lacoste is a shop in T2. Type: fashion. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Lacoste in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Lacoste is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lacoste in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_023",
     "entity_type": "place",
     "entity_id": "SHOP_023",
-    "text": "Lakme is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Lakme in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Lakme is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lakme in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_024",
     "entity_type": "place",
     "entity_id": "SHOP_024",
-    "text": "Lal Sweets is a shop in T2. Type: budget. Level: unknown. Near: ARRIVAL_HALL. Budget level: low. Speed: fast. Queue time: 2 minutes. Avg time spent: 10 minutes. Food preferences: none. Shopping preferences: budget, local. Best for age groups: young, adult, elderly. Travel types: solo, family. Interests: quick_exit. Scores youth=35, luxury=20, family=55, quick_stop=75. Description: Official CSMIA listing for Lal Sweets in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall.",
+    "text": "Lal Sweets is a shop in T2. Type: sweets_packed_foods. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lal Sweets in Terminal 2. Category: Sweets / Packed Foods. Location: Arrival Hall.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_025",
     "entity_type": "place",
     "entity_id": "SHOP_025",
-    "text": "Lenskart is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Lenskart in Terminal 2. Category: Sunglasses. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Lenskart is a shop in T2. Type: sunglasses. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Lenskart in Terminal 2. Category: Sunglasses. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_026",
     "entity_type": "place",
     "entity_id": "SHOP_026",
-    "text": "Marks and Spencers is a shop in T2. Type: fashion. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Marks and Spencers in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Marks and Spencers is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Marks and Spencers in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_027",
     "entity_type": "place",
     "entity_id": "SHOP_027",
-    "text": "Mufti is a shop in T2. Type: fashion. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Mufti in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.",
+    "text": "Mufti is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Mufti in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_028",
     "entity_type": "place",
     "entity_id": "SHOP_028",
-    "text": "Nyaka is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Nyaka in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Nyaka is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Nyaka in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_029",
     "entity_type": "place",
     "entity_id": "SHOP_029",
-    "text": "Parcos Luxe is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Parcos Luxe in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Parcos Luxe is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Parcos Luxe in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_030",
     "entity_type": "place",
     "entity_id": "SHOP_030",
-    "text": "Perona is a shop in T2. Type: fashion. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Perona in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.",
+    "text": "Perona is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Perona in Terminal 2. Category: Apparel. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_031",
     "entity_type": "place",
     "entity_id": "SHOP_031",
-    "text": "Rare Planet is a shop in T2. Type: mid_range. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Rare Planet in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.",
+    "text": "Rare Planet is a shop in T2. Type: souvenirs_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Rare Planet in Terminal 2. Category: Souvenirs / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_032",
     "entity_type": "place",
     "entity_id": "SHOP_032",
-    "text": "Reliance Digital is a shop in T2. Type: electronics. Level: L3. Near: not specified. Budget level: medium. Speed: fast. Queue time: 2 minutes. Avg time spent: 12 minutes. Food preferences: none. Shopping preferences: electronics. Best for age groups: young, adult. Travel types: solo, business. Interests: quick_exit, explore. Scores youth=70, luxury=30, family=35, quick_stop=70. Description: Official CSMIA listing for Reliance Digital in Terminal 2. Category: Electronics. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Reliance Digital is a shop in T2. Type: electronics. Price level: medium. Speed: fast. Recommended for age groups: young, adult. Description: Official CSMIA listing for Reliance Digital in Terminal 2. Category: Electronics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_033",
     "entity_type": "place",
     "entity_id": "SHOP_033",
-    "text": "Scentido is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Scentido in Terminal 2. Category: Perfumes. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Scentido is a shop in T2. Type: perfumes. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Scentido in Terminal 2. Category: Perfumes. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_034",
     "entity_type": "place",
     "entity_id": "SHOP_034",
-    "text": "Shahenaz is a shop in T2. Type: mid_range. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Shahenaz in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.",
+    "text": "Shahenaz is a shop in T2. Type: home_decor_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Shahenaz in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_035",
     "entity_type": "place",
     "entity_id": "SHOP_035",
-    "text": "Shahenaz Women is a shop in T2. Type: fashion. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Shahenaz Women in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.",
+    "text": "Shahenaz Women is a shop in T2. Type: fashion_accessories. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Shahenaz Women in Terminal 2. Category: Fashion Accessories. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_036",
     "entity_type": "place",
     "entity_id": "SHOP_036",
-    "text": "Shaze is a shop in T2. Type: mid_range. Level: L4. Near: POST_SECURITY. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Shaze in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.",
+    "text": "Shaze is a shop in T2. Type: home_decor_gifting. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Shaze in Terminal 2. Category: Home Decor / Gifting. Location: Level 4 , Post Security Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_037",
     "entity_type": "place",
     "entity_id": "SHOP_037",
-    "text": "Skechers is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Skechers in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Skechers is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Skechers in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_038",
     "entity_type": "place",
     "entity_id": "SHOP_038",
-    "text": "Steve Madden is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Steve Madden in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Steve Madden is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Steve Madden in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_039",
     "entity_type": "place",
     "entity_id": "SHOP_039",
-    "text": "Superdry is a shop in T2. Type: fashion. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local, fashion. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Superdry in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Superdry is a shop in T2. Type: fashion. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Superdry in Terminal 2. Category: Apparel. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_040",
     "entity_type": "place",
     "entity_id": "SHOP_040",
-    "text": "The Body Shop is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for The Body Shop in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "The Body Shop is a shop in T2. Type: health_and_beauty. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for The Body Shop in Terminal 2. Category: Health and Beauty. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_041",
     "entity_type": "place",
     "entity_id": "SHOP_041",
-    "text": "The Bombay Shaving Company is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for The Bombay Shaving Company in Terminal 2. Category: Men's Grooming. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "The Bombay Shaving Company is a shop in T2. Type: men's_grooming. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for The Bombay Shaving Company in Terminal 2. Category: Men's Grooming. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_042",
     "entity_type": "place",
     "entity_id": "SHOP_042",
-    "text": "The Face Shop is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for The Face Shop in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "The Face Shop is a shop in T2. Type: makeup_and_cosmetics. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for The Face Shop in Terminal 2. Category: Makeup and Cosmetics. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_043",
     "entity_type": "place",
     "entity_id": "SHOP_043",
-    "text": "Theobroma is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Theobroma in Terminal 2. Category: Confectionary. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Theobroma is a shop in T2. Type: confectionary. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Theobroma in Terminal 2. Category: Confectionary. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_044",
     "entity_type": "place",
     "entity_id": "SHOP_044",
-    "text": "Tresmode is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Tresmode in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Tresmode is a shop in T2. Type: footware. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Tresmode in Terminal 2. Category: Footware. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_045",
     "entity_type": "place",
     "entity_id": "SHOP_045",
-    "text": "Tribe is a shop in T2. Type: luxury. Level: L3. Near: not specified. Budget level: high. Speed: slow. Queue time: 3 minutes. Avg time spent: 25 minutes. Food preferences: none. Shopping preferences: luxury. Best for age groups: young, adult. Travel types: solo, business. Interests: explore, relax. Scores youth=60, luxury=75, family=35, quick_stop=35. Description: Official CSMIA listing for Tribe in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area.",
+    "text": "Tribe is a shop in T2. Type: jewelry. Price level: high. Speed: slow. Recommended for age groups: young, adult. Description: Official CSMIA listing for Tribe in Terminal 2. Category: Jewellary. Location: Level 3 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_shop_046",
     "entity_type": "place",
     "entity_id": "SHOP_046",
-    "text": "Tynimo is a shop in T2. Type: mid_range. Level: L3. Near: not specified. Budget level: medium. Speed: medium. Queue time: 3 minutes. Avg time spent: 15 minutes. Food preferences: none. Shopping preferences: local. Best for age groups: young, adult. Travel types: solo, family. Interests: explore. Scores youth=50, luxury=20, family=45, quick_stop=35. Description: Official CSMIA listing for Tynimo in Terminal 2. Category: LifeStyle. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Secuirty Hold Area.",
+    "text": "Tynimo is a shop in T2. Type: lifestyle. Price level: medium. Speed: medium. Recommended for age groups: young, adult, elderly. Description: Official CSMIA listing for Tynimo in Terminal 2. Category: LifeStyle. Location: Level 3 , Post Secuirty Hold Area | Level 4 , Post Secuirty Hold Area.. Intents: shopping.",
     "source_url": "local://data/raw/shops.json"
   },
   {
     "id": "chunk_place_service_001",
     "entity_type": "place",
     "entity_id": "SERVICE_001",
-    "text": "Adani Lounge-Loyalty is a service in T2. Type: lounge. Level: L3. Near: DOMESTIC_DEPARTURE. Budget level: high. Speed: slow. Queue time: 6 minutes. Avg time spent: 45 minutes. Food preferences: none. Shopping preferences: none. Best for age groups: adult, elderly. Travel types: solo, family, business. Interests: relax. Scores youth=35, luxury=65, family=35, quick_stop=15. Description: 3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable)",
+    "text": "Adani Lounge-Loyalty is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable). Intents: utility.",
     "source_url": "local://data/raw/services.json"
   },
   {
     "id": "chunk_place_service_002",
     "entity_type": "place",
     "entity_id": "SERVICE_002",
-    "text": "Adani Lounge-Business Class L3( Airline) is a service in T2. Type: lounge. Level: L3. Near: DOMESTIC_DEPARTURE. Budget level: high. Speed: slow. Queue time: 6 minutes. Avg time spent: 45 minutes. Food preferences: none. Shopping preferences: none. Best for age groups: adult, elderly. Travel types: solo, family, business. Interests: relax. Scores youth=35, luxury=65, family=35, quick_stop=15. Description: 3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable)",
+    "text": "Adani Lounge-Business Class L3( Airline) is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable). Intents: utility.",
     "source_url": "local://data/raw/services.json"
   },
   {
     "id": "chunk_place_service_003",
     "entity_type": "place",
     "entity_id": "SERVICE_003",
-    "text": "AMEX is a service in T2. Type: lounge. Level: L3. Near: GATE_65. Budget level: high. Speed: slow. Queue time: 6 minutes. Avg time spent: 45 minutes. Food preferences: none. Shopping preferences: none. Best for age groups: adult, elderly. Travel types: solo, family, business. Interests: relax. Scores youth=35, luxury=65, family=35, quick_stop=15. Description: Hot and Cold à la carte Buffet menu with Jain menu options Complimentary Bar with cocktails and mocktails Free Wi-Fi Phone calls Printing",
+    "text": "AMEX is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: Hot and Cold à la carte Buffet menu with Jain menu options Complimentary Bar with cocktails and mocktails Free Wi-Fi Phone calls Printing. Intents: utility.",
     "source_url": "local://data/raw/services.json"
   },
   {
     "id": "chunk_place_service_004",
     "entity_type": "place",
     "entity_id": "SERVICE_004",
-    "text": "Aviserv Lounge West is a service in T2. Type: lounge. Level: L2. Near: not specified. Budget level: high. Speed: slow. Queue time: 6 minutes. Avg time spent: 45 minutes. Food preferences: none. Shopping preferences: none. Best for age groups: adult, elderly. Travel types: solo, family, business. Interests: relax. Scores youth=35, luxury=65, family=35, quick_stop=15. Description: Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.",
+    "text": "Aviserv Lounge West is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.. Intents: utility.",
     "source_url": "local://data/raw/services.json"
   },
   {
     "id": "chunk_place_service_005",
     "entity_type": "place",
     "entity_id": "SERVICE_005",
-    "text": "Aviserv Lounge East is a service in T2. Type: lounge. Level: L2. Near: not specified. Budget level: high. Speed: slow. Queue time: 6 minutes. Avg time spent: 45 minutes. Food preferences: none. Shopping preferences: none. Best for age groups: adult, elderly. Travel types: solo, family, business. Interests: relax. Scores youth=35, luxury=65, family=35, quick_stop=15. Description: Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.",
+    "text": "Aviserv Lounge East is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.. Intents: utility.",
     "source_url": "local://data/raw/services.json"
   },
   {
     "id": "chunk_place_service_006",
     "entity_type": "place",
     "entity_id": "SERVICE_006",
-    "text": "Adani Lounge Loyalty is a service in T2. Type: lounge. Level: L4. Near: INTERNATIONAL_DEPARTURE. Budget level: high. Speed: slow. Queue time: 6 minutes. Avg time spent: 45 minutes. Food preferences: none. Shopping preferences: none. Best for age groups: adult, elderly. Travel types: solo, family, business. Interests: relax. Scores youth=35, luxury=65, family=35, quick_stop=15. Description: 4 hours of Lounge Access prior to departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability",
+    "text": "Adani Lounge Loyalty is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 4 hours of Lounge Access prior to departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability. Intents: utility.",
     "source_url": "local://data/raw/services.json"
   },
   {
     "id": "chunk_place_service_007",
     "entity_type": "place",
     "entity_id": "SERVICE_007",
-    "text": "Adani Lounge Loyalty (1st Class & Premium business) is a service in T2. Type: lounge. Level: L4. Near: INTERNATIONAL_DEPARTURE. Budget level: high. Speed: slow. Queue time: 6 minutes. Avg time spent: 45 minutes. Food preferences: none. Shopping preferences: none. Best for age groups: adult, elderly. Travel types: solo, family, business. Interests: relax. Scores youth=35, luxury=65, family=35, quick_stop=15. Description: 4 hours of Lounge Access prior to scheduled departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability",
+    "text": "Adani Lounge Loyalty (1st Class & Premium business) is a service in T2. Type: lounge. Price level: high. Speed: slow. Recommended for age groups: adult, elderly. Description: 4 hours of Lounge Access prior to scheduled departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability. Intents: utility.",
     "source_url": "local://data/raw/services.json"
   },
   {

@@ -4,6 +4,7 @@ __pycache__/
 .env
 venv/
 .venv/
+venv10/
 .DS_Store
 frontend/dist/
 chroma_db/

@@ -72,7 +72,7 @@ function help() {
   npm run setup    first time (Python deps + frontend npm)
   npm run dev      frontend  http://localhost:3000
   npm run api      backend   http://localhost:8000
-  npm run scrape   scrape official CSMIA T2 data
+  npm run scrape   scrape CSMIA T2 outlets + live flight status (Playwright)
   npm run test     quick check
 `);
 }
@@ -89,6 +89,7 @@ function installFrontend() {
 
 function setup() {
   install();
+  run('npm', ['install'], { cwd: REPO, shell: isWin });
   installFrontend();
   console.log('setup done.');
 }
@@ -113,6 +114,12 @@ function scrape() {
     process.exit(1);
   }
   run(python, ['scrape_csmia_t2.py'], { cwd: backend, shell: false });
+  run(process.execPath, [path.join(REPO, 'scripts', 'scrape_csmia_flights.mjs')], { cwd: REPO, shell: false });
+  run(
+    python,
+    ['-c', 'from app.services.rag_service import build_knowledge_base; build_knowledge_base()'],
+    { cwd: backend, shell: false },
+  );
 }
 
 function test() {

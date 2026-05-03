@@ -1,19 +1,1817 @@
 [
   {
-    "flight_id": "TBD_FLIGHT_FEED",
-    "airline": "Unknown",
-    "type": "departure",
+    "flight_id": "AI_4218_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
     "terminal": "T2",
     "gate": null,
     "check_in": null,
     "timings": {
-      "scheduled": "",
-      "boarding": "",
-      "departure": ""
+      "scheduled": "23:55",
+      "route": "Dubai (DXB)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "9"
     },
-    "status": "data_pending",
-    "category": "unknown",
-    "source_url": "local://pending/flights",
-    "last_verified_at": "2026-05-03T09:53:40.482851+00:00"
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2433_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:55",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "LH_766_ARR",
+    "airline": "LUFTHANSA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:50",
+      "estimated": "23:55",
+      "route": "Munich (MUC)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "10"
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_4214_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:50",
+      "route": "Bhopal (BHO)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_6598_ARR",
+    "airline": "INDIGO",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:45",
+      "route": "Indore (IDR)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2482_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:45",
+      "route": "Kolkata (CCU)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2338_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:40",
+      "route": "Bangkok (BKK)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "9"
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "VJ_883_ARR",
+    "airline": "VIETJET",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:40",
+      "route": "Ho Chi Minh Vietnam (SGN)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "5"
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "BA_139_ARR",
+    "airline": "BRITISH AIRWAYS",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:40",
+      "route": "London (LHR)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "6"
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SL_218_ARR",
+    "airline": "LION AIR THAI",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:35",
+      "route": "Bangkok (DMK)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "7"
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2642_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:35",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5203_ARR",
+    "airline": "INDIGO",
+    "type": "arrival",
+    "terminal": "T1",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:30",
+      "route": "Hyderabad (HYD)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_436_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:30",
+      "route": "Chennai (MAA)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_2390_ARR",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:25",
+      "estimated": "21:50",
+      "route": "Goa Dabolim (GOI)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "EARLY",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AF_218_ARR",
+    "airline": "AIR FRANCE",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:20",
+      "estimated": "23:21",
+      "route": "Paris (CDG)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "8"
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_2403_ARR",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:20",
+      "route": "Lucknow (LKO)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2981_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:20",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2108_ARR",
+    "airline": "AIR INDIA",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:15",
+      "route": "Singapore (SIN)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": "5"
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_6186_ARR",
+    "airline": "INDIGO",
+    "type": "arrival",
+    "terminal": "T2",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:15",
+      "route": "Madurai (IXM)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_696_ARR",
+    "airline": "SPICE JET",
+    "type": "arrival",
+    "terminal": "T1",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:15",
+      "estimated": "06:50",
+      "route": "Kochi (COK)",
+      "ist_note": "IST (GMT+5:30)",
+      "baggage_belt": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_1882_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-E14",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:55",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_696A_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:55",
+      "route": "Ahmedabad (AMD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_350_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In N01-N14 : 44B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:45",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SQ_423_DEP",
+    "airline": "SINGAPORE AIRLINES",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In P01-P10 : 70",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:40",
+      "route": "Singapore (SIN)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "TG_318_DEP",
+    "airline": "THAI AIRWAYS",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In C08-C14 : 74",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:35",
+      "route": "Bangkok (BKK)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2857_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 42B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:30",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2105_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In F01-F14",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:25",
+      "route": "Singapore (SIN)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "MH_195_DEP",
+    "airline": "MALAYSIA AIRLINES",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In L01-L07 : 73",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:25",
+      "route": "Kuala Lumpur (KUL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "OD_216_DEP",
+    "airline": "MALINDO AIR",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In J01-J04 : 68A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:25",
+      "route": "Kuala Lumpur (KUL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5135_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 22",
+    "check_in": null,
+    "timings": {
+      "scheduled": "23:20",
+      "route": "Jaipur (JAI)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_631_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 9",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:45",
+      "estimated": "23:10",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "DELAYED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5328_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 23",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:45",
+      "route": "Nagpur (NAG)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_648_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:45",
+      "route": "Chennai (MAA)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_2093_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In N01-N14 : 45A1",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:45",
+      "route": "Kochi (COK)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2986_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 42A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:35",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "QP_6756_DEP",
+    "airline": "Akasa Air",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 3",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:35",
+      "route": "Nagpur (NAG)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_559_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 5",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:30",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_555_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:30",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_669B_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 9",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:30",
+      "estimated": "03:10",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "DELAYED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "EK_509_DEP",
+    "airline": "EMIRATES",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In H08-H07 : 78",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:25",
+      "route": "Dubai (DXB)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_1341_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14 : 67B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:15",
+      "route": "Doha (DOH)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_651_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In N01-N14 : 49A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:15",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5106_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 12",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:15",
+      "route": "Goa Dabolim (GOI)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5388_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 11",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:10",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_2391_DEP",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In D08-D07 : 51",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:10",
+      "estimated": "22:05",
+      "route": "Ahmedabad (AMD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_235_DEP",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In D08-D06 : 69A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:05",
+      "route": "Muscat (MCT)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "QP_1103_DEP",
+    "airline": "Akasa Air",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 21",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:05",
+      "route": "Ahmedabad (AMD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_1235_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:00",
+      "route": "Kuwait (KWI)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_6503_DEP",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In D08-C12 : 67A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "22:00",
+      "route": "Ras Al Khaimah UAE (RKT)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "ON TIME",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "G9_402_DEP",
+    "airline": "AIR ARABIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In H01-H04 : 68B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:55",
+      "route": "Sharjah (SHJ)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_691_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:55",
+      "estimated": "21:55",
+      "route": "Ahmedabad (AMD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_1267_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14 : 48B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:50",
+      "route": "Muscat (MCT)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5283_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 25",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:50",
+      "route": "Ahmedabad (AMD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_1501_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14 : 69B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:45",
+      "route": "Al-Fujairah (FJR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "QP_1518_DEP",
+    "airline": "Akasa Air",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 26",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:45",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_119_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In F01-F14 : 46",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:40",
+      "estimated": "21:30",
+      "route": "JFK New York (JFK)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_081_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14 : 72",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:40",
+      "route": "Dammam (DMM)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2919_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 43",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:35",
+      "route": "Ahmedabad (AMD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_257_DEP",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In D08-D14",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:30",
+      "route": "Abu Dhabi (AUH)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_6188_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In N01-N14 : 41A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:30",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_1895_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 87B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:30",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2869_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 47B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:25",
+      "route": "Hyderabad (HYD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_413_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 65B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:15",
+      "route": "Jaipur (JAI)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_102_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In N01-N14 : 65A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:15",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_1491_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14 : 73",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:10",
+      "route": "Ras Al Khaimah UAE (RKT)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5056_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 10",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:10",
+      "route": "Hyderabad (HYD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2643_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 49B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:10",
+      "route": "Kolkata (CCU)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_061_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14 : 68A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:05",
+      "route": "Jeddah (JED)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_9989_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 5",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:00",
+      "estimated": "06:00",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "DELAYED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_816_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 53",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:00",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5291_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 22",
+    "check_in": null,
+    "timings": {
+      "scheduled": "21:00",
+      "route": "Chennai (MAA)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5145_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 24",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:55",
+      "route": "Lucknow (LKO)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_1201_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In M01-M14 : 68B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:50",
+      "estimated": "20:40",
+      "route": "Bahrain (BAH)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_169_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": null,
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:50",
+      "route": "Goa Mopa (GOX)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2401_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 45A1",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:45",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_1163_DEP",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In D08-C12 : 51",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:45",
+      "route": "Goa Mopa (GOX)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2249_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In F01-F14",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:40",
+      "route": "Dammam (DMM)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "UL_144_DEP",
+    "airline": "SRILANKAN AIRLINES",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In J09-J14 : 74",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:40",
+      "route": "Colombo (CMB)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5182_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 9",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:40",
+      "route": "Bhubaneswar (BBI)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "QP_1516_DEP",
+    "airline": "Akasa Air",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 21",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:35",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2988_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 50",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:30",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2827_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 52",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:30",
+      "route": "Chennai (MAA)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_330_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In N01-N14 : 41A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:30",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_191_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In F01-F14 : 66",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:25",
+      "estimated": "20:30",
+      "route": "Newark (EWR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_983_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In F01-F14",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:25",
+      "route": "Dubai (DXB)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_5113_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In B15-B18 : 85A1",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:20",
+      "estimated": "17:50",
+      "route": "Dubai (DXB)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "DEPARTED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2791_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In D01-D04 : 44B",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:20",
+      "route": "Kochi (COK)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "IX_1219_DEP",
+    "airline": "AIR INDIA EXPRESS",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In D08-C12 : 86",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:20",
+      "route": "Jaipur (JAI)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5233_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 23",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:15",
+      "route": "Chandigarh (IXC)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "QP_1177_DEP",
+    "airline": "Akasa Air",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 1",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:10",
+      "route": "Kolkata (CCU)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "S5_112_DEP",
+    "airline": "Star Air",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 3",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:10",
+      "estimated": "19:45",
+      "route": "Belgaum (IXG)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "SECURITY CHECK",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5032_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 12",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:05",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2289_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In F01-F14",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:00",
+      "route": "Doha (DOH)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CANCELLED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5107_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 25",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:00",
+      "route": "Ahmedabad (AMD)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2940_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 42A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:00",
+      "route": "Delhi (DEL)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_5164_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 11",
+    "check_in": null,
+    "timings": {
+      "scheduled": "20:00",
+      "route": "Indore (IDR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "CHECK IN OPEN",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2583_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 45C1",
+    "check_in": null,
+    "timings": {
+      "scheduled": "19:55",
+      "route": "Nagpur (NAG)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "SECURITY CHECK",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "6E_6287_DEP",
+    "airline": "INDIGO",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In N01-N14 : 44A",
+    "check_in": null,
+    "timings": {
+      "scheduled": "19:50",
+      "route": "Kolkata (CCU)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "SECURITY CHECK",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "SG_669_DEP",
+    "airline": "SPICE JET",
+    "type": "departure",
+    "terminal": "T1",
+    "gate": ": 1",
+    "check_in": null,
+    "timings": {
+      "scheduled": "19:50",
+      "estimated": "06:07",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "DEPARTED",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
+  },
+  {
+    "flight_id": "AI_2865_DEP",
+    "airline": "AIR INDIA",
+    "type": "departure",
+    "terminal": "T2",
+    "gate": "Check-In : Check-In E01-A02 : 45B2",
+    "check_in": null,
+    "timings": {
+      "scheduled": "19:45",
+      "route": "Bengaluru (BLR)",
+      "ist_note": "IST (GMT+5:30)",
+      "boarding": ""
+    },
+    "status": "SECURITY CHECK",
+    "category": "commercial",
+    "source_url": "https://csmia-mumbai.adaniairports.com/en/flight-status",
+    "last_verified_at": "2026-05-03T12:30:58.913Z"
   }
 ]

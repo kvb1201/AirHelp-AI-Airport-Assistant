@@ -489,8 +489,10 @@ class KnowledgeBaseRepository:
     def _load_flights(self, timestamp: str) -> list[Flight]:
         flights_path = self.mock_root / "flights.json"
         payload = self._read_json(flights_path)
-        if isinstance(payload, list) and payload:
-            return [Flight.model_validate(item) for item in payload]
+        if isinstance(payload, list):
+            if payload:
+                return [Flight.model_validate(item) for item in payload]
+            return []
 
         # Placeholder records preserve the final schema until a live flight
         # source is wired into the backend.
