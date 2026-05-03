@@ -90,16 +90,54 @@ def _is_followup_query(msg: str) -> bool:
 # -------------------------------
 # 🔥 Query Rewriting
 # -------------------------------
-def _rewrite_query(user_input: str, intent: str, location: Optional[str]) -> Optional[str]:
-    msg = user_input.lower()
+def _rewrite_query(user_input: str, context: Dict) -> str:
+    msg = user_input.lower().strip()
 
-    if _is_followup_query(msg):
-        if intent and location:
+    intent = context.get("intent")
+    location = context.get("source")
+    behavior = context.get("behavior")
+
+    # -------------------------------
+    # 🔥 FOLLOW-UP (STRONG CONTROL)
+    # -------------------------------
+    if _is_followup_query(msg) and intent:
+        if location:
             return f"{intent} options in {location}"
-        elif intent:
-            return f"{intent} options"
+        return f"{intent} options"
 
-    return None
+    # -------------------------------
+    # 🔥 INTENT-SPECIFIC REWRITES
+    # -------------------------------
+    if intent == "food":
+        if behavior == "quick":
+            return f"fast food options in {location}"
+        return f"food options in {location}"
+
+    if intent == "coffee":
+        return f"coffee shops in {location}"
+
+    if intent == "restroom":
+        return f"restrooms near {location}"
+
+    if intent == "lounge":
+        return f"lounges in {location}"
+
+    if intent == "atm":
+        return f"ATMs in {location}"
+
+    if intent == "wifi":
+        return f"wifi services in {location}"
+
+    # -------------------------------
+    # 🔥 NAVIGATION TYPE
+    # -------------------------------
+    if intent == "navigation":
+        return user_input
+
+    # -------------------------------
+    # 🔹 FALLBACK
+    # -------------------------------
+    return user_input
 
 
 # -------------------------------
@@ -247,10 +285,11 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         )
 
     elif intent_type in ["explore", "recommendation"] and intent:
+        query = _rewrite_query(user_input, user_context)
 
-        rewritten = _rewrite_query(user_input, intent, rag_location)
+        print(f"[ORCHESTRATOR] REWRITTEN QUERY: {query}")
 
-        query = rewritten if rewritten else _build_search_query(user_input, rag_location, intent_type)
+
 
         print(f"[ORCHESTRATOR] QUERY: {query}")
 
