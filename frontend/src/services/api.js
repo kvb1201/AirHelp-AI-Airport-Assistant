@@ -1,27 +1,48 @@
-// Replace localhost with local IP for mobile testing (e.g. http://192.168.x.x:8000/api)
-const BASE_URL = 'http://localhost:8000/api';
+// frontend/src/services/api.js
+
+function getBaseUrl() {
+  const hostname = window.location.hostname;
+
+  // Case 1: Running on laptop (localhost)
+  if (hostname === "localhost" || hostname === "127.0.0.1") {
+    return "http://localhost:8000/api";
+  }
+
+  // Case 2: Accessed from mobile via LAN
+  return `http://${hostname}:8000/api`;
+}
+
+const BASE_URL = getBaseUrl();
 
 /**
  * Send a chat message to the backend.
- * @param {string} message  - The user's message text
- * @param {string} location - Current location in the airport (default: "entrance")
- * @returns {Promise<object>} - { type, intent, message, data, context }
  */
-export async function sendChatMessage(message, location = 'entrance') {
-  const response = await fetch(`${BASE_URL}/chat`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      user_id: 'user_123',
-      message,
-      location,
-      language: 'en',
-    }),
-  });
+export async function sendChatMessage(message, location = "entrance") {
+  try {
+    const response = await fetch(`${BASE_URL}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: "user_123",
+        message,
+        location,
+        language: "en",
+      }),
+    });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (err) {
+    console.error("API error:", err);
+    return {
+      type: "error",
+      intent: "error",
+      message: "Server not reachable. Check connection.",
+      data: {},
+      context: {},
+    };
   }
-
-  return response.json();
 }
