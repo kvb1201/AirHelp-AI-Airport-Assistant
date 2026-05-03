@@ -1,0 +1,10 @@
+{
+  "name": "ai-airport-companion",
+  "private": true,
+  "scripts": {
+    "setup": "node scripts/run.mjs setup",
+    "dev": "node scripts/run.mjs dev",
+    "api": "node scripts/run.mjs api",
+    "test": "node scripts/run.mjs test"
+  }
+}
