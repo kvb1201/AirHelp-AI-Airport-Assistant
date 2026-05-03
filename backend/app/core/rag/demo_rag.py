@@ -44,13 +44,13 @@ if PROJECT_ROOT not in sys.path:
 # ---------------------------------------------------------------------------
 # Imports
 # ---------------------------------------------------------------------------
-from backend.app.core.rag.loader import load_airport_data
-from backend.app.core.rag.chunker import chunk_documents
-from backend.app.core.rag.embedder import LocalEmbedder
-from backend.app.core.rag.vector_store import AirportVectorStore
-from backend.app.core.rag.retriever import AirportRetriever
-from backend.app.core.rag.prompt_builder import build_prompt
-from backend.app.core.rag.pipeline import AirportRAGPipeline
+from app.core.rag.loader import load_airport_data
+from app.core.rag.chunker import chunk_documents
+from app.core.rag.embedder import LocalEmbedder
+from app.core.rag.vector_store import AirportVectorStore
+from app.core.rag.retriever import AirportRetriever
+from app.core.rag.prompt_builder import build_prompt
+from app.core.rag.pipeline import AirportRAGPipeline
 
 
 # ---------------------------------------------------------------------------

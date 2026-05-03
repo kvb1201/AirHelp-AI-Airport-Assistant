@@ -10,8 +10,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from backend.app.core.rag.embedder import LocalEmbedder
-from backend.app.core.rag.vector_store import AirportVectorStore
+from app.core.rag.embedder import LocalEmbedder
+from app.core.rag.vector_store import AirportVectorStore
 
 
 class AirportRetriever:
