@@ -16,6 +16,21 @@ INTENT_KEYWORDS = {
     "atm": ["atm", "cash"],
     "wifi": ["wifi", "internet"],
     "shop": ["shop", "buy"],
+    "explore": ["what can i do", "things to do", "explore", "around", "nearby"],
+}
+
+
+# -------------------------------
+# 🔹 Service Labels (NOT locations)
+# -------------------------------
+SERVICE_LABELS = {
+    "lounge",
+    "wifi",
+    "atm",
+    "food",
+    "coffee",
+    "shop",
+    "restaurant",
 }
 
 
@@ -25,9 +40,11 @@ INTENT_KEYWORDS = {
 def _detect_query_type(text: str) -> str:
     t = text.lower()
 
-    if any(x in t for x in ["go to", "navigate", "where is", "find"]):
+    # Destination-type queries
+    if any(x in t for x in ["go to", "navigate", "where", "find", "get", "nearest"]):
         return "destination"
 
+    # Source-type queries
     if any(x in t for x in ["i am", "near", "at", "currently"]):
         return "source"
 
@@ -39,6 +56,10 @@ def _detect_query_type(text: str) -> str:
 # -------------------------------
 def _extract_intent(text: str) -> Optional[str]:
     t = text.lower()
+
+    # 🔥 Strong explicit check for explore
+    if any(x in t for x in ["something to do", "what can i do", "things to do", "explore"]):
+        return "explore"
 
     for intent, keywords in INTENT_KEYWORDS.items():
         if any(k in t for k in keywords):
@@ -52,8 +73,10 @@ def _extract_intent(text: str) -> Optional[str]:
 # -------------------------------
 def locate_from_query(message: str) -> Dict:
     """
-    Final decision engine:
-    Combines semantic + mapping + logic layer
+    Extract structured information:
+    - source (user location)
+    - destination (target place/service)
+    - intent
     """
 
     # -------------------------------
@@ -76,30 +99,47 @@ def locate_from_query(message: str) -> Dict:
     # -------------------------------
     mapping_output = map_locations(
         query=message,
-        source_candidates=None,  # regex layer can be added later
+        source_candidates=None,
         semantic_candidates=semantic_output,
     )
 
     print("MAPPING OUTPUT:", mapping_output)
 
     # -------------------------------
-    # STEP 5: Decision Layer (FIXED)
+    # STEP 5: Decision Layer
     # -------------------------------
     source = None
     destination = None
 
-    # 🔥 TRUST mapping (critical fix)
     mapped_location = mapping_output.get("source")
 
     if mapped_location:
 
-        if query_type == "destination":
+        # 🔥 FIX 1 — Service vs Location
+        if mapped_location in SERVICE_LABELS:
             destination = mapped_location
+
+        # 🔥 Destination-style queries
+        elif query_type == "destination":
+            destination = mapped_location
+
+        # 🔥 Otherwise treat as source
         else:
             source = mapped_location
 
     # -------------------------------
-    # STEP 6: Clarification Logic
+    # STEP 6: Confidence
+    # -------------------------------
+    confidence_map = {
+        "high": 0.9,
+        "medium": 0.7,
+        "low": 0.4,
+    }
+
+    confidence = confidence_map.get(mapping_output.get("confidence"), 0.5)
+
+    # -------------------------------
+    # STEP 7: Missing Both
     # -------------------------------
     if source is None and destination is None:
         return {
@@ -112,18 +152,22 @@ def locate_from_query(message: str) -> Dict:
         }
 
     # -------------------------------
-    # STEP 7: Confidence
+    # STEP 8: Destination but no source
+    # (Handled by context engine later)
     # -------------------------------
-    confidence_map = {
-        "high": 0.9,
-        "medium": 0.7,
-        "low": 0.4,
-    }
-
-    confidence = confidence_map.get(mapping_output.get("confidence"), 0.5)
+    if destination and source is None:
+        return {
+            "source": None,
+            "destination": destination,
+            "intent": intent,
+            "needs_clarification": False,
+            "clarification_message": None,
+            "confidence": confidence,
+            "meta": "source_missing",
+        }
 
     # -------------------------------
-    # STEP 8: Final Output
+    # STEP 9: Final Output
     # -------------------------------
     return {
         "source": source,
