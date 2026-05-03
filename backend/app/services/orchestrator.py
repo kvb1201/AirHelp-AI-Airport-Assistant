@@ -3,16 +3,13 @@
 from typing import Dict, Any
 
 from app.services.llm_service import call_llm
-
-# NOTE:
-# These will be replaced with real implementations later
-# Keep imports ready for easy swap
-# from app.services.navigation_service import get_route
-# from app.services.rag_service import search
+from app.services.navigation_service import get_route
+from app.services.rag_service import search
+from app.core.llm.prompts import SYSTEM_PROMPT
 
 
 # -------------------------------
-# 🔹 Intent Detection (Simple + Fast)
+# 🔹 Intent Detection
 # -------------------------------
 def detect_intent(message: str) -> str:
     msg = message.lower()
@@ -30,7 +27,7 @@ def detect_intent(message: str) -> str:
 
 
 # -------------------------------
-# 🔹 Main Orchestrator Function
+# 🔹 Main Orchestrator
 # -------------------------------
 async def handle_chat(
     user_input: str,
@@ -40,54 +37,28 @@ async def handle_chat(
     intent = detect_intent(user_input)
 
     # ----------------------------------
-    # 🔹 MOCK DATA (Replace Later)
+    # 🔹 Extract Context
+    # ----------------------------------
+    location = user_context.get("location", "unknown")
+    destination = user_context.get("destination")
+
+    # ----------------------------------
+    # 🔹 Call Services (Mock/Real)
     # ----------------------------------
     nav_data = None
     rag_data = None
 
     if intent == "navigation":
-        nav_data = {
-            "path": ["security", "corridor_A", "gate_B12"],
-            "total_time": 6,
-            "steps": [
-                "Walk straight from security",
-                "Enter Corridor A",
-                "Continue to Gate B12"
-            ]
-        }
+        nav_data = get_route(location, user_input)
 
     elif intent == "recommendation":
-        rag_data = [
-            {
-                "name": "Cafe A",
-                "distance": "2 min",
-                "time_required": 5,
-                "price_range": "low"
-            },
-            {
-                "name": "Snack Bar B",
-                "distance": "3 min",
-                "time_required": 4,
-                "price_range": "medium"
-            }
-        ]
+        rag_data = search(user_input)
 
     # ----------------------------------
-    # 🔹 Extract Context
-    # ----------------------------------
-    location = user_context.get("location", "unknown")
-    destination = user_context.get("destination", None)
-
-    # ----------------------------------
-    # 🔹 Build Controlled Prompt
+    # 🔹 Build Prompt using SYSTEM_PROMPT
     # ----------------------------------
     prompt = f"""
-You are an intelligent airport assistant.
-
-STRICT RULES:
-- Do NOT make up information
-- ONLY use the provided data
-- If unsure, say "I don't have that information"
+{SYSTEM_PROMPT}
 
 USER CONTEXT:
 Location: {location}
@@ -96,13 +67,11 @@ Destination: {destination}
 NAVIGATION DATA:
 {nav_data}
 
-FOOD / SHOP DATA:
+AVAILABLE OPTIONS:
 {rag_data}
 
 USER QUERY:
 {user_input}
-
-Provide a helpful, concise response.
 """
 
     # ----------------------------------
@@ -111,15 +80,20 @@ Provide a helpful, concise response.
     response_text = await call_llm(prompt)
 
     # ----------------------------------
-    # 🔹 Update Context (Minimal)
+    # 🔹 Update Context
     # ----------------------------------
     updated_context = dict(user_context)
 
-    if intent == "navigation":
-        updated_context["destination"] = "gate_B12"  # replace with parsed later
-
     if location:
         updated_context["location"] = location
+
+    if nav_data:
+        updated_context["last_route"] = nav_data
+
+    if rag_data:
+        updated_context["last_recommendations"] = rag_data
+
+    # (Optional improvement later: parse destination from query)
 
     # ----------------------------------
     # 🔹 Final Response
