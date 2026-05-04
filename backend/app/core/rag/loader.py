@@ -417,4 +417,9 @@ def load_airport_data(json_path: str) -> list[dict[str, Any]]:
         else:
             documents.extend(_flatten_generic(section_value, section_key))
 
+    # CSV T2 shops: hard-coded persona / age / cuisine text for richer embeddings (see shop_audience_rag_docs).
+    from app.services.shop_audience_rag_docs import merge_shop_audience_documents
+
+    documents = merge_shop_audience_documents(documents)
+
     return documents

@@ -30,8 +30,6 @@ const WELCOME = {
   time: formatTime(),
 };
 
-const SIDEBAR_STUBS = new Set(['Flights', 'My Trips', 'Help & Support', 'Settings']);
-
 function App() {
   const [messages, setMessages] = useState([WELCOME]);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +39,8 @@ function App() {
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
+  /** After computing a route on the map, jump to Navigation with live step-by-step (`_id` disambiguates StrictMode). */
+  const [guidedNavHandoff, setGuidedNavHandoff] = useState(null);
   /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
   const [crisisContact, setCrisisContact] = useState(null);
   const [reportIssueOpen, setReportIssueOpen] = useState(false);
@@ -56,13 +56,6 @@ function App() {
     !showFacilities &&
     !showLostFound &&
     (sidebarNav === 'Profile' || mobileView === 'profile');
-  const showDesktopStub =
-    !showMap &&
-    !showNavFlow &&
-    !showFacilities &&
-    !showLostFound &&
-    !showProfilePlaceholder &&
-    SIDEBAR_STUBS.has(sidebarNav);
 
   const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
 
@@ -73,7 +66,6 @@ function App() {
     else if (label === 'Navigation') setMobileView('nav');
     else if (label === 'Facilities') setMobileView('facilities');
     else if (label === 'Lost & Found') setMobileView('lostfound');
-    else if (label === 'Profile') setMobileView('profile');
     else if (label === 'Operator') setMobileView('operator');
     else setMobileView('home');
   }, []);
@@ -113,6 +105,22 @@ function App() {
     [location, openFloorMap],
   );
 
+  const clearGuidedNavHandoff = useCallback(() => setGuidedNavHandoff(null), []);
+
+  const openStepByStepFromMap = useCallback(
+    (payload) => {
+      if (payload?.fromId) setLocation(payload.fromId);
+      setGuidedNavHandoff({
+        fromId: payload.fromId,
+        toId: payload.toId,
+        routeIndex: payload.routeIndex ?? 0,
+        _id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      });
+      handleNavSelect('Navigation');
+    },
+    [handleNavSelect],
+  );
+
   const handleSend = async (text, loc = null) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
@@ -138,10 +146,15 @@ function App() {
       }
       const navStart = payload.start;
       const navEnd = payload.end;
+      const openMapForRecommendation =
+        payload.open_map_after_chat &&
+        (data.type === 'recommendation' || data.intent === 'recommendation');
       if (
-        (data.type === 'navigation' || data.intent === 'navigation') &&
         navStart &&
-        navEnd
+        navEnd &&
+        (data.type === 'navigation' ||
+          data.intent === 'navigation' ||
+          openMapForRecommendation)
       ) {
         openFloorMap({ fromId: navStart, toId: navEnd, routeIndex: 0 });
       }
@@ -238,12 +251,15 @@ function App() {
                 onLocationChange={setLocation}
                 launchRoute={mapLaunch}
                 onLaunchRouteConsumed={clearMapLaunch}
+                onOpenStepByStepGuidance={openStepByStepFromMap}
               />
             ) : showNavFlow ? (
               <NavigationFlowView
                 location={location}
                 onLocationChange={setLocation}
                 onOpenFloorMap={openFloorMap}
+                guidedHandoff={guidedNavHandoff}
+                onGuidedHandoffConsumed={clearGuidedNavHandoff}
               />
             ) : showFacilities ? (
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
@@ -251,17 +267,6 @@ function App() {
               <LostFoundView location={location} onOpenFloorMap={openFloorMap} />
             ) : showOperator ? (
               <OperatorConsoleView onBack={() => handleNavSelect('Home')} />
-            ) : showDesktopStub ? (
-              <PlaceholderView
-                title={sidebarNav}
-                onBack={() => handleNavSelect('Home')}
-                backLabel="Back to Home"
-              >
-                <p>
-                  This area is not connected yet. Use <strong>Navigation</strong> or <strong>Map</strong> from the
-                  sidebar for walking directions and the terminal plan.
-                </p>
-              </PlaceholderView>
             ) : showProfilePlaceholder ? (
               <PlaceholderView
                 title="Profile"
@@ -301,7 +306,7 @@ function App() {
             )}
           </main>
 
-          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showOperator && !showDesktopStub && !showProfilePlaceholder && (
+          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showOperator && !showProfilePlaceholder && (
           <RightPanel />
         )}
         </div>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import GuidedStepMap, { normalizeGuidedPath } from './GuidedStepMap';
 import TtsMiniBar from './TtsMiniBar';
 import { fetchGuidedCheckpoints, fetchGuidedRelocalize, fetchMapData, fetchNavigation } from '../services/api';
@@ -105,7 +105,13 @@ function RouteDetailBody({ route }) {
 /**
  * Step-by-step walking navigation without the floor map until the user asks for it.
  */
-export default function NavigationFlowView({ location, onLocationChange, onOpenFloorMap }) {
+export default function NavigationFlowView({
+  location,
+  onLocationChange,
+  onOpenFloorMap,
+  guidedHandoff = null,
+  onGuidedHandoffConsumed,
+}) {
   const [meta, setMeta] = useState(null);
   const [nodes, setNodes] = useState([]);
   const [loadErr, setLoadErr] = useState(null);
@@ -135,9 +141,96 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
   const [relocalizeCandidates, setRelocalizeCandidates] = useState([]);
   const [guidedLoading, setGuidedLoading] = useState(false);
 
+  const handoffRunSeq = useRef(0);
+
   useEffect(() => {
     if (location) setFrom(location);
   }, [location]);
+
+  /** Map → Navigation: fetch same route, build checkpoints, open guided UI. */
+  useEffect(() => {
+    if (!guidedHandoff?.fromId || !guidedHandoff?.toId) return;
+    const runSeq = ++handoffRunSeq.current;
+    let cancelled = false;
+
+    (async () => {
+      const { fromId, toId, routeIndex = 0 } = guidedHandoff;
+      setGuidedErr(null);
+      setRouteErr(null);
+      setLoading(true);
+      try {
+        const data = await fetchNavigation(fromId, toId, {
+          localHour: new Date().getHours(),
+          busyTerminal,
+        });
+        if (cancelled || runSeq !== handoffRunSeq.current) return;
+        const nav = data?.data?.navigation;
+        if (!nav?.ok) {
+          setRouteErr(nav?.hint || nav?.error || 'No route found');
+          return;
+        }
+        const routes = routesFromPayload(nav);
+        const idx = Math.max(0, Math.min(Math.floor(routeIndex) || 0, routes.length - 1));
+        const selected = routes[idx];
+        if (!selected?.path?.length) {
+          setRouteErr('Route has no path for step-by-step guidance.');
+          setNavPayload(nav);
+          setPickedIdx(idx);
+          setStep('detail');
+          return;
+        }
+        const path = selected.path.map((p) => (typeof p === 'string' ? p : p.id));
+        const edges = selected.edges || [];
+        const cp = await fetchGuidedCheckpoints({ path, edges });
+        if (cancelled || runSeq !== handoffRunSeq.current) return;
+        if (!cp?.ok) {
+          setGuidedErr(cp?.hint || cp?.error || 'Could not build guidance');
+          setNavPayload(nav);
+          setPickedIdx(idx);
+          setStep('detail');
+          return;
+        }
+        if (!cp.steps?.length) {
+          setGuidedErr('Route is too short for live steps.');
+          setNavPayload(nav);
+          setPickedIdx(idx);
+          setStep('detail');
+          return;
+        }
+        setNavPayload(nav);
+        setPickedIdx(idx);
+        setFrom(fromId);
+        setTo(toId);
+        setGuidedPayload(cp);
+        setGuidedStepIndex(0);
+        setLastConfirmedPathIndex(0);
+        setGuidedPhase('question');
+        setLostObservation('');
+        setRelocalizeCandidates([]);
+        setStep('guided');
+        if (onLocationChange) onLocationChange(fromId);
+      } catch (e) {
+        if (!cancelled && runSeq === handoffRunSeq.current) {
+          setRouteErr(e.message || 'Could not start guidance');
+        }
+      } finally {
+        if (!cancelled && runSeq === handoffRunSeq.current) setLoading(false);
+        if (runSeq === handoffRunSeq.current) onGuidedHandoffConsumed?.();
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [guidedHandoff, busyTerminal, onLocationChange, onGuidedHandoffConsumed]);
+
+  useLayoutEffect(() => {
+    if (step !== 'guided' || !guidedPayload) return;
+    const el = document.getElementById('nav-flow-guided-anchor');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [step, guidedPayload]);
 
   useEffect(() => {
     setNotYetHint('');
@@ -533,7 +626,11 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
         )}
 
         {step === 'guided' && guidedPayload && (
-          <section className="nav-flow-panel nav-flow-panel--guided" aria-labelledby="nav-flow-guided-title">
+          <section
+            id="nav-flow-guided-anchor"
+            className="nav-flow-panel nav-flow-panel--guided"
+            aria-labelledby="nav-flow-guided-title"
+          >
             <div className="nav-flow-guided-layout">
               <div className="nav-flow-guided-main">
             <h2 id="nav-flow-guided-title" className="nav-flow-panel-title">

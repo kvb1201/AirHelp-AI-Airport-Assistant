@@ -397,6 +397,9 @@ def goal_from_rag_snippets(
         return None
 
     for sn in snippets[:10]:
+        gn = str(sn.get("graph_node_id") or "").strip()
+        if gn and gn in NODES:
+            return gn
         cat = (sn.get("category") or "").lower()
         blob = f"{sn.get('name', '')} {sn.get('description', '')} {sn.get('location', '')}"
         quad = _infer_quad_from_blurb(blob)

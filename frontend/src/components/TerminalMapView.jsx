@@ -27,7 +27,13 @@ function nodeColor(kind) {
   return KIND_COLORS[kind] || '#6b5a5f';
 }
 
-export default function TerminalMapView({ location, onLocationChange, launchRoute, onLaunchRouteConsumed }) {
+export default function TerminalMapView({
+  location,
+  onLocationChange,
+  launchRoute,
+  onLaunchRouteConsumed,
+  onOpenStepByStepGuidance,
+}) {
   const [meta, setMeta] = useState(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -390,9 +396,6 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
           <p className="terminal-map-meta">
             {meta?.airport_name || 'BOM'} · {meta?.terminal || 'T2'} · {meta?.floor || 'L02'}
           </p>
-          {meta?.disclaimer && (
-            <p className="terminal-map-disclaimer">{meta.disclaimer}</p>
-          )}
         </div>
       </header>
 
@@ -699,12 +702,6 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
 
         <aside className="terminal-map-side">
           <h2 className="terminal-map-side-title">Route</h2>
-          <p className="terminal-map-side-hint">
-            <strong>Map:</strong> first tap sets <strong>From</strong>, second tap sets <strong>To</strong> and loads
-            the path. Changing <strong>From</strong> or <strong>To</strong> in the dropdowns also recomputes the walk
-            after a short delay (map stays full until a route succeeds). Teal triangles = airport facilities; purple
-            diamonds = shops. Facilities below are grouped by walking-graph node (every facility appears under its node).
-          </p>
 
           <details className="terminal-map-shops-panel">
             <summary className="terminal-map-shops-summary">
@@ -796,7 +793,7 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
               checked={busyTerminal}
               onChange={(e) => setBusyTerminal(e.target.checked)}
             />
-            <span>Busy terminal (adds typical security-queue allowance — not live crowd data)</span>
+            <span>Busy terminal (slightly longer time estimates)</span>
           </label>
 
           <button
@@ -876,11 +873,21 @@ export default function TerminalMapView({ location, onLocationChange, launchRout
                   <>{formatRouteTimeLine(route, navPayload)} — plain-language steps below (no staff gate codes).</>
                 )}
               </div>
-              {(route.congestion?.disclaimer || navPayload?.congestion?.disclaimer) && (
-                <p className="terminal-map-side-hint terminal-map-congestion-note" role="note">
-                  {route.congestion?.disclaimer || navPayload?.congestion?.disclaimer}
-                </p>
-              )}
+              {typeof onOpenStepByStepGuidance === 'function' ? (
+                <button
+                  type="button"
+                  className="terminal-map-btn terminal-map-btn--guidance"
+                  onClick={() =>
+                    onOpenStepByStepGuidance({
+                      fromId: from,
+                      toId: to,
+                      routeIndex: activeRouteIdx,
+                    })
+                  }
+                >
+                  Get step-by-step guidance
+                </button>
+              ) : null}
 
               {Array.isArray(route.shops_along_route?.tips) && route.shops_along_route.tips.length > 0 ? (
                 <section className="terminal-map-route-callout" aria-label="Food and shopping near your walk">

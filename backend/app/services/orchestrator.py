@@ -7,9 +7,11 @@ from typing import Any, Dict, List, Optional
 from app.services.llm_service import call_llm
 from app.services.navigation_service import (
     get_route,
+    goal_from_rag_snippets,
     plan_navigation_from_chat,
     resolve_node_id,
     resolve_place_label_to_graph_node,
+    resolve_shop_name_to_graph_node,
     resolve_walking_goal_id,
 )
 from app.services.rag_service import search
@@ -18,6 +20,7 @@ from app.services.context_engine import update_context
 from app.services.context_normalizer import normalize_chat_context
 from app.services.query_preprocess import compose_navigation_message, prepare_for_locate_and_context
 from app.services.special_assistance_intents import try_special_assistance_response
+from app.core.graph.airport_data import NODES
 from app.core.graph.node_mapper import coerce_to_graph_node_id
 from app.core.llm.prompts import SYSTEM_PROMPT
 from app.utils.logger import logger
@@ -411,7 +414,7 @@ def _build_time_nudges(flight: dict[str, Any]) -> tuple[str, list[dict[str, str]
 def _format_single_result(r: Dict[str, Any]) -> str:
     name = r.get("name")
     loc = r.get("location", "")
-    desc = r.get("description", "")
+    desc = (r.get("description") or "").strip()
 
     lines = []
 
@@ -420,8 +423,19 @@ def _format_single_result(r: Dict[str, Any]) -> str:
     else:
         lines.append(name)
 
-    if desc:
-        lines.append("\n" + desc[:120])
+    # Never paste internal RAG / embedding-debug blobs into chat.
+    if desc and not any(
+        x in desc
+        for x in (
+            "internal key",
+            "Traveler-fit notes",
+            "RAG grouping for food search",
+            "CSV category:",
+        )
+    ):
+        lines.append("\n" + (desc[:280] + ("…" if len(desc) > 280 else "")))
+    else:
+        lines.append("\nOpening the map with walking directions to this place.")
 
     return "\n".join(lines)
 
@@ -1225,15 +1239,43 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         user_context["selected"] = rag_data[0]
         user_context["last_results"] = rag_data
 
+        start_raw = (user_context.get("source") or user_context.get("location") or "").strip() or "t2_entrance"
+        start_id = resolve_place_label_to_graph_node(start_raw) or None
+        if not start_id or start_id not in NODES:
+            start_id, _ = resolve_node_id("t2_entrance", role="start")
+
+        sel0 = rag_data[0]
+        goal_id = (sel0.get("graph_node_id") or "").strip() or None
+        if not goal_id or goal_id not in NODES:
+            goal_id = resolve_shop_name_to_graph_node(
+                str(sel0.get("name") or ""),
+                start_graph_id=start_id,
+                avoid_graph_node_id=start_id,
+            )
+        if not goal_id and start_id:
+            goal_id = goal_from_rag_snippets(rag_data, start_id)
+
+        rec_data: Dict[str, Any] = {
+            "navigation": nav_data,
+            "recommendations": rag_data,
+            "selected": rag_data[0],
+        }
+        if (
+            start_id
+            and goal_id
+            and start_id in NODES
+            and goal_id in NODES
+            and start_id != goal_id
+        ):
+            rec_data["start"] = start_id
+            rec_data["end"] = goal_id
+            rec_data["open_map_after_chat"] = True
+
         return {
             "type": "recommendation",
             "intent": intent,
             "message": message,
-            "data": {
-                "navigation": nav_data,
-                "recommendations": rag_data,
-                "selected": rag_data[0],
-            },
+            "data": rec_data,
             "context": user_context,
         }
 

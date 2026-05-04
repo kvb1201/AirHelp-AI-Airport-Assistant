@@ -115,9 +115,5 @@ def congestion_public_block(
         "busy_terminal": bool(busy_terminal),
         "security_edges_on_route": int(security_edges_on_route),
         "security_extra_minutes_per_edge": {"low": extras.low, "mid": extras.mid, "high": extras.high},
-        "disclaimer": (
-            "Times include a typical security-queue allowance on screening segments. "
-            "Low/high bands are rough — not live passenger counts. For offline use, we use "
-            "time-of-day priors (and optional busy-terminal); when online, refresh overlays from your ops pipeline."
-        ),
+        "disclaimer": "",
     }

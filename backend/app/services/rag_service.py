@@ -169,6 +169,66 @@ def _item_matches_terminal(item_location: str, terminal_num: str) -> bool:
     return any(alias in item_lower for alias in aliases)
 
 
+# Prefix used by ``shop_audience_rag_docs`` chunk ids in Chroma (not passenger-facing).
+_AUDIENCE_DOC_PREFIX = "csv_audience_"
+
+
+def _rag_category_from_csv_shop(csv_category: str) -> str:
+    c = (csv_category or "").strip().lower()
+    if "coffee" in c:
+        return "coffee_shop"
+    if "bar" in c and "restaurant" in c:
+        return "restaurant"
+    if c in (
+        "qsr",
+        "quick_bites",
+        "snacks",
+        "confectionary",
+        "sweets_/_packed_foods",
+        "premium_bakery",
+    ):
+        return "quick_bites"
+    return "shop"
+
+
+def _sanitize_audience_rag_row(p: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Replace internal ``csv_audience_*`` index rows with a short passenger-facing row
+    plus ``graph_node_id`` for map routing.
+    """
+    rid = str(p.get("id") or "")
+    if not rid.startswith(_AUDIENCE_DOC_PREFIX):
+        return p
+    shop_id = rid[len(_AUDIENCE_DOC_PREFIX) :]
+    try:
+        from app.services.shops_loader import load_shops_t2_l02
+    except Exception:
+        return {**p, "description": (p.get("name") or "Outlet") + " at Terminal 2."}
+
+    for row in load_shops_t2_l02():
+        if str(row.get("shop_id") or "") != shop_id:
+            continue
+        display = str(row.get("name_display") or "").strip() or "Outlet"
+        cat_csv = str(row.get("category") or "").strip()
+        loc = str(row.get("listing_location") or row.get("near_graph_hint") or "").strip()
+        gn = str(row.get("graph_node_id") or "").strip()
+        nice_cat = cat_csv.replace("_", " ").replace("/", " ") if cat_csv else "outlet"
+        return {
+            "id": shop_id,
+            "name": display,
+            "category": _rag_category_from_csv_shop(cat_csv),
+            "location": loc or "Terminal 2",
+            "terminal": str(row.get("floor") or "2"),
+            "description": f"{display} — {nice_cat} at Mumbai T2. Open the map for walking directions.",
+            "score": float(p.get("score") or 0),
+            "graph_node_id": gn or None,
+        }
+    return {
+        **p,
+        "description": f"{p.get('name') or 'This outlet'} at Terminal 2.",
+    }
+
+
 # -------------------------------
 # 🔹 Parse Result
 # -------------------------------
@@ -268,6 +328,7 @@ def _rank(results, location, intent, signals=None):
     allowed = _CATEGORY_MAP.get(intent, set())
 
     behavior = (signals or {}).get("behavior")
+    rq = str((signals or {}).get("_retrieval_query") or "").lower()
 
     def score(x):
         if x.get("category") in _NON_ACTIONABLE:
@@ -289,6 +350,44 @@ def _rank(results, location, intent, signals=None):
         elif behavior == "relaxed":
             if any(k in desc for k in ["lounge", "premium", "relax"]):
                 behavior_bonus += 0.6
+
+        # Light query-time boosts using audience text baked into CSV shop RAG docs
+        if any(w in rq for w in ("senior", "elderly", "older", "grandparent", "grandma", "grandpa", "aged", "parents")):
+            if any(
+                k in desc
+                for k in (
+                    "familiar indian",
+                    "familiar flavors",
+                    "seated service",
+                    "quieter than",
+                    "calmer than",
+                    "vegetarian",
+                    "mild spice",
+                    "dosa",
+                    "idli",
+                    "thali",
+                    "predictable global",
+                    "recognizable items",
+                )
+            ):
+                behavior_bonus += 0.35
+        if "avoid chinese" in rq or "no chinese" in rq or "not chinese" in rq:
+            if any(k in desc for k in ("indo-chinese", "pan-asian", "wok-style", "momos", "schezwan")):
+                behavior_bonus -= 0.45
+            if any(
+                k in desc
+                for k in (
+                    "familiar north",
+                    "south indian",
+                    "predictable global",
+                    "burger",
+                    "pizza",
+                    "fried chicken",
+                    "dosa",
+                    "thali",
+                )
+            ):
+                behavior_bonus += 0.25
 
         return sem + loc_bonus + cat_bonus + behavior_bonus
 
@@ -315,13 +414,13 @@ def search(query, location=None, top_k=5, intent=None, signals=None):
     try:
         raw = _pipeline._retriever.retrieve(query, top_k=max(top_k * 3, 15))
 
-        parsed = [_parse_result(r) for r in raw]
+        parsed = [_sanitize_audience_rag_row(_parse_result(r)) for r in raw]
         parsed = [p for p in parsed if _is_valid(p)]
 
         parsed = _filter_by_category(parsed, intent)
         filtered = _filter_by_location(parsed, location)
 
-        ranked = _rank(filtered, location, intent, signals)
+        ranked = _rank(filtered, location, intent, {**(signals or {}), "_retrieval_query": query})
 
         ranked = [r for r in ranked if _is_actionable(r)]
         ranked = _deduplicate(ranked)
