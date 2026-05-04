@@ -1,0 +1,220 @@
+{
+  "France": {
+    "region": "Schengen Area",
+    "documents_required": [
+      "Valid Passport (6+ months validity)",
+      "Schengen Visa",
+      "Travel Insurance (€30,000 coverage)",
+      "Return Ticket",
+      "Proof of Accommodation",
+      "Financial Proof"
+    ],
+    "notes": [
+      "Visa processing: 15–30 days",
+      "Biometric required"
+    ]
+  },
+  "Germany": {
+    "region": "Schengen Area",
+    "documents_required": [
+      "Valid Passport",
+      "Schengen Visa",
+      "Travel Insurance",
+      "Accommodation Proof",
+      "Return Ticket"
+    ],
+    "notes": [
+      "Strict financial proof required"
+    ]
+  },
+  "Italy": {
+    "region": "Schengen Area",
+    "documents_required": [
+      "Valid Passport",
+      "Schengen Visa",
+      "Travel Insurance",
+      "Hotel Booking",
+      "Return Ticket"
+    ],
+    "notes": [
+      "Tourist visa common"
+    ]
+  },
+  "Spain": {
+    "region": "Schengen Area",
+    "documents_required": [
+      "Passport",
+      "Schengen Visa",
+      "Insurance",
+      "Accommodation",
+      "Return Ticket"
+    ],
+    "notes": []
+  },
+  "USA": {
+    "region": "North America",
+    "documents_required": [
+      "Valid Passport",
+      "B1/B2 Visa",
+      "DS-160 Confirmation",
+      "Interview Letter",
+      "Financial Proof"
+    ],
+    "notes": [
+      "Visa interview mandatory"
+    ]
+  },
+  "Canada": {
+    "region": "North America",
+    "documents_required": [
+      "Passport",
+      "Visitor Visa",
+      "Financial Proof",
+      "Return Ticket"
+    ],
+    "notes": [
+      "Biometrics required"
+    ]
+  },
+  "UK": {
+    "region": "Europe",
+    "documents_required": [
+      "Passport",
+      "UK Visa",
+      "Financial Proof",
+      "Accommodation"
+    ],
+    "notes": [
+      "Separate from Schengen"
+    ]
+  },
+  "UAE": {
+    "region": "Middle East",
+    "documents_required": [
+      "Passport",
+      "Tourist Visa",
+      "Return Ticket",
+      "Hotel Booking"
+    ],
+    "notes": [
+      "Fast visa processing"
+    ]
+  },
+  "Singapore": {
+    "region": "Asia",
+    "documents_required": [
+      "Passport",
+      "Tourist Visa",
+      "Return Ticket",
+      "Accommodation"
+    ],
+    "notes": []
+  },
+  "Thailand": {
+    "region": "Asia",
+    "documents_required": [
+      "Passport",
+      "Visa on Arrival",
+      "Return Ticket"
+    ],
+    "notes": [
+      "VOA available for Indians"
+    ]
+  },
+  "Japan": {
+    "region": "Asia",
+    "documents_required": [
+      "Passport",
+      "Tourist Visa",
+      "Financial Proof",
+      "Itinerary"
+    ],
+    "notes": []
+  },
+  "Australia": {
+    "region": "Oceania",
+    "documents_required": [
+      "Passport",
+      "Visitor Visa",
+      "Financial Proof",
+      "Health Insurance"
+    ],
+    "notes": []
+  },
+  "New Zealand": {
+    "region": "Oceania",
+    "documents_required": [
+      "Passport",
+      "Visa",
+      "Return Ticket",
+      "Funds Proof"
+    ],
+    "notes": []
+  },
+  "Turkey": {
+    "region": "Europe/Asia",
+    "documents_required": [
+      "Passport",
+      "E-Visa",
+      "Return Ticket"
+    ],
+    "notes": [
+      "E-visa easy"
+    ]
+  },
+  "Malaysia": {
+    "region": "Asia",
+    "documents_required": [
+      "Passport",
+      "Visa-Free (short stay)",
+      "Return Ticket"
+    ],
+    "notes": []
+  },
+  "Indonesia": {
+    "region": "Asia",
+    "documents_required": [
+      "Passport",
+      "Visa on Arrival",
+      "Return Ticket"
+    ],
+    "notes": []
+  },
+  "South Korea": {
+    "region": "Asia",
+    "documents_required": [
+      "Passport",
+      "Tourist Visa",
+      "Bank Statement"
+    ],
+    "notes": []
+  },
+  "Switzerland": {
+    "region": "Schengen Area",
+    "documents_required": [
+      "Passport",
+      "Schengen Visa",
+      "Insurance",
+      "Accommodation"
+    ],
+    "notes": []
+  },
+  "Netherlands": {
+    "region": "Schengen Area",
+    "documents_required": [
+      "Passport",
+      "Schengen Visa",
+      "Travel Insurance"
+    ],
+    "notes": []
+  },
+  "Brazil": {
+    "region": "South America",
+    "documents_required": [
+      "Passport",
+      "Visa",
+      "Return Ticket"
+    ],
+    "notes": []
+  }
+}
