@@ -214,6 +214,39 @@ export async function fetchTtsAudio(text, language = "en") {
   return response.blob();
 }
 
+/** @returns {Promise<{ categories: { id: string, label: string }[] }>} */
+export async function fetchTicketCategories() {
+  const response = await fetch(`${apiBase()}/support/ticket-categories`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+/**
+ * @param {{ category: string, description: string, where_hint?: string, email?: string, location_graph_id?: string }} body
+ */
+export async function createSupportTicket(body) {
+  const response = await fetch(`${apiBase()}/support/tickets`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    let detail = `HTTP ${response.status}`;
+    try {
+      const j = await response.json();
+      if (j.detail != null) {
+        detail = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+      }
+    } catch {
+      /* ignore */
+    }
+    const err = new Error(detail);
+    err.status = response.status;
+    throw err;
+  }
+  return response.json();
+}
+
 /**
  * Send a chat message to the backend (English assistant).
  * @param {string} message

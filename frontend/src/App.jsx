@@ -12,6 +12,8 @@ import InputBox from './components/InputBox';
 import QuickActions from './components/QuickActions';
 import BottomNav from './components/BottomNav';
 import PlaceholderView from './components/PlaceholderView';
+import CrisisContactOverlay from './components/CrisisContactOverlay';
+import ReportIssueModal from './components/ReportIssueModal';
 import { sendChatMessage } from './services/api';
 import './styles.css';
 
@@ -36,6 +38,9 @@ function App() {
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
+  /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
+  const [crisisContact, setCrisisContact] = useState(null);
+  const [reportIssueOpen, setReportIssueOpen] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
@@ -69,6 +74,7 @@ function App() {
 
   const handleNewChat = useCallback(() => {
     setMessages([{ ...WELCOME, time: formatTime() }]);
+    setCrisisContact(null);
     handleNavSelect('Home');
     setChatOpen(true);
   }, [handleNavSelect]);
@@ -103,6 +109,7 @@ function App() {
   const handleSend = async (text, loc = null) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
+    setCrisisContact(null);
 
     const userMsg = { text, role: 'user', time: formatTime() };
     setMessages((prev) => [...prev, userMsg]);
@@ -119,6 +126,9 @@ function App() {
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
 
       const payload = data.data || {};
+      if (payload.crisis_contact) {
+        setCrisisContact({ ...payload.crisis_contact, kind: payload.special_assistance });
+      }
       const navStart = payload.start;
       const navEnd = payload.end;
       if (
@@ -143,8 +153,35 @@ function App() {
     handleSend(message, actionLocation);
   };
 
+  const handleTicketCreated = useCallback((ticket) => {
+    const text = [
+      '## Ticket created',
+      '',
+      `Your reference is **${ticket.ticket_id}**.`,
+      '',
+      `- **Issue type:** ${ticket.category_label}`,
+      `- **Summary:** ${ticket.summary}`,
+      '',
+      'Keep this number if you contact airport support about this report.',
+    ].join('\n');
+    setMessages((prev) => [...prev, { text, role: 'bot', time: formatTime() }]);
+    setChatOpen(true);
+    setMobileView('chat');
+  }, []);
+
   return (
     <div className="app-container">
+      {crisisContact ? (
+        <CrisisContactOverlay data={crisisContact} onDismiss={() => setCrisisContact(null)} />
+      ) : null}
+
+      <ReportIssueModal
+        open={reportIssueOpen}
+        onClose={() => setReportIssueOpen(false)}
+        graphLocationId={location}
+        onTicketCreated={handleTicketCreated}
+      />
+
       {/* ── Left Sidebar (Desktop) ── */}
       <Sidebar activeNav={sidebarNav} onNavChange={handleNavSelect} onNewChat={handleNewChat} />
 
@@ -225,6 +262,7 @@ function App() {
                     onSend={handleSend}
                     onOpenNavigation={() => handleNavSelect('Navigation')}
                     onOpenFloorMap={openFloorMap}
+                    onOpenReportIssue={() => setReportIssueOpen(true)}
                   />
                 </div>
 

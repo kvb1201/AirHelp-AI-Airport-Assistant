@@ -197,20 +197,6 @@ def _build_search_query(user_input: str, location: Optional[str], intent_type: s
 
 
 # -------------------------------
-# 🔹 Format Navigation
-# -------------------------------
-def _format_navigation(nav_data: Dict[str, Any]) -> str:
-    steps = nav_data.get("steps", [])
-
-    if not steps:
-        return "I couldn't generate a route."
-
-    return "Here is your route:\n" + "\n".join(
-        [f"{i+1}. {s}" for i, s in enumerate(steps)]
-    )
-
-
-# -------------------------------
 # 🔹 Format Single Result
 # -------------------------------
 def _format_single_result(r: Dict[str, Any]) -> str:
@@ -393,10 +379,15 @@ def _map_to_node(location_str: str) -> str:
 
     loc = raw.lower()
 
-    # Direct gate pattern: "gate d3" → "gate_d3", "gate b12" → "gate_b12"
-    gate_match = re.match(r"gate\s+([a-z]?\d+)", loc)
+    # ``gate b12`` → ``gate_b12`` (legacy pier). ``gate 45`` / ``45`` → numeric segregation key.
+    gate_match = re.match(r"gate\s+([ab])\s*(\d{1,2})\b", loc)
     if gate_match:
-        return f"gate_{gate_match.group(1)}"
+        return f"gate_{gate_match.group(1)}{gate_match.group(2)}"
+    gate_match = re.match(r"gate\s+(\d{1,2})\b", loc)
+    if gate_match:
+        return f"gate_num_{int(gate_match.group(1))}"
+    if re.fullmatch(r"\d{1,2}", loc.strip()):
+        return f"gate_num_{int(loc.strip())}"
 
     # Known landmark mappings
     known = {
@@ -735,6 +726,16 @@ def _format_navigation_response(nav_data: Dict[str, Any]) -> str:
     return header + step_lines
 
 
+def _navigation_message_with_gate_note(nav_msg: str, resolved_goal: str, nav_data: Dict[str, Any]) -> str:
+    base = _format_navigation_response(nav_data)
+    from app.services.gate_segregation import advisory_for_gate_context
+
+    note = advisory_for_gate_context(nav_msg, resolved_goal or "")
+    if note:
+        return f"{base}\n\n{note}"
+    return base
+
+
 def _try_pure_rules_navigation(
     *,
     nav_msg: str,
@@ -798,7 +799,7 @@ def _try_pure_rules_navigation(
     user_context["mode"] = "navigation"
 
     if nav_data.get("ok"):
-        message = _format_navigation_response(nav_data)
+        message = _navigation_message_with_gate_note(nav_msg, goal_graph, nav_data)
         return {
             "type": "navigation",
             "intent": "navigation",
@@ -813,7 +814,7 @@ def _try_pure_rules_navigation(
     return {
         "type": "navigation",
         "intent": "navigation",
-        "message": _format_navigation_response(nav_data),
+        "message": _navigation_message_with_gate_note(nav_msg, goal_graph, nav_data),
         "data": {
             "navigation": nav_data,
             "start": start_graph,
@@ -958,7 +959,7 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         return {
             "type": "navigation",
             "intent": intent,
-            "message": _format_navigation(nav_data),
+            "message": _navigation_message_with_gate_note(loc_msg, goal_id or "", nav_data),
             "data": {"navigation": nav_data, "recommendations": rag_data, "start": start_id, "end": goal_id},
             "context": user_context,
         }

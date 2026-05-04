@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTtsPlayback } from '../context/TtsPlaybackContext';
+import MarkdownBody from './MarkdownBody';
 
 /**
  * Single chat bubble with timestamp and read-aloud (English Piper, line-by-line with pause/resume).
@@ -30,7 +31,9 @@ export default function MessageBubble({ text, role, time, utteranceId }) {
       )}
 
       <div className="bubble-wrap">
-        <div className="bubble">{text}</div>
+        <div className={`bubble${isBot ? ' bubble--md' : ''}`}>
+          {isBot ? <MarkdownBody>{text}</MarkdownBody> : text}
+        </div>
         <div className="msg-meta-row">
           {time && <div className="msg-time">{time}</div>}
           {role === 'bot' && (

@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "airport": "CSMIA / BOM",
+  "terminal": "T2",
+  "summary": "Terminal 2 does not use a strict permanent domestic-vs-international gate number split. Many gates are swing (MARS) stands and assignments change by schedule. All passengers use the same security checkpoints; after security, domestic passengers follow Domestic gate signage (no immigration), while international passengers proceed through Immigration then to international gates. Always confirm gate number and domestic/international on your boarding pass and on FIDS screens.",
+  "levels_hint": "Level 3 is heavily used for domestic departures; Level 4 includes international departures and shared check-in. Walking distances in the X-shaped terminal can be 10–20+ minutes to distant gates.",
+  "numeric_bands": [
+    {
+      "min": 1,
+      "max": 39,
+      "goal_node": "t2_ne_sp_14",
+      "label": "Lower gate numbers (often international-leaning)",
+      "disclaimer": "Swing gates apply — verify on your boarding pass and airport screens."
+    },
+    {
+      "min": 40,
+      "max": 99,
+      "goal_node": "t2_se_sp_14",
+      "label": "Mid/high gate numbers (often domestic-leaning)",
+      "disclaimer": "Swing gates apply — verify on your boarding pass and airport screens."
+    }
+  ],
+  "flavor_keywords": {
+    "domestic": [
+      "domestic",
+      "indigo",
+      "spicejet",
+      "spice jet",
+      "air india express",
+      "akasa",
+      "go first",
+      "trujet",
+      "star air",
+      "no immigration",
+      "without immigration"
+    ],
+    "international": [
+      "international",
+      "immigration",
+      "emirates",
+      "lufthansa",
+      "british airways",
+      "singapore airlines",
+      "qatar",
+      "etihad",
+      "customs",
+      "passport control",
+      "visa",
+      "schengen",
+      "transit intl"
+    ]
+  },
+  "flavor_goal": {
+    "domestic": "t2_sw_sp_14",
+    "international": "t2_nw_sp_14"
+  },
+  "level_keywords": {
+    "l3": {
+      "goal": "t2_l03_postsec",
+      "patterns": ["level 3", "l3", "level three", "domestic departures l3"]
+    },
+    "l4": {
+      "goal": "t2_l04_postsec",
+      "patterns": ["level 4", "l4", "level four", "international departures l4"]
+    }
+  },
+  "official_links": {
+    "csmia_home": "https://csmia-mumbai.adaniairports.com/",
+    "adani_one": "https://www.adani.com/adanione"
+  }
+}

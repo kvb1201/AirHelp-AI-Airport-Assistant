@@ -20,6 +20,13 @@ from app.services.navigation_service import get_route, resolve_node_id, resolve_
 # Official CSMIA Information Desk copy (see ``csmia_information_desk_t2_source.json``).
 CSMIA_HELPLINE = "1800-572-111111"
 
+# Official facility pages (``facilities_bom.csv`` page_url patterns).
+CRISIS_WEB_URL: Dict[str, str] = {
+    "medical": "https://csmia-mumbai.adaniairports.com/en/airport-facilities/special-assistance",
+    "lost_property": "https://csmia-mumbai.adaniairports.com/en/airport-facilities/lost-and-found-services",
+    "disoriented_help": "https://csmia-mumbai.adaniairports.com/en/airport-facilities/information-desk",
+}
+
 NODE_MEDICAL = "t2_medical"
 NODE_INFORMATION = "t2_information"
 NODE_LOST_FOUND = "t2_lost_found"
@@ -45,12 +52,71 @@ def _looks_like_explicit_nav_to_facility(t: str) -> bool:
     )
 
 
+_BARE_HELP_OR_EMERGENCY = frozenset(
+    {
+        "help",
+        "please help",
+        "help please",
+        "need help",
+        "need help now",
+        "need urgent help",
+        "emergency",
+        "emergency help",
+        "help emergency",
+        "urgent help",
+        "urgent",
+        "immediate help",
+        "sos",
+        "911",
+        "112",
+        "send help",
+        "airport emergency",
+        "i need help",
+        "we need help",
+        "can anyone help",
+        "anyone there",
+        "someone help",
+        "somebody help",
+        "assist me",
+        "need assistance",
+        "get me help",
+        "call for help",
+    }
+)
+
+
+def _is_short_standalone_help_or_emergency(t: str) -> bool:
+    """Single-line cries for help (voice UI often sends just ``help`` / ``emergency``)."""
+    s = t.strip().lower()
+    s = re.sub(r"^[\s.,!?;:]+|[\s.,!?;:]+$", "", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    if len(s) > 56 or not s:
+        return False
+    if s in _BARE_HELP_OR_EMERGENCY:
+        return True
+    if re.fullmatch(r"(please\s+)?help(\s+please)?", s):
+        return True
+    if re.fullmatch(r"(please\s+)?emergency(\s+please)?", s):
+        return True
+    if re.fullmatch(r"emergency\s+help", s):
+        return True
+    if re.fullmatch(r"help\s+emergency", s):
+        return True
+    return False
+
+
 def classify_special_assistance(message: str) -> Optional[SpecialKind]:
     t = _norm(message)
-    if len(t) < 3:
+    if not t:
         return None
 
     explicit_nav = _looks_like_explicit_nav_to_facility(t)
+
+    if not explicit_nav and _is_short_standalone_help_or_emergency(t):
+        return "disoriented_help"
+
+    if len(t) < 3:
+        return None
 
     # --- Medical (symptoms / urgent help; not "take me to the medical room") ---
     symptom_or_urgent = any(
@@ -281,6 +347,21 @@ def try_special_assistance_response(
     message = f"{header}\n\n{_format_route_block(nav)}"
     user_context["mode"] = "navigation"
 
+    headlines = {
+        "medical": "Medical assistance",
+        "lost_property": "Lost & found",
+        "disoriented_help": "Airport help & information",
+    }
+    crisis_contact: Dict[str, Any] = {
+        "headline": headlines[kind],
+        "helpline": CSMIA_HELPLINE,
+        "helpline_label": "CSMIA 24/7 helpline",
+        "emergency_dial": "112",
+        "emergency_label": "Life-threatening emergency (India)",
+        "website_url": CRISIS_WEB_URL[kind],
+        "website_label": "Official CSMIA page",
+    }
+
     return {
         "type": "navigation",
         "intent": "navigation",
@@ -290,6 +371,7 @@ def try_special_assistance_response(
             "start": start_out,
             "end": goal_out,
             "special_assistance": kind,
+            "crisis_contact": crisis_contact,
         },
         "context": user_context,
     }
