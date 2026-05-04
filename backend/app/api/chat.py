@@ -41,6 +41,15 @@ async def chat_endpoint(request: ChatRequest):
     if request.destination is not None:
         patch["destination"] = request.destination
         context["destination"] = request.destination
+    if request.flight_number:
+        patch["flight_number"] = request.flight_number
+        context["flight_number"] = request.flight_number
+    if request.boarding_time:
+        patch["boarding_time"] = request.boarding_time
+        context["boarding_time"] = request.boarding_time
+    if request.departure_time:
+        patch["departure_time"] = request.departure_time
+        context["departure_time"] = request.departure_time
     if patch:
         update_user_context(request.user_id, patch)
 

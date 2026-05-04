@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 
 from app.api import chat, context, guided_navigation, map as map_api, navigation
 from app.services.rag_service import init_rag
+from app.services.alert_scheduler import start_alert_scheduler
 
 app = FastAPI(title="AI Airport Companion API")
 
@@ -64,3 +65,10 @@ async def startup_event():
         print("✅ RAG initialized successfully")
     except Exception as e:
         print(f"❌ RAG initialization failed: {e}")
+
+    try:
+        # Start background alert scheduler (offline)
+        start_alert_scheduler()
+        print("⏰ Alert scheduler started")
+    except Exception as e:
+        print(f"⚠️ Failed to start alert scheduler: {e}")

@@ -1,0 +1,35 @@
+{
+	"user_john": {
+		"user_id": "user_john",
+		"flight_number": "AI 143",
+		"boarding_time": "10:35",
+		"departure_time": "11:20",
+		"terminal": "T2",
+		"gate": "B12",
+		"location": "entrance",
+		"created_at": "2026-05-04T04:00:00+05:30",
+		"updated_at": "2026-05-04T04:30:00+05:30"
+	},
+	"user_priya": {
+		"user_id": "user_priya",
+		"flight_number": "BA 286",
+		"boarding_time": "15:20",
+		"departure_time": "16:00",
+		"terminal": "T1",
+		"gate": "A05",
+		"location": "cafe",
+		"created_at": "2026-05-04T13:00:00+05:30",
+		"updated_at": "2026-05-04T14:00:00+05:30"
+	},
+	"user_raj": {
+		"user_id": "user_raj",
+		"flight_number": "SQ 406",
+		"boarding_time": "19:45",
+		"departure_time": "20:30",
+		"terminal": "T2",
+		"gate": "C18",
+		"location": "restaurants",
+		"created_at": "2026-05-04T16:00:00+05:30",
+		"updated_at": "2026-05-04T17:00:00+05:30"
+	}
+}
