@@ -22,8 +22,13 @@ const SERVICES = [
   { name: 'Wi‑Fi', sub: 'Connection information', icon: 'wifi', iconColor: 'neutral', message: 'How do I connect to airport Wi-Fi?', location: null },
 ];
 
-export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenFlightQueries }) {
-export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue }) {
+export default function HomeContent({ 
+  onSend, 
+  onOpenNavigation, 
+  onOpenFloorMap, 
+  onOpenFlightQueries, 
+  onOpenReportIssue 
+}) {
   const handleChip = (chip) => {
     if (chip.action === 'navigation' && onOpenNavigation) {
       onOpenNavigation();
@@ -31,6 +36,10 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
     }
     if (chip.action === 'floor_map' && onOpenFloorMap) {
       onOpenFloorMap(null);
+      return;
+    }
+    if (chip.action === 'flight_queries' && onOpenFlightQueries) {
+      onOpenFlightQueries();
       return;
     }
     if (chip.action === 'report_issue') {
