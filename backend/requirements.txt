@@ -26,6 +26,7 @@ networkx==3.3
 opencv-python==4.10.0.84
 pytesseract==0.3.10
 Pillow==10.4.0
+# Note: pytesseract removed for completely offline operation
 
 # Offline TTS (PyPI Piper — `pip install piper-tts`; see app/services/tts_service.py)
 piper-tts>=1.4.0,<2

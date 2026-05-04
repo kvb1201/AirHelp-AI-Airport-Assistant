@@ -11,7 +11,8 @@ from app.services.context_service import (
     update_user_context,
 )
 from app.core.slang_normalizer import clean_airport_slang
-from app.services.simple_ocr_service import extract_boarding_pass_simple
+from app.services.offline_ocr_service import extract_boarding_pass_offline
+
 from app.services import operational_state_service as ops_state
 import tempfile
 import os
@@ -114,7 +115,7 @@ async def chat_with_image_endpoint(
     
     try:
         # Extract boarding pass information
-        boarding_pass_info = extract_boarding_pass_simple(image_path)
+        boarding_pass_info = extract_boarding_pass_offline(image_path)
         
         # Clean up temp file
         os.unlink(image_path)

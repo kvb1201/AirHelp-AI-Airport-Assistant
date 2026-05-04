@@ -10,7 +10,7 @@ import tempfile
 import os
 from datetime import datetime
 
-from app.services.simple_ocr_service import extract_boarding_pass_simple, simple_boarding_pass_ocr
+from app.services.offline_ocr_service import extract_boarding_pass_offline, offline_boarding_pass_ocr
 from app.utils.logger import logger
 
 router = APIRouter()
@@ -57,7 +57,7 @@ async def extract_boarding_pass_endpoint(
     
     try:
         # Extract boarding pass information
-        result = extract_boarding_pass_simple(image_path)
+        result = extract_boarding_pass_offline(image_path)
         
         # Clean up temp file
         os.unlink(image_path)
@@ -130,7 +130,7 @@ async def general_ocr_endpoint(
     
     try:
         # Extract text using OCR service
-        result = simple_boarding_pass_ocr.extract_boarding_pass_info(image_path)
+        result = offline_boarding_pass_ocr.extract_boarding_pass_info(image_path)
         
         # Clean up temp file
         os.unlink(image_path)
@@ -216,9 +216,9 @@ async def batch_ocr_endpoint(
                 # Process the file
                 try:
                     if extract_boarding_passes:
-                        result = extract_boarding_pass_simple(tmp.name)
+                        result = extract_boarding_pass_offline(tmp.name)
                     else:
-                        result = simple_boarding_pass_ocr.extract_boarding_pass_info(tmp.name)
+                        result = offline_boarding_pass_ocr.extract_boarding_pass_info(tmp.name)
                     
                     results.append({
                         'filename': file.filename,
@@ -260,12 +260,15 @@ async def ocr_status():
     return {
         'status': 'active',
         'service': 'Boarding Pass OCR',
-        'supported_formats': ['jpg', 'jpeg', 'png', 'bmp', 'tiff'],
+        'mode': 'offline',
+        'supported_formats': offline_boarding_pass_ocr.get_supported_formats(),
         'features': [
             'boarding_pass_extraction',
             'general_text_extraction',
             'batch_processing',
-            'structured_data_extraction'
+            'structured_data_extraction',
+            'completely_offline'
         ],
+        'offline_mode': offline_boarding_pass_ocr.is_offline_mode(),
         'timestamp': datetime.now().isoformat()
     }
