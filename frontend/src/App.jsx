@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import HomeContent from './components/HomeContent';
+import FlightQueryModal from './components/FlightQueryModal';
 import RightPanel from './components/RightPanel';
 import TerminalMapView from './components/TerminalMapView';
 import NavigationFlowView from './components/NavigationFlowView';
@@ -35,6 +36,7 @@ export default function App() {
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
+  const [showFlightModal, setShowFlightModal] = useState(false);
 
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
@@ -204,8 +206,18 @@ export default function App() {
                     onSend={handleSend}
                     onOpenNavigation={() => handleNavSelect('Navigation')}
                     onOpenFloorMap={openFloorMap}
+                    onOpenFlightQueries={() => setShowFlightModal(true)}
                   />
                 </div>
+
+                <FlightQueryModal
+                  visible={showFlightModal}
+                  onClose={() => setShowFlightModal(false)}
+                  onSaved={(resp) => {
+                    const botText = resp.message || 'Flight saved.';
+                    setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
+                  }}
+                />
 
                 {mobileView === 'chat' && (
                   <div className="mobile-chat-history">

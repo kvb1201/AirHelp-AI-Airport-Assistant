@@ -133,3 +133,36 @@ export async function sendChatMessage(message, location = "entrance") {
     };
   }
 }
+
+/**
+ * Send flight details (stores on backend and returns nudges/response).
+ */
+export async function sendFlightDetails({ userId = 'user_123', flightNumber, boardingTime, departureTime, location = 'entrance' }) {
+  try {
+    const response = await fetch(`${BASE_URL}/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user_id: userId,
+        message: `Store flight ${flightNumber}`,
+        flight_number: flightNumber,
+        boarding_time: boardingTime,
+        departure_time: departureTime,
+        location,
+        language: 'en',
+      }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return await response.json();
+  } catch (err) {
+    console.error('API error:', err);
+    return {
+      type: 'error',
+      intent: 'error',
+      message: 'Server not reachable. Check connection.',
+      data: {},
+      context: {},
+    };
+  }
+}
