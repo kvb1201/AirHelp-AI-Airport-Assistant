@@ -1,4 +1,5 @@
 import React from 'react';
+import BoardingPassUpload from './BoardingPassUpload';
 
 const QUICK_CHIPS = [
   { label: 'Flight status',   icon: 'flight_takeoff', message: 'What is the status of my flight?', location: null },
@@ -176,6 +177,13 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
           Report an Issue
         </button>
       </div>
+
+      {/* ── Boarding Pass Scanner ── */}
+      <BoardingPassUpload onBoardingPassProcessed={(data) => {
+        if (onSend) {
+          onSend(`I've uploaded my boarding pass. Flight: ${data.flight_number}, Gate: ${data.gate}, Seat: ${data.seat}. Can you help me navigate?`, null);
+        }
+      }} />
     </>
   );
 }
