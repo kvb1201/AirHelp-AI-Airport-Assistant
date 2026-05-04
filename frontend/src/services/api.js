@@ -393,7 +393,7 @@ export async function sendChatMessage(message, location = "entrance") {
  */
 export async function sendFlightDetails({ userId = 'user_123', flightNumber, boardingTime, departureTime, location = 'entrance' }) {
   try {
-    const response = await fetch(`${BASE_URL}/chat`, {
+    const response = await fetch(`${apiBase()}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -417,6 +417,36 @@ export async function sendFlightDetails({ userId = 'user_123', flightNumber, boa
       message: 'Server not reachable. Check connection.',
       data: {},
       context: {},
+    };
+  }
+}
+
+/**
+ * Extract boarding pass information using OCR.
+ * @param {File} file - Image file of boarding pass
+ * @returns {Promise<Object>} OCR extraction result
+ */
+export async function extractBoardingPass(file) {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${apiBase()}/ocr/boarding-pass`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (err) {
+    console.error('OCR API error:', err);
+    return {
+      success: false,
+      message: 'OCR processing failed. Please try again.',
+      data: {},
     };
   }
 }

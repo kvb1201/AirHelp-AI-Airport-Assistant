@@ -44,6 +44,7 @@ function App() {
   /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
   const [crisisContact, setCrisisContact] = useState(null);
   const [reportIssueOpen, setReportIssueOpen] = useState(false);
+  const [showFlightModal, setShowFlightModal] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
@@ -277,6 +278,7 @@ function App() {
                     onOpenNavigation={() => handleNavSelect('Navigation')}
                     onOpenFloorMap={openFloorMap}
                     onOpenReportIssue={() => setReportIssueOpen(true)}
+                    onOpenFlightQueries={() => setShowFlightModal(true)}
                   />
                 </div>
 

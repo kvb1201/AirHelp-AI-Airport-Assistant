@@ -10,21 +10,15 @@ const QUICK_CHIPS = [
 ];
 
 const SERVICES = [
-  { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight',    iconColor: 'pink', message: 'Show me flight status updates.',    location: null },
+  { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight', iconColor: 'pink', message: 'Show me flight status updates.', location: null },
   { name: 'Flight Queries', sub: 'Save or scan boarding pass', icon: 'event', iconColor: 'gold', action: 'flight_queries' },
-  { name: 'Walking routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
-  { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
-  { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
-  { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
-  { name: 'Flight status', sub: 'Schedules and updates', icon: 'flight', iconColor: 'neutral', message: 'Show me flight status updates.', location: null },
-  { name: 'Walking routes', sub: 'Compare paths A to B', icon: 'directions_walk', iconColor: 'neutral', action: 'navigation' },
-  { name: 'Floor map', sub: 'Terminal plan', icon: 'location_on', iconColor: 'neutral', action: 'floor_map' },
-  { name: 'Lounges', sub: 'Locations and access', icon: 'weekend', iconColor: 'neutral', message: 'Where are the airport lounges?', location: null },
-  { name: 'Wi‑Fi', sub: 'Connection information', icon: 'wifi', iconColor: 'neutral', message: 'How do I connect to airport Wi-Fi?', location: null },
+  { name: 'Walking Routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
+  { name: 'Floor Map', sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
+  { name: 'Lounges', sub: 'Relax & unwind', icon: 'weekend', iconColor: 'pink', message: 'Where are the airport lounges?', location: null },
+  { name: 'Wi-Fi Access', sub: 'Stay connected', icon: 'wifi', iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
 ];
 
-export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenFlightQueries }) {
-export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue }) {
+export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue, onOpenFlightQueries }) {
   const handleChip = (chip) => {
     if (chip.action === 'navigation' && onOpenNavigation) {
       onOpenNavigation();

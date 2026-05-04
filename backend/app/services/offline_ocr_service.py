@@ -64,9 +64,9 @@ class OfflineBoardingPassOCR:
                 r'T([A-Z0-9]+)'
             ],
             'boarding_time': [
-                r'BOARDING\s*TIME\s*:?(\d{1,2}:\d{2})',
-                r'BOARDING\s*:?(\d{1,2}:\d{2})',
-                r'BRD\s*:?(\d{1,2}:\d{2})'
+                r'BOARDING\s+TIME\s*:\s*(\d{1,2}:\d{2})',
+                r'BOARDING\s*:\s*(\d{1,2}:\d{2})',
+                r'BRD\s*:\s*(\d{1,2}:\d{2})'
             ]
         }
         
@@ -283,10 +283,12 @@ class OfflineBoardingPassOCR:
                 'terminal': self.extract_field(extracted_text, 'terminal'),
                 'boarding_time': self.extract_field(extracted_text, 'boarding_time'),
                 'timestamp': datetime.now().isoformat(),
-                'confidence': self._calculate_confidence(extracted_info),
                 'method': 'offline_simulation',
                 'offline': True
             }
+            
+            # Calculate confidence after extracted_info is complete
+            extracted_info['confidence'] = self._calculate_confidence(extracted_info)
             
             # Clean up extracted data
             extracted_info = self._clean_extracted_data(extracted_info)
