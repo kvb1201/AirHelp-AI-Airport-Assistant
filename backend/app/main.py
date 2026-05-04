@@ -1,12 +1,19 @@
 # backend/app/main.py
+import os
+os.environ["HF_TOKEN"] = "REVOKED_USE_ENV_VAR"
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
-from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, ops, support_tickets, tts
-from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, support_tickets, travel_documents, tts
+from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, tts, transcribe, translate
+from app.api import support_tickets, travel_documents
+try:
+    from app.api import ops
+    HAS_OPS = True
+except Exception:
+    HAS_OPS = False
 from app.services import lost_found_service as lost_found_storage
 from app.services import operational_state_service as ops_state
 from app.services.rag_service import init_rag
@@ -31,6 +38,12 @@ async def lifespan(app: FastAPI):
         print("✅ RAG initialized successfully")
     except Exception as e:
         print(f"❌ RAG initialization failed: {e}")
+
+    try:
+        start_alert_scheduler()
+        print("⏰ Alert scheduler started")
+    except Exception as e:
+        print(f"⚠️ Failed to start alert scheduler: {e}")
 
     yield
 
@@ -68,8 +81,11 @@ app.include_router(context.router, prefix="/api", tags=["Context"])
 app.include_router(map_api.router, prefix="/api", tags=["Map"])
 app.include_router(lost_found.router, prefix="/api", tags=["Lost & Found"])
 app.include_router(tts.router, prefix="/api", tags=["TTS"])
+app.include_router(transcribe.router, prefix="/api", tags=["STT"])
+app.include_router(translate.router, prefix="/api", tags=["Translation"])
 app.include_router(support_tickets.router, prefix="/api", tags=["Support"])
-app.include_router(ops.router, prefix="/api", tags=["Operator ops"])
+if HAS_OPS:
+    app.include_router(ops.router, prefix="/api", tags=["Operator ops"])
 app.include_router(travel_documents.router, prefix="/api/travel-documents", tags=["Travel Documents"])
 
 
@@ -91,25 +107,4 @@ async def global_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
         status_code=500,
         content={"message": "Internal server error"},
-    )
-
-
-# ----------------------------
-# 🔹 Startup Event
-# ----------------------------
-@app.on_event("startup")
-async def startup_event():
-    print("🚀 AI Airport Companion API started")
-
-    try:
-        init_rag()   # 🔥 Initialize RAG once
-        print("✅ RAG initialized successfully")
-    except Exception as e:
-        print(f"❌ RAG initialization failed: {e}")
-
-    try:
-        # Start background alert scheduler (offline)
-        start_alert_scheduler()
-        print("⏰ Alert scheduler started")
-    except Exception as e:
-        print(f"⚠️ Failed to start alert scheduler: {e}")
+    )

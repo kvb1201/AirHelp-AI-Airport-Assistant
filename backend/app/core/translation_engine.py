@@ -7,13 +7,16 @@ Handles direct text translation between languages
 
 import os
 from typing import Dict, Optional
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
 from app.utils.logger import logger
 
-# Force offline mode
-os.environ["HF_DATASETS_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
-os.environ["HF_HUB_OFFLINE"] = "1"
+try:
+    from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
+    HAS_TRANSFORMERS = True
+except ImportError:
+    logger.warning("transformers not installed. Translation will use mock responses.")
+    HAS_TRANSFORMERS = False
+
+
 
 class TranslationEngine:
     """Translation engine using NLLB-200 model"""
@@ -26,53 +29,25 @@ class TranslationEngine:
     
     def _load_model(self):
         """Load NLLB-200 translation model"""
-        try:
-            model_name = "facebook/nllb-200-distilled-600M"
-            logger.info(f"Loading translation model: {model_name}")
-            
-            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-            self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-            
-            # Create translation pipeline
-            self.translator = pipeline(
-                "translation",
-                model=self.model,
-                tokenizer=self.tokenizer,
-                device=-1  # CPU
-            )
-            
-            logger.info("✅ Translation model loaded successfully")
-            
-        except Exception as e:
-            logger.error(f"❌ Failed to load translation model: {e}")
-            self.model = None
-            self.tokenizer = None
-            self.translator = None
+        logger.info("Translation disabled per user request. Skipping model download.")
+        self.model = None
+        self.tokenizer = None
+        self.translator = None
     
     def translate(self, text: str, src_lang: str, tgt_lang: str) -> Dict[str, any]:
         """
         Translate text from source to target language
-        
-        Args:
-            text: Text to translate
-            src_lang: Source language code (e.g., 'eng_Latn')
-            tgt_lang: Target language code (e.g., 'hin_Deva')
-            
-        Returns:
-            Dictionary with translation and metadata
         """
         if not self.translator:
-            # Fallback: return original text
-            logger.warning("Translation model not available, returning original text")
+            # Fallback: return mock translation
+            logger.warning("Translation model not available, returning mock translation")
+            mock_translation = f"[Mock Translation to {tgt_lang}]: {text}"
             return {
-                "translation": text,
+                "translation": mock_translation,
                 "confidence": 0.0
             }
         
         try:
-            # Prepare the translation task
-            translation_task = f"{src_lang} {tgt_lang}"
-            
             # Perform translation
             result = self.translator(
                 text,
@@ -92,7 +67,7 @@ class TranslationEngine:
             
             return {
                 "translation": translation,
-                "confidence": 0.9  # Placeholder confidence
+                "confidence": 0.9
             }
             
         except Exception as e:

@@ -248,9 +248,10 @@ export async function createSupportTicket(body) {
 }
 
 /**
- * Send a chat message to the backend (English assistant).
+ * Send a chat message to the backend.
  * @param {string} message
  * @param {string} [location]
+ * @param {{ inputMode?: string, whisperLang?: string }} [opts]
  */
 /** HTTP origin for the API host (no ``/api`` suffix), e.g. ``http://192.168.1.10:8000``. */
 export function getApiHttpOrigin() {
@@ -358,17 +359,23 @@ export async function deleteOpsFlightOverride(flight) {
   return response.json();
 }
 
-export async function sendChatMessage(message, location = "entrance") {
+export async function sendChatMessage(message, location = "entrance", opts = {}) {
   try {
+    const body = {
+      user_id: "user_123",
+      message,
+      location,
+      language: "en",
+      input_mode: opts.inputMode || "text",
+    };
+    if (opts.whisperLang) {
+      body.whisper_lang = opts.whisperLang;
+    }
+
     const response = await fetch(`${apiBase()}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: "user_123",
-        message,
-        location,
-        language: "en",
-      }),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
@@ -386,6 +393,42 @@ export async function sendChatMessage(message, location = "entrance") {
       context: {},
     };
   }
+}
+
+/**
+ * Transcribe audio file to text.
+ * @param {Blob} audioBlob
+ * @param {string} [language]
+ */
+export async function transcribeAudio(audioBlob, language = null) {
+  const formData = new FormData();
+  formData.append('file', audioBlob, 'audio.wav');
+  if (language) formData.append('language', language);
+
+  const response = await fetch(`${apiBase()}/transcribe`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) throw new Error(`Transcription error: ${response.status}`);
+  return response.json();
+}
+
+/**
+ * Translate text from one language to another.
+ * @param {string} text
+ * @param {string} srcLang
+ * @param {string} tgtLang
+ */
+export async function translateText(text, srcLang = "eng_Latn", tgtLang = "hin_Deva") {
+  const response = await fetch(`${apiBase()}/translate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text, src_lang: srcLang, tgt_lang: tgtLang }),
+  });
+
+  if (!response.ok) throw new Error(`Translation error: ${response.status}`);
+  return response.json();
 }
 
 /**

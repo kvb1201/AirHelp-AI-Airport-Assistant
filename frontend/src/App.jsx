@@ -43,6 +43,7 @@ function App() {
   const [mapLaunch, setMapLaunch] = useState(null);
   /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
   const [crisisContact, setCrisisContact] = useState(null);
+  const [showFlightModal, setShowFlightModal] = useState(false);
   const [reportIssueOpen, setReportIssueOpen] = useState(false);
   const [showFlightModal, setShowFlightModal] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
@@ -113,7 +114,7 @@ function App() {
     [location, openFloorMap],
   );
 
-  const handleSend = async (text, loc = null) => {
+  const handleSend = async (text, loc = null, opts = {}) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
     setCrisisContact(null);
@@ -128,7 +129,10 @@ function App() {
     setChatOpen(true);
 
     try {
-      const data = await sendChatMessage(text, currentLocation);
+      const data = await sendChatMessage(text, currentLocation, {
+        inputMode: opts.inputMode || 'text',
+        whisperLang: opts.whisperLang || null,
+      });
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
 

@@ -3,8 +3,15 @@ Boarding Pass OCR Service
 Extracts structured information from boarding pass images using OCR
 """
 
-import cv2
-import pytesseract
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+try:
+    import pytesseract
+except ImportError:
+    pytesseract = None
+
 import re
 from PIL import Image
 from typing import Dict, List, Optional, Tuple
