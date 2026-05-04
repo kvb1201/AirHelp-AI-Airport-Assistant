@@ -1,4 +1,6 @@
 # backend/app/main.py
+import os
+os.environ["HF_TOKEN"] = "REMOVED_TOKEN"
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
