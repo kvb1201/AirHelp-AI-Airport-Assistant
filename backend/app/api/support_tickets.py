@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
@@ -20,6 +22,8 @@ class SupportTicketOut(BaseModel):
     category: str
     category_label: str
     summary: str
+    email_sent: bool = False
+    email_notice: str | None = None
 
 
 class SupportCategoriesOut(BaseModel):
@@ -34,7 +38,8 @@ async def ticket_categories():
 @router.post("/support/tickets", response_model=SupportTicketOut)
 async def post_support_ticket(body: SupportTicketCreate):
     try:
-        out = create_ticket(
+        out = await asyncio.to_thread(
+            create_ticket,
             category=body.category,
             description=body.description,
             where_hint=body.where_hint,

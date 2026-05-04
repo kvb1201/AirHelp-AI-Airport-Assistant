@@ -221,7 +221,7 @@ export default function ReportIssueModal({ open, onClose, graphLocationId, onTic
               maxLength={500}
             />
             <label className="report-issue-label" htmlFor="report-issue-email">
-              Email (optional — if you want a follow-up)
+              Email (optional — we send your ticket confirmation here when mail is configured)
             </label>
             <input
               id="report-issue-email"
@@ -264,6 +264,16 @@ export default function ReportIssueModal({ open, onClose, graphLocationId, onTic
               <br />
               {result.summary}
             </p>
+            {result.email_notice ? (
+              <p
+                className={
+                  result.email_sent ? 'report-issue-email-ok' : 'report-issue-email-warn'
+                }
+                role="status"
+              >
+                {result.email_notice}
+              </p>
+            ) : null}
             <div className="report-issue-actions report-issue-actions--stack">
               <button type="button" className="report-issue-btn report-issue-btn--secondary" onClick={copyId}>
                 <span className="ms">content_copy</span>

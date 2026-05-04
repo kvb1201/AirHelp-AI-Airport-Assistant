@@ -154,7 +154,7 @@ function App() {
   };
 
   const handleTicketCreated = useCallback((ticket) => {
-    const text = [
+    const lines = [
       '## Ticket created',
       '',
       `Your reference is **${ticket.ticket_id}**.`,
@@ -162,8 +162,13 @@ function App() {
       `- **Issue type:** ${ticket.category_label}`,
       `- **Summary:** ${ticket.summary}`,
       '',
-      'Keep this number if you contact airport support about this report.',
-    ].join('\n');
+    ];
+    if (ticket.email_notice) {
+      lines.push(ticket.email_sent ? ticket.email_notice : `**Note:** ${ticket.email_notice}`);
+      lines.push('');
+    }
+    lines.push('Keep this number if you contact airport support about this report.');
+    const text = lines.join('\n');
     setMessages((prev) => [...prev, { text, role: 'bot', time: formatTime() }]);
     setChatOpen(true);
     setMobileView('chat');

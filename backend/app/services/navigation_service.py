@@ -225,6 +225,12 @@ def _match_csv_poi_label(
     if not ranked:
         return None
 
+    # Prefer Terminal 2 anchors when the passenger start is on the T2 walking graph (CSV also lists T1).
+    if (start_graph_id or "").startswith("t2_"):
+        t2_ranked = [(s, g) for s, g in ranked if str(g).startswith("t2_")]
+        if t2_ranked:
+            ranked = t2_ranked
+
     top_s = max(s for s, _ in ranked)
     ties = list(dict.fromkeys(g for s, g in ranked if s == top_s))
     if (
@@ -255,15 +261,35 @@ def resolve_shop_name_to_graph_node(
     """
     Resolve a retail / shop name using ``shops_t2_l02.csv`` (``graph_node_id``).
     ``avoid_graph_node_id`` drops that node from tie-breaks (e.g. goal must differ from start).
+
+    Also maps **dish / craving phrases** (e.g. "sandwich", "pizza", "latte") to outlets that sell
+    them (Subway, Pizza Hut, Starbucks, …) via ``craving_shop_resolver``.
     """
+    from app.services.craving_shop_resolver import craving_hints_for_queries
     from app.services.shops_loader import load_shops_t2_l02
 
-    return _match_csv_poi_label(
-        label,
-        load_shops_t2_l02(),
+    rows = load_shops_t2_l02()
+    if not label or not str(label).strip():
+        return None
+    raw = str(label).strip()
+    gid = _match_csv_poi_label(
+        raw,
+        rows,
         start_graph_id=start_graph_id,
         avoid_graph_node_id=avoid_graph_node_id,
     )
+    if gid:
+        return gid
+    for hint in craving_hints_for_queries(raw):
+        gid = _match_csv_poi_label(
+            hint,
+            rows,
+            start_graph_id=start_graph_id,
+            avoid_graph_node_id=avoid_graph_node_id,
+        )
+        if gid:
+            return gid
+    return None
 
 
 def resolve_facility_name_to_graph_node(
@@ -435,6 +461,16 @@ def resolve_walking_goal_id(
         )
         if fg:
             return fg
+
+    # Whole utterance may be a craving ("I want to eat a sandwich") while ``tried`` only had short tails.
+    from app.services.craving_shop_resolver import craving_hints_for_queries
+
+    for hint in craving_hints_for_queries(combined):
+        sg = resolve_shop_name_to_graph_node(
+            hint, start_graph_id=sid, avoid_graph_node_id=sid
+        )
+        if sg:
+            return sg
 
     if rag_snippets and sid:
         g = goal_from_rag_snippets(rag_snippets, sid)

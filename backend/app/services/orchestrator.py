@@ -578,6 +578,15 @@ def _resolve_destination(msg: str, context: Dict[str, Any]) -> Optional[str]:
         r"(?:i['’]d|i would)\s+like\s+to\s+(?:get\s+to|go\s+to)\s+(.+)",
         r"\bgo\s+to\s+(.+)",
         r"where\s+(?:is|are)\s+(.+)",
+        r"where\s+can\s+i\s+(?:get|find|buy)\s+(?:a|an|some)?\s*(.+)$",
+        r"where\s+do\s+i\s+(?:get|find)\s+(?:a|an|some)?\s*(.+)$",
+        # Dish / craving → resolved to a shop graph node via ``craving_shop_resolver`` + CSV
+        r"(?:i\s+)?(?:want|would like|need)\s+to\s+(?:eat|have|grab|get)\s+(?:a|an|some)?\s*(.+)$",
+        r"\b(?:craving|feel\s+like)\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:i\s*'?m|i am)\s+hungry(?:\s+for)?\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:i\s+)?(?:fancy|could\s+do\s+with)\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:get|grab)\s+me\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:i\s+)?(?:need|want)\s+(?:a|an|some)\s+(.+)$",
     ]
     for pattern in dest_patterns:
         match = re.search(pattern, m)

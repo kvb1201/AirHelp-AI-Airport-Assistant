@@ -8,6 +8,8 @@ import secrets
 from datetime import datetime, timezone
 from pathlib import Path
 
+from app.services.ticket_email_service import try_send_ticket_confirmation
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 TICKETS_FILE = DATA_DIR / "support_tickets.jsonl"
 
@@ -85,12 +87,28 @@ def create_ticket(
     if len(summary) > 160:
         summary = summary[:157] + "…"
 
+    email_sent = False
+    email_notice: str | None = None
+    if email_norm:
+        email_sent, email_notice = try_send_ticket_confirmation(
+            to_addr=email_norm,
+            ticket_id=ticket_id,
+            category_label=ISSUE_CATEGORIES[cat],
+            summary=summary,
+            created_at=record["created_at"],
+            description=desc,
+            where_hint=where,
+            location_graph_id=loc,
+        )
+
     return {
         "ticket_id": ticket_id,
         "created_at": record["created_at"],
         "category": cat,
         "category_label": ISSUE_CATEGORIES[cat],
         "summary": summary,
+        "email_sent": email_sent,
+        "email_notice": email_notice,
     }
 
 

@@ -4531,3 +4531,24 @@ a { text-decoration: none; }
   color: var(--on-surface);
 }
 
+.report-issue-email-ok,
+.report-issue-email-warn {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.report-issue-email-ok {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  border: 1px solid rgba(107, 90, 95, 0.2);
+}
+
+.report-issue-email-warn {
+  background: var(--error-container);
+  color: var(--on-error-container);
+  border: 1px solid rgba(186, 26, 26, 0.15);
+}
+
