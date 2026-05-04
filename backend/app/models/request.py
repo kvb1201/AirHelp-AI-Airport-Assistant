@@ -11,3 +11,7 @@ class ChatRequest(BaseModel):
     """Optional explicit goal (e.g. gate_b12); else parsed from message."""
     language: str = "en"
     context_id: Optional[str] = None
+    input_mode: str = "text"
+    """'text' for typed input, 'voice' for voice/mic input."""
+    whisper_lang: Optional[str] = None
+    """Language code detected by Whisper STT (e.g. 'hi', 'en'). Only set for voice input."""

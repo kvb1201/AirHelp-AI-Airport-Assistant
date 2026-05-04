@@ -100,7 +100,7 @@ function App() {
     [location, openFloorMap],
   );
 
-  const handleSend = async (text, loc = null) => {
+  const handleSend = async (text, loc = null, opts = {}) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
 
@@ -114,7 +114,10 @@ function App() {
     setChatOpen(true);
 
     try {
-      const data = await sendChatMessage(text, currentLocation);
+      const data = await sendChatMessage(text, currentLocation, {
+        inputMode: opts.inputMode || 'text',
+        whisperLang: opts.whisperLang || null,
+      });
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
 
