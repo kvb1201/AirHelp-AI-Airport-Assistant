@@ -37,26 +37,26 @@
   --outline:         #7f7477;
   --outline-variant: #d0c3c6;
 
-  /* Primary — Mauve / Petal */
-  --primary:                   #6b5a5f;
+  /* Primary — Teal Blue */
+  --primary:                   #027da2;
   --on-primary:                #ffffff;
-  --primary-container:         #f8e1e7;
-  --on-primary-container:      #746368;
-  --inverse-primary:           #d7c1c7;
-  --primary-fixed:             #f4dde3;
-  --primary-fixed-dim:         #d7c1c7;
-  --on-primary-fixed:          #24181c;
-  --on-primary-fixed-variant:  #524348;
+  --primary-container:         #e0f7fa;
+  --on-primary-container:      #005a7d;
+  --inverse-primary:           #5fa3c3;
+  --primary-fixed:             #b3e5fc;
+  --primary-fixed-dim:         #5fa3c3;
+  --on-primary-fixed:          #001c30;
+  --on-primary-fixed-variant:  #00546d;
 
-  /* Secondary — Gold */
-  --secondary:                    #735c00;
+  /* Secondary — Dark Pink */
+  --secondary:                    #b7375d;
   --on-secondary:                 #ffffff;
-  --secondary-container:          #fed65b;
-  --on-secondary-container:       #745c00;
-  --secondary-fixed:              #ffe088;
-  --secondary-fixed-dim:          #e9c349;
-  --on-secondary-fixed:           #241a00;
-  --on-secondary-fixed-variant:   #574500;
+  --secondary-container:          #f8d4df;
+  --on-secondary-container:       #8c2848;
+  --secondary-fixed:              #f0b5c9;
+  --secondary-fixed-dim:          #d99aae;
+  --on-secondary-fixed:           #3d0a1a;
+  --on-secondary-fixed-variant:   #7a1c3a;
 
   /* Tertiary */
   --tertiary:             #5e5e5f;
@@ -784,7 +784,7 @@ body {
 }
 
 .terminal-map-route-line {
-  stroke: #735c00;
+  stroke: #b7375d;
 }
 
 .terminal-map-node-label {
