@@ -4204,6 +4204,36 @@ a { text-decoration: none; }
   }
 }
 
+.crisis-facility-hints {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 248, 225, 0.95);
+  border: 1px solid rgba(183, 28, 28, 0.22);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.crisis-facility-hints-title {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #5d4037;
+}
+
+.crisis-facility-hints-list {
+  margin: 0;
+  padding-left: 1.15em;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #3e2723;
+}
+
+.crisis-facility-hints-list li {
+  margin: 0.35em 0;
+}
+
 .crisis-overlay-actions {
   margin-top: 22px;
   display: flex;

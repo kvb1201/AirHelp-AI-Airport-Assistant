@@ -23,8 +23,17 @@ export default function CrisisContactOverlay({ data, onDismiss }) {
 
   if (!data) return null;
 
-  const { headline, helpline, helpline_label, emergency_dial, emergency_label, website_url, website_label } =
-    data;
+  const {
+    headline,
+    helpline,
+    helpline_label,
+    emergency_dial,
+    emergency_label,
+    website_url,
+    website_label,
+    facility_hints: facilityHints,
+    flash_lede: flashLede,
+  } = data;
 
   return (
     <div
@@ -43,7 +52,8 @@ export default function CrisisContactOverlay({ data, onDismiss }) {
           {headline || 'Airport help'}
         </h1>
         <p id="crisis-overlay-desc" className="crisis-overlay-lede">
-          Call or open the official page first — walking directions are in the chat below.
+          {flashLede ||
+            'Call or open the official page first — walking directions are in the chat below.'}
         </p>
 
         <div className="crisis-flash-stack" aria-live="assertive">
@@ -76,6 +86,17 @@ export default function CrisisContactOverlay({ data, onDismiss }) {
             </a>
           ) : null}
         </div>
+
+        {Array.isArray(facilityHints) && facilityHints.length > 0 ? (
+          <div className="crisis-facility-hints" aria-label="Terminal 2 facility listings">
+            <h2 className="crisis-facility-hints-title">From official T2 facilities</h2>
+            <ul className="crisis-facility-hints-list">
+              {facilityHints.map((line, i) => (
+                <li key={i}>{line}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="crisis-overlay-actions">
           <button type="button" ref={closeRef} className="crisis-overlay-dismiss" onClick={onDismiss}>
