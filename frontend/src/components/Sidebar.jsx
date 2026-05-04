@@ -4,6 +4,7 @@ const NAV_ITEMS = [
   { label: 'Home', icon: 'home', active: true },
   { label: 'Flights', icon: 'flight_takeoff', active: false },
   { label: 'Facilities', icon: 'apartment', active: false },
+  { label: 'Lost & Found', icon: 'luggage', active: false },
   { label: 'Navigation', icon: 'directions_walk', active: false },
   { label: 'Map', icon: 'map', active: false },
   { label: 'My Trips', icon: 'work', active: false },

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
+/** Shown in chat fields so users phrase navigation as start → goal (matches backend parsers). */
+export const CHAT_PLACEHOLDER = 'I am at A take me to B';
+
 /**
  * Chat input bar — used in ChatPanel (desktop) and mobile bottom area.
  */
-export default function InputBox({ onSend, isLoading, placeholder = 'Type your message…' }) {
+export default function InputBox({ onSend, isLoading, placeholder = CHAT_PLACEHOLDER }) {
   const [value, setValue] = useState('');
 
   const handleSubmit = (e) => {

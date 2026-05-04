@@ -9,3 +9,15 @@ venv10/
 frontend/dist/
 chroma_db/
 chroma_db_demo/
+
+# Lost & Found demo DB (may contain user-entered text)
+backend/app/data/lost_found.sqlite3
+backend/app/data/support_tickets.jsonl
+
+# Piper neural voices (~60MB each; run scripts/download_piper_voices.sh)
+backend/app/data/piper_voices/*.onnx
+backend/app/data/piper_voices/*.onnx.json
+
+# Local Piper / espeak-ng bundles (hundreds of dict files + binaries — never commit; use pip / release tarball + script)
+piper/
+rhasspy-piper-38917ff/

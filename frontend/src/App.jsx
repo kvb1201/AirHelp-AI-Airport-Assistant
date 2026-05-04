@@ -6,12 +6,15 @@ import RightPanel from './components/RightPanel';
 import TerminalMapView from './components/TerminalMapView';
 import NavigationFlowView from './components/NavigationFlowView';
 import FacilitiesDirectoryView from './components/FacilitiesDirectoryView';
+import LostFoundView from './components/LostFoundView';
 import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
 import QuickActions from './components/QuickActions';
 import BottomNav from './components/BottomNav';
 import PlaceholderView from './components/PlaceholderView';
+import CrisisContactOverlay from './components/CrisisContactOverlay';
+import ReportIssueModal from './components/ReportIssueModal';
 import { sendChatMessage } from './services/api';
 import './styles.css';
 
@@ -20,31 +23,42 @@ function formatTime() {
 }
 
 const WELCOME = {
-  text: "Hi! I'm here to help you with airport facilities, flights, or any issues. How can I assist you?",
+  text: "You're in AirHelp for Terminal 2. Ask about facilities, flights, walking routes, or issues — or say e.g. “take me to BIBA”.",
   role: 'bot',
   time: formatTime(),
 };
 
 const SIDEBAR_STUBS = new Set(['Flights', 'My Trips', 'Help & Support', 'Settings']);
 
-export default function App() {
+function App() {
   const [messages, setMessages] = useState([WELCOME]);
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState('t2_entrance');
   const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
-  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'map' | 'nav' | 'facilities' | 'profile'
+  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'map' | 'nav' | 'facilities' | 'lostfound' | 'profile'
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
-  const [showFlightModal, setShowFlightModal] = useState(false);
-
+  /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
+  const [crisisContact, setCrisisContact] = useState(null);
+  const [reportIssueOpen, setReportIssueOpen] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
+  const showLostFound = sidebarNav === 'Lost & Found' || mobileView === 'lostfound';
   const showProfilePlaceholder =
-    !showMap && !showNavFlow && !showFacilities && (sidebarNav === 'Profile' || mobileView === 'profile');
+    !showMap &&
+    !showNavFlow &&
+    !showFacilities &&
+    !showLostFound &&
+    (sidebarNav === 'Profile' || mobileView === 'profile');
   const showDesktopStub =
-    !showMap && !showNavFlow && !showFacilities && !showProfilePlaceholder && SIDEBAR_STUBS.has(sidebarNav);
+    !showMap &&
+    !showNavFlow &&
+    !showFacilities &&
+    !showLostFound &&
+    !showProfilePlaceholder &&
+    SIDEBAR_STUBS.has(sidebarNav);
 
   const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
 
@@ -54,12 +68,14 @@ export default function App() {
     if (label === 'Map') setMobileView('map');
     else if (label === 'Navigation') setMobileView('nav');
     else if (label === 'Facilities') setMobileView('facilities');
+    else if (label === 'Lost & Found') setMobileView('lostfound');
     else if (label === 'Profile') setMobileView('profile');
     else setMobileView('home');
   }, []);
 
   const handleNewChat = useCallback(() => {
     setMessages([{ ...WELCOME, time: formatTime() }]);
+    setCrisisContact(null);
     handleNavSelect('Home');
     setChatOpen(true);
   }, [handleNavSelect]);
@@ -69,6 +85,7 @@ export default function App() {
     if (view === 'map') setSidebarNav('Map');
     else if (view === 'nav') setSidebarNav('Navigation');
     else if (view === 'facilities') setSidebarNav('Facilities');
+    else if (view === 'lostfound') setSidebarNav('Lost & Found');
     else if (view === 'home') setSidebarNav('Home');
     else if (view === 'profile') setSidebarNav('Profile');
     else if (view === 'chat') setSidebarNav('Home');
@@ -93,6 +110,7 @@ export default function App() {
   const handleSend = async (text, loc = null) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
+    setCrisisContact(null);
 
     const userMsg = { text, role: 'user', time: formatTime() };
     setMessages((prev) => [...prev, userMsg]);
@@ -107,6 +125,20 @@ export default function App() {
       const data = await sendChatMessage(text, currentLocation);
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
+
+      const payload = data.data || {};
+      if (payload.crisis_contact) {
+        setCrisisContact({ ...payload.crisis_contact, kind: payload.special_assistance });
+      }
+      const navStart = payload.start;
+      const navEnd = payload.end;
+      if (
+        (data.type === 'navigation' || data.intent === 'navigation') &&
+        navStart &&
+        navEnd
+      ) {
+        openFloorMap({ fromId: navStart, toId: navEnd, routeIndex: 0 });
+      }
     } catch (err) {
       console.error('API error:', err);
       setMessages((prev) => [
@@ -122,8 +154,40 @@ export default function App() {
     handleSend(message, actionLocation);
   };
 
+  const handleTicketCreated = useCallback((ticket) => {
+    const lines = [
+      '## Ticket created',
+      '',
+      `Your reference is **${ticket.ticket_id}**.`,
+      '',
+      `- **Issue type:** ${ticket.category_label}`,
+      `- **Summary:** ${ticket.summary}`,
+      '',
+    ];
+    if (ticket.email_notice) {
+      lines.push(ticket.email_sent ? ticket.email_notice : `**Note:** ${ticket.email_notice}`);
+      lines.push('');
+    }
+    lines.push('Keep this number if you contact airport support about this report.');
+    const text = lines.join('\n');
+    setMessages((prev) => [...prev, { text, role: 'bot', time: formatTime() }]);
+    setChatOpen(true);
+    setMobileView('chat');
+  }, []);
+
   return (
     <div className="app-container">
+      {crisisContact ? (
+        <CrisisContactOverlay data={crisisContact} onDismiss={() => setCrisisContact(null)} />
+      ) : null}
+
+      <ReportIssueModal
+        open={reportIssueOpen}
+        onClose={() => setReportIssueOpen(false)}
+        graphLocationId={location}
+        onTicketCreated={handleTicketCreated}
+      />
+
       {/* ── Left Sidebar (Desktop) ── */}
       <Sidebar activeNav={sidebarNav} onNavChange={handleNavSelect} onNewChat={handleNewChat} />
 
@@ -132,10 +196,6 @@ export default function App() {
 
         {/* Desktop Header */}
         <header className="desktop-header" role="banner">
-          <button type="button" className="header-lang-btn" aria-label="Change language">
-            <span className="ms" style={{ fontSize: 16 }}>language</span>
-            EN
-          </button>
           <div className="header-avatar" role="button" tabIndex={0} aria-label="User account">
             G
           </div>
@@ -153,7 +213,7 @@ export default function App() {
           </button>
           <div className="mobile-header-title">
             <h1>AirHelp</h1>
-            <p>Smart help for your journey</p>
+            <p>Terminal 2 airport information</p>
           </div>
           <button type="button" className="mobile-header-bell" aria-label="Notifications (coming soon)">
             <span className="ms">notifications</span>
@@ -162,7 +222,7 @@ export default function App() {
 
         {/* Content area */}
         <div
-          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
+          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
         >
           <main className="main-content">
             {showMap ? (
@@ -180,6 +240,8 @@ export default function App() {
               />
             ) : showFacilities ? (
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
+            ) : showLostFound ? (
+              <LostFoundView location={location} onOpenFloorMap={openFloorMap} />
             ) : showDesktopStub ? (
               <PlaceholderView
                 title={sidebarNav}
@@ -206,7 +268,7 @@ export default function App() {
                     onSend={handleSend}
                     onOpenNavigation={() => handleNavSelect('Navigation')}
                     onOpenFloorMap={openFloorMap}
-                    onOpenFlightQueries={() => setShowFlightModal(true)}
+                    onOpenReportIssue={() => setReportIssueOpen(true)}
                   />
                 </div>
 
@@ -230,7 +292,9 @@ export default function App() {
             )}
           </main>
 
-          {!showMap && !showNavFlow && !showFacilities && !showDesktopStub && !showProfilePlaceholder && <RightPanel />}
+          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showDesktopStub && !showProfilePlaceholder && (
+          <RightPanel />
+        )}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}
@@ -238,11 +302,7 @@ export default function App() {
           {mobileView === 'home' && (
             <QuickActions onAction={handleQuickAction} />
           )}
-          <InputBox
-            onSend={handleSend}
-            isLoading={isLoading}
-            placeholder="Ask me anything…"
-          />
+          <InputBox onSend={handleSend} isLoading={isLoading} />
           <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
         </div>
       </div>
@@ -260,3 +320,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;

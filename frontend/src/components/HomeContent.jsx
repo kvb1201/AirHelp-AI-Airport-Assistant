@@ -5,7 +5,7 @@ const QUICK_CHIPS = [
   { label: 'Walking routes', icon: 'directions_walk', action: 'navigation' },
   { label: 'Floor map',      icon: 'map',             action: 'floor_map' },
   { label: 'Find lounge',    icon: 'weekend',         message: 'Where is the nearest lounge?',      location: null },
-  { label: 'Report an issue', icon: 'report_problem', message: 'I need to report an issue.',        location: null },
+  { label: 'Report an issue', icon: 'report_problem', action: 'report_issue' },
 ];
 
 const SERVICES = [
@@ -15,9 +15,15 @@ const SERVICES = [
   { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
   { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
   { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
+  { name: 'Flight status', sub: 'Schedules and updates', icon: 'flight', iconColor: 'neutral', message: 'Show me flight status updates.', location: null },
+  { name: 'Walking routes', sub: 'Compare paths A to B', icon: 'directions_walk', iconColor: 'neutral', action: 'navigation' },
+  { name: 'Floor map', sub: 'Terminal plan', icon: 'location_on', iconColor: 'neutral', action: 'floor_map' },
+  { name: 'Lounges', sub: 'Locations and access', icon: 'weekend', iconColor: 'neutral', message: 'Where are the airport lounges?', location: null },
+  { name: 'Wi‑Fi', sub: 'Connection information', icon: 'wifi', iconColor: 'neutral', message: 'How do I connect to airport Wi-Fi?', location: null },
 ];
 
 export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenFlightQueries }) {
+export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue }) {
   const handleChip = (chip) => {
     if (chip.action === 'navigation' && onOpenNavigation) {
       onOpenNavigation();
@@ -25,6 +31,11 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
     }
     if (chip.action === 'floor_map' && onOpenFloorMap) {
       onOpenFloorMap(null);
+      return;
+    }
+    if (chip.action === 'report_issue') {
+      if (onOpenReportIssue) onOpenReportIssue();
+      else if (onSend) onSend('I need to report an issue.', chip.location ?? null);
       return;
     }
     if (onSend) onSend(chip.message, chip.location);
@@ -35,8 +46,8 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
       {/* ── Hero ── */}
       <div className="home-hero">
         <div className="hero-text">
-          <h1 className="hero-greeting">Hello! 👋</h1>
-          <p className="hero-subtitle">Your smart travel companion at every step.</p>
+          <h1 className="hero-greeting">Welcome</h1>
+          <p className="hero-subtitle">Terminal 2 information, walking routes, and services.</p>
 
           {/* Search bar */}
           <div className="hero-search">
@@ -44,7 +55,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
             <input
               className="hero-search-input"
               type="text"
-              placeholder="What can I help you with?"
+              placeholder="Search facilities, flights, or routes"
               aria-label="Search"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && e.target.value.trim()) {
@@ -86,18 +97,12 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
           </div>
         </div>
 
-        {/* Bot illustration (desktop only) */}
-        <div className="hero-illustration" aria-hidden="true">
-          <div className="bot-orb">
-            <span className="ms">smart_toy</span>
-          </div>
-        </div>
       </div>
 
       {/* ── Popular Services ── */}
       <section className="section" aria-label="Popular services">
         <div className="section-header">
-          <h2 className="section-title">Popular Services</h2>
+          <h2 className="section-title">Services</h2>
           <button
             type="button"
             className="section-link"
@@ -137,7 +142,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
         {[
           { label: 'Flight status',    sub: 'Check real-time flight information', icon: 'flight_takeoff', message: 'What is the flight status?',    location: null },
           { label: 'Airport facilities', sub: 'Find lounges, restaurants, services', icon: 'apartment',  message: 'Show me airport facilities.',    location: null },
-          { label: 'Report an issue',  sub: 'Get help with any airport issue',    icon: 'report_problem', message: 'I need to report an issue.',    location: null },
+          { label: 'Report an issue',  sub: 'Describe the problem and get a ticket number',    icon: 'report_problem', action: 'report_issue' },
           { label: 'Walking directions', sub: 'From / to, then pick one of three routes', icon: 'directions_walk', action: 'navigation' },
         ].map((item) => (
           <button
@@ -147,7 +152,10 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
             role="listitem"
             onClick={() => {
               if (item.action === 'navigation' && onOpenNavigation) onOpenNavigation();
-              else if (onSend) onSend(item.message, item.location);
+              else if (item.action === 'report_issue') {
+                if (onOpenReportIssue) onOpenReportIssue();
+                else if (onSend) onSend('I need to report an issue.', item.location ?? null);
+              } else if (onSend) onSend(item.message, item.location);
             }}
           >
             <div className="mqi-icon">
@@ -167,18 +175,21 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
       {/* ── Need Assistance Banner ── */}
       <div className="assistance-banner" role="complementary" aria-label="Assistance">
         <div className="assistance-info">
-          <div className="assistance-icon">
-            <span className="ms">smart_toy</span>
+          <div className="assistance-icon" aria-hidden="true">
+            <span className="ms">help</span>
           </div>
           <div className="assistance-text">
-            <h4>Need assistance?</h4>
-            <p>Report an issue or request help from our support team.</p>
+            <h4>Support</h4>
+            <p>Report an issue or request assistance.</p>
           </div>
         </div>
         <button
           type="button"
           className="assistance-btn"
-          onClick={() => onSend && onSend('I need assistance from the support team.', null)}
+          onClick={() => {
+            if (onOpenReportIssue) onOpenReportIssue();
+            else if (onSend) onSend('I need assistance from the support team.', null);
+          }}
         >
           <span className="ms">support_agent</span>
           Report an Issue

@@ -14,13 +14,19 @@ export default function ChatWindow({ messages, isLoading }) {
   return (
     <div className="chat-window" role="log" aria-live="polite" aria-label="Chat history">
       {messages.map((msg, i) => (
-        <MessageBubble key={i} text={msg.text} role={msg.role} time={msg.time} />
+        <MessageBubble
+          key={`${msg.time}-${i}`}
+          utteranceId={`msg-${i}-${msg.time}`}
+          text={msg.text}
+          role={msg.role}
+          time={msg.time}
+        />
       ))}
 
       {isLoading && (
         <div className="typing-row">
           <div className="bot-avatar" aria-hidden="true">
-            <span className="ms">smart_toy</span>
+            <span className="bot-avatar-initial">A</span>
           </div>
           <div className="typing-bubble" aria-label="Assistant is typing">
             <span /><span /><span />

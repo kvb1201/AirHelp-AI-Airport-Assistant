@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import ChatWindow from './ChatWindow';
 import InputBox from './InputBox';
+import MarkdownBody from './MarkdownBody';
+import TtsMiniBar from './TtsMiniBar';
 
 const SUGGESTED = [
   'I need help with my baggage',
@@ -30,15 +32,15 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
     <div
       className={`chat-panel ${isOpen ? '' : 'minimized'}${mapMode ? ' chat-panel--map' : ''}`}
       role="complementary"
-      aria-label="AirHelp Assistant chat"
+      aria-label="Assistant chat"
     >
       {/* ── Panel Header ── */}
       <div className="chat-panel-header" onClick={onToggle} aria-expanded={isOpen}>
         <div className="chat-panel-avatar" aria-hidden="true">
-          <span className="ms">smart_toy</span>
+          <span className="chat-panel-avatar-initial">AH</span>
         </div>
         <div className="chat-panel-info">
-          <div className="chat-panel-name">AirHelp Assistant</div>
+          <div className="chat-panel-name">Assistant</div>
           <div className="chat-panel-status">
             <span className="status-dot" aria-hidden="true" />
             Online
@@ -83,17 +85,29 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
                   {isLoading ? (
                     <div className="chat-panel-map-line chat-panel-map-line--bot">
                       <span className="chat-panel-map-kicker">AirHelp</span>
-                      <span className="chat-panel-map-text chat-panel-map-typing">Thinking…</span>
+                      <span className="chat-panel-map-text chat-panel-map-typing">Loading…</span>
                     </div>
                   ) : mapLastExchange.lastAssistant ? (
                     <div className="chat-panel-map-line chat-panel-map-line--bot">
                       <span className="chat-panel-map-kicker">AirHelp</span>
-                      <span className="chat-panel-map-text">{mapLastExchange.lastAssistant.text}</span>
+                      <div className="chat-panel-map-line-body">
+                        <MarkdownBody className="chat-panel-map-text">
+                          {mapLastExchange.lastAssistant.text}
+                        </MarkdownBody>
+                        {mapLastExchange.lastAssistant.role === 'bot' && (
+                          <TtsMiniBar
+                            sessionId="chat-map-preview"
+                            text={mapLastExchange.lastAssistant.text}
+                            buttonClass="chat-panel-map-tts"
+                            wrapClass="chat-panel-map-tts-wrap"
+                          />
+                        )}
+                      </div>
                     </div>
                   ) : null}
                 </div>
               )}
-              <InputBox onSend={onSend} isLoading={isLoading} placeholder="Ask facilities, gates, delays…" />
+              <InputBox onSend={onSend} isLoading={isLoading} />
             </>
           ) : (
             <>

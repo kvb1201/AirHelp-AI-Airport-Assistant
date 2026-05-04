@@ -1,5 +1,22 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { fetchFacilities, fetchMapData, fetchShops } from '../services/api';
+import { fetchMapData } from '../services/api';
+import { buildTerminalPlanProjection, PLAN_H, PLAN_W } from '../utils/terminalPlanGeometry';
+
+/** Full route node ids; tolerate API omitting `path` if `steps` has from/to. */
+export function normalizeGuidedPath(path, steps) {
+  if (Array.isArray(path) && path.length >= 2) {
+    const ids = path.map((x) => (typeof x === 'string' ? x : x?.id)).filter(Boolean);
+    if (ids.length >= 2) return ids;
+  }
+  if (!Array.isArray(steps) || steps.length === 0) return [];
+  const ids = [];
+  const first = steps[0];
+  if (first?.from_node_id) ids.push(first.from_node_id);
+  for (const st of steps) {
+    if (st?.to_node_id && ids[ids.length - 1] !== st.to_node_id) ids.push(st.to_node_id);
+  }
+  return ids.length >= 2 ? ids : [];
+}
 
 function tripleFromStep(path, steps, stepIndex, guidedDone) {
   if (!Array.isArray(path) || path.length < 2 || !Array.isArray(steps) || steps.length === 0) {
@@ -12,9 +29,6 @@ function tripleFromStep(path, steps, stepIndex, guidedDone) {
       prevId,
       thisId: last.to_node_id,
       nextId: null,
-      labelPrev: 'Previous',
-      labelThis: 'You arrived',
-      labelNext: null,
     };
   }
   const cur = steps[stepIndex];
@@ -24,68 +38,75 @@ function tripleFromStep(path, steps, stepIndex, guidedDone) {
     prevId,
     thisId: cur.from_node_id,
     nextId: cur.to_node_id,
-    labelPrev: 'Previous',
-    labelThis: 'This leg',
-    labelNext: 'Next',
   };
 }
 
-function placeLabel(nodeId, byId) {
-  const n = byId[nodeId];
-  if (!n) return nodeId;
-  return n.passenger_name || n.name || nodeId;
+function slicePathBetween(pathArr, fromId, toId) {
+  const i0 = pathArr.indexOf(fromId);
+  const i1 = pathArr.indexOf(toId);
+  if (i0 < 0 || i1 < 0) return [];
+  const lo = Math.min(i0, i1);
+  const hi = Math.max(i0, i1);
+  return pathArr.slice(lo, hi + 1);
 }
 
-function featuresAroundNode(nodeId, facilities, shops, maxEach = 8) {
-  const fid = String(nodeId || '').trim();
-  const fac = (facilities || [])
-    .filter((f) => String(f.graph_node_id || '').trim() === fid)
-    .map((f) => ({
-      key: `f-${f.facility_id}`,
-      title: f.name_display || f.name_normalized,
-      sub: f.category ? String(f.category).replace(/_/g, ' ') : '',
-    }))
-    .slice(0, maxEach);
-  const sho = (shops || [])
-    .filter((s) => String(s.graph_node_id || '').trim() === fid)
-    .map((s) => ({
-      key: `s-${s.shop_id}`,
-      title: s.name_display || s.name_normalized,
-      sub: s.category ? String(s.category).replace(/_/g, ' ') : '',
-    }))
-    .slice(0, maxEach);
-  return { fac, sho };
+function polylinePts(ids, byId, mx, my) {
+  return ids
+    .map((id) => byId[id])
+    .filter((n) => n && n.x != null && n.y != null)
+    .map((n) => `${mx(n.x)},${my(n.y)}`)
+    .join(' ');
+}
+
+const KIND_COLORS = {
+  entrance: '#735c00',
+  security: '#ba1a1a',
+  corridor: '#6b5a5f',
+  gate: '#1b5e20',
+  food: '#6a1b9a',
+  shopping: '#c2185b',
+  restroom: '#0277bd',
+  service: '#455a64',
+  vertical: '#37474f',
+  junction: '#78909c',
+  baggage: '#5d4037',
+  shop: '#9c27b0',
+  facility: '#00897b',
+};
+
+function nodeColor(kind) {
+  return KIND_COLORS[kind] || '#6b5a5f';
 }
 
 /**
- * Three-node navigation strip (no floor image): previous · this leg · next, each with
- * shops and facilities tied to that walking-graph node. Updates when the parent advances steps.
+ * Floor plan + walking route for live guidance (read-only). Highlights current leg on the full path.
  */
 export default function GuidedStepMap({ path, steps, stepIndex, guidedDone, nextLookFor }) {
-  const [byId, setById] = useState({});
-  const [facilities, setFacilities] = useState([]);
-  const [shops, setShops] = useState([]);
+  const [meta, setMeta] = useState(null);
+  const [nodes, setNodes] = useState([]);
   const [loadErr, setLoadErr] = useState(null);
+
+  const pathIds = useMemo(() => normalizeGuidedPath(path, steps), [path, steps]);
+  const byId = useMemo(() => {
+    const m = {};
+    (nodes || []).forEach((n) => {
+      m[n.id] = n;
+    });
+    return m;
+  }, [nodes]);
+
+  const { mx, my, nxs, planCalib } = useMemo(() => buildTerminalPlanProjection(meta), [meta]);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const [mapData, facBundle, shopBundle] = await Promise.all([
-          fetchMapData(),
-          fetchFacilities().catch(() => ({ facilities: [] })),
-          fetchShops().catch(() => ({ shops: [] })),
-        ]);
+        const mapData = await fetchMapData();
         if (cancelled) return;
-        const m = {};
-        (mapData.nodes || []).forEach((n) => {
-          m[n.id] = n;
-        });
-        setById(m);
-        setFacilities(Array.isArray(facBundle.facilities) ? facBundle.facilities : []);
-        setShops(Array.isArray(shopBundle.shops) ? shopBundle.shops : []);
+        setMeta(mapData.meta || {});
+        setNodes(mapData.nodes || []);
       } catch (e) {
-        if (!cancelled) setLoadErr(e.message || 'Could not load node directory');
+        if (!cancelled) setLoadErr(e.message || 'Could not load map');
       }
     })();
     return () => {
@@ -93,118 +114,194 @@ export default function GuidedStepMap({ path, steps, stepIndex, guidedDone, next
     };
   }, []);
 
-  const triple = useMemo(() => tripleFromStep(path, steps, stepIndex, guidedDone), [path, steps, stepIndex, guidedDone]);
+  const triple = useMemo(
+    () => tripleFromStep(pathIds, steps, stepIndex, guidedDone),
+    [pathIds, steps, stepIndex, guidedDone],
+  );
 
-  const cards = useMemo(() => {
-    if (!triple) return [];
-    const out = [];
-    if (triple.prevId && triple.prevId !== triple.thisId) {
-      out.push({
-        key: 'prev',
-        variant: 'prev',
-        badge: triple.labelPrev,
-        nodeId: triple.prevId,
-      });
-    }
-    out.push({
-      key: 'this',
-      variant: 'this',
-      badge: triple.labelThis,
-      nodeId: triple.thisId,
-    });
-    if (triple.nextId) {
-      out.push({
-        key: 'next',
-        variant: 'next',
-        badge: triple.labelNext,
-        nodeId: triple.nextId,
-      });
-    }
-    return out;
-  }, [triple]);
+  const pathSet = useMemo(() => new Set(pathIds), [pathIds]);
+
+  const fullLine = useMemo(() => polylinePts(pathIds, byId, mx, my), [pathIds, byId, mx, my]);
+
+  const legIds = useMemo(() => {
+    if (!triple || guidedDone) return [];
+    if (!triple.nextId) return [];
+    return slicePathBetween(pathIds, triple.thisId, triple.nextId);
+  }, [triple, pathIds, guidedDone]);
+
+  const legLine = useMemo(() => (legIds.length >= 2 ? polylinePts(legIds, byId, mx, my) : ''), [legIds, byId, mx, my]);
+
+  const pathNodesRender = useMemo(() => {
+    return pathIds.map((id) => byId[id]).filter(Boolean);
+  }, [pathIds, byId]);
+
+  const hintsForNext = Array.isArray(nextLookFor) ? nextLookFor.filter(Boolean).slice(0, 6) : [];
 
   if (loadErr) {
     return (
-      <div className="guided-node-strip guided-node-strip--error" role="note">
+      <div className="guided-floor-map guided-floor-map--error" role="note">
         {loadErr}
       </div>
     );
   }
 
-  if (!triple) return null;
+  if (!triple) {
+    if (Array.isArray(steps) && steps.length > 0) {
+      return (
+        <div className="guided-floor-map guided-floor-map--error" role="status">
+          Could not draw the map for this route. Go back and start guidance again.
+        </div>
+      );
+    }
+    return null;
+  }
 
-  const hintsForNext = Array.isArray(nextLookFor) ? nextLookFor.filter(Boolean) : [];
+  if (pathIds.length < 2) {
+    return (
+      <div className="guided-floor-map guided-floor-map--error" role="status">
+        Route is too short to show on the map.
+      </div>
+    );
+  }
 
   return (
-    <div className="guided-node-strip" aria-label="Three-node navigation with nearby features">
-      <div className="guided-node-strip-kicker">Where you are on the route</div>
-      <p className="guided-node-strip-lead">
-        {guidedDone
-          ? 'Three stops on your last guided segment — what is around each walking-graph point (not a floor plan).'
-          : 'Each card is one walking-graph node. Lists come from our facilities and shop anchors on that node. Tap Yes above when the next checkpoint matches what you see.'}
-      </p>
-      <div className={`guided-node-cards guided-node-cards--count-${cards.length}`}>
-        {cards.map((c) => {
-          const { fac, sho } = featuresAroundNode(c.nodeId, facilities, shops);
-          const title = placeLabel(c.nodeId, byId);
-          const meta = byId[c.nodeId];
-          const metaLine = [meta?.kind, meta?.zone].filter(Boolean).join(' · ');
-          const showHints = c.key === 'next' && hintsForNext.length > 0 && !guidedDone;
+    <div className="guided-floor-map" aria-label="Floor plan and your walking route">
+      <div className="guided-floor-map-inner">
+        <svg
+          className="guided-floor-map-svg"
+          viewBox={`0 0 ${PLAN_W} ${PLAN_H}`}
+          preserveAspectRatio="xMidYMid meet"
+          overflow="visible"
+        >
+          <defs>
+            <filter id="guidedMapNodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.2" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-          return (
-            <article key={c.key} className={`guided-node-card guided-node-card--${c.variant}`}>
-              <header className="guided-node-card-head">
-                <span className={`guided-node-badge guided-node-badge--${c.variant}`}>{c.badge}</span>
-                <h3 className="guided-node-title">{title}</h3>
-                {metaLine ? <p className="guided-node-meta">{metaLine}</p> : null}
-                <p className="guided-node-id">
-                  <code>{c.nodeId}</code>
-                </p>
-              </header>
-              {showHints ? (
-                <section className="guided-node-section" aria-label="Checkpoint hints">
-                  <h4 className="guided-node-section-title">Checkpoint cues</h4>
-                  <ul className="guided-node-list">
-                    {hintsForNext.map((h) => (
-                      <li key={h}>{h}</li>
-                    ))}
-                  </ul>
-                </section>
-              ) : null}
-              <section className="guided-node-section" aria-label="Facilities">
-                <h4 className="guided-node-section-title">Facilities nearby</h4>
-                {fac.length === 0 ? (
-                  <p className="guided-node-empty">None listed on this node in our data.</p>
-                ) : (
-                  <ul className="guided-node-list">
-                    {fac.map((item) => (
-                      <li key={item.key}>
-                        <span className="guided-node-item-title">{item.title}</span>
-                        {item.sub ? <span className="guided-node-item-sub">{item.sub}</span> : null}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
-              <section className="guided-node-section" aria-label="Shops and dining">
-                <h4 className="guided-node-section-title">Shops &amp; dining nearby</h4>
-                {sho.length === 0 ? (
-                  <p className="guided-node-empty">None listed on this node in our data.</p>
-                ) : (
-                  <ul className="guided-node-list">
-                    {sho.map((item) => (
-                      <li key={item.key}>
-                        <span className="guided-node-item-title">{item.title}</span>
-                        {item.sub ? <span className="guided-node-item-sub">{item.sub}</span> : null}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
-            </article>
-          );
-        })}
+          <g
+            className="guided-floor-map-calib"
+            transform={`translate(${planCalib.tx}, ${planCalib.ty}) translate(${PLAN_W / 2}, ${PLAN_H / 2}) scale(${planCalib.kx}, ${planCalib.ky}) translate(${-PLAN_W / 2}, ${-PLAN_H / 2})`}
+          >
+            <image
+              href="/mumbai-t2-l2-plan.jpg"
+              width={PLAN_W}
+              height={PLAN_H}
+              x={0}
+              y={0}
+              preserveAspectRatio="none"
+            />
+          </g>
+
+          {fullLine && !guidedDone ? (
+            <polyline
+              className="guided-floor-map-route guided-floor-map-route--full"
+              points={fullLine}
+              fill="none"
+              stroke="#735c00"
+              strokeWidth={5.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity={0.38}
+              style={{ pointerEvents: 'none' }}
+            />
+          ) : null}
+
+          {legLine && !guidedDone ? (
+            <polyline
+              className="guided-floor-map-route guided-floor-map-route--leg"
+              points={legLine}
+              fill="none"
+              stroke="#ffb300"
+              strokeWidth={8.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ pointerEvents: 'none' }}
+            />
+          ) : null}
+
+          {guidedDone && fullLine ? (
+            <polyline
+              className="guided-floor-map-route guided-floor-map-route--done"
+              points={fullLine}
+              fill="none"
+              stroke="#2e7d32"
+              strokeWidth={7.25}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ pointerEvents: 'none' }}
+            />
+          ) : null}
+
+          <g style={{ pointerEvents: 'none' }}>
+            {pathNodesRender.map((n) => {
+              if (n.x == null || n.y == null) return null;
+              const onLeg = legIds.length >= 2 && legIds.includes(n.id);
+              const isPrev = triple.prevId && n.id === triple.prevId;
+              const isThis = n.id === triple.thisId;
+              const isNext = triple.nextId && n.id === triple.nextId;
+              const emphasis = isPrev || isThis || isNext;
+              let r = emphasis ? 2.35 : pathSet.has(n.id) ? 1.55 : 0.9;
+              if (guidedDone && n.id === triple.thisId) r = 2.85;
+              const cx = mx(n.x);
+              const cy = my(n.y);
+              const pr = nxs(r);
+              let fill = nodeColor(n.kind);
+              let stroke = 'rgba(255,255,255,0.92)';
+              let sw = 0.22;
+              if (isThis) {
+                fill = guidedDone ? '#43a047' : '#ffb300';
+                stroke = guidedDone ? '#1b5e20' : '#5d4037';
+                sw = 0.42;
+              } else if (isNext) {
+                fill = '#29b6f6';
+                stroke = '#0d47a1';
+                sw = 0.38;
+              } else if (isPrev) {
+                fill = '#90a4ae';
+                stroke = '#37474f';
+                sw = 0.32;
+              }
+              return (
+                <g key={n.id}>
+                  {emphasis ? (
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={nxs(r + 0.55)}
+                      fill="none"
+                      stroke={isThis ? (guidedDone ? '#a5d6a7' : '#ffe082') : isNext ? '#81d4fa' : '#cfd8dc'}
+                      strokeWidth={Math.max(1.1, nxs(0.36))}
+                      opacity={0.95}
+                    />
+                  ) : null}
+                  <circle
+                    cx={cx}
+                    cy={cy}
+                    r={pr}
+                    fill={fill}
+                    stroke={stroke}
+                    strokeWidth={Math.max(0.85, nxs(sw))}
+                    filter={onLeg && !emphasis ? 'url(#guidedMapNodeGlow)' : undefined}
+                  />
+                </g>
+              );
+            })}
+          </g>
+        </svg>
       </div>
+
+      {!guidedDone && hintsForNext.length > 0 ? (
+        <p className="guided-floor-map-hints">
+          <span className="guided-floor-map-hints-label">Look for</span> {hintsForNext.join(' · ')}
+        </p>
+      ) : guidedDone ? (
+        <p className="guided-floor-map-hints guided-floor-map-hints--done">Green highlight: you reached this guided destination.</p>
+      ) : null}
     </div>
   );
 }

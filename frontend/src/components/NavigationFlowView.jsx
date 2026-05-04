@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import GuidedStepMap from './GuidedStepMap';
+import GuidedStepMap, { normalizeGuidedPath } from './GuidedStepMap';
+import TtsMiniBar from './TtsMiniBar';
 import { fetchGuidedCheckpoints, fetchGuidedRelocalize, fetchMapData, fetchNavigation } from '../services/api';
 import { formatRouteTimeCompact, formatRouteTimeLine } from '../utils/routeEstimate';
+import { buildGuidedCheckpointSpeech, buildRouteSpeechText } from '../utils/routeSpeech';
 
 const BUSY_TERMINAL_STORAGE_KEY = 'airhelp_busy_terminal';
 
@@ -23,6 +25,7 @@ function routeCardHint(routes, idx) {
 
 function RouteDetailBody({ route }) {
   if (!route) return null;
+  const routeSpeech = buildRouteSpeechText(route);
   return (
     <>
       {Array.isArray(route.shops_along_route?.tips) && route.shops_along_route.tips.length > 0 ? (
@@ -42,13 +45,32 @@ function RouteDetailBody({ route }) {
 
       {Array.isArray(route.simple_journey?.bullets) && route.simple_journey.bullets.length > 0 ? (
         <>
-          <div className="nav-flow-section-title">Your route</div>
+          <div className="nav-flow-section-title nav-flow-section-title--row">
+            <span>Your route</span>
+            {routeSpeech ? (
+              <TtsMiniBar
+                sessionId="nav-route-detail"
+                text={routeSpeech}
+                buttonClass="nav-flow-tts-inline"
+                wrapClass="nav-flow-tts-wrap"
+              />
+            ) : null}
+          </div>
           <ul className="nav-flow-bullets">
             {route.simple_journey.bullets.map((line, i) => (
               <li key={i}>{line}</li>
             ))}
           </ul>
         </>
+      ) : routeSpeech ? (
+        <div className="nav-flow-read-row">
+          <TtsMiniBar
+            sessionId="nav-route-detail"
+            text={routeSpeech}
+            buttonClass="nav-flow-tts-inline"
+            wrapClass="nav-flow-tts-wrap"
+          />
+        </div>
       ) : null}
 
       {Array.isArray(route.shops_along_route?.picks) && route.shops_along_route.picks.length > 0 ? (
@@ -267,7 +289,7 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
     setGuidedErr(null);
     try {
       const res = await fetchGuidedRelocalize({
-        path: guidedPayload.path,
+        path: normalizeGuidedPath(guidedPayload.path, guidedPayload.steps || []),
         last_confirmed_path_index: lastConfirmedPathIndex,
         next_waypoint_path_index: cur.to_path_index,
         observation: lostObservation.trim(),
@@ -626,6 +648,13 @@ export default function NavigationFlowView({ location, onLocationChange, onOpenF
                         {notYetHint}
                       </p>
                     ) : null}
+                    <TtsMiniBar
+                      sessionId="nav-guided"
+                      text={buildGuidedCheckpointSpeech(guidedCur)}
+                      buttonClass="nav-flow-btn nav-flow-btn--ghost"
+                      wrapClass="nav-flow-tts-guided-wrap"
+                      disabled={guidedLoading}
+                    />
                     <button
                       type="button"
                       className="nav-flow-btn nav-flow-btn--primary"

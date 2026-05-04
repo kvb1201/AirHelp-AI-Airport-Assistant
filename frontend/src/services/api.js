@@ -1,21 +1,42 @@
 // frontend/src/services/api.js
 
+/**
+ * API base including `/api` suffix.
+ * Priority: localStorage `airhelp_api_base` → Vite `VITE_API_BASE_URL` → same host as the page on LAN → localhost.
+ * Use localStorage / env when the UI runs on another laptop but data lives on the storage laptop (host:8000).
+ */
 function getBaseUrl() {
+  try {
+    const ls = window.localStorage?.getItem("airhelp_api_base");
+    if (ls && String(ls).trim()) {
+      const u = String(ls).trim().replace(/\/+$/, "");
+      return u.endsWith("/api") ? u : `${u}/api`;
+    }
+  } catch {
+    /* ignore */
+  }
+
+  const envBase = import.meta.env?.VITE_API_BASE_URL;
+  if (envBase && String(envBase).trim()) {
+    const u = String(envBase).trim().replace(/\/+$/, "");
+    return u.endsWith("/api") ? u : `${u}/api`;
+  }
+
   const hostname = window.location.hostname;
 
-  // Case 1: Running on laptop (localhost)
   if (hostname === "localhost" || hostname === "127.0.0.1") {
     return "http://localhost:8000/api";
   }
 
-  // Case 2: Accessed from mobile via LAN
   return `http://${hostname}:8000/api`;
 }
 
-const BASE_URL = getBaseUrl();
+function apiBase() {
+  return getBaseUrl();
+}
 
 export async function fetchMapData() {
-  const response = await fetch(`${BASE_URL}/map`);
+  const response = await fetch(`${apiBase()}/map`);
   if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
   return response.json();
 }
@@ -25,7 +46,7 @@ export async function fetchMapData() {
  * @param {{ path: string[], edges: { from: string, to: string, minutes: number }[] }} body
  */
 export async function fetchGuidedCheckpoints(body) {
-  const response = await fetch(`${BASE_URL}/guided-nav/checkpoints`, {
+  const response = await fetch(`${apiBase()}/guided-nav/checkpoints`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -49,7 +70,7 @@ export async function fetchGuidedRelocalize(body) {
     payload.local_hour = Math.floor(body.localHour);
   }
   if (body.busyTerminal) payload.busy_terminal = true;
-  const response = await fetch(`${BASE_URL}/guided-nav/relocalize`, {
+  const response = await fetch(`${apiBase()}/guided-nav/relocalize`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -71,7 +92,7 @@ export async function fetchNavigation(start, end, opts = {}) {
   if (opts.busyTerminal) {
     q.set('busy_terminal', 'true');
   }
-  const response = await fetch(`${BASE_URL}/navigate?${q}`);
+  const response = await fetch(`${apiBase()}/navigate?${q}`);
   if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
   return response.json();
 }
@@ -80,7 +101,7 @@ export async function fetchFacilities(params = {}) {
   const q = new URLSearchParams();
   if (params.category) q.set('category', params.category);
   const suffix = q.toString() ? `?${q}` : '';
-  const response = await fetch(`${BASE_URL}/facilities${suffix}`);
+  const response = await fetch(`${apiBase()}/facilities${suffix}`);
   if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
   return response.json();
 }
@@ -90,23 +111,150 @@ export async function fetchShops(params = {}) {
   if (params.zone) q.set('zone', params.zone);
   if (params.category) q.set('category', params.category);
   const suffix = q.toString() ? `?${q}` : '';
-  const response = await fetch(`${BASE_URL}/shops${suffix}`);
+  const response = await fetch(`${apiBase()}/shops${suffix}`);
   if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
   return response.json();
 }
 
 export async function fetchCatalog() {
-  const response = await fetch(`${BASE_URL}/catalog`);
+  const response = await fetch(`${apiBase()}/catalog`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+/** Lost / found baggage: default meet point on the graph. */
+export async function fetchLostFoundMeetDefaults() {
+  const response = await fetch(`${apiBase()}/lost-found/meet-defaults`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+async function readLostFoundError(response) {
+  try {
+    const j = await response.json();
+    if (j && typeof j.detail === 'string') return j.detail;
+    if (j && j.detail != null) return JSON.stringify(j.detail);
+  } catch {
+    /* ignore */
+  }
+  return `HTTP ${response.status}`;
+}
+
+/** @param {Record<string, unknown>} body */
+export async function postLostFoundLost(body) {
+  const response = await fetch(`${apiBase()}/lost-found/lost`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(await readLostFoundError(response));
+  return response.json();
+}
+
+/** @param {Record<string, unknown>} body */
+export async function postLostFoundFound(body) {
+  const response = await fetch(`${apiBase()}/lost-found/found`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(await readLostFoundError(response));
+  return response.json();
+}
+
+export async function fetchLostFoundMatches(reportId) {
+  const response = await fetch(`${apiBase()}/lost-found/matches/${encodeURIComponent(reportId)}`);
+  if (!response.ok) throw new Error(await readLostFoundError(response));
+  return response.json();
+}
+
+/** @param {{ lost_report_id: string, found_report_id: string, shared_secret: string }} body */
+export async function postLostFoundConfirm(body) {
+  const response = await fetch(`${apiBase()}/lost-found/confirm`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(await readLostFoundError(response));
+  return response.json();
+}
+
+/**
+ * Piper TTS status (English only): piper_found, voices_configured { en }, ready.
+ */
+export async function fetchTtsStatus() {
+  const response = await fetch(`${apiBase()}/tts/status`);
   if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
   return response.json();
 }
 
 /**
- * Send a chat message to the backend.
+ * Offline TTS (WAV) from laptop Piper — English only.
+ */
+export async function fetchTtsAudio(text, language = "en") {
+  const response = await fetch(`${apiBase()}/tts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, language: "en" }),
+  });
+  if (!response.ok) {
+    let detail = `HTTP ${response.status}`;
+    try {
+      const j = await response.json();
+      if (j.detail != null) {
+        detail = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+      }
+    } catch {
+      /* ignore */
+    }
+    const err = new Error(detail);
+    err.status = response.status;
+    throw err;
+  }
+  return response.blob();
+}
+
+/** @returns {Promise<{ categories: { id: string, label: string }[] }>} */
+export async function fetchTicketCategories() {
+  const response = await fetch(`${apiBase()}/support/ticket-categories`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+/**
+ * @param {{ category: string, description: string, where_hint?: string, email?: string, location_graph_id?: string }} body
+ */
+export async function createSupportTicket(body) {
+  const response = await fetch(`${apiBase()}/support/tickets`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    let detail = `HTTP ${response.status}`;
+    try {
+      const j = await response.json();
+      if (j.detail != null) {
+        detail = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+      }
+    } catch {
+      /* ignore */
+    }
+    const err = new Error(detail);
+    err.status = response.status;
+    throw err;
+  }
+  return response.json();
+}
+
+/**
+ * Send a chat message to the backend (English assistant).
+ * @param {string} message
+ * @param {string} [location]
  */
 export async function sendChatMessage(message, location = "entrance") {
   try {
-    const response = await fetch(`${BASE_URL}/chat`, {
+    const response = await fetch(`${apiBase()}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

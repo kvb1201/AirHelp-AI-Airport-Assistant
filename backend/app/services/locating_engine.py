@@ -10,8 +10,39 @@ from app.services.location_mapping_engine import map_locations
 # 🔹 Intent Keywords
 # -------------------------------
 INTENT_KEYWORDS = {
-    "food": ["food", "eat", "restaurant"],
-    "coffee": ["coffee", "cafe"],
+    "food": [
+        "food",
+        "eat",
+        "restaurant",
+        "hungry",
+        "craving",
+        "snack",
+        "meal",
+        "lunch",
+        "dinner",
+        "breakfast",
+        "sandwich",
+        "burger",
+        "pizza",
+        "biryani",
+        "dosa",
+        "idli",
+        "coffee",
+        "chai",
+        "juice",
+        "ice cream",
+        "sweets",
+        "dessert",
+        "noodles",
+        "curry",
+        "thali",
+        "chaat",
+        "burrito",
+        "taco",
+        "fried chicken",
+        "fries",
+    ],
+    "coffee": ["coffee", "cafe", "latte", "espresso", "cappuccino"],
     "lounge": ["lounge"],
     "atm": ["atm", "cash"],
     "wifi": ["wifi", "internet"],
@@ -23,15 +54,19 @@ INTENT_KEYWORDS = {
 # -------------------------------
 # 🔹 Service Labels (NOT locations)
 # -------------------------------
-SERVICE_LABELS = {
-    "lounge",
-    "wifi",
-    "atm",
-    "food",
-    "coffee",
-    "shop",
-    "restaurant",
-}
+SERVICE_LABELS = frozenset(
+    {
+        "lounge",
+        "wifi",
+        "atm",
+        "food",
+        "coffee",
+        "shop",
+        "restaurant",
+        "retail",
+        "dining",
+    }
+)
 
 
 # -------------------------------
@@ -40,12 +75,45 @@ SERVICE_LABELS = {
 def _detect_query_type(text: str) -> str:
     t = text.lower()
 
-    # Destination-type queries
-    if any(x in t for x in ["go to", "navigate", "where", "find", "get", "nearest"]):
+    # Destination-type queries (must include "take me to" etc. or mapped gates land as *source* by mistake)
+    if any(
+        x in t
+        for x in [
+            "go to",
+            "want to go to",
+            "going to",
+            "need to go to",
+            "need to get to",
+            "navigate to",
+            "take me to",
+            "walk me to",
+            "guide me to",
+            "directions to",
+            "route to",
+            "path to",
+            "way to",
+            "how do i get to",
+            "how do i go to",
+            "how to get to",
+            "how to go to",
+            "redirect to",
+            "redirect me to",
+            "where is",
+            "where's",
+            "wheres",
+            "get to",
+            "get me to",
+            "point me to",
+            "help me get",
+            "help me find",
+            "which way",
+            "nearest",
+        ]
+    ):
         return "destination"
 
     # Source-type queries
-    if any(x in t for x in ["i am", "near", "at", "currently"]):
+    if any(x in t for x in ["i am", "i'm at", "im at", "near", "at gate", "currently at"]):
         return "source"
 
     return "intent"
@@ -102,8 +170,6 @@ def locate_from_query(message: str) -> Dict:
         source_candidates=None,
         semantic_candidates=semantic_output,
     )
-
-    print("MAPPING OUTPUT:", mapping_output)
 
     # -------------------------------
     # STEP 5: Decision Layer
