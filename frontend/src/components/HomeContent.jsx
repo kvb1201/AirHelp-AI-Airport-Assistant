@@ -56,7 +56,9 @@ export default function HomeContent({
       <div className="home-hero">
         <div className="hero-text">
           <h1 className="hero-greeting">Welcome</h1>
-          <p className="hero-subtitle">Terminal 2 information, walking routes, and services.</p>
+          <p className="hero-subtitle">
+            CSMIA Mumbai, Terminal 2 — information, walking routes, and services.
+          </p>
 
           {/* Search bar */}
           <div className="hero-search">

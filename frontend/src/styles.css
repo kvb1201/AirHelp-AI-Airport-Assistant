@@ -3936,12 +3936,45 @@ body {
 }
 
 .mobile-chat-history .chat-window {
-  max-height: 300px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(208, 195, 198, 0.3);
   border-radius: var(--radius-xl);
   padding: var(--space-sm);
+}
+
+.mobile-chat-history-inner {
+  padding-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .main-content--mobile-chat {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .main-content--mobile-chat .mobile-chat-history {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-content--mobile-chat .mobile-chat-history-inner {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-content--mobile-chat .mobile-chat-history .chat-window {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
 }
 
 /* ================================================================

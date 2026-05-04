@@ -25,7 +25,7 @@ function formatTime() {
 }
 
 const WELCOME = {
-  text: "You're in AirHelp for Terminal 2. Ask about facilities, flights, walking routes, or issues — or say e.g. “take me to BIBA”.",
+  text: "You're in AirHelp for CSMIA Mumbai, Terminal 2. Ask about facilities, flights, walking routes, or issues — or say e.g. “take me to BIBA”.",
   role: 'bot',
   time: formatTime(),
 };
@@ -233,7 +233,7 @@ function App() {
           </button>
           <div className="mobile-header-title">
             <h1>AirHelp</h1>
-            <p>Terminal 2 airport information</p>
+            <p>CSMIA Mumbai, Terminal 2</p>
           </div>
           <button type="button" className="mobile-header-bell" aria-label="Notifications (coming soon)">
             <span className="ms">notifications</span>
@@ -244,7 +244,7 @@ function App() {
         <div
           className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showOperator ? ' content-area--facilities' : ''}`}
         >
-          <main className="main-content">
+          <main className={`main-content${mobileView === 'chat' ? ' main-content--mobile-chat' : ''}`}>
             {showMap ? (
               <TerminalMapView
                 location={location}
@@ -297,7 +297,7 @@ function App() {
 
                 {mobileView === 'chat' && (
                   <div className="mobile-chat-history">
-                    <div style={{ paddingTop: 16 }}>
+                    <div className="mobile-chat-history-inner">
                       <ChatWindow messages={messages} isLoading={isLoading} />
                     </div>
                   </div>
