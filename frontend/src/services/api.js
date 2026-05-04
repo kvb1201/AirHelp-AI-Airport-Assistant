@@ -253,9 +253,6 @@ export async function createSupportTicket(body) {
  * @param {string} [location]
  * @param {{ inputMode?: string, whisperLang?: string }} [opts]
  */
-<<<<<<< HEAD
-export async function sendChatMessage(message, location = "entrance", opts = {}) {
-=======
 /** HTTP origin for the API host (no ``/api`` suffix), e.g. ``http://192.168.1.10:8000``. */
 export function getApiHttpOrigin() {
   const base = apiBase().replace(/\/+$/, "");
@@ -362,8 +359,7 @@ export async function deleteOpsFlightOverride(flight) {
   return response.json();
 }
 
-export async function sendChatMessage(message, location = "entrance") {
->>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
+export async function sendChatMessage(message, location = "entrance", opts = {}) {
   try {
     const body = {
       user_id: "user_123",
@@ -400,7 +396,6 @@ export async function sendChatMessage(message, location = "entrance") {
 }
 
 /**
-<<<<<<< HEAD
  * Transcribe audio file to text.
  * @param {Blob} audioBlob
  * @param {string} [language]
@@ -434,12 +429,14 @@ export async function translateText(text, srcLang = "eng_Latn", tgtLang = "hin_D
 
   if (!response.ok) throw new Error(`Translation error: ${response.status}`);
   return response.json();
-=======
+}
+
+/**
  * Send flight details (stores on backend and returns nudges/response).
  */
 export async function sendFlightDetails({ userId = 'user_123', flightNumber, boardingTime, departureTime, location = 'entrance' }) {
   try {
-    const response = await fetch(`${BASE_URL}/chat`, {
+    const response = await fetch(`${apiBase()}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -465,5 +462,4 @@ export async function sendFlightDetails({ userId = 'user_123', flightNumber, boa
       context: {},
     };
   }
->>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
 }

@@ -122,7 +122,7 @@ def detect_language(text: str, input_mode: str = "text", whisper_lang: str = Non
     if input_mode == "voice" and whisper_lang:
         if whisper_lang == "en":
             return "english"
-        # Whisper detected a non-English language
+        # Whisper detected a non-English language (will use passthrough since NLLB is disabled)
         return f"native_{whisper_lang}"
 
     # Check for native scripts (Devanagari, Tamil, etc.)

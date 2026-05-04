@@ -45,6 +45,7 @@ export default function InputBox({ onSend, isLoading, placeholder = CHAT_PLACEHO
       mediaRecorderRef.current.onstop = async () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
         setIsRecording(false);
+        setValue('Transcribing...'); // visual feedback
         try {
           const data = await transcribeAudio(audioBlob);
           if (data.transcript) {
@@ -53,9 +54,12 @@ export default function InputBox({ onSend, isLoading, placeholder = CHAT_PLACEHO
             setVoiceMeta({
               whisperLang: data.detected_language || null,
             });
+          } else {
+            setValue('');
           }
         } catch (err) {
           console.error("Transcription failed:", err);
+          setValue('');
         }
       };
 

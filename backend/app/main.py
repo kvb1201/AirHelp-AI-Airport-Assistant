@@ -1,4 +1,6 @@
 # backend/app/main.py
+import os
+os.environ["HF_TOKEN"] = "REVOKED_USE_ENV_VAR"
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware

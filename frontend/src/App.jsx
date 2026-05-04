@@ -43,6 +43,7 @@ function App() {
   const [mapLaunch, setMapLaunch] = useState(null);
   /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
   const [crisisContact, setCrisisContact] = useState(null);
+  const [showFlightModal, setShowFlightModal] = useState(false);
   const [reportIssueOpen, setReportIssueOpen] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';

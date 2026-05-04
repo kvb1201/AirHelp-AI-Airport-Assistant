@@ -16,10 +16,7 @@ except ImportError:
     logger.warning("transformers not installed. Translation will use mock responses.")
     HAS_TRANSFORMERS = False
 
-# Force offline mode
-os.environ["HF_DATASETS_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
-os.environ["HF_HUB_OFFLINE"] = "1"
+
 
 class TranslationEngine:
     """Translation engine using NLLB-200 model"""
@@ -32,31 +29,10 @@ class TranslationEngine:
     
     def _load_model(self):
         """Load NLLB-200 translation model"""
-        if not HAS_TRANSFORMERS:
-            return
-            
-        try:
-            model_name = "facebook/nllb-200-distilled-600M"
-            logger.info(f"Loading translation model: {model_name}")
-            
-            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-            self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-            
-            # Create translation pipeline
-            self.translator = pipeline(
-                "translation",
-                model=self.model,
-                tokenizer=self.tokenizer,
-                device=-1  # CPU
-            )
-            
-            logger.info("✅ Translation model loaded successfully")
-            
-        except Exception as e:
-            logger.error(f"❌ Failed to load translation model: {e}")
-            self.model = None
-            self.tokenizer = None
-            self.translator = None
+        logger.info("Translation disabled per user request. Skipping model download.")
+        self.model = None
+        self.tokenizer = None
+        self.translator = None
     
     def translate(self, text: str, src_lang: str, tgt_lang: str) -> Dict[str, any]:
         """
