@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useTtsPlayback } from '../context/TtsPlaybackContext';
+<<<<<<< HEAD
 import { translateText } from '../services/api';
+=======
+import MarkdownBody from './MarkdownBody';
+>>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
 
 /**
  * Single chat bubble with timestamp, read-aloud, and translation.
@@ -53,7 +57,13 @@ export default function MessageBubble({ text: initialText, role, time, utterance
       )}
 
       <div className="bubble-wrap">
+<<<<<<< HEAD
         <div className="bubble">{translatedText || initialText}</div>
+=======
+        <div className={`bubble${isBot ? ' bubble--md' : ''}`}>
+          {isBot ? <MarkdownBody>{text}</MarkdownBody> : text}
+        </div>
+>>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
         <div className="msg-meta-row">
           {time && <div className="msg-time">{time}</div>}
           {role === 'bot' && (

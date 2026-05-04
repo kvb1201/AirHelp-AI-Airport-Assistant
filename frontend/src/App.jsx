@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import HomeContent from './components/HomeContent';
+import FlightQueryModal from './components/FlightQueryModal';
 import RightPanel from './components/RightPanel';
 import TerminalMapView from './components/TerminalMapView';
 import NavigationFlowView from './components/NavigationFlowView';
@@ -12,6 +13,10 @@ import InputBox from './components/InputBox';
 import QuickActions from './components/QuickActions';
 import BottomNav from './components/BottomNav';
 import PlaceholderView from './components/PlaceholderView';
+import CrisisContactOverlay from './components/CrisisContactOverlay';
+import ReportIssueModal from './components/ReportIssueModal';
+import OperationalAlertsBar from './components/OperationalAlertsBar';
+import OperatorConsoleView from './components/OperatorConsoleView';
 import { sendChatMessage } from './services/api';
 import './styles.css';
 
@@ -36,10 +41,14 @@ function App() {
   const [sidebarNav, setSidebarNav] = useState('Home');
   /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
+  /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
+  const [crisisContact, setCrisisContact] = useState(null);
+  const [reportIssueOpen, setReportIssueOpen] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
   const showLostFound = sidebarNav === 'Lost & Found' || mobileView === 'lostfound';
+  const showOperator = sidebarNav === 'Operator' || mobileView === 'operator';
   const showProfilePlaceholder =
     !showMap &&
     !showNavFlow &&
@@ -64,11 +73,13 @@ function App() {
     else if (label === 'Facilities') setMobileView('facilities');
     else if (label === 'Lost & Found') setMobileView('lostfound');
     else if (label === 'Profile') setMobileView('profile');
+    else if (label === 'Operator') setMobileView('operator');
     else setMobileView('home');
   }, []);
 
   const handleNewChat = useCallback(() => {
     setMessages([{ ...WELCOME, time: formatTime() }]);
+    setCrisisContact(null);
     handleNavSelect('Home');
     setChatOpen(true);
   }, [handleNavSelect]);
@@ -81,6 +92,7 @@ function App() {
     else if (view === 'lostfound') setSidebarNav('Lost & Found');
     else if (view === 'home') setSidebarNav('Home');
     else if (view === 'profile') setSidebarNav('Profile');
+    else if (view === 'operator') setSidebarNav('Operator');
     else if (view === 'chat') setSidebarNav('Home');
   }, []);
 
@@ -103,6 +115,7 @@ function App() {
   const handleSend = async (text, loc = null, opts = {}) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
+    setCrisisContact(null);
 
     const userMsg = { text, role: 'user', time: formatTime() };
     setMessages((prev) => [...prev, userMsg]);
@@ -122,6 +135,9 @@ function App() {
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
 
       const payload = data.data || {};
+      if (payload.crisis_contact) {
+        setCrisisContact({ ...payload.crisis_contact, kind: payload.special_assistance });
+      }
       const navStart = payload.start;
       const navEnd = payload.end;
       if (
@@ -146,13 +162,46 @@ function App() {
     handleSend(message, actionLocation);
   };
 
+  const handleTicketCreated = useCallback((ticket) => {
+    const lines = [
+      '## Ticket created',
+      '',
+      `Your reference is **${ticket.ticket_id}**.`,
+      '',
+      `- **Issue type:** ${ticket.category_label}`,
+      `- **Summary:** ${ticket.summary}`,
+      '',
+    ];
+    if (ticket.email_notice) {
+      lines.push(ticket.email_sent ? ticket.email_notice : `**Note:** ${ticket.email_notice}`);
+      lines.push('');
+    }
+    lines.push('Keep this number if you contact airport support about this report.');
+    const text = lines.join('\n');
+    setMessages((prev) => [...prev, { text, role: 'bot', time: formatTime() }]);
+    setChatOpen(true);
+    setMobileView('chat');
+  }, []);
+
   return (
     <div className="app-container">
+      {crisisContact ? (
+        <CrisisContactOverlay data={crisisContact} onDismiss={() => setCrisisContact(null)} />
+      ) : null}
+
+      <ReportIssueModal
+        open={reportIssueOpen}
+        onClose={() => setReportIssueOpen(false)}
+        graphLocationId={location}
+        onTicketCreated={handleTicketCreated}
+      />
+
       {/* ── Left Sidebar (Desktop) ── */}
       <Sidebar activeNav={sidebarNav} onNavChange={handleNavSelect} onNewChat={handleNewChat} />
 
       {/* ── Main Body ── */}
       <div className="app-body">
+        <OperationalAlertsBar />
 
         {/* Desktop Header */}
         <header className="desktop-header" role="banner">
@@ -182,7 +231,7 @@ function App() {
 
         {/* Content area */}
         <div
-          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
+          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showOperator ? ' content-area--facilities' : ''}`}
         >
           <main className="main-content">
             {showMap ? (
@@ -202,6 +251,8 @@ function App() {
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
             ) : showLostFound ? (
               <LostFoundView location={location} onOpenFloorMap={openFloorMap} />
+            ) : showOperator ? (
+              <OperatorConsoleView onBack={() => handleNavSelect('Home')} />
             ) : showDesktopStub ? (
               <PlaceholderView
                 title={sidebarNav}
@@ -228,8 +279,18 @@ function App() {
                     onSend={handleSend}
                     onOpenNavigation={() => handleNavSelect('Navigation')}
                     onOpenFloorMap={openFloorMap}
+                    onOpenReportIssue={() => setReportIssueOpen(true)}
                   />
                 </div>
+
+                <FlightQueryModal
+                  visible={showFlightModal}
+                  onClose={() => setShowFlightModal(false)}
+                  onSaved={(resp) => {
+                    const botText = resp.message || 'Flight saved.';
+                    setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
+                  }}
+                />
 
                 {mobileView === 'chat' && (
                   <div className="mobile-chat-history">
@@ -242,17 +303,17 @@ function App() {
             )}
           </main>
 
-          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showDesktopStub && !showProfilePlaceholder && (
+          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showOperator && !showDesktopStub && !showProfilePlaceholder && (
           <RightPanel />
         )}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}
-        <div className="mobile-bottom">
-          {mobileView === 'home' && (
+        <div className={`mobile-bottom${showOperator ? ' mobile-bottom--operator' : ''}`}>
+          {mobileView === 'home' && !showOperator && (
             <QuickActions onAction={handleQuickAction} />
           )}
-          <InputBox onSend={handleSend} isLoading={isLoading} />
+          {!showOperator ? <InputBox onSend={handleSend} isLoading={isLoading} /> : null}
           <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
         </div>
       </div>

@@ -1,5 +1,7 @@
 import json
 import re
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from app.services.llm_service import call_llm
@@ -18,6 +20,18 @@ from app.services.query_preprocess import compose_navigation_message, prepare_fo
 from app.services.special_assistance_intents import try_special_assistance_response
 from app.core.graph.node_mapper import coerce_to_graph_node_id
 from app.core.llm.prompts import SYSTEM_PROMPT
+from app.utils.logger import logger
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# Prefer the workspace-wide data/airport/flights.json, fallback to packaged catalog
+FLIGHT_CATALOG_PATHS = [
+    PROJECT_ROOT.parents[0] / "data" / "airport" / "flights.json",
+    PROJECT_ROOT / "backend" / "app" / "data" / "mumbai_t2_catalog.json",
+]
+IST = timezone(timedelta(hours=5, minutes=30))
+_FLIGHT_CATALOG_CACHE: list[dict[str, Any]] | None = None
+_FLIGHT_REFERENCE_RE = re.compile(r"\b([A-Z]{2,3})[\s\-]?(\d{1,4})\b", re.IGNORECASE)
 
 
 # -------------------------------
@@ -90,6 +104,11 @@ def detect_intent(message: str) -> str:
         "restroom", "prayer", "facility"
     ]):
         return "recommendation"
+
+    if any(word in msg for word in [
+        "time", "late", "delay", "boarding", "takeoff", "departure", "flight"
+    ]):
+        return "time_check"
 
     return "general"
 
@@ -196,18 +215,194 @@ def _build_search_query(user_input: str, location: Optional[str], intent_type: s
     return user_input
 
 
-# -------------------------------
-# 🔹 Format Navigation
-# -------------------------------
-def _format_navigation(nav_data: Dict[str, Any]) -> str:
-    steps = nav_data.get("steps", [])
+def _normalize_flight_key(value: str | None) -> str:
+    if not value:
+        return ""
+    return re.sub(r"[^A-Z0-9]", "", value.upper())
 
-    if not steps:
-        return "I couldn't generate a route."
 
-    return "Here is your route:\n" + "\n".join(
-        [f"{i+1}. {s}" for i, s in enumerate(steps)]
-    )
+def _parse_time_to_minutes(value: str | None) -> int | None:
+    if not value:
+        return None
+
+    text = value.strip().upper()
+    match = re.match(r"^(\d{1,2}):(\d{2})(?:\s*([AP]M))?$", text)
+    if not match:
+        return None
+
+    hour = int(match.group(1))
+    minute = int(match.group(2))
+    suffix = match.group(3)
+
+    if suffix == "AM":
+        if hour == 12:
+            hour = 0
+    elif suffix == "PM" and hour != 12:
+        hour += 12
+
+    return hour * 60 + minute
+
+
+def _format_minutes_of_day(minutes: int | None) -> str:
+    if minutes is None:
+        return "unknown"
+    hour = (minutes // 60) % 24
+    minute = minutes % 60
+    return f"{hour:02d}:{minute:02d}"
+
+
+def _load_flight_catalog() -> list[dict[str, Any]]:
+    global _FLIGHT_CATALOG_CACHE
+    if _FLIGHT_CATALOG_CACHE is not None:
+        return _FLIGHT_CATALOG_CACHE
+
+    payload = None
+    used_path = None
+    # Try configured catalog paths in order
+    for p in FLIGHT_CATALOG_PATHS:
+        try:
+            if p.exists():
+                with p.open("r", encoding="utf-8") as handle:
+                    payload = json.load(handle)
+                    used_path = p
+                    break
+        except OSError:
+            continue
+
+    if payload is None:
+        logger.warning("No flight catalog found at configured paths; returning empty list")
+        _FLIGHT_CATALOG_CACHE = []
+        return _FLIGHT_CATALOG_CACHE
+
+    logger.info(f"Loaded flight catalog from {used_path}")
+
+    # Normalize different catalog formats to a common shape with 'flight_number'
+    flights: list[dict[str, Any]] = []
+
+    if isinstance(payload, dict) and "flights" in payload and isinstance(payload.get("flights"), list):
+        # Existing packaged catalog format
+        flights = payload.get("flights", [])
+    elif isinstance(payload, list):
+        # Likely the data/airport/flights.json format
+        for item in payload:
+            # Prefer explicit flight_id, else try flight_number
+            flight_id = item.get("flight_id") or item.get("flight_number")
+            flight_number = None
+            if flight_id:
+                m = re.match(r"^([A-Z]{2,3})[_\-]?(\d{1,4})", str(flight_id))
+                if m:
+                    flight_number = f"{m.group(1)} {m.group(2)}"
+                else:
+                    flight_number = str(flight_id)
+
+            timings = item.get("timings") or {}
+            departure = timings.get("scheduled") or item.get("departure_time") or None
+            boarding = timings.get("boarding") or item.get("boarding_time") or None
+
+            flights.append({
+                "flight_number": flight_number,
+                "boarding_time": boarding,
+                "departure_time": departure,
+                "terminal": item.get("terminal") or item.get("terminal_name"),
+                "gate_display": item.get("gate") or item.get("gate_display"),
+            })
+    else:
+        # Unknown format
+        logger.warning("Unrecognized flight catalog format; returning empty list")
+        _FLIGHT_CATALOG_CACHE = []
+        return _FLIGHT_CATALOG_CACHE
+
+    _FLIGHT_CATALOG_CACHE = flights
+    return _FLIGHT_CATALOG_CACHE
+
+
+def _extract_flight_reference(user_input: str, user_context: Dict[str, Any]) -> str | None:
+    for key in ("flight_number", "flight_id"):
+        value = user_context.get(key)
+        if value:
+            return str(value)
+
+    match = _FLIGHT_REFERENCE_RE.search(user_input)
+    if match:
+        return f"{match.group(1).upper()} {match.group(2)}"
+
+    return None
+
+
+def _find_flight_record(reference: str | None, user_context: Dict[str, Any]) -> dict[str, Any] | None:
+    boarding_time = user_context.get("boarding_time")
+    departure_time = user_context.get("departure_time")
+
+    if boarding_time or departure_time:
+        return {
+            "flight_number": reference or user_context.get("flight_number") or "your flight",
+            "boarding_time": boarding_time,
+            "departure_time": departure_time,
+            "terminal": user_context.get("terminal") or user_context.get("location") or "T2",
+            "gate_display": user_context.get("gate") or user_context.get("destination"),
+        }
+
+    if not reference:
+        return None
+
+    ref_key = _normalize_flight_key(reference)
+    for item in _load_flight_catalog():
+        item_key = _normalize_flight_key(item.get("flight_number"))
+        if item_key == ref_key:
+            return dict(item)
+
+    return None
+
+
+def _build_time_nudges(flight: dict[str, Any]) -> tuple[str, list[dict[str, str]]]:
+    flight_number = flight.get("flight_number") or "Your flight"
+    terminal = flight.get("terminal") or "T2"
+    boarding_time = flight.get("boarding_time")
+    departure_time = flight.get("departure_time")
+
+    boarding_minutes = _parse_time_to_minutes(boarding_time)
+    departure_minutes = _parse_time_to_minutes(departure_time)
+
+    if boarding_minutes is None and departure_minutes is not None:
+        boarding_minutes = max(departure_minutes - 45, 0)
+        boarding_time = _format_minutes_of_day(boarding_minutes)
+    elif departure_minutes is None and boarding_minutes is not None:
+        departure_minutes = boarding_minutes + 45
+        departure_time = _format_minutes_of_day(departure_minutes)
+
+    if boarding_minutes is None:
+        boarding_minutes = 0
+    if departure_minutes is None:
+        departure_minutes = boarding_minutes + 45
+
+    events = [
+        {"label": "Head to security", "minutes": max(departure_minutes - 120, 0)},
+        {"label": "Go to gate", "minutes": max(boarding_minutes - 45, 0)},
+        {"label": "Final call", "minutes": max(boarding_minutes - 10, 0)},
+    ]
+
+    formatted_events = [
+        {"time": _format_minutes_of_day(event["minutes"]), "nudge": event["label"]}
+        for event in events
+    ]
+
+    now = datetime.now(IST)
+    now_minutes = now.hour * 60 + now.minute
+    due = [event for event in events if now_minutes >= event["minutes"]]
+    next_event = next((event for event in events if now_minutes < event["minutes"]), None)
+
+    lines = [f"{flight_number} · {terminal}"]
+    for event in formatted_events:
+        lines.append(f"- {event['time']}: {event['nudge']}")
+
+    if due:
+        lines.append("")
+        lines.append(f"Right now: {due[-1]['label']}.")
+    elif next_event:
+        lines.append("")
+        lines.append(f"Next: {next_event['label']} at {_format_minutes_of_day(next_event['minutes'])}.")
+
+    return "\n".join(lines), formatted_events
 
 
 # -------------------------------
@@ -393,10 +588,15 @@ def _map_to_node(location_str: str) -> str:
 
     loc = raw.lower()
 
-    # Direct gate pattern: "gate d3" → "gate_d3", "gate b12" → "gate_b12"
-    gate_match = re.match(r"gate\s+([a-z]?\d+)", loc)
+    # ``gate b12`` → ``gate_b12`` (legacy pier). ``gate 45`` / ``45`` → numeric segregation key.
+    gate_match = re.match(r"gate\s+([ab])\s*(\d{1,2})\b", loc)
     if gate_match:
-        return f"gate_{gate_match.group(1)}"
+        return f"gate_{gate_match.group(1)}{gate_match.group(2)}"
+    gate_match = re.match(r"gate\s+(\d{1,2})\b", loc)
+    if gate_match:
+        return f"gate_num_{int(gate_match.group(1))}"
+    if re.fullmatch(r"\d{1,2}", loc.strip()):
+        return f"gate_num_{int(loc.strip())}"
 
     # Known landmark mappings
     known = {
@@ -587,6 +787,15 @@ def _resolve_destination(msg: str, context: Dict[str, Any]) -> Optional[str]:
         r"(?:i['’]d|i would)\s+like\s+to\s+(?:get\s+to|go\s+to)\s+(.+)",
         r"\bgo\s+to\s+(.+)",
         r"where\s+(?:is|are)\s+(.+)",
+        r"where\s+can\s+i\s+(?:get|find|buy)\s+(?:a|an|some)?\s*(.+)$",
+        r"where\s+do\s+i\s+(?:get|find)\s+(?:a|an|some)?\s*(.+)$",
+        # Dish / craving → resolved to a shop graph node via ``craving_shop_resolver`` + CSV
+        r"(?:i\s+)?(?:want|would like|need)\s+to\s+(?:eat|have|grab|get)\s+(?:a|an|some)?\s*(.+)$",
+        r"\b(?:craving|feel\s+like)\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:i\s*'?m|i am)\s+hungry(?:\s+for)?\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:i\s+)?(?:fancy|could\s+do\s+with)\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:get|grab)\s+me\s+(?:a|an|some)?\s*(.+)$",
+        r"(?:i\s+)?(?:need|want)\s+(?:a|an|some)\s+(.+)$",
     ]
     for pattern in dest_patterns:
         match = re.search(pattern, m)
@@ -735,6 +944,16 @@ def _format_navigation_response(nav_data: Dict[str, Any]) -> str:
     return header + step_lines
 
 
+def _navigation_message_with_gate_note(nav_msg: str, resolved_goal: str, nav_data: Dict[str, Any]) -> str:
+    base = _format_navigation_response(nav_data)
+    from app.services.gate_segregation import advisory_for_gate_context
+
+    note = advisory_for_gate_context(nav_msg, resolved_goal or "")
+    if note:
+        return f"{base}\n\n{note}"
+    return base
+
+
 def _try_pure_rules_navigation(
     *,
     nav_msg: str,
@@ -798,7 +1017,7 @@ def _try_pure_rules_navigation(
     user_context["mode"] = "navigation"
 
     if nav_data.get("ok"):
-        message = _format_navigation_response(nav_data)
+        message = _navigation_message_with_gate_note(nav_msg, goal_graph, nav_data)
         return {
             "type": "navigation",
             "intent": "navigation",
@@ -813,7 +1032,7 @@ def _try_pure_rules_navigation(
     return {
         "type": "navigation",
         "intent": "navigation",
-        "message": _format_navigation_response(nav_data),
+        "message": _navigation_message_with_gate_note(nav_msg, goal_graph, nav_data),
         "data": {
             "navigation": nav_data,
             "start": start_graph,
@@ -827,6 +1046,28 @@ def _try_pure_rules_navigation(
 # 🔹 MAIN ORCHESTRATOR
 # ===============================
 async def handle_chat(user_input: str, user_context: Dict[str, Any], language: str = "en") -> Dict[str, Any]:
+
+    if user_context.get("intent") == "time_check":
+        flight_reference = _extract_flight_reference(user_input, user_context)
+        flight_record = _find_flight_record(flight_reference, user_context)
+
+        if flight_record:
+            message, nudges = _build_time_nudges(flight_record)
+            enriched_context = dict(user_context)
+            if flight_reference:
+                enriched_context["flight_number"] = flight_reference
+            if flight_record.get("boarding_time"):
+                enriched_context["boarding_time"] = flight_record.get("boarding_time")
+            if flight_record.get("departure_time"):
+                enriched_context["departure_time"] = flight_record.get("departure_time")
+
+            return {
+                "type": "flight",
+                "intent": "time_check",
+                "message": message,
+                "data": {"flight": flight_record, "nudges": nudges},
+                "context": enriched_context,
+            }
 
     loc_msg = prepare_for_locate_and_context(user_input)
     nav_msg = compose_navigation_message(user_input)
@@ -958,7 +1199,7 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         return {
             "type": "navigation",
             "intent": intent,
-            "message": _format_navigation(nav_data),
+            "message": _navigation_message_with_gate_note(loc_msg, goal_id or "", nav_data),
             "data": {"navigation": nav_data, "recommendations": rag_data, "start": start_id, "end": goal_id},
             "context": user_context,
         }
@@ -1023,6 +1264,14 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
         print("[ORCHESTRATOR] RAG+router did not return ok navigation → using LLM fallback")
 
     print("[ORCHESTRATOR] Calling LLM (Ollama) final fallback…")
+
+    op_brief = (user_context or {}).get("_operational_brief")
+    if isinstance(op_brief, str) and op_brief.strip():
+        rag_empty_hint += (
+            "\n\nLive airport operator feed (use for gate changes, delays, and notices; "
+            "do not invent flights not listed):\n"
+            f"{op_brief.strip()}\n"
+        )
 
     response_text = await call_llm(
         f"""

@@ -5,9 +5,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
+<<<<<<< HEAD
 from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, tts, transcribe, translate
+=======
+from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, ops, support_tickets, tts
+from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, support_tickets, travel_documents, tts
+>>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
 from app.services import lost_found_service as lost_found_storage
+from app.services import operational_state_service as ops_state
 from app.services.rag_service import init_rag
+from app.services.alert_scheduler import start_alert_scheduler
 
 
 # ----------------------------
@@ -19,6 +26,9 @@ async def lifespan(app: FastAPI):
 
     lost_found_storage.init_db()
     print(f"📦 Lost & Found storage (SQLite on this laptop): {lost_found_storage.get_db_path()}")
+
+    ops_state.load_from_disk()
+    print(f"📡 Operational state (operator bulletins / delays): {ops_state.get_data_path()}")
 
     try:
         init_rag()
@@ -62,8 +72,14 @@ app.include_router(context.router, prefix="/api", tags=["Context"])
 app.include_router(map_api.router, prefix="/api", tags=["Map"])
 app.include_router(lost_found.router, prefix="/api", tags=["Lost & Found"])
 app.include_router(tts.router, prefix="/api", tags=["TTS"])
+<<<<<<< HEAD
 app.include_router(transcribe.router, prefix="/api", tags=["STT"])
 app.include_router(translate.router, prefix="/api", tags=["Translation"])
+=======
+app.include_router(support_tickets.router, prefix="/api", tags=["Support"])
+app.include_router(ops.router, prefix="/api", tags=["Operator ops"])
+app.include_router(travel_documents.router, prefix="/api/travel-documents", tags=["Travel Documents"])
+>>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
 
 
 # ----------------------------
@@ -85,3 +101,24 @@ async def global_exception_handler(request: Request, exc: Exception):
         status_code=500,
         content={"message": "Internal server error"},
     )
+
+
+# ----------------------------
+# 🔹 Startup Event
+# ----------------------------
+@app.on_event("startup")
+async def startup_event():
+    print("🚀 AI Airport Companion API started")
+
+    try:
+        init_rag()   # 🔥 Initialize RAG once
+        print("✅ RAG initialized successfully")
+    except Exception as e:
+        print(f"❌ RAG initialization failed: {e}")
+
+    try:
+        # Start background alert scheduler (offline)
+        start_alert_scheduler()
+        print("⏰ Alert scheduler started")
+    except Exception as e:
+        print(f"⚠️ Failed to start alert scheduler: {e}")

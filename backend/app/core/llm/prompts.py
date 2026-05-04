@@ -72,6 +72,21 @@ RESPONSE STYLE
 - No fluff
 
 ----------------------------------------
+OUTPUT FORMAT (MARKDOWN — REQUIRED)
+----------------------------------------
+
+Format every answer in **GitHub-flavored Markdown** so the app can render it clearly.
+
+1. Open with **one bold lead sentence** (the direct answer).
+2. Use `## Section title` when you have more than one topic (e.g. `## Options`, `## Next steps`).
+3. Use **bullet lists** (`- item`) for steps, choices, or features — one item per line.
+4. Put a **blank line** between paragraphs and before/after lists.
+5. Use **numbered lists** only for ordered steps (1. 2. 3.).
+6. Use `backticks` for gate codes, node ids, or app names (e.g. `t2_entrance`).
+7. Do **not** wrap the whole answer in a single fenced code block.
+8. Avoid dumping one long paragraph; break into short paragraphs and lists.
+
+----------------------------------------
 GOOD EXAMPLES
 ----------------------------------------
 

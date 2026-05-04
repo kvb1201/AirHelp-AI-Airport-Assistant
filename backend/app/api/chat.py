@@ -13,6 +13,8 @@ from app.services.context_service import (
 from app.core.slang_normalizer import clean_airport_slang
 from app.core.language_router import route_input
 from app.services.offline_ocr_service import extract_boarding_pass_offline
+
+from app.services import operational_state_service as ops_state
 import tempfile
 import os
 
@@ -56,6 +58,9 @@ async def chat_endpoint(request: ChatRequest):
     # 🔹 Step 2: Get existing context
     # ----------------------------
     context = get_user_context(request.user_id) or {}
+    brief = ops_state.get_brief_for_llm()
+    if brief:
+        context = {**context, "_operational_brief": brief}
 
     # ----------------------------
     # 🔹 Step 3: Update context (location etc.)
@@ -69,6 +74,15 @@ async def chat_endpoint(request: ChatRequest):
     if request.destination is not None:
         patch["destination"] = request.destination
         context["destination"] = request.destination
+    if request.flight_number:
+        patch["flight_number"] = request.flight_number
+        context["flight_number"] = request.flight_number
+    if request.boarding_time:
+        patch["boarding_time"] = request.boarding_time
+        context["boarding_time"] = request.boarding_time
+    if request.departure_time:
+        patch["departure_time"] = request.departure_time
+        context["departure_time"] = request.departure_time
     if patch:
         update_user_context(request.user_id, patch)
 

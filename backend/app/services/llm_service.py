@@ -1,9 +1,22 @@
 # backend/app/services/llm_service.py
 
+import re
+
 import httpx
 from app.config import OLLAMA_URL, MODEL_NAME
 
 FALLBACK_RESPONSE = "Sorry, I couldn't process that right now. Server error"
+
+
+def polish_llm_markdown(text: str) -> str:
+    """Normalize whitespace so Markdown renders cleanly in the chat UI."""
+    t = (text or "").strip()
+    if not t:
+        return t
+    t = re.sub(r"\r\n?", "\n", t)
+    t = re.sub(r"[ \t]+\n", "\n", t)
+    t = re.sub(r"\n{4,}", "\n\n\n", t)
+    return t.strip()
 
 
 async def call_llm(prompt: str) -> str:
@@ -32,7 +45,8 @@ async def call_llm(prompt: str) -> str:
         response.raise_for_status()
         data = response.json()
 
-        return data.get("response", "").strip() or FALLBACK_RESPONSE
+        raw = (data.get("response") or "").strip()
+        return polish_llm_markdown(raw) if raw else FALLBACK_RESPONSE
 
     except Exception as e:
         print(f"[LLM ERROR] {e}")

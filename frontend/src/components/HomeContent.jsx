@@ -6,10 +6,16 @@ const QUICK_CHIPS = [
   { label: 'Walking routes', icon: 'directions_walk', action: 'navigation' },
   { label: 'Floor map',      icon: 'map',             action: 'floor_map' },
   { label: 'Find lounge',    icon: 'weekend',         message: 'Where is the nearest lounge?',      location: null },
-  { label: 'Report an issue', icon: 'report_problem', message: 'I need to report an issue.',        location: null },
+  { label: 'Report an issue', icon: 'report_problem', action: 'report_issue' },
 ];
 
 const SERVICES = [
+  { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight',    iconColor: 'pink', message: 'Show me flight status updates.',    location: null },
+  { name: 'Flight Queries', sub: 'Save or scan boarding pass', icon: 'event', iconColor: 'gold', action: 'flight_queries' },
+  { name: 'Walking routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
+  { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
+  { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
+  { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
   { name: 'Flight status', sub: 'Schedules and updates', icon: 'flight', iconColor: 'neutral', message: 'Show me flight status updates.', location: null },
   { name: 'Walking routes', sub: 'Compare paths A to B', icon: 'directions_walk', iconColor: 'neutral', action: 'navigation' },
   { name: 'Floor map', sub: 'Terminal plan', icon: 'location_on', iconColor: 'neutral', action: 'floor_map' },
@@ -17,7 +23,8 @@ const SERVICES = [
   { name: 'Wi‑Fi', sub: 'Connection information', icon: 'wifi', iconColor: 'neutral', message: 'How do I connect to airport Wi-Fi?', location: null },
 ];
 
-export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }) {
+export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenFlightQueries }) {
+export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue }) {
   const handleChip = (chip) => {
     if (chip.action === 'navigation' && onOpenNavigation) {
       onOpenNavigation();
@@ -25,6 +32,11 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
     }
     if (chip.action === 'floor_map' && onOpenFloorMap) {
       onOpenFloorMap(null);
+      return;
+    }
+    if (chip.action === 'report_issue') {
+      if (onOpenReportIssue) onOpenReportIssue();
+      else if (onSend) onSend('I need to report an issue.', chip.location ?? null);
       return;
     }
     if (onSend) onSend(chip.message, chip.location);
@@ -109,10 +121,11 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
               key={svc.name}
               className="service-card"
               onClick={() => {
-                if (svc.action === 'navigation' && onOpenNavigation) onOpenNavigation();
-                else if (svc.action === 'floor_map' && onOpenFloorMap) onOpenFloorMap(null);
-                else if (onSend) onSend(svc.message, svc.location);
-              }}
+                  if (svc.action === 'navigation' && onOpenNavigation) onOpenNavigation();
+                  else if (svc.action === 'floor_map' && onOpenFloorMap) onOpenFloorMap(null);
+                  else if (svc.action === 'flight_queries' && typeof onOpenFlightQueries === 'function') onOpenFlightQueries();
+                  else if (onSend) onSend(svc.message, svc.location);
+                }}
               aria-label={svc.name}
             >
               <div className={`service-icon ${svc.iconColor}`}>
@@ -130,7 +143,7 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
         {[
           { label: 'Flight status',    sub: 'Check real-time flight information', icon: 'flight_takeoff', message: 'What is the flight status?',    location: null },
           { label: 'Airport facilities', sub: 'Find lounges, restaurants, services', icon: 'apartment',  message: 'Show me airport facilities.',    location: null },
-          { label: 'Report an issue',  sub: 'Get help with any airport issue',    icon: 'report_problem', message: 'I need to report an issue.',    location: null },
+          { label: 'Report an issue',  sub: 'Describe the problem and get a ticket number',    icon: 'report_problem', action: 'report_issue' },
           { label: 'Walking directions', sub: 'From / to, then pick one of three routes', icon: 'directions_walk', action: 'navigation' },
         ].map((item) => (
           <button
@@ -140,7 +153,10 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
             role="listitem"
             onClick={() => {
               if (item.action === 'navigation' && onOpenNavigation) onOpenNavigation();
-              else if (onSend) onSend(item.message, item.location);
+              else if (item.action === 'report_issue') {
+                if (onOpenReportIssue) onOpenReportIssue();
+                else if (onSend) onSend('I need to report an issue.', item.location ?? null);
+              } else if (onSend) onSend(item.message, item.location);
             }}
           >
             <div className="mqi-icon">
@@ -171,7 +187,10 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap }
         <button
           type="button"
           className="assistance-btn"
-          onClick={() => onSend && onSend('I need assistance from the support team.', null)}
+          onClick={() => {
+            if (onOpenReportIssue) onOpenReportIssue();
+            else if (onSend) onSend('I need assistance from the support team.', null);
+          }}
         >
           <span className="ms">support_agent</span>
           Report an Issue

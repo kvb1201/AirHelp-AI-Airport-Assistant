@@ -214,13 +214,156 @@ export async function fetchTtsAudio(text, language = "en") {
   return response.blob();
 }
 
+/** @returns {Promise<{ categories: { id: string, label: string }[] }>} */
+export async function fetchTicketCategories() {
+  const response = await fetch(`${apiBase()}/support/ticket-categories`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+/**
+ * @param {{ category: string, description: string, where_hint?: string, email?: string, location_graph_id?: string }} body
+ */
+export async function createSupportTicket(body) {
+  const response = await fetch(`${apiBase()}/support/tickets`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    let detail = `HTTP ${response.status}`;
+    try {
+      const j = await response.json();
+      if (j.detail != null) {
+        detail = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+      }
+    } catch {
+      /* ignore */
+    }
+    const err = new Error(detail);
+    err.status = response.status;
+    throw err;
+  }
+  return response.json();
+}
+
 /**
  * Send a chat message to the backend.
  * @param {string} message
  * @param {string} [location]
  * @param {{ inputMode?: string, whisperLang?: string }} [opts]
  */
+<<<<<<< HEAD
 export async function sendChatMessage(message, location = "entrance", opts = {}) {
+=======
+/** HTTP origin for the API host (no ``/api`` suffix), e.g. ``http://192.168.1.10:8000``. */
+export function getApiHttpOrigin() {
+  const base = apiBase().replace(/\/+$/, "");
+  return base.replace(/\/api\/?$/, "");
+}
+
+/** @returns {Promise<Record<string, unknown>>} */
+export async function fetchOpsState() {
+  const response = await fetch(`${apiBase()}/ops/state`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+/**
+ * Subscribe to operator-driven state changes (gate / delay / bulletins).
+ * @param {(state: Record<string, unknown>) => void} onState
+ * @param {string} [operatorToken] query ``token`` when ``AIRHELP_OPERATOR_TOKEN`` is set on server
+ */
+export function connectOpsWebSocket(onState, operatorToken) {
+  const http = getApiHttpOrigin();
+  const wsBase = http.replace(/^http/i, (m) => (m.toLowerCase() === "https" ? "wss" : "ws"));
+  let url = `${wsBase}/api/ops/ws`;
+  if (operatorToken) {
+    url += `?token=${encodeURIComponent(operatorToken)}`;
+  }
+  const ws = new WebSocket(url);
+  ws.onmessage = (ev) => {
+    try {
+      const msg = JSON.parse(ev.data);
+      if (msg?.type === "ops_snapshot" || msg?.type === "ops_updated") {
+        if (msg.state) onState(msg.state);
+      }
+    } catch {
+      /* ignore */
+    }
+  };
+  return ws;
+}
+
+function operatorHeaders() {
+  try {
+    const t = window.localStorage?.getItem("airhelp_operator_token");
+    if (t && String(t).trim()) {
+      return { "X-Operator-Token": String(t).trim() };
+    }
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/** @param {{ title?: string|null, body?: string|null }} body */
+export async function postOpsGlobalNotice(body) {
+  const response = await fetch(`${apiBase()}/ops/global-notice`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...operatorHeaders() },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/** @param {{ title: string, body: string, severity?: string }} body */
+export async function postOpsBulletin(body) {
+  const response = await fetch(`${apiBase()}/ops/bulletin`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...operatorHeaders() },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/** @param {string} id */
+export async function deleteOpsBulletin(id) {
+  const response = await fetch(`${apiBase()}/ops/bulletin/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: { ...operatorHeaders() },
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/**
+ * @param {{ flight: string, gate?: string|null, delay_minutes?: number|null, status?: string|null, note?: string|null }} body
+ */
+export async function postOpsFlightOverride(body) {
+  const response = await fetch(`${apiBase()}/ops/flight-override`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...operatorHeaders() },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/** @param {string} flight */
+export async function deleteOpsFlightOverride(flight) {
+  const response = await fetch(`${apiBase()}/ops/flight-override/${encodeURIComponent(flight)}`, {
+    method: "DELETE",
+    headers: { ...operatorHeaders() },
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+export async function sendChatMessage(message, location = "entrance") {
+>>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
   try {
     const body = {
       user_id: "user_123",
@@ -257,6 +400,7 @@ export async function sendChatMessage(message, location = "entrance", opts = {})
 }
 
 /**
+<<<<<<< HEAD
  * Transcribe audio file to text.
  * @param {Blob} audioBlob
  * @param {string} [language]
@@ -290,4 +434,36 @@ export async function translateText(text, srcLang = "eng_Latn", tgtLang = "hin_D
 
   if (!response.ok) throw new Error(`Translation error: ${response.status}`);
   return response.json();
+=======
+ * Send flight details (stores on backend and returns nudges/response).
+ */
+export async function sendFlightDetails({ userId = 'user_123', flightNumber, boardingTime, departureTime, location = 'entrance' }) {
+  try {
+    const response = await fetch(`${BASE_URL}/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user_id: userId,
+        message: `Store flight ${flightNumber}`,
+        flight_number: flightNumber,
+        boarding_time: boardingTime,
+        departure_time: departureTime,
+        location,
+        language: 'en',
+      }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    return await response.json();
+  } catch (err) {
+    console.error('API error:', err);
+    return {
+      type: 'error',
+      intent: 'error',
+      message: 'Server not reachable. Check connection.',
+      data: {},
+      context: {},
+    };
+  }
+>>>>>>> 957572d85f2bc9bc965df2f6aaad701e16c715ba
 }

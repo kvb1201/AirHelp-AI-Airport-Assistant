@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import ChatWindow from './ChatWindow';
 import InputBox from './InputBox';
+import MarkdownBody from './MarkdownBody';
 import TtsMiniBar from './TtsMiniBar';
 
 const SUGGESTED = [
@@ -90,7 +91,9 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
                     <div className="chat-panel-map-line chat-panel-map-line--bot">
                       <span className="chat-panel-map-kicker">AirHelp</span>
                       <div className="chat-panel-map-line-body">
-                        <span className="chat-panel-map-text">{mapLastExchange.lastAssistant.text}</span>
+                        <MarkdownBody className="chat-panel-map-text">
+                          {mapLastExchange.lastAssistant.text}
+                        </MarkdownBody>
                         {mapLastExchange.lastAssistant.role === 'bot' && (
                           <TtsMiniBar
                             sessionId="chat-map-preview"

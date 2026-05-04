@@ -13,6 +13,7 @@ from app.core.graph.node_mapper import resolve_to_graph_node_id
 from app.core.graph.graph_builder import build_airport_graph
 from app.core.graph.path_finder import PathFinder
 from app.services import congestion
+from app.services import gate_segregation
 from app.services.route_narrative import (
     build_simple_journey,
     passenger_place_name,
@@ -96,6 +97,24 @@ def resolve_node_id(label: str | None, *, role: str) -> tuple[str | None, str | 
     if key in NODES:
         return key, None
 
+    mgn = re.fullmatch(r"gate_num_(\d{1,2})", key)
+    if mgn:
+        gid, _ = gate_segregation.goal_graph_for_numeric_gate(int(mgn.group(1)), "")
+        if gid and gid in NODES:
+            return gid, None
+
+    mgu = re.fullmatch(r"gate_(\d{1,2})", key)
+    if mgu:
+        gid, _ = gate_segregation.goal_graph_for_numeric_gate(int(mgu.group(1)), "")
+        if gid and gid in NODES:
+            return gid, None
+
+    if re.fullmatch(r"\d{1,2}", key):
+        n = int(key)
+        gid, _ = gate_segregation.goal_graph_for_numeric_gate(n, "")
+        if gid and gid in NODES:
+            return gid, None
+
     mapped, _how = resolve_to_graph_node_id(label)
     if mapped:
         return mapped, None
@@ -138,17 +157,22 @@ def extract_goal_node_hint(message: str) -> str | None:
 
     m = re.search(r"\b(?:gate|boarding)\s*([ab]?)\s*(\d{1,2})\b", text)
     if m:
-        letter = (m.group(1) or "a").lower()
+        letter_raw = (m.group(1) or "").strip().lower()
         num = int(m.group(2))
-        legacy = f"gate_{letter}{num}"
-        if legacy in _LEGACY_GATE:
-            return _LEGACY_GATE[legacy]
+        if letter_raw in ("a", "b"):
+            legacy = f"gate_{letter_raw}{num}"
+            if legacy in _LEGACY_GATE:
+                return _LEGACY_GATE[legacy]
 
     m = re.search(r"\b([ab])\s*(\d{1,2})\b", text)
     if m:
         legacy = f"gate_{m.group(1)}{int(m.group(2))}"
         if legacy in _LEGACY_GATE:
             return _LEGACY_GATE[legacy]
+
+    gnum = gate_segregation.infer_gate_graph_from_text(message)
+    if gnum:
+        return gnum
 
     return None
 
@@ -201,6 +225,12 @@ def _match_csv_poi_label(
     if not ranked:
         return None
 
+    # Prefer Terminal 2 anchors when the passenger start is on the T2 walking graph (CSV also lists T1).
+    if (start_graph_id or "").startswith("t2_"):
+        t2_ranked = [(s, g) for s, g in ranked if str(g).startswith("t2_")]
+        if t2_ranked:
+            ranked = t2_ranked
+
     top_s = max(s for s, _ in ranked)
     ties = list(dict.fromkeys(g for s, g in ranked if s == top_s))
     if (
@@ -231,15 +261,35 @@ def resolve_shop_name_to_graph_node(
     """
     Resolve a retail / shop name using ``shops_t2_l02.csv`` (``graph_node_id``).
     ``avoid_graph_node_id`` drops that node from tie-breaks (e.g. goal must differ from start).
+
+    Also maps **dish / craving phrases** (e.g. "sandwich", "pizza", "latte") to outlets that sell
+    them (Subway, Pizza Hut, Starbucks, …) via ``craving_shop_resolver``.
     """
+    from app.services.craving_shop_resolver import craving_hints_for_queries
     from app.services.shops_loader import load_shops_t2_l02
 
-    return _match_csv_poi_label(
-        label,
-        load_shops_t2_l02(),
+    rows = load_shops_t2_l02()
+    if not label or not str(label).strip():
+        return None
+    raw = str(label).strip()
+    gid = _match_csv_poi_label(
+        raw,
+        rows,
         start_graph_id=start_graph_id,
         avoid_graph_node_id=avoid_graph_node_id,
     )
+    if gid:
+        return gid
+    for hint in craving_hints_for_queries(raw):
+        gid = _match_csv_poi_label(
+            hint,
+            rows,
+            start_graph_id=start_graph_id,
+            avoid_graph_node_id=avoid_graph_node_id,
+        )
+        if gid:
+            return gid
+    return None
 
 
 def resolve_facility_name_to_graph_node(
@@ -374,7 +424,8 @@ def resolve_walking_goal_id(
 ) -> str | None:
     """Resolve user text + optional RAG rows to a single graph node id for routing."""
     tried: list[str] = []
-    h = extract_goal_node_hint(user_message)
+    combined = f"{(user_message or '').strip()} {(destination_label or '').strip()}".strip()
+    h = extract_goal_node_hint(combined)
     if h:
         tried.append(h)
     if destination_label and str(destination_label).strip():
@@ -410,6 +461,16 @@ def resolve_walking_goal_id(
         )
         if fg:
             return fg
+
+    # Whole utterance may be a craving ("I want to eat a sandwich") while ``tried`` only had short tails.
+    from app.services.craving_shop_resolver import craving_hints_for_queries
+
+    for hint in craving_hints_for_queries(combined):
+        sg = resolve_shop_name_to_graph_node(
+            hint, start_graph_id=sid, avoid_graph_node_id=sid
+        )
+        if sg:
+            return sg
 
     if rag_snippets and sid:
         g = goal_from_rag_snippets(rag_snippets, sid)
