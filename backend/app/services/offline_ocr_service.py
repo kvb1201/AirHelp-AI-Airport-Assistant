@@ -4,7 +4,11 @@ Completely offline OCR implementation using OpenCV
 No external dependencies or internet required
 """
 
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+
 import numpy as np
 import re
 from PIL import Image

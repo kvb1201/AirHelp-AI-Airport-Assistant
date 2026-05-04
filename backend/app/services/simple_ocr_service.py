@@ -3,7 +3,11 @@ Simple Boarding Pass OCR Service
 Lightweight OCR implementation without pandas dependency
 """
 
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+
 import re
 from PIL import Image
 from typing import Dict, List, Optional, Tuple
