@@ -1,0 +1,90 @@
+[
+  {
+    "id": "service_001",
+    "name": "Adani Lounge-Loyalty",
+    "terminal": "T2",
+    "category": "lounge",
+    "description": "3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable)",
+    "location_text": "CSMI Airport, Terminal-2, Domestic Departure, Level-3",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_002",
+    "name": "Adani Lounge-Business Class L3( Airline)",
+    "terminal": "T2",
+    "category": "lounge",
+    "description": "3 hours of Lounge Access prior to scheduled departure Self-Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Premium selection of Alcohol (Chargeable) SPA Services (Chargeable)",
+    "location_text": "CSMI Airport, Terminal-2, Domestic Departure, Level-3",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_003",
+    "name": "AMEX",
+    "terminal": "T2",
+    "category": "lounge",
+    "description": "Hot and Cold à la carte Buffet menu with Jain menu options Complimentary Bar with cocktails and mocktails Free Wi-Fi Phone calls Printing",
+    "location_text": "Terminal 2 Domestic, Level 3, Near Gate 65, Opposite Burger King.",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_004",
+    "name": "Aviserv Lounge West",
+    "terminal": "T2",
+    "category": "lounge",
+    "description": "Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.",
+    "location_text": "CSMI Airport, Terminal-2, Arrivals, Nr. Arrival Gate No A, Level-2 West Side",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_005",
+    "name": "Aviserv Lounge East",
+    "terminal": "T2",
+    "category": "lounge",
+    "description": "Experience the luxury of travelling at airports with our plush lounges,business centers, one-of-its kind sleeping pods, buffets and other à la Carte services. Immerse yourself in a world of tranquil oasis at the airport like never before.",
+    "location_text": "CSMI Airport, Terminal-2, Arrivals, Nr. Arrival Gate No C, Level-2 East Side",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_006",
+    "name": "Adani Lounge Loyalty",
+    "terminal": "T2",
+    "category": "lounge",
+    "description": "4 hours of Lounge Access prior to departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability",
+    "location_text": "CSMI Airport, Terminal-2, International Departure, Level-4",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_007",
+    "name": "Adani Lounge Loyalty (1st Class & Premium business)",
+    "terminal": "T2",
+    "category": "lounge",
+    "description": "4 hours of Lounge Access prior to scheduled departure Self Service Food & Beverage Buffet Business Centre Services Free Wi-Fi Open Bar Services 15-minute Complimentary Foot Massage subject to availability",
+    "location_text": "CSMI Airport, Terminal-2, International Departure, Level-4",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/airport-services/lounges"
+  },
+  {
+    "id": "service_008",
+    "name": "Duty Free Mumbai — NE Pier",
+    "terminal": "T2",
+    "category": "duty_free",
+    "description": "Duty-free shopping with premium brands and selections. Categories: Perfumes, Liquor, Chocolates, and Tobacco (international passengers only). Special offer: 20% off perfumes on purchases above ₹8000. Operated by DFS.",
+    "location_text": "Terminal-2, NE Pier, Post Security Hold Area",
+    "source_type": "official",
+    "source_name": "csmia_adani_airports",
+    "source_query": "https://csmia-mumbai.adaniairports.com/en/shop-and-dine/shopping"
+  }
+]

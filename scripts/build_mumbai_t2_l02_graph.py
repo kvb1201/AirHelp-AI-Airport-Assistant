@@ -110,6 +110,17 @@ def main() -> None:
         "plan_reference": "Level_02_Plan_copia.jpg; see also mumbai-terminal-2-map.jpg (T2 overview)",
         "coordinate_system": "normalized_xy_0_100_origin_top_left",
         "units": {"edge_weight": "walk_minutes", "xy": "0-100 normalized to terminal bounding box"},
+        "plan_image_transform": {
+            "tx_px": -122,
+            "ty_px": 18,
+            "scale_x": 1.018,
+            "scale_y": 0.998,
+            "about": "Map UI only: nudge/scales the L02 raster under schematic nodes; tune against Level_02_Plan_copia.jpg.",
+        },
+        "plan_graph_to_image": {
+            "flip_180": True,
+            "about": "Map UI: plot at (100-x,100-y) vs JPEG if pier/landside quadrants are inverted.",
+        },
     }
 
     def add_node(nid: str, **kw):

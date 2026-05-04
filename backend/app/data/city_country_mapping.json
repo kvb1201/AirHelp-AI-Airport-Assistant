@@ -1,0 +1,105 @@
+{
+  "paris": "France",
+  "lyon": "France",
+  "marseille": "France",
+  "nice": "France",
+  "cannes": "France",
+  
+  "berlin": "Germany",
+  "munich": "Germany",
+  "hamburg": "Germany",
+  "cologne": "Germany",
+  "frankfurt": "Germany",
+  
+  "rome": "Italy",
+  "milan": "Italy",
+  "venice": "Italy",
+  "florence": "Italy",
+  "naples": "Italy",
+  
+  "madrid": "Spain",
+  "barcelona": "Spain",
+  "seville": "Spain",
+  "valencia": "Spain",
+  "bilbao": "Spain",
+  
+  "new york": "USA",
+  "los angeles": "USA",
+  "chicago": "USA",
+  "miami": "USA",
+  "san francisco": "USA",
+  "las vegas": "USA",
+  "boston": "USA",
+  "washington": "USA",
+  "seattle": "USA",
+  
+  "toronto": "Canada",
+  "vancouver": "Canada",
+  "montreal": "Canada",
+  "calgary": "Canada",
+  "ottawa": "Canada",
+  
+  "london": "UK",
+  "manchester": "UK",
+  "edinburgh": "UK",
+  "birmingham": "UK",
+  "liverpool": "UK",
+  
+  "dubai": "UAE",
+  "abu dhabi": "UAE",
+  "sharjah": "UAE",
+  
+  "singapore": "Singapore",
+  
+  "bangkok": "Thailand",
+  "phuket": "Thailand",
+  "chiang mai": "Thailand",
+  "pattaya": "Thailand",
+  
+  "tokyo": "Japan",
+  "osaka": "Japan",
+  "kyoto": "Japan",
+  "hiroshima": "Japan",
+  "nagoya": "Japan",
+  
+  "sydney": "Australia",
+  "melbourne": "Australia",
+  "brisbane": "Australia",
+  "perth": "Australia",
+  "adelaide": "Australia",
+  
+  "auckland": "New Zealand",
+  "wellington": "New Zealand",
+  "christchurch": "New Zealand",
+  
+  "istanbul": "Turkey",
+  "ankara": "Turkey",
+  "antalya": "Turkey",
+  
+  "kuala lumpur": "Malaysia",
+  "penang": "Malaysia",
+  "johor bahru": "Malaysia",
+  
+  "jakarta": "Indonesia",
+  "bali": "Indonesia",
+  "yogyakarta": "Indonesia",
+  "surabaya": "Indonesia",
+  
+  "seoul": "South Korea",
+  "busan": "South Korea",
+  "incheon": "South Korea",
+  
+  "zurich": "Switzerland",
+  "geneva": "Switzerland",
+  "basel": "Switzerland",
+  "bern": "Switzerland",
+  
+  "amsterdam": "Netherlands",
+  "rotterdam": "Netherlands",
+  "the hague": "Netherlands",
+  
+  "rio de janeiro": "Brazil",
+  "sao paulo": "Brazil",
+  "brasilia": "Brazil",
+  "salvador": "Brazil"
+}

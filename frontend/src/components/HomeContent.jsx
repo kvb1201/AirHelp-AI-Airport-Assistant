@@ -1,21 +1,52 @@
 import React from 'react';
 
 const QUICK_CHIPS = [
-  { label: 'Flight status',  icon: 'flight_takeoff', message: 'What is the status of my flight?', location: null },
-  { label: 'Terminal map',   icon: 'map',            message: 'Show me the terminal map.',         location: null },
-  { label: 'Find lounge',    icon: 'weekend',        message: 'Where is the nearest lounge?',      location: null },
-  { label: 'Report an issue',icon: 'report_problem', message: 'I need to report an issue.',        location: null },
+  { label: 'Flight status',   icon: 'flight_takeoff', message: 'What is the status of my flight?', location: null },
+  { label: 'Walking routes', icon: 'directions_walk', action: 'navigation' },
+  { label: 'Floor map',      icon: 'map',             action: 'floor_map' },
+  { label: 'Find lounge',    icon: 'weekend',         message: 'Where is the nearest lounge?',      location: null },
+  { label: 'Report an issue', icon: 'report_problem', action: 'report_issue' },
 ];
 
 const SERVICES = [
   { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight',    iconColor: 'pink', message: 'Show me flight status updates.',    location: null },
-  { name: 'Airport Map',   sub: 'Navigate easily',   icon: 'location_on', iconColor: 'gold', message: 'Show me the airport map.',        location: null },
+  { name: 'Flight Queries', sub: 'Save or scan boarding pass', icon: 'event', iconColor: 'gold', action: 'flight_queries' },
+  { name: 'Walking routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
+  { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
   { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
   { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
+  { name: 'Flight status', sub: 'Schedules and updates', icon: 'flight', iconColor: 'neutral', message: 'Show me flight status updates.', location: null },
+  { name: 'Walking routes', sub: 'Compare paths A to B', icon: 'directions_walk', iconColor: 'neutral', action: 'navigation' },
+  { name: 'Floor map', sub: 'Terminal plan', icon: 'location_on', iconColor: 'neutral', action: 'floor_map' },
+  { name: 'Lounges', sub: 'Locations and access', icon: 'weekend', iconColor: 'neutral', message: 'Where are the airport lounges?', location: null },
+  { name: 'Wi‑Fi', sub: 'Connection information', icon: 'wifi', iconColor: 'neutral', message: 'How do I connect to airport Wi-Fi?', location: null },
 ];
 
-export default function HomeContent({ onSend }) {
+export default function HomeContent({ 
+  onSend, 
+  onOpenNavigation, 
+  onOpenFloorMap, 
+  onOpenFlightQueries, 
+  onOpenReportIssue 
+}) {
   const handleChip = (chip) => {
+    if (chip.action === 'navigation' && onOpenNavigation) {
+      onOpenNavigation();
+      return;
+    }
+    if (chip.action === 'floor_map' && onOpenFloorMap) {
+      onOpenFloorMap(null);
+      return;
+    }
+    if (chip.action === 'flight_queries' && onOpenFlightQueries) {
+      onOpenFlightQueries();
+      return;
+    }
+    if (chip.action === 'report_issue') {
+      if (onOpenReportIssue) onOpenReportIssue();
+      else if (onSend) onSend('I need to report an issue.', chip.location ?? null);
+      return;
+    }
     if (onSend) onSend(chip.message, chip.location);
   };
 
@@ -24,8 +55,10 @@ export default function HomeContent({ onSend }) {
       {/* ── Hero ── */}
       <div className="home-hero">
         <div className="hero-text">
-          <h1 className="hero-greeting">Hello, Priya! 👋</h1>
-          <p className="hero-subtitle">Your smart travel companion at every step.</p>
+          <h1 className="hero-greeting">Welcome</h1>
+          <p className="hero-subtitle">
+            CSMIA Mumbai, Terminal 2 — information, walking routes, and services.
+          </p>
 
           {/* Search bar */}
           <div className="hero-search">
@@ -33,7 +66,7 @@ export default function HomeContent({ onSend }) {
             <input
               className="hero-search-input"
               type="text"
-              placeholder="What can I help you with?"
+              placeholder="Search facilities, flights, or routes"
               aria-label="Search"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && e.target.value.trim()) {
@@ -43,6 +76,7 @@ export default function HomeContent({ onSend }) {
               }}
             />
             <button
+              type="button"
               className="hero-search-btn"
               aria-label="Submit search"
               onClick={(e) => {
@@ -61,6 +95,7 @@ export default function HomeContent({ onSend }) {
           <div className="quick-chips" role="toolbar" aria-label="Quick actions">
             {QUICK_CHIPS.map((chip) => (
               <button
+                type="button"
                 key={chip.label}
                 className="quick-chip"
                 onClick={() => handleChip(chip)}
@@ -73,27 +108,34 @@ export default function HomeContent({ onSend }) {
           </div>
         </div>
 
-        {/* Bot illustration (desktop only) */}
-        <div className="hero-illustration" aria-hidden="true">
-          <div className="bot-orb">
-            <span className="ms">smart_toy</span>
-          </div>
-        </div>
       </div>
 
       {/* ── Popular Services ── */}
       <section className="section" aria-label="Popular services">
         <div className="section-header">
-          <h2 className="section-title">Popular Services</h2>
-          <button className="section-link" aria-label="View all services">View all</button>
+          <h2 className="section-title">Services</h2>
+          <button
+            type="button"
+            className="section-link"
+            aria-label="View all services"
+            onClick={() => document.querySelector('.services-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          >
+            View all
+          </button>
         </div>
 
         <div className="services-grid">
           {SERVICES.map((svc) => (
             <button
+              type="button"
               key={svc.name}
               className="service-card"
-              onClick={() => onSend && onSend(svc.message, svc.location)}
+              onClick={() => {
+                  if (svc.action === 'navigation' && onOpenNavigation) onOpenNavigation();
+                  else if (svc.action === 'floor_map' && onOpenFloorMap) onOpenFloorMap(null);
+                  else if (svc.action === 'flight_queries' && typeof onOpenFlightQueries === 'function') onOpenFlightQueries();
+                  else if (onSend) onSend(svc.message, svc.location);
+                }}
               aria-label={svc.name}
             >
               <div className={`service-icon ${svc.iconColor}`}>
@@ -111,14 +153,21 @@ export default function HomeContent({ onSend }) {
         {[
           { label: 'Flight status',    sub: 'Check real-time flight information', icon: 'flight_takeoff', message: 'What is the flight status?',    location: null },
           { label: 'Airport facilities', sub: 'Find lounges, restaurants, services', icon: 'apartment',  message: 'Show me airport facilities.',    location: null },
-          { label: 'Report an issue',  sub: 'Get help with any airport issue',    icon: 'report_problem', message: 'I need to report an issue.',    location: null },
-          { label: 'Navigation',       sub: 'Find your way in the airport',       icon: 'map',           message: 'Help me navigate the airport.',  location: 'entrance' },
+          { label: 'Report an issue',  sub: 'Describe the problem and get a ticket number',    icon: 'report_problem', action: 'report_issue' },
+          { label: 'Walking directions', sub: 'From / to, then pick one of three routes', icon: 'directions_walk', action: 'navigation' },
         ].map((item) => (
           <button
+            type="button"
             key={item.label}
             className="mobile-quick-item"
             role="listitem"
-            onClick={() => onSend && onSend(item.message, item.location)}
+            onClick={() => {
+              if (item.action === 'navigation' && onOpenNavigation) onOpenNavigation();
+              else if (item.action === 'report_issue') {
+                if (onOpenReportIssue) onOpenReportIssue();
+                else if (onSend) onSend('I need to report an issue.', item.location ?? null);
+              } else if (onSend) onSend(item.message, item.location);
+            }}
           >
             <div className="mqi-icon">
               <span className="ms">{item.icon}</span>
@@ -137,17 +186,21 @@ export default function HomeContent({ onSend }) {
       {/* ── Need Assistance Banner ── */}
       <div className="assistance-banner" role="complementary" aria-label="Assistance">
         <div className="assistance-info">
-          <div className="assistance-icon">
-            <span className="ms">smart_toy</span>
+          <div className="assistance-icon" aria-hidden="true">
+            <span className="ms">help</span>
           </div>
           <div className="assistance-text">
-            <h4>Need assistance?</h4>
-            <p>Report an issue or request help from our support team.</p>
+            <h4>Support</h4>
+            <p>Report an issue or request assistance.</p>
           </div>
         </div>
         <button
+          type="button"
           className="assistance-btn"
-          onClick={() => onSend && onSend('I need assistance from the support team.', null)}
+          onClick={() => {
+            if (onOpenReportIssue) onOpenReportIssue();
+            else if (onSend) onSend('I need assistance from the support team.', null);
+          }}
         >
           <span className="ms">support_agent</span>
           Report an Issue

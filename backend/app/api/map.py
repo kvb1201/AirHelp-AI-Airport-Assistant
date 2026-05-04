@@ -5,8 +5,11 @@ from pathlib import Path
 
 from fastapi import APIRouter, Query
 
-from app.core.graph.airport_data import EDGES, GRAPH_META, NODES
+from app.core.graph.airport_data import NODES
+from app.core.graph.load_layout import load_graph_bundle
+from app.core.graph.node_mapper import resolve_to_graph_node_id
 from app.services.facilities_loader import load_facilities_bom
+from app.services.route_narrative import passenger_place_name
 from app.services.shops_loader import load_shops_t2_l02
 
 router = APIRouter()
@@ -54,9 +57,27 @@ def _group_facilities_by_graph_node(facilities: list[dict]) -> list[dict]:
 @router.get("/map")
 def get_terminal_map():
     """Nodes with x/y for SVG + edges for optional drawing."""
-    nodes = [{"id": nid, **meta} for nid, meta in NODES.items()]
-    edges = [{"from": a, "to": b, "minutes": m} for a, b, m in EDGES]
-    return {"meta": GRAPH_META, "nodes": nodes, "edges": edges}
+    nodes_dict, edges_list, graph_meta = load_graph_bundle()
+    nodes: list[dict] = []
+    for nid, meta in nodes_dict.items():
+        row = {"id": nid, **meta}
+        row["passenger_name"] = passenger_place_name(row)
+        nodes.append(row)
+    edges = [{"from": a, "to": b, "minutes": m} for a, b, m in edges_list]
+    return {"meta": graph_meta, "nodes": nodes, "edges": edges}
+
+
+@router.get("/map/resolve-node")
+def resolve_map_node(q: str = Query(..., description="RAG navigation id, alias, or graph node id")):
+    """Map LLM ``airport_data`` navigation ids (e.g. node-t2-entrance) to walking-graph ids without editing source JSON."""
+    gid, how = resolve_to_graph_node_id(q)
+    meta = NODES.get(gid) if gid else None
+    name = None
+    if meta is not None and gid:
+        row = dict(meta)
+        row["id"] = gid
+        name = passenger_place_name(row)
+    return {"requested": q, "graph_node_id": gid, "resolution": how, "passenger_name": name}
 
 
 @router.get("/catalog")
