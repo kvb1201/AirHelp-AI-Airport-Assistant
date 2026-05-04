@@ -252,6 +252,112 @@ export async function createSupportTicket(body) {
  * @param {string} message
  * @param {string} [location]
  */
+/** HTTP origin for the API host (no ``/api`` suffix), e.g. ``http://192.168.1.10:8000``. */
+export function getApiHttpOrigin() {
+  const base = apiBase().replace(/\/+$/, "");
+  return base.replace(/\/api\/?$/, "");
+}
+
+/** @returns {Promise<Record<string, unknown>>} */
+export async function fetchOpsState() {
+  const response = await fetch(`${apiBase()}/ops/state`);
+  if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+  return response.json();
+}
+
+/**
+ * Subscribe to operator-driven state changes (gate / delay / bulletins).
+ * @param {(state: Record<string, unknown>) => void} onState
+ * @param {string} [operatorToken] query ``token`` when ``AIRHELP_OPERATOR_TOKEN`` is set on server
+ */
+export function connectOpsWebSocket(onState, operatorToken) {
+  const http = getApiHttpOrigin();
+  const wsBase = http.replace(/^http/i, (m) => (m.toLowerCase() === "https" ? "wss" : "ws"));
+  let url = `${wsBase}/api/ops/ws`;
+  if (operatorToken) {
+    url += `?token=${encodeURIComponent(operatorToken)}`;
+  }
+  const ws = new WebSocket(url);
+  ws.onmessage = (ev) => {
+    try {
+      const msg = JSON.parse(ev.data);
+      if (msg?.type === "ops_snapshot" || msg?.type === "ops_updated") {
+        if (msg.state) onState(msg.state);
+      }
+    } catch {
+      /* ignore */
+    }
+  };
+  return ws;
+}
+
+function operatorHeaders() {
+  try {
+    const t = window.localStorage?.getItem("airhelp_operator_token");
+    if (t && String(t).trim()) {
+      return { "X-Operator-Token": String(t).trim() };
+    }
+  } catch {
+    /* ignore */
+  }
+  return {};
+}
+
+/** @param {{ title?: string|null, body?: string|null }} body */
+export async function postOpsGlobalNotice(body) {
+  const response = await fetch(`${apiBase()}/ops/global-notice`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...operatorHeaders() },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/** @param {{ title: string, body: string, severity?: string }} body */
+export async function postOpsBulletin(body) {
+  const response = await fetch(`${apiBase()}/ops/bulletin`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...operatorHeaders() },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/** @param {string} id */
+export async function deleteOpsBulletin(id) {
+  const response = await fetch(`${apiBase()}/ops/bulletin/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: { ...operatorHeaders() },
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/**
+ * @param {{ flight: string, gate?: string|null, delay_minutes?: number|null, status?: string|null, note?: string|null }} body
+ */
+export async function postOpsFlightOverride(body) {
+  const response = await fetch(`${apiBase()}/ops/flight-override`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...operatorHeaders() },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+/** @param {string} flight */
+export async function deleteOpsFlightOverride(flight) {
+  const response = await fetch(`${apiBase()}/ops/flight-override/${encodeURIComponent(flight)}`, {
+    method: "DELETE",
+    headers: { ...operatorHeaders() },
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
 export async function sendChatMessage(message, location = "entrance") {
   try {
     const response = await fetch(`${apiBase()}/chat`, {

@@ -12,3 +12,6 @@ SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "").strip()
 SMTP_FROM = os.getenv("SMTP_FROM", SMTP_USER or "noreply@localhost").strip()
 SMTP_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() in ("1", "true", "yes")
 SMTP_USE_SSL = os.getenv("SMTP_USE_SSL", "false").lower() in ("1", "true", "yes")
+
+# Optional: require ``X-Operator-Token`` (and WebSocket ``?token=``) for POST/DELETE on ``/api/ops/*`` mutating routes.
+AIRHELP_OPERATOR_TOKEN = os.getenv("AIRHELP_OPERATOR_TOKEN", "").strip()

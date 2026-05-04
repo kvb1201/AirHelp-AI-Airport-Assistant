@@ -15,6 +15,8 @@ import BottomNav from './components/BottomNav';
 import PlaceholderView from './components/PlaceholderView';
 import CrisisContactOverlay from './components/CrisisContactOverlay';
 import ReportIssueModal from './components/ReportIssueModal';
+import OperationalAlertsBar from './components/OperationalAlertsBar';
+import OperatorConsoleView from './components/OperatorConsoleView';
 import { sendChatMessage } from './services/api';
 import './styles.css';
 
@@ -46,6 +48,7 @@ function App() {
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
   const showLostFound = sidebarNav === 'Lost & Found' || mobileView === 'lostfound';
+  const showOperator = sidebarNav === 'Operator' || mobileView === 'operator';
   const showProfilePlaceholder =
     !showMap &&
     !showNavFlow &&
@@ -70,6 +73,7 @@ function App() {
     else if (label === 'Facilities') setMobileView('facilities');
     else if (label === 'Lost & Found') setMobileView('lostfound');
     else if (label === 'Profile') setMobileView('profile');
+    else if (label === 'Operator') setMobileView('operator');
     else setMobileView('home');
   }, []);
 
@@ -88,6 +92,7 @@ function App() {
     else if (view === 'lostfound') setSidebarNav('Lost & Found');
     else if (view === 'home') setSidebarNav('Home');
     else if (view === 'profile') setSidebarNav('Profile');
+    else if (view === 'operator') setSidebarNav('Operator');
     else if (view === 'chat') setSidebarNav('Home');
   }, []);
 
@@ -193,6 +198,7 @@ function App() {
 
       {/* ── Main Body ── */}
       <div className="app-body">
+        <OperationalAlertsBar />
 
         {/* Desktop Header */}
         <header className="desktop-header" role="banner">
@@ -222,7 +228,7 @@ function App() {
 
         {/* Content area */}
         <div
-          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}`}
+          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showOperator ? ' content-area--facilities' : ''}`}
         >
           <main className="main-content">
             {showMap ? (
@@ -242,6 +248,8 @@ function App() {
               <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
             ) : showLostFound ? (
               <LostFoundView location={location} onOpenFloorMap={openFloorMap} />
+            ) : showOperator ? (
+              <OperatorConsoleView onBack={() => handleNavSelect('Home')} />
             ) : showDesktopStub ? (
               <PlaceholderView
                 title={sidebarNav}
@@ -292,17 +300,17 @@ function App() {
             )}
           </main>
 
-          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showDesktopStub && !showProfilePlaceholder && (
+          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showOperator && !showDesktopStub && !showProfilePlaceholder && (
           <RightPanel />
         )}
         </div>
 
         {/* ── Mobile Bottom Area (fixed) ── */}
-        <div className="mobile-bottom">
-          {mobileView === 'home' && (
+        <div className={`mobile-bottom${showOperator ? ' mobile-bottom--operator' : ''}`}>
+          {mobileView === 'home' && !showOperator && (
             <QuickActions onAction={handleQuickAction} />
           )}
-          <InputBox onSend={handleSend} isLoading={isLoading} />
+          {!showOperator ? <InputBox onSend={handleSend} isLoading={isLoading} /> : null}
           <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
         </div>
       </div>
