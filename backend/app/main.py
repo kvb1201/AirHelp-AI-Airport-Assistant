@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
-from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, support_tickets, tts
+from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, support_tickets, travel_documents, tts
 from app.services import lost_found_service as lost_found_storage
 from app.services.rag_service import init_rag
 from app.services.alert_scheduler import start_alert_scheduler
@@ -64,6 +64,7 @@ app.include_router(map_api.router, prefix="/api", tags=["Map"])
 app.include_router(lost_found.router, prefix="/api", tags=["Lost & Found"])
 app.include_router(tts.router, prefix="/api", tags=["TTS"])
 app.include_router(support_tickets.router, prefix="/api", tags=["Support"])
+app.include_router(travel_documents.router, prefix="/api/travel-documents", tags=["Travel Documents"])
 
 
 # ----------------------------
