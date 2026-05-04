@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { label: 'Facilities', icon: 'apartment',       view: 'facilities' },
   { label: 'L&F',        icon: 'luggage',         view: 'lostfound' },
   { label: 'Map',        icon: 'map',             view: 'map' },
+  { label: 'Ops',        icon: 'admin_panel_settings', view: 'operator' },
   { label: 'Profile',    icon: 'account_circle',  view: 'profile' },
 ];
 

@@ -12,6 +12,7 @@ from app.services.context_service import (
 )
 from app.core.slang_normalizer import clean_airport_slang
 from app.services.simple_ocr_service import extract_boarding_pass_simple
+from app.services import operational_state_service as ops_state
 import tempfile
 import os
 
@@ -34,6 +35,9 @@ async def chat_endpoint(request: ChatRequest):
     # 🔹 Step 1: Get existing context
     # ----------------------------
     context = get_user_context(request.user_id) or {}
+    brief = ops_state.get_brief_for_llm()
+    if brief:
+        context = {**context, "_operational_brief": brief}
 
     # ----------------------------
     # 🔹 Step 2: Update context (location etc.)

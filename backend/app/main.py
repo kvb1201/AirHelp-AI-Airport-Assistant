@@ -5,8 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 
-from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, support_tickets, tts
+from app.api import chat, context, guided_navigation, lost_found, map as map_api, navigation, ops, support_tickets, tts
 from app.services import lost_found_service as lost_found_storage
+from app.services import operational_state_service as ops_state
 from app.services.rag_service import init_rag
 
 
@@ -19,6 +20,9 @@ async def lifespan(app: FastAPI):
 
     lost_found_storage.init_db()
     print(f"📦 Lost & Found storage (SQLite on this laptop): {lost_found_storage.get_db_path()}")
+
+    ops_state.load_from_disk()
+    print(f"📡 Operational state (operator bulletins / delays): {ops_state.get_data_path()}")
 
     try:
         init_rag()
@@ -63,6 +67,7 @@ app.include_router(map_api.router, prefix="/api", tags=["Map"])
 app.include_router(lost_found.router, prefix="/api", tags=["Lost & Found"])
 app.include_router(tts.router, prefix="/api", tags=["TTS"])
 app.include_router(support_tickets.router, prefix="/api", tags=["Support"])
+app.include_router(ops.router, prefix="/api", tags=["Operator ops"])
 
 
 # ----------------------------

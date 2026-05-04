@@ -1034,6 +1034,14 @@ async def handle_chat(user_input: str, user_context: Dict[str, Any], language: s
 
     print("[ORCHESTRATOR] Calling LLM (Ollama) final fallback…")
 
+    op_brief = (user_context or {}).get("_operational_brief")
+    if isinstance(op_brief, str) and op_brief.strip():
+        rag_empty_hint += (
+            "\n\nLive airport operator feed (use for gate changes, delays, and notices; "
+            "do not invent flights not listed):\n"
+            f"{op_brief.strip()}\n"
+        )
+
     response_text = await call_llm(
         f"""
 {SYSTEM_PROMPT}

@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { label: 'Lost & Found', icon: 'luggage', active: false },
   { label: 'Navigation', icon: 'directions_walk', active: false },
   { label: 'Map', icon: 'map', active: false },
+  { label: 'Operator', icon: 'admin_panel_settings', active: false },
   { label: 'My Trips', icon: 'work', active: false },
   { label: 'Profile', icon: 'account_circle', active: false },
   { label: 'Help & Support', icon: 'help', active: false },
