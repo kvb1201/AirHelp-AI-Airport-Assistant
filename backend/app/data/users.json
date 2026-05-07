@@ -24,10 +24,11 @@
     "gate": "A05",
     "location": "cafe",
     "created_at": "2026-05-04T13:00:00+05:30",
-    "updated_at": "2026-05-07T14:45:48.067837+05:30",
+    "updated_at": "2026-05-07T15:10:57.347485+05:30",
     "alerts_sent": [
       "Head to security",
-      "Go to gate"
+      "Go to gate",
+      "Final call"
     ]
   },
   "user_raj": {
@@ -42,11 +43,11 @@
     "updated_at": "2026-05-04T17:00:00+05:30"
   },
   "user_123": {
-    "location": "t2_entrance",
-    "source": "t2_entrance",
+    "location": "t2_l03_postsec",
+    "source": "t2_l03_postsec",
     "user_id": "user_123",
     "created_at": "2026-05-04T07:43:18.666716+05:30",
-    "updated_at": "2026-05-04T14:14:07.049942+05:30",
+    "updated_at": "2026-05-07T15:20:35.076105+05:30",
     "intent": "food",
     "mode": "navigation",
     "selected": {
