@@ -1,4 +1,5 @@
 import React from 'react';
+import BoardingPassUpload from './BoardingPassUpload';
 
 const QUICK_CHIPS = [
   { label: 'Flight status',   icon: 'flight_takeoff', message: 'What is the status of my flight?', location: null },
@@ -9,21 +10,15 @@ const QUICK_CHIPS = [
 ];
 
 const SERVICES = [
-  { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight',    iconColor: 'pink', message: 'Show me flight status updates.',    location: null },
+  { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight', iconColor: 'pink', message: 'Show me flight status updates.', location: null },
   { name: 'Flight Queries', sub: 'Save or scan boarding pass', icon: 'event', iconColor: 'gold', action: 'flight_queries' },
-  { name: 'Walking routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
-  { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
-  { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
-  { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
+  { name: 'Walking Routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
+  { name: 'Floor Map', sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
+  { name: 'Lounges', sub: 'Relax & unwind', icon: 'weekend', iconColor: 'pink', message: 'Where are the airport lounges?', location: null },
+  { name: 'Wi-Fi Access', sub: 'Stay connected', icon: 'wifi', iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
 ];
 
-export default function HomeContent({ 
-  onSend, 
-  onOpenNavigation, 
-  onOpenFloorMap, 
-  onOpenFlightQueries, 
-  onOpenReportIssue 
-}) {
+export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue, onOpenFlightQueries }) {
   const handleChip = (chip) => {
     if (chip.action === 'navigation' && onOpenNavigation) {
       onOpenNavigation();
@@ -201,6 +196,13 @@ export default function HomeContent({
           Report an Issue
         </button>
       </div>
+
+      {/* ── Boarding Pass Scanner ── */}
+      <BoardingPassUpload onBoardingPassProcessed={(data) => {
+        if (onSend) {
+          onSend(`I've uploaded my boarding pass. Flight: ${data.flight_number}, Gate: ${data.gate}, Seat: ${data.seat}. Can you help me navigate?`, null);
+        }
+      }} />
     </>
   );
 }

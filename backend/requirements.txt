@@ -18,12 +18,13 @@ chromadb==0.5.23
 sentence-transformers==3.2.1
 
 # RAG - Vector Search (FAISS, optional secondary index)
-faiss-cpu==1.9.0.post1
+faiss-cpu==1.13.2
 # Graph support
 networkx==3.3
 
-# OCR for image processing (boarding pass extraction) - OFFLINE ONLY
-opencv-python==4.10.0
+# OCR for image processing (boarding pass extraction)
+opencv-python==4.10.0.84
+pytesseract==0.3.10
 Pillow==10.4.0
 # Note: pytesseract removed for completely offline operation
 

@@ -296,6 +296,48 @@ body {
   box-shadow: var(--shadow-ambient);
 }
 
+.input-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 6px 12px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-glass);
+}
+
+.voice-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--on-surface-variant);
+  transition: all 0.2s ease;
+}
+
+.voice-btn:hover {
+  background: var(--primary-container);
+  color: var(--primary);
+}
+
+.voice-btn.recording {
+  background: var(--error-container);
+  color: var(--error);
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(186, 26, 26, 0.4); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(186, 26, 26, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(186, 26, 26, 0); }
+}
+
 .sidebar-nav {
   flex: 1;
   padding: var(--space-sm) var(--space-base);
@@ -1244,6 +1286,51 @@ body {
 
 .terminal-map-journey-heading--row > span {
   letter-spacing: inherit;
+}
+
+.msg-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 0 4px;
+}
+
+.msg-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.msg-translate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container-low);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--on-surface-variant);
+  transition: all 0.2s ease;
+}
+
+.msg-translate-btn:hover {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  border-color: transparent;
+}
+
+.msg-translate-btn.loading {
+  animation: spin 1s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .terminal-map-read-row {
