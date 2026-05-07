@@ -43,6 +43,7 @@ function App() {
   const [guidedNavHandoff, setGuidedNavHandoff] = useState(null);
   /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
   const [crisisContact, setCrisisContact] = useState(null);
+  const [showFlightModal, setShowFlightModal] = useState(false);
   const [reportIssueOpen, setReportIssueOpen] = useState(false);
   const [showFlightModal, setShowFlightModal] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
@@ -105,23 +106,7 @@ function App() {
     [location, openFloorMap],
   );
 
-  const clearGuidedNavHandoff = useCallback(() => setGuidedNavHandoff(null), []);
-
-  const openStepByStepFromMap = useCallback(
-    (payload) => {
-      if (payload?.fromId) setLocation(payload.fromId);
-      setGuidedNavHandoff({
-        fromId: payload.fromId,
-        toId: payload.toId,
-        routeIndex: payload.routeIndex ?? 0,
-        _id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-      });
-      handleNavSelect('Navigation');
-    },
-    [handleNavSelect],
-  );
-
-  const handleSend = async (text, loc = null) => {
+  const handleSend = async (text, loc = null, opts = {}) => {
     const currentLocation = loc ?? location;
     if (loc) setLocation(loc);
     setCrisisContact(null);
@@ -136,7 +121,10 @@ function App() {
     setChatOpen(true);
 
     try {
-      const data = await sendChatMessage(text, currentLocation);
+      const data = await sendChatMessage(text, currentLocation, {
+        inputMode: opts.inputMode || 'text',
+        whisperLang: opts.whisperLang || null,
+      });
       const botText = data.message || data.response || 'Got it!';
       setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
 
@@ -283,6 +271,7 @@ function App() {
                     onOpenNavigation={() => handleNavSelect('Navigation')}
                     onOpenFloorMap={openFloorMap}
                     onOpenReportIssue={() => setReportIssueOpen(true)}
+                    onOpenFlightQueries={() => setShowFlightModal(true)}
                   />
                 </div>
 

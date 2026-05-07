@@ -150,12 +150,12 @@ async def general_ocr_endpoint(
             # Try to extract common patterns
             text = result.get('raw_text', '')
             structured_data = {
-                'flight_number': boarding_pass_ocr.extract_field(text, 'flight_number'),
-                'dates': boarding_pass_ocr.extract_field(text, 'date'),
-                'times': boarding_pass_ocr.extract_field(text, 'time'),
-                'locations': boarding_pass_ocr.extract_field(text, 'from_to'),
-                'gates': boarding_pass_ocr.extract_field(text, 'gate'),
-                'seats': boarding_pass_ocr.extract_field(text, 'seat')
+                'flight_number': offline_boarding_pass_ocr.extract_field(text, 'flight_number'),
+                'dates': offline_boarding_pass_ocr.extract_field(text, 'date'),
+                'times': offline_boarding_pass_ocr.extract_field(text, 'time'),
+                'locations': offline_boarding_pass_ocr.extract_field(text, 'from_to'),
+                'gates': offline_boarding_pass_ocr.extract_field(text, 'gate'),
+                'seats': offline_boarding_pass_ocr.extract_field(text, 'seat')
             }
             # Remove None values
             structured_data = {k: v for k, v in structured_data.items() if v is not None}

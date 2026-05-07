@@ -67,7 +67,11 @@ def security_extras_for_context(*, local_hour: int, busy_terminal: bool) -> Secu
 
 def default_terminal_local_hour() -> int:
     """When the client does not send `local_hour`, assume Asia/Kolkata (CSMIA)."""
-    return datetime.now(ZoneInfo("Asia/Kolkata")).hour
+    try:
+        return datetime.now(ZoneInfo("Asia/Kolkata")).hour
+    except Exception:
+        # Fallback to system local time if Asia/Kolkata is not found (common on Windows without tzdata)
+        return datetime.now().hour
 
 
 def path_time_bands_minutes(
