@@ -37,7 +37,7 @@
     "source": "t2_entrance",
     "user_id": "user_123",
     "created_at": "2026-05-04T07:43:18.666716+05:30",
-    "updated_at": "2026-05-04T08:08:35.240562+05:30",
+    "updated_at": "2026-05-04T14:14:07.049942+05:30",
     "intent": "food",
     "mode": "navigation",
     "selected": {
@@ -81,6 +81,7 @@
         "score": 0.5104,
         "graph_node_id": "t2_baggage_claim"
       }
-    ]
+    ],
+    "_operational_brief": "Operator notice (Flight timings changed): Flight with pnr :84728292  is delayed by 2 hours"
   }
 }
