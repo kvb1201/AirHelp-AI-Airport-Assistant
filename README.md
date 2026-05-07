@@ -354,17 +354,29 @@ Complete privacy and offline capability:
 
 **PowerMind Hackathon Team**
 
-- **[Team Member 1]** - Full Stack Development, AI Integration
-  - GitHub: [@username](https://github.com/username)
-  - LinkedIn: [Profile](https://linkedin.com/in/username)
+- **[Team Member 1]** - Samanvitha Bolisetty -Smart Knowledge Base Developer 
+  - GitHub: [@username](https://github.com/samanvitha7)
+  - LinkedIn: [Profile](https://www.linkedin.com/in/samanvitha-bolisetty-465a02326/)
 
-- **[Team Member 2]** - Backend Architecture, RAG Pipeline
-  - GitHub: [@username](https://github.com/username)
-  - LinkedIn: [Profile](https://linkedin.com/in/username)
+- **[Team Member 2]** - Shreya Ashar- Voice Interaction & Language Support Developer
+  - GitHub: [@username](https://github.com/ShreyaSVNIT) 
+  - LinkedIn: [Profile](https://www.linkedin.com/in/shreya-ashar-18a027191/)
 
-- **[Team Member 3]** - Frontend Development, UI/UX
-  - GitHub: [@username](https://github.com/username)
-  - LinkedIn: [Profile](https://linkedin.com/in/username)
+- **[Team Member 3]** - Ojas Srivastava - UI/UX and navigation engine developer
+  - GitHub: [@username](https://github.com/Ojas-Srivastava05)
+  - LinkedIn: [Profile](https://www.linkedin.com/in/ojas-srivastava05/)
+
+  - **[Team Member 4]** - Sunil Jaat - RAG developer
+  - GitHub: [@username](https://github.com/u24ai063sunil)
+  - LinkedIn: [Profile](https://www.linkedin.com/in/sunil-jaat-216052348/)
+
+    - **[Team Member 5]** - Kavya Bhatiya - System Orchestrator and context engine developer
+  - GitHub: [@username](https://github.com/kvb1201)
+  - LinkedIn: [Profile](https://www.linkedin.com/in/kavya-bhatiya/)
+
+
+
+
 
 ---
 
@@ -388,8 +400,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions, feedback, or collaboration:
 
-- **Email**: team@airhelp.com
-- **GitHub Issues**: [Report a bug](https://github.com/your-org/airhelp/issues)
+- **Email**: kavyabhatiya44@gmail.com
 - **Documentation**: [Full docs](DOCUMENTATION_INDEX.md)
 
 ---
