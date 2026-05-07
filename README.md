@@ -366,11 +366,11 @@ Complete privacy and offline capability:
   - GitHub: [Github link](https://github.com/Ojas-Srivastava05)
   - LinkedIn: [Linkedin link](https://www.linkedin.com/in/ojas-srivastava05/)
 
-  - **[Team Member 4]** - Sunil Jaat - RAG developer
+- **[Team Member 4]** - Sunil Jaat - RAG developer
   - GitHub: [Github link](https://github.com/u24ai063sunil)
   - LinkedIn: [Linkedin link](https://www.linkedin.com/in/sunil-jaat-216052348/)
 
-    - **[Team Member 5]** - Kavya Bhatiya - System Orchestrator and context engine developer
+- **[Team Member 5]** - Kavya Bhatiya - System Orchestrator and context engine developer
   - GitHub: [Github link](https://github.com/kvb1201)
   - LinkedIn: [Linkedin link](https://www.linkedin.com/in/kavya-bhatiya/)
 
