@@ -45,7 +45,6 @@ function App() {
   const [crisisContact, setCrisisContact] = useState(null);
   const [showFlightModal, setShowFlightModal] = useState(false);
   const [reportIssueOpen, setReportIssueOpen] = useState(false);
-  const [showFlightModal, setShowFlightModal] = useState(false);
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
@@ -59,6 +58,20 @@ function App() {
     (sidebarNav === 'Profile' || mobileView === 'profile');
 
   const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
+
+  const clearGuidedNavHandoff = useCallback(() => {
+    setGuidedNavHandoff(null);
+  }, []);
+
+  const openStepByStepFromMap = useCallback((payload) => {
+    setGuidedNavHandoff({
+      ...payload,
+      _id: Date.now(),
+    });
+
+    setSidebarNav('Navigation');
+    setMobileView('nav');
+  }, []);
 
   /** Keep sidebar highlight and mobile full-screen view in sync when switching primary areas. */
   const handleNavSelect = useCallback((label) => {

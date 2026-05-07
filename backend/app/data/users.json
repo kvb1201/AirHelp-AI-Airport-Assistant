@@ -8,7 +8,12 @@
     "gate": "B12",
     "location": "entrance",
     "created_at": "2026-05-04T04:00:00+05:30",
-    "updated_at": "2026-05-04T04:30:00+05:30"
+    "updated_at": "2026-05-07T14:45:48.065325+05:30",
+    "alerts_sent": [
+      "Head to security",
+      "Go to gate",
+      "Final call"
+    ]
   },
   "user_priya": {
     "user_id": "user_priya",
@@ -19,7 +24,11 @@
     "gate": "A05",
     "location": "cafe",
     "created_at": "2026-05-04T13:00:00+05:30",
-    "updated_at": "2026-05-04T14:00:00+05:30"
+    "updated_at": "2026-05-07T14:45:48.067837+05:30",
+    "alerts_sent": [
+      "Head to security",
+      "Go to gate"
+    ]
   },
   "user_raj": {
     "user_id": "user_raj",
