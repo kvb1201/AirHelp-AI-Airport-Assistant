@@ -355,24 +355,24 @@ Complete privacy and offline capability:
 **PowerMind Hackathon Team**
 
 - **[Team Member 1]** - Samanvitha Bolisetty -Smart Knowledge Base Developer 
-  - GitHub: [@username](https://github.com/samanvitha7)
-  - LinkedIn: [Profile](https://www.linkedin.com/in/samanvitha-bolisetty-465a02326/)
+  - GitHub: [Github link](https://github.com/samanvitha7)
+  - LinkedIn: [Linkedin link](https://www.linkedin.com/in/samanvitha-bolisetty-465a02326/)
 
 - **[Team Member 2]** - Shreya Ashar- Voice Interaction & Language Support Developer
-  - GitHub: [@username](https://github.com/ShreyaSVNIT) 
-  - LinkedIn: [Profile](https://www.linkedin.com/in/shreya-ashar-18a027191/)
+  - GitHub: [Github link](https://github.com/ShreyaSVNIT) 
+  - LinkedIn: [Linkedin link](https://www.linkedin.com/in/shreya-ashar-18a027191/)
 
 - **[Team Member 3]** - Ojas Srivastava - UI/UX and navigation engine developer
-  - GitHub: [@username](https://github.com/Ojas-Srivastava05)
-  - LinkedIn: [Profile](https://www.linkedin.com/in/ojas-srivastava05/)
+  - GitHub: [Github link](https://github.com/Ojas-Srivastava05)
+  - LinkedIn: [Linkedin link](https://www.linkedin.com/in/ojas-srivastava05/)
 
   - **[Team Member 4]** - Sunil Jaat - RAG developer
-  - GitHub: [@username](https://github.com/u24ai063sunil)
-  - LinkedIn: [Profile](https://www.linkedin.com/in/sunil-jaat-216052348/)
+  - GitHub: [Github link](https://github.com/u24ai063sunil)
+  - LinkedIn: [Linkedin link](https://www.linkedin.com/in/sunil-jaat-216052348/)
 
     - **[Team Member 5]** - Kavya Bhatiya - System Orchestrator and context engine developer
-  - GitHub: [@username](https://github.com/kvb1201)
-  - LinkedIn: [Profile](https://www.linkedin.com/in/kavya-bhatiya/)
+  - GitHub: [Github link](https://github.com/kvb1201)
+  - LinkedIn: [Linkedin link](https://www.linkedin.com/in/kavya-bhatiya/)
 
 
 
