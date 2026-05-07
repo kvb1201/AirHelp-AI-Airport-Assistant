@@ -1,99 +1,32 @@
 {
-  "user_john": {
-    "user_id": "user_john",
-    "flight_number": "AI 143",
-    "boarding_time": "10:35",
-    "departure_time": "11:20",
-    "terminal": "T2",
-    "gate": "B12",
-    "location": "entrance",
-    "created_at": "2026-05-04T04:00:00+05:30",
-    "updated_at": "2026-05-07T14:45:48.065325+05:30",
-    "alerts_sent": [
-      "Head to security",
-      "Go to gate",
-      "Final call"
-    ]
-  },
-  "user_priya": {
-    "user_id": "user_priya",
-    "flight_number": "BA 286",
-    "boarding_time": "15:20",
-    "departure_time": "16:00",
-    "terminal": "T1",
-    "gate": "A05",
-    "location": "cafe",
-    "created_at": "2026-05-04T13:00:00+05:30",
-    "updated_at": "2026-05-07T15:10:57.347485+05:30",
-    "alerts_sent": [
-      "Head to security",
-      "Go to gate",
-      "Final call"
-    ]
-  },
-  "user_raj": {
-    "user_id": "user_raj",
-    "flight_number": "SQ 406",
-    "boarding_time": "19:45",
-    "departure_time": "20:30",
-    "terminal": "T2",
-    "gate": "C18",
-    "location": "restaurants",
-    "created_at": "2026-05-04T16:00:00+05:30",
-    "updated_at": "2026-05-04T17:00:00+05:30"
-  },
   "user_123": {
-    "location": "t2_entrance",
-    "source": "t2_entrance",
+    "location": "t2_nw_fb",
+    "source": "t2_nw_fb",
     "user_id": "user_123",
-    "created_at": "2026-05-04T07:43:18.666716+05:30",
-    "updated_at": "2026-05-07T15:45:29.638726+05:30",
-    "intent": "food",
-    "mode": "navigation",
+    "created_at": "2026-05-07T17:27:12.798752+05:30",
+    "updated_at": "2026-05-07T17:27:58.350291+05:30",
+    "intent": "shop",
     "selected": {
-      "id": "csmia_f5900f6c70039f",
-      "name": "Foody's",
-      "category": "quick_bites",
-      "location": "Terminal 2; P10,Level 4, Landside",
-      "terminal": "L04",
-      "description": "Foody's \u2014 qsr at Mumbai T2. Open the map for walking directions.",
-      "score": 0.5855,
-      "graph_node_id": "t2_l04_postsec"
+      "id": "csmia_00a815a43d239a",
+      "name": "Bookscetra (New Store)",
+      "category": "shop",
+      "location": "Terminal 2; Level 3 , Post Secuirty Hold Area",
+      "terminal": "L03",
+      "description": "Bookscetra (New Store) \u2014 ctn at Mumbai T2. Open the map for walking directions.",
+      "score": 0.429,
+      "graph_node_id": "t2_l03_postsec"
     },
     "last_results": [
       {
-        "id": "csmia_f5900f6c70039f",
-        "name": "Foody's",
-        "category": "quick_bites",
-        "location": "Terminal 2; P10,Level 4, Landside",
-        "terminal": "L04",
-        "description": "Foody's \u2014 qsr at Mumbai T2. Open the map for walking directions.",
-        "score": 0.5855,
-        "graph_node_id": "t2_l04_postsec"
-      },
-      {
-        "id": "csmia_0e791b56bf203a",
-        "name": "Cafe 2.0",
-        "category": "quick_bites",
-        "location": "Terminal 2; P6, Arrival Forecourt",
-        "terminal": "L02",
-        "description": "Cafe 2.0 \u2014 snacks at Mumbai T2. Open the map for walking directions.",
-        "score": 0.5108,
-        "graph_node_id": "t2_baggage_claim"
-      },
-      {
-        "id": "csmia_91c102ac8234a9",
-        "name": "Street Foods by Punjab Grill",
-        "category": "quick_bites",
-        "location": "Terminal 2; Arrival Hall",
-        "terminal": "L02",
-        "description": "Street Foods by Punjab Grill \u2014 qsr at Mumbai T2. Open the map for walking directions.",
-        "score": 0.5104,
-        "graph_node_id": "t2_baggage_claim"
+        "id": "csmia_00a815a43d239a",
+        "name": "Bookscetra (New Store)",
+        "category": "shop",
+        "location": "Terminal 2; Level 3 , Post Secuirty Hold Area",
+        "terminal": "L03",
+        "description": "Bookscetra (New Store) \u2014 ctn at Mumbai T2. Open the map for walking directions.",
+        "score": 0.429,
+        "graph_node_id": "t2_l03_postsec"
       }
-    ],
-    "_operational_brief": "Operator notice (Flight timings changed): Flight with pnr :84728292  is delayed by 2 hours",
-    "destination": "t2_se_sp_14",
-    "behavior": "quick"
+    ]
   }
 }
