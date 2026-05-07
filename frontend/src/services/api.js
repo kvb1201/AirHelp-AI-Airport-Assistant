@@ -474,22 +474,74 @@ export async function extractBoardingPass(file) {
     const formData = new FormData();
     formData.append('file', file);
 
+    console.log('[OCR] Uploading boarding pass:', file.name, file.type, file.size);
+
     const response = await fetch(`${apiBase()}/ocr/boarding-pass`, {
       method: 'POST',
       body: formData,
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status}`);
+    console.log('[OCR] Response status:', response.status, response.statusText);
+
+    // Get response text first (works for both JSON and HTML)
+    const text = await response.text();
+    console.log('[OCR] Response text length:', text.length);
+
+    // Check if response is empty
+    if (!text || text.trim().length === 0) {
+      console.error('[OCR] Empty response from server');
+      return {
+        success: false,
+        message: 'Server returned empty response. Please try again.',
+        data: {},
+      };
     }
 
-    return await response.json();
+    // Try to parse as JSON
+    let data;
+    try {
+      data = JSON.parse(text);
+      console.log('[OCR] Parsed JSON successfully:', data.success);
+    } catch (parseError) {
+      console.error('[OCR] Failed to parse JSON:', text.substring(0, 200));
+      
+      // Check if it's an HTML error page
+      if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+        return {
+          success: false,
+          message: 'Server error occurred. Please check the backend logs.',
+          data: {},
+          error: 'Server returned HTML instead of JSON',
+        };
+      }
+      
+      return {
+        success: false,
+        message: 'Invalid response from server. Please try again.',
+        data: {},
+        error: `Parse error: ${parseError.message}`,
+      };
+    }
+
+    // Check HTTP status after parsing (for better error messages)
+    if (!response.ok) {
+      console.error('[OCR] HTTP error:', response.status, data);
+      return {
+        success: false,
+        message: data.message || data.detail || `HTTP error: ${response.status}`,
+        data: {},
+        error: data.detail || data.message,
+      };
+    }
+
+    return data;
   } catch (err) {
-    console.error('OCR API error:', err);
+    console.error('[OCR] API error:', err);
     return {
       success: false,
-      message: 'OCR processing failed. Please try again.',
+      message: `OCR processing failed: ${err.message}`,
       data: {},
+      error: err.message,
     };
   }
 }

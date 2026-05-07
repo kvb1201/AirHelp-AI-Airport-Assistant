@@ -43,11 +43,11 @@
     "updated_at": "2026-05-04T17:00:00+05:30"
   },
   "user_123": {
-    "location": "t2_l03_postsec",
-    "source": "t2_l03_postsec",
+    "location": "t2_entrance",
+    "source": "t2_entrance",
     "user_id": "user_123",
     "created_at": "2026-05-04T07:43:18.666716+05:30",
-    "updated_at": "2026-05-07T15:20:35.076105+05:30",
+    "updated_at": "2026-05-07T15:45:29.638726+05:30",
     "intent": "food",
     "mode": "navigation",
     "selected": {
@@ -92,6 +92,8 @@
         "graph_node_id": "t2_baggage_claim"
       }
     ],
-    "_operational_brief": "Operator notice (Flight timings changed): Flight with pnr :84728292  is delayed by 2 hours"
+    "_operational_brief": "Operator notice (Flight timings changed): Flight with pnr :84728292  is delayed by 2 hours",
+    "destination": "t2_se_sp_14",
+    "behavior": "quick"
   }
 }

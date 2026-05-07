@@ -46,28 +46,48 @@ async def extract_boarding_pass_endpoint(
     Returns:
         Structured boarding pass information
     """
-    if not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Invalid file type, image expected.")
-    
-    # Create temporary file
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
-        content = await file.read()
-        tmp.write(content)
-        image_path = tmp.name
+    image_path = None
     
     try:
+        logger.info(f"📷 Boarding pass upload started: {file.filename}, type: {file.content_type}, size: {file.size if hasattr(file, 'size') else 'unknown'}")
+        
+        # Validate file type
+        if not file.content_type or not file.content_type.startswith("image/"):
+            logger.warning(f"Invalid file type: {file.content_type}")
+            return BoardingPassResponse(
+                success=False,
+                data={},
+                message=f"Invalid file type '{file.content_type}'. Please upload an image file.",
+                timestamp=datetime.now().isoformat(),
+                confidence=0.0
+            )
+        
+        # Create temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
+            content = await file.read()
+            logger.info(f"📷 File read: {len(content)} bytes")
+            tmp.write(content)
+            image_path = tmp.name
+        
+        logger.info(f"📷 Temp file created: {image_path}")
+        
         # Extract boarding pass information
+        logger.info("📷 Starting OCR extraction...")
         result = extract_boarding_pass_offline(image_path)
+        logger.info(f"📷 OCR extraction complete: {result.get('success', False)}")
         
         # Clean up temp file
-        os.unlink(image_path)
+        if image_path and os.path.exists(image_path):
+            os.unlink(image_path)
+            logger.info("📷 Temp file cleaned up")
         
         if 'error' in result:
+            logger.warning(f"📷 OCR extraction failed: {result['error']}")
             return BoardingPassResponse(
                 success=False,
                 data={},
                 message=f"OCR extraction failed: {result['error']}",
-                timestamp=result['timestamp'],
+                timestamp=result.get('timestamp', datetime.now().isoformat()),
                 confidence=result.get('confidence', 0.0)
             )
         
@@ -88,21 +108,43 @@ async def extract_boarding_pass_endpoint(
         if return_raw_text:
             response_data['raw_text'] = result.get('raw_text', '')
         
-        return BoardingPassResponse(
+        logger.info(f"📷 Boarding pass extracted successfully: flight={response_data.get('flight_number')}, gate={response_data.get('gate')}")
+        
+        response_obj = BoardingPassResponse(
             success=True,
             data=response_data,
             message="Boarding pass extracted successfully",
-            timestamp=result['timestamp'],
+            timestamp=result.get('timestamp', datetime.now().isoformat()),
             confidence=result.get('confidence', 0.0)
         )
         
+        logger.info(f"📷 Returning response: success={response_obj.success}, data_keys={list(response_obj.data.keys())}")
+        
+        return response_obj
+        
     except Exception as e:
         # Clean up temp file on error
-        if os.path.exists(image_path):
-            os.unlink(image_path)
+        if image_path and os.path.exists(image_path):
+            try:
+                os.unlink(image_path)
+                logger.info("📷 Temp file cleaned up after error")
+            except Exception as cleanup_error:
+                logger.warning(f"📷 Failed to cleanup temp file: {cleanup_error}")
         
-        logger.error(f"Boarding pass OCR failed: {e}")
-        raise HTTPException(status_code=500, detail=f"OCR processing failed: {str(e)}")
+        logger.error(f"📷 Boarding pass OCR failed with exception: {e}", exc_info=True)
+        
+        # CRITICAL: Return JSON response instead of raising HTTPException
+        error_response = BoardingPassResponse(
+            success=False,
+            data={},
+            message=f"OCR processing failed: {str(e)}",
+            timestamp=datetime.now().isoformat(),
+            confidence=0.0
+        )
+        
+        logger.info(f"📷 Returning error response: {error_response.message}")
+        
+        return error_response
 
 @router.post("/ocr/general", response_model=OCRResponse)
 async def general_ocr_endpoint(

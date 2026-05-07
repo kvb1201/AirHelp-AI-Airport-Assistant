@@ -30,3 +30,6 @@ Pillow==10.4.0
 
 # Offline TTS (PyPI Piper — `pip install piper-tts`; see app/services/tts_service.py)
 piper-tts>=1.4.0,<2
+
+# Speech-to-Text (Whisper for voice input transcription)
+faster-whisper>=1.0.0,<2

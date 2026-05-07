@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { extractBoardingPass } from '../services/api';
 
 const BoardingPassUpload = ({ onBoardingPassProcessed }) => {
   const [uploading, setUploading] = useState(false);
@@ -25,17 +26,13 @@ const BoardingPassUpload = ({ onBoardingPassProcessed }) => {
     setError(null);
     setResult(null);
 
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-
     try {
-      // Call the OCR API
-      const response = await fetch('/api/ocr/boarding-pass', {
-        method: 'POST',
-        body: formData,
-      });
+      console.log('[Upload] Starting upload:', selectedFile.name, selectedFile.type);
+      
+      // Use the safe API function with all error handling
+      const data = await extractBoardingPass(selectedFile);
 
-      const data = await response.json();
+      console.log('[Upload] Received data:', data.success, data.message);
 
       if (data.success) {
         setResult(data.data);
@@ -46,6 +43,7 @@ const BoardingPassUpload = ({ onBoardingPassProcessed }) => {
         setError(data.message || 'Failed to process boarding pass');
       }
     } catch (err) {
+      console.error('[Upload] Error:', err);
       setError('Error uploading file: ' + err.message);
     } finally {
       setUploading(false);
