@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import BoardingPassUpload from './BoardingPassUpload';
 
 const QUICK_CHIPS = [
@@ -12,33 +12,67 @@ const QUICK_CHIPS = [
 const SERVICES = [
   { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight', iconColor: 'pink', message: 'Show me flight status updates.', location: null },
   { name: 'Flight Queries', sub: 'Save or scan boarding pass', icon: 'event', iconColor: 'gold', action: 'flight_queries' },
-<<<<<<< Updated upstream
   { name: 'Walking Routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
   { name: 'Floor Map', sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
   { name: 'Lounges', sub: 'Relax & unwind', icon: 'weekend', iconColor: 'pink', message: 'Where are the airport lounges?', location: null },
   { name: 'Wi-Fi Access', sub: 'Stay connected', icon: 'wifi', iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
-=======
-  { name: 'Walking routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
-  { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
-  { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
-  { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
->>>>>>> Stashed changes
 ];
 
+const DEPARTURE_FEED = [
+  { flight: 'AI-202',  dest: 'Delhi',     gate: 'B14', time: '16:45', status: 'ON TIME' },
+  { flight: '6E-851',  dest: 'Bangalore', gate: 'C7',  time: '17:10', status: 'BOARDING' },
+  { flight: 'UK-972',  dest: 'London',    gate: 'D3',  time: '17:30', status: 'ON TIME' },
+  { flight: 'EK-503',  dest: 'Dubai',     gate: 'E11', time: '18:00', status: 'DELAYED' },
+  { flight: 'SG-181',  dest: 'Hyderabad', gate: 'B9',  time: '18:20', status: 'ON TIME' },
+];
+
+const STATS = [
+  { value: '120+', label: 'Daily Flights' },
+  { value: '47',   label: 'AI Map Nodes' },
+  { value: '3',    label: 'Route Options' },
+  { value: '24/7', label: 'AI Support' },
+];
+
+const TIPS = [
+  { icon: 'schedule', title: 'Arrive early', body: 'Allow 2–3 hours for international flights. Security and immigration can be busy during peak hours.' },
+  { icon: 'luggage', title: 'Baggage limits', body: 'Check-in baggage is typically 15–23 kg. Keep liquids under 100ml in a clear bag for carry-on.' },
+  { icon: 'currency_rupee', title: 'Currency exchange', body: 'Exchange counters are available before and after immigration on Level 2.' },
+  { icon: 'wifi', title: 'Free Wi-Fi', body: 'Connect to "CSMIA_Free_WiFi" and verify with your phone number for 45 minutes of complimentary access.' },
+];
+
+function statusClass(status) {
+  if (status === 'BOARDING') return 'fids-board__status--boarding';
+  if (status === 'DELAYED') return 'fids-board__status--delay';
+  return 'fids-board__status--ok';
+}
+
+function useScrollReveal() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    const items = el.querySelectorAll('.reveal');
+    items.forEach((item) => observer.observe(item));
+    return () => items.forEach((item) => observer.unobserve(item));
+  }, []);
+  return ref;
+}
+
 export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue, onOpenFlightQueries }) {
+  const [time, setTime] = useState(new Date());
+  useEffect(() => { const id = setInterval(() => setTime(new Date()), 60000); return () => clearInterval(id); }, []);
+  const scrollRef = useScrollReveal();
+
+  const greeting = time.getHours() < 12 ? 'Good morning' : time.getHours() < 17 ? 'Good afternoon' : 'Good evening';
+
   const handleChip = (chip) => {
-    if (chip.action === 'navigation' && onOpenNavigation) {
-      onOpenNavigation();
-      return;
-    }
-    if (chip.action === 'floor_map' && onOpenFloorMap) {
-      onOpenFloorMap(null);
-      return;
-    }
-    if (chip.action === 'flight_queries' && onOpenFlightQueries) {
-      onOpenFlightQueries();
-      return;
-    }
+    if (chip.action === 'navigation' && onOpenNavigation) { onOpenNavigation(); return; }
+    if (chip.action === 'floor_map' && onOpenFloorMap) { onOpenFloorMap(null); return; }
+    if (chip.action === 'flight_queries' && onOpenFlightQueries) { onOpenFlightQueries(); return; }
     if (chip.action === 'report_issue') {
       if (onOpenReportIssue) onOpenReportIssue();
       else if (onSend) onSend('I need to report an issue.', chip.location ?? null);
@@ -47,23 +81,30 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
     if (onSend) onSend(chip.message, chip.location);
   };
 
+  const handleService = (svc) => {
+    if (svc.action === 'navigation' && onOpenNavigation) onOpenNavigation();
+    else if (svc.action === 'floor_map' && onOpenFloorMap) onOpenFloorMap(null);
+    else if (svc.action === 'flight_queries' && typeof onOpenFlightQueries === 'function') onOpenFlightQueries();
+    else if (onSend) onSend(svc.message, svc.location);
+  };
+
   return (
-    <>
+    <div ref={scrollRef}>
       {/* ── Hero ── */}
       <div className="home-hero">
         <div className="hero-text">
-          <h1 className="hero-greeting">Welcome</h1>
+          <div className="hero-kicker">CSMIA · Terminal 2 · Mumbai</div>
+          <h1 className="hero-greeting">{greeting}</h1>
           <p className="hero-subtitle">
-            CSMIA Mumbai, Terminal 2 — information, walking routes, and services.
+            Your AI airport companion — flights, walking routes, facilities, and live support at your fingertips.
           </p>
 
-          {/* Search bar */}
           <div className="hero-search">
             <span className="ms">search</span>
             <input
               className="hero-search-input"
               type="text"
-              placeholder="Search facilities, flights, or routes"
+              placeholder="Ask anything — flights, gates, lounges..."
               aria-label="Search"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && e.target.value.trim()) {
@@ -78,69 +119,95 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
               aria-label="Submit search"
               onClick={(e) => {
                 const input = e.currentTarget.closest('.hero-search').querySelector('input');
-                if (input.value.trim()) {
-                  onSend(input.value.trim(), null);
-                  input.value = '';
-                }
+                if (input.value.trim()) { onSend(input.value.trim(), null); input.value = ''; }
               }}
             >
-              <span className="ms">send</span>
+              <span className="ms">arrow_forward</span>
             </button>
           </div>
 
-          {/* Quick chips */}
           <div className="quick-chips" role="toolbar" aria-label="Quick actions">
             {QUICK_CHIPS.map((chip) => (
-              <button
-                type="button"
-                key={chip.label}
-                className="quick-chip"
-                onClick={() => handleChip(chip)}
-                aria-label={chip.label}
-              >
+              <button type="button" key={chip.label} className="quick-chip" onClick={() => handleChip(chip)} aria-label={chip.label}>
                 <span className="ms">{chip.icon}</span>
                 {chip.label}
               </button>
             ))}
           </div>
         </div>
-
       </div>
 
-      {/* ── Popular Services ── */}
-      <section className="section" aria-label="Popular services">
+      {/* ── Stats Row ── */}
+      <div className="stats-row">
+        {STATS.map((s, i) => (
+          <div key={s.label} className={`stat-card reveal reveal-delay-${i + 1}`}>
+            <div className="stat-value">{s.value}</div>
+            <div className="stat-label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Services ── */}
+      <section className="section reveal" aria-label="Popular services">
         <div className="section-header">
           <h2 className="section-title">Services</h2>
-          <button
-            type="button"
-            className="section-link"
-            aria-label="View all services"
-            onClick={() => document.querySelector('.services-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-          >
-            View all
-          </button>
         </div>
-
         <div className="services-grid">
-          {SERVICES.map((svc) => (
-            <button
-              type="button"
-              key={svc.name}
-              className="service-card"
-              onClick={() => {
-                  if (svc.action === 'navigation' && onOpenNavigation) onOpenNavigation();
-                  else if (svc.action === 'floor_map' && onOpenFloorMap) onOpenFloorMap(null);
-                  else if (svc.action === 'flight_queries' && typeof onOpenFlightQueries === 'function') onOpenFlightQueries();
-                  else if (onSend) onSend(svc.message, svc.location);
-                }}
-              aria-label={svc.name}
-            >
+          {SERVICES.map((svc, i) => (
+            <button type="button" key={svc.name} className={`service-card reveal reveal-delay-${i + 1}`} onClick={() => handleService(svc)} aria-label={svc.name}>
               <div className={`service-icon ${svc.iconColor}`}>
                 <span className="ms">{svc.icon}</span>
               </div>
               <div className="service-name">{svc.name}</div>
               <div className="service-sub">{svc.sub}</div>
             </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Travel Tips ── */}
+      <section className="section reveal" aria-label="Travel tips">
+        <div className="section-header">
+          <h2 className="section-title">Travel Tips</h2>
+        </div>
+        <div className="tips-grid">
+          {TIPS.map((tip, i) => (
+            <div key={tip.title} className={`tip-card reveal reveal-delay-${i + 1}`}>
+              <div className="tip-icon">
+                <span className="ms">{tip.icon}</span>
+              </div>
+              <div className="tip-content">
+                <div className="tip-title">{tip.title}</div>
+                <div className="tip-body">{tip.body}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Departures Board ── */}
+      <section className="section reveal" aria-label="Departures">
+        <div className="section-header">
+          <h2 className="section-title">Upcoming Departures</h2>
+          <button type="button" className="section-link" onClick={() => onSend && onSend('Show all departures', null)}>View all</button>
+        </div>
+
+        <div className="fids-board">
+          <div className="fids-board__header">
+            <span>Flight</span>
+            <span>Destination</span>
+            <span>Gate</span>
+            <span>Time</span>
+            <span>Status</span>
+          </div>
+          {DEPARTURE_FEED.map((dep, i) => (
+            <div key={dep.flight} className={`fids-board__row reveal reveal-delay-${i + 1}`}>
+              <span className="fids-board__flight">{dep.flight}</span>
+              <span className="fids-board__dest">{dep.dest}</span>
+              <span className="fids-board__gate">{dep.gate}</span>
+              <span className="fids-board__time">{dep.time}</span>
+              <span className={`fids-board__status ${statusClass(dep.status)}`}>{dep.status}</span>
+            </div>
           ))}
         </div>
       </section>
@@ -173,22 +240,20 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
               <h4>{item.label}</h4>
               <p>{item.sub}</p>
             </div>
-            <span className="ms" style={{ color: 'var(--outline-variant)', marginLeft: 'auto' }}>
-              chevron_right
-            </span>
+            <span className="ms" style={{ color: 'var(--text-muted)', marginLeft: 'auto' }}>chevron_right</span>
           </button>
         ))}
       </div>
 
-      {/* ── Need Assistance Banner ── */}
-      <div className="assistance-banner" role="complementary" aria-label="Assistance">
+      {/* ── Assistance Banner ── */}
+      <div className="assistance-banner reveal" role="complementary" aria-label="Assistance">
         <div className="assistance-info">
           <div className="assistance-icon" aria-hidden="true">
             <span className="ms">help</span>
           </div>
           <div className="assistance-text">
-            <h4>Support</h4>
-            <p>Report an issue or request assistance.</p>
+            <h4>Need help?</h4>
+            <p>Report an issue or request live assistance from airport staff.</p>
           </div>
         </div>
         <button
@@ -200,16 +265,16 @@ export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, 
           }}
         >
           <span className="ms">support_agent</span>
-          Report an Issue
+          Get Support
         </button>
       </div>
 
-      {/* ── Boarding Pass Scanner ── */}
+      {/* ── Boarding Pass ── */}
       <BoardingPassUpload onBoardingPassProcessed={(data) => {
         if (onSend) {
           onSend(`I've uploaded my boarding pass. Flight: ${data.flight_number}, Gate: ${data.gate}, Seat: ${data.seat}. Can you help me navigate?`, null);
         }
       }} />
-    </>
+    </div>
   );
 }

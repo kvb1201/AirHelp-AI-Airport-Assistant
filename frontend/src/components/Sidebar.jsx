@@ -1,12 +1,12 @@
 import React from 'react';
 
 const NAV_ITEMS = [
-  { label: 'Home', icon: 'home', active: true },
-  { label: 'Facilities', icon: 'apartment', active: false },
-  { label: 'Lost & Found', icon: 'luggage', active: false },
-  { label: 'Navigation', icon: 'directions_walk', active: false },
-  { label: 'Map', icon: 'map', active: false },
-  { label: 'Operator', icon: 'admin_panel_settings', active: false },
+  { label: 'Home',        icon: 'home' },
+  { label: 'Facilities',  icon: 'apartment' },
+  { label: 'Lost & Found', icon: 'luggage' },
+  { label: 'Navigation',  icon: 'directions_walk' },
+  { label: 'Map',         icon: 'map' },
+  { label: 'Operator',    icon: 'admin_panel_settings' },
 ];
 
 export default function Sidebar({ activeNav, onNavChange, onNewChat }) {
@@ -15,7 +15,7 @@ export default function Sidebar({ activeNav, onNavChange, onNewChat }) {
       <div className="sidebar-header">
         <div className="brand">
           <div className="brand-logo" aria-hidden="true">
-            <span className="ms">flight</span>
+            <span className="ms filled">flight_takeoff</span>
           </div>
           <span className="brand-name">AirHelp</span>
         </div>
@@ -46,7 +46,7 @@ export default function Sidebar({ activeNav, onNavChange, onNewChat }) {
           <div className="user-avatar" aria-hidden="true">G</div>
           <div>
             <div className="user-name">Guest</div>
-            <div className="user-email">guest@example.com</div>
+            <div className="user-email">Passenger</div>
           </div>
         </div>
       </div>

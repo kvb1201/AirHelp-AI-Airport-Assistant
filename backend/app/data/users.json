@@ -1,11 +1,11 @@
 {
   "user_123": {
-    "location": "t2_nw_fb",
-    "source": "t2_nw_fb",
+    "location": "t2_entrance",
+    "source": "t2_entrance",
     "user_id": "user_123",
     "created_at": "2026-05-07T17:27:12.798752+05:30",
-    "updated_at": "2026-05-07T17:27:58.350291+05:30",
-    "intent": "shop",
+    "updated_at": "2026-05-08T17:18:53.566780+05:30",
+    "intent": "lounge",
     "selected": {
       "id": "csmia_00a815a43d239a",
       "name": "Bookscetra (New Store)",
@@ -27,6 +27,7 @@
         "score": 0.429,
         "graph_node_id": "t2_l03_postsec"
       }
-    ]
+    ],
+    "mode": "navigation"
   }
 }
