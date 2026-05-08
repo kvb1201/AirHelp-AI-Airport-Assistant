@@ -12,10 +12,17 @@ const QUICK_CHIPS = [
 const SERVICES = [
   { name: 'Flight Status', sub: 'Real-time updates', icon: 'flight', iconColor: 'pink', message: 'Show me flight status updates.', location: null },
   { name: 'Flight Queries', sub: 'Save or scan boarding pass', icon: 'event', iconColor: 'gold', action: 'flight_queries' },
+<<<<<<< Updated upstream
   { name: 'Walking Routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
   { name: 'Floor Map', sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
   { name: 'Lounges', sub: 'Relax & unwind', icon: 'weekend', iconColor: 'pink', message: 'Where are the airport lounges?', location: null },
   { name: 'Wi-Fi Access', sub: 'Stay connected', icon: 'wifi', iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
+=======
+  { name: 'Walking routes', sub: 'Compare paths A→B', icon: 'directions_walk', iconColor: 'gold', action: 'navigation' },
+  { name: 'Floor map',   sub: 'Tap the terminal plan', icon: 'location_on', iconColor: 'gold', action: 'floor_map' },
+  { name: 'Lounges',       sub: 'Relax & unwind',    icon: 'weekend',   iconColor: 'pink', message: 'Where are the airport lounges?',    location: null },
+  { name: 'Wi-Fi Access',  sub: 'Stay connected',    icon: 'wifi',      iconColor: 'gold', message: 'How do I connect to airport Wi-Fi?', location: null },
+>>>>>>> Stashed changes
 ];
 
 export default function HomeContent({ onSend, onOpenNavigation, onOpenFloorMap, onOpenReportIssue, onOpenFlightQueries }) {
