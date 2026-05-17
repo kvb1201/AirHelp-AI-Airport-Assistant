@@ -92,7 +92,7 @@ const BoardingPassUpload = ({ onBoardingPassProcessed }) => {
   return (
     <div className="boarding-pass-upload">
       <div className="upload-section">
-        <h3 className="section-title">📷 Boarding Pass Scanner</h3>
+        <h3 className="section-title">Boarding pass scanner</h3>
         
         <div className="file-input-wrapper">
           <input
@@ -103,7 +103,7 @@ const BoardingPassUpload = ({ onBoardingPassProcessed }) => {
             className="file-input"
           />
           <label htmlFor="boarding-pass-file" className="file-input-label">
-            <span className="ms">upload_file</span>
+            <span className="ms" aria-hidden="true">upload_file</span>
             <span>Choose Boarding Pass Image</span>
           </label>
         </div>
@@ -211,183 +211,8 @@ const BoardingPassUpload = ({ onBoardingPassProcessed }) => {
           )}
         </div>
       )}
-
-      <style jsx>{`
-        .boarding-pass-upload {
-          background: var(--surface-container-low);
-          border-radius: var(--radius-md);
-          padding: 20px;
-          margin: 20px 0;
-          border: 1px solid var(--outline-variant);
-        }
-
-        .upload-section h3 {
-          margin-bottom: 20px;
-          color: var(--on-surface);
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .file-input-wrapper {
-          position: relative;
-          margin-bottom: 16px;
-        }
-
-        .file-input {
-          display: none;
-        }
-
-        .file-input-label {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 12px 16px;
-          background: var(--surface-container-highest);
-          border: 2px dashed var(--outline-variant);
-          border-radius: var(--radius-md);
-          cursor: pointer;
-          transition: all 0.2s ease;
-          color: var(--on-surface-variant);
-        }
-
-        .file-input-label:hover {
-          border-color: var(--primary);
-          background: var(--surface-container);
-          color: var(--primary);
-        }
-
-        .selected-file {
-          margin-bottom: 16px;
-          padding: 8px 12px;
-          background: var(--surface-container);
-          border-radius: var(--radius-sm);
-          color: var(--on-surface);
-        }
-
-        .button-group {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 16px;
-        }
-
-        .upload-btn, .chat-btn {
-          padding: 10px 16px;
-          border-radius: var(--radius-md);
-          border: none;
-          font-family: var(--font-body);
-          font-size: 14px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-
-        .upload-btn {
-          background: var(--primary);
-          color: white;
-        }
-
-        .upload-btn:hover:not(:disabled) {
-          background: var(--primary-container);
-          color: var(--on-primary-container);
-        }
-
-        .chat-btn {
-          background: var(--secondary);
-          color: white;
-        }
-
-        .chat-btn:hover:not(:disabled) {
-          background: var(--secondary-container);
-          color: var(--on-secondary-container);
-        }
-
-        .upload-btn:disabled, .chat-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
-        .error-message {
-          padding: 12px;
-          background: var(--error-container);
-          color: var(--on-error-container);
-          border-radius: var(--radius-sm);
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .result-section {
-          margin-top: 24px;
-          padding-top: 20px;
-          border-top: 1px solid var(--outline-variant);
-        }
-
-        .result-title {
-          color: var(--primary);
-          margin-bottom: 16px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .info-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 12px;
-          margin-bottom: 20px;
-        }
-
-        .info-item {
-          display: flex;
-          justify-content: space-between;
-          padding: 8px 12px;
-          background: var(--surface-container);
-          border-radius: var(--radius-sm);
-        }
-
-        .info-label {
-          font-weight: 600;
-          color: var(--on-surface-variant);
-        }
-
-        .info-value {
-          color: var(--on-surface);
-          font-weight: 500;
-        }
-
-        .chat-response {
-          margin-top: 20px;
-          padding: 16px;
-          background: var(--surface-container);
-          border-radius: var(--radius-md);
-          border-left: 4px solid var(--primary);
-        }
-
-        .chat-response h5 {
-          margin-bottom: 8px;
-          color: var(--primary);
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .response-text {
-          color: var(--on-surface);
-          line-height: 1.5;
-        }
-
-        .method-info {
-          margin-top: 16px;
-          text-align: center;
-          color: var(--on-surface-variant);
-        }
-      `}</style>
     </div>
   );
-};
+}
 
 export default BoardingPassUpload;

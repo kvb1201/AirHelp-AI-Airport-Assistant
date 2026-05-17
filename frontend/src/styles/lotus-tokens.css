@@ -1,0 +1,224 @@
+/* Lotus Travel Experience — canonical tokens + app aliases */
+
+:root {
+  --lotus-background: #fbf9f8;
+  --lotus-on-background: #1b1c1c;
+  --lotus-surface: #fbf9f8;
+  --lotus-surface-dim: #dbd9d9;
+  --lotus-surface-bright: #fbf9f8;
+  --lotus-surface-variant: #e4e2e2;
+  --lotus-surface-container-lowest: #ffffff;
+  --lotus-surface-container-low: #f5f3f3;
+  --lotus-surface-container: #efeded;
+  --lotus-surface-container-high: #eae8e7;
+  --lotus-surface-container-highest: #e4e2e2;
+  --lotus-surface-tint: #6b5a5f;
+  --lotus-on-surface: #1b1c1c;
+  --lotus-on-surface-variant: #4d4447;
+  --lotus-inverse-surface: #303030;
+  --lotus-inverse-on-surface: #f2f0f0;
+  --lotus-outline: #7f7477;
+  --lotus-outline-variant: #d0c3c6;
+  --lotus-primary: #6b5a5f;
+  --lotus-on-primary: #ffffff;
+  --lotus-primary-container: #f8e1e7;
+  --lotus-on-primary-container: #746368;
+  --lotus-inverse-primary: #d7c1c7;
+  --lotus-primary-fixed: #f4dde3;
+  --lotus-primary-fixed-dim: #d7c1c7;
+  --lotus-on-primary-fixed: #24181c;
+  --lotus-on-primary-fixed-variant: #524348;
+  --lotus-secondary: #735c00;
+  --lotus-on-secondary: #ffffff;
+  --lotus-secondary-container: #fed65b;
+  --lotus-on-secondary-container: #745c00;
+  --lotus-secondary-fixed: #ffe088;
+  --lotus-secondary-fixed-dim: #e9c349;
+  --lotus-on-secondary-fixed: #241a00;
+  --lotus-on-secondary-fixed-variant: #574500;
+  --lotus-gold: #d4af37;
+  --lotus-gold-dim: #b8942e;
+  --lotus-gold-subtle: rgba(212, 175, 55, 0.12);
+  --lotus-gold-glow: rgba(212, 175, 55, 0.35);
+  --lotus-tertiary: #5e5e5f;
+  --lotus-on-tertiary: #ffffff;
+  --lotus-tertiary-container: #e8e6e6;
+  --lotus-on-tertiary-container: #676767;
+  --lotus-error: #ba1a1a;
+  --lotus-on-error: #ffffff;
+  --lotus-error-container: #ffdad6;
+  --lotus-on-error-container: #93000a;
+  --lotus-success: #2e6b4a;
+  --lotus-success-container: rgba(46, 107, 74, 0.12);
+  --lotus-on-success-container: #1e4a33;
+  --lotus-warning: #8a5a00;
+  --lotus-warning-container: rgba(254, 214, 91, 0.45);
+  --lotus-on-warning-container: #574500;
+  --lotus-info: #4a6a7a;
+  --lotus-info-container: rgba(91, 143, 168, 0.14);
+  --lotus-petal: #f8e1e7;
+  --lotus-petal-light: #fdfbfb;
+  --lotus-petal-mid: #f8e1e7;
+  --lotus-petal-deep: #f4dde3;
+  --lotus-mauve: #6b5a5f;
+  --lotus-canvas: #fbf9f8;
+  --lotus-water-shimmer: linear-gradient(
+    105deg,
+    rgba(248, 225, 231, 0.55) 0%,
+    rgba(255, 255, 255, 0.85) 45%,
+    rgba(254, 214, 91, 0.08) 100%
+  );
+  --lotus-glass-bg: rgba(255, 255, 255, 0.72);
+  --lotus-glass-bg-strong: rgba(255, 255, 255, 0.88);
+  --lotus-glass-border: rgba(255, 255, 255, 0.55);
+  --lotus-glass-border-focus: rgba(212, 175, 55, 0.65);
+  --lotus-glass-blur: 16px;
+  --lotus-glass-blur-heavy: 22px;
+  --lotus-shadow-petal-sm: 0 2px 8px rgba(107, 90, 95, 0.06);
+  --lotus-shadow-petal-md: 0 8px 24px rgba(248, 225, 231, 0.35);
+  --lotus-shadow-petal-lg: 0 16px 48px rgba(107, 90, 95, 0.08);
+  --lotus-shadow-gold-sm: 0 4px 16px rgba(212, 175, 55, 0.12);
+  --lotus-shadow-gold-focus: 0 0 0 3px var(--lotus-gold-subtle), 0 0 20px var(--lotus-gold-glow);
+  --lotus-scrim: rgba(27, 28, 28, 0.42);
+  --lotus-scrim-heavy: rgba(27, 28, 28, 0.62);
+
+  /* Typography */
+  --type-display: 600 40px/1.2 'Noto Serif', Georgia, serif;
+  --type-headline-lg: 500 28px/1.3 'Noto Serif', Georgia, serif;
+  --type-headline-md: 600 22px/1.25 'Noto Serif', Georgia, serif;
+  --type-headline-sm: 600 18px/1.3 'Noto Serif', Georgia, serif;
+  --type-body-lg: 400 18px/1.6 'Plus Jakarta Sans', system-ui, sans-serif;
+  --type-body-md: 400 16px/1.5 'Plus Jakarta Sans', system-ui, sans-serif;
+  --type-body-sm: 400 14px/1.5 'Plus Jakarta Sans', system-ui, sans-serif;
+  --type-label-sm: 600 12px/1 'Plus Jakarta Sans', system-ui, sans-serif;
+  --type-caption: 500 11px/1.4 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Spacing */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-3);
+  --space-md: var(--space-6);
+  --space-lg: var(--space-12);
+  --space-xl: var(--space-20);
+  --space-base: var(--space-2);
+  --gutter: var(--space-6);
+  --margin-mob: var(--space-4);
+  --margin-desk: var(--space-12);
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+
+  /* Z-index */
+  --z-base: 0;
+  --z-sticky-header: 10;
+  --z-alerts: 20;
+  --z-bottom-nav: 30;
+  --z-chat-dock: 40;
+  --z-fab: 50;
+  --z-dropdown: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+  --z-crisis: 90;
+
+  /* Breakpoints (reference) */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+
+  /* Legacy aliases used across styles.css */
+  --bg: var(--lotus-background);
+  --bg-elevated: var(--lotus-surface-container-lowest);
+  --bg-card: var(--lotus-surface-container-lowest);
+  --bg-card-hover: var(--lotus-surface-container-low);
+  --bg-input: var(--lotus-surface-container-lowest);
+  --bg-overlay: var(--lotus-scrim);
+  --surface: var(--lotus-surface);
+  --surface-bright: var(--lotus-surface-bright);
+  --surface-dim: var(--lotus-surface-dim);
+  --surface-container-lowest: var(--lotus-surface-container-lowest);
+  --surface-container-low: var(--lotus-surface-container-low);
+  --surface-container: var(--lotus-surface-container);
+  --surface-container-high: var(--lotus-surface-container-high);
+  --surface-container-highest: var(--lotus-surface-container-highest);
+  --surface-variant: var(--lotus-surface-variant);
+  --text-primary: var(--lotus-on-surface);
+  --text-secondary: var(--lotus-on-surface-variant);
+  --text-muted: var(--lotus-outline);
+  --on-surface: var(--lotus-on-surface);
+  --on-surface-variant: var(--lotus-on-surface-variant);
+  --inverse-surface: var(--lotus-inverse-surface);
+  --inverse-on-surface: var(--lotus-inverse-on-surface);
+  --border: var(--lotus-outline-variant);
+  --border-subtle: rgba(208, 195, 198, 0.55);
+  --border-strong: var(--lotus-outline);
+  --outline: var(--lotus-outline);
+  --outline-variant: var(--lotus-outline-variant);
+  --accent: var(--lotus-gold);
+  --accent-dim: var(--lotus-gold-dim);
+  --accent-subtle: var(--lotus-gold-subtle);
+  --accent-medium: rgba(212, 175, 55, 0.22);
+  --primary: var(--lotus-primary);
+  --on-primary: var(--lotus-on-primary);
+  --primary-container: var(--lotus-primary-container);
+  --on-primary-container: var(--lotus-on-primary-container);
+  --inverse-primary: var(--lotus-inverse-primary);
+  --primary-fixed: var(--lotus-primary-fixed);
+  --primary-fixed-dim: var(--lotus-primary-fixed-dim);
+  --on-primary-fixed: var(--lotus-on-primary-fixed);
+  --on-primary-fixed-variant: var(--lotus-on-primary-fixed-variant);
+  --secondary: var(--lotus-secondary);
+  --on-secondary: var(--lotus-on-secondary);
+  --secondary-container: var(--lotus-secondary-container);
+  --on-secondary-container: var(--lotus-on-secondary-container);
+  --tertiary: var(--lotus-tertiary);
+  --on-tertiary: var(--lotus-on-tertiary);
+  --tertiary-container: var(--lotus-tertiary-container);
+  --on-tertiary-container: var(--lotus-on-tertiary-container);
+  --error: var(--lotus-error);
+  --on-error: var(--lotus-on-error);
+  --error-container: var(--lotus-error-container);
+  --on-error-container: var(--lotus-on-error-container);
+  --success: var(--lotus-success);
+  --info: var(--lotus-info);
+  --background: var(--lotus-background);
+  --on-background: var(--lotus-on-background);
+  --font-heading: 'Noto Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --shadow-sm: var(--lotus-shadow-petal-sm);
+  --shadow-md: var(--lotus-shadow-petal-md);
+  --shadow-lg: var(--lotus-shadow-petal-lg);
+  --shadow-xl: var(--lotus-shadow-petal-lg);
+  --glow-accent: var(--lotus-shadow-gold-focus);
+  --shadow-ambient: var(--lotus-shadow-petal-sm);
+  --shadow-card: var(--lotus-shadow-petal-md);
+  --shadow-float: var(--lotus-shadow-petal-lg);
+  --shadow-glass: var(--lotus-shadow-gold-sm);
+}
+
+::selection {
+  background: rgba(248, 225, 231, 0.9);
+  color: var(--lotus-on-surface);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--lotus-shadow-gold-focus);
+}

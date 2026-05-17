@@ -13,7 +13,7 @@ const SUGGESTED = [
 /**
  * Floating chat widget — desktop only (hidden on mobile via CSS).
  */
-export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggle, onClose, mapMode }) {
+export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggle, onClose, mapMode, drawerMode }) {
   const showSuggestions = !mapMode && messages.length <= 1;
 
   const mapLastExchange = useMemo(() => {
@@ -30,12 +30,16 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
 
   return (
     <div
-      className={`chat-panel ${isOpen ? '' : 'minimized'}${mapMode ? ' chat-panel--map' : ''}`}
+      className={`chat-panel ${isOpen ? '' : 'minimized'}${mapMode ? ' chat-panel--map' : ''}${drawerMode ? ' chat-panel--drawer' : ''}`}
       role="complementary"
       aria-label="Assistant chat"
     >
       {/* ── Panel Header ── */}
-      <div className="chat-panel-header" onClick={onToggle} aria-expanded={isOpen}>
+      <div
+        className="chat-panel-header"
+        onClick={drawerMode ? undefined : onToggle}
+        aria-expanded={isOpen}
+      >
         <div className="chat-panel-avatar" aria-hidden="true">
           <span className="chat-panel-avatar-initial">AH</span>
         </div>
@@ -47,14 +51,16 @@ export default function ChatPanel({ messages, isLoading, onSend, isOpen, onToggl
           </div>
         </div>
         <div className="chat-panel-actions">
-          <button
-            type="button"
-            className="chat-panel-btn"
-            onClick={(e) => { e.stopPropagation(); onToggle(); }}
-            aria-label={isOpen ? 'Minimize chat' : 'Expand chat'}
-          >
-            <span className="ms">{isOpen ? 'remove' : 'open_in_full'}</span>
-          </button>
+          {!drawerMode ? (
+            <button
+              type="button"
+              className="chat-panel-btn"
+              onClick={(e) => { e.stopPropagation(); onToggle(); }}
+              aria-label={isOpen ? 'Minimize chat' : 'Expand chat'}
+            >
+              <span className="ms">{isOpen ? 'remove' : 'open_in_full'}</span>
+            </button>
+          ) : null}
           <button
             type="button"
             className="chat-panel-btn"

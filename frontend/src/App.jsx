@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import HomeContent from './components/HomeContent';
 import FlightQueryModal from './components/FlightQueryModal';
-import RightPanel from './components/RightPanel';
 import TerminalMapView from './components/TerminalMapView';
 import NavigationFlowView from './components/NavigationFlowView';
 import FacilitiesDirectoryView from './components/FacilitiesDirectoryView';
@@ -10,15 +9,18 @@ import LostFoundView from './components/LostFoundView';
 import ChatPanel from './components/ChatPanel';
 import ChatWindow from './components/ChatWindow';
 import InputBox from './components/InputBox';
-import QuickActions from './components/QuickActions';
 import BottomNav from './components/BottomNav';
 import PlaceholderView from './components/PlaceholderView';
 import CrisisContactOverlay from './components/CrisisContactOverlay';
 import ReportIssueModal from './components/ReportIssueModal';
 import OperationalAlertsBar from './components/OperationalAlertsBar';
 import OperatorConsoleView from './components/OperatorConsoleView';
+import ViewTransition from './components/ViewTransition';
+import MoreMenuSheet from './components/MoreMenuSheet';
+import ChatDrawer from './components/ChatDrawer';
+import useMediaQuery from './hooks/useMediaQuery';
+import DesignSystemShowcase from './components/DesignSystemShowcase';
 import { sendChatMessage } from './services/api';
-import './styles.css';
 
 function formatTime() {
   return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -30,21 +32,46 @@ const WELCOME = {
   time: formatTime(),
 };
 
+const LOCATION_LABELS = {
+  t2_entrance: 'Near Entrance',
+};
+
+const PAGE_TITLES = {
+  Home: { title: 'Home', sub: 'Your T2 companion' },
+  Map: { title: 'Terminal map', sub: 'Floor plan & routes' },
+  Navigation: { title: 'Walking directions', sub: 'Step-by-step guidance' },
+  Facilities: { title: 'Facilities', sub: 'Food, shops, lounges' },
+  'Lost & Found': { title: 'Lost & Found', sub: 'Report or claim items' },
+  Operator: { title: 'Operator', sub: 'Staff tools' },
+  Profile: { title: 'Profile', sub: 'Account & preferences' },
+};
+
 function App() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isDesktop = useMediaQuery('(min-width: 769px)');
+
   const [messages, setMessages] = useState([WELCOME]);
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState('t2_entrance');
-  const [chatOpen, setChatOpen] = useState(true);       // desktop chat panel open/minimized
-  const [mobileView, setMobileView] = useState('home'); // 'home' | 'chat' | 'map' | 'nav' | 'facilities' | 'lostfound' | 'profile'
+  const [chatOpen, setChatOpen] = useState(false);
+  const [mobileView, setMobileView] = useState('home');
   const [sidebarNav, setSidebarNav] = useState('Home');
-  /** When opening the floor map from walking-directions flow: `{ fromId, toId, routeIndex }`. */
   const [mapLaunch, setMapLaunch] = useState(null);
-  /** After computing a route on the map, jump to Navigation with live step-by-step (`_id` disambiguates StrictMode). */
   const [guidedNavHandoff, setGuidedNavHandoff] = useState(null);
-  /** Full-screen helpline / website when backend returns ``crisis_contact`` (medical, lost, disoriented). */
   const [crisisContact, setCrisisContact] = useState(null);
   const [showFlightModal, setShowFlightModal] = useState(false);
   const [reportIssueOpen, setReportIssueOpen] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+  const [showDesignSystem, setShowDesignSystem] = useState(
+    () => typeof window !== 'undefined' && window.location.hash === '#design-system',
+  );
+
+  useEffect(() => {
+    const onHash = () => setShowDesignSystem(window.location.hash === '#design-system');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
   const showMap = sidebarNav === 'Map' || mobileView === 'map';
   const showNavFlow = sidebarNav === 'Navigation' || mobileView === 'nav';
   const showFacilities = sidebarNav === 'Facilities' || mobileView === 'facilities';
@@ -57,50 +84,99 @@ function App() {
     !showLostFound &&
     (sidebarNav === 'Profile' || mobileView === 'profile');
 
-  const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
+  const showMobileChat = isMobile && mobileView === 'chat';
 
-  const clearGuidedNavHandoff = useCallback(() => {
-    setGuidedNavHandoff(null);
-  }, []);
+  const stageKey = useMemo(() => {
+    if (showMobileChat) return 'chat';
+    if (showMap) return 'map';
+    if (showNavFlow) return 'nav';
+    if (showFacilities) return 'facilities';
+    if (showLostFound) return 'lostfound';
+    if (showOperator) return 'operator';
+    if (showProfilePlaceholder) return 'profile';
+    return 'home';
+  }, [
+    showMobileChat,
+    showMap,
+    showNavFlow,
+    showFacilities,
+    showLostFound,
+    showOperator,
+    showProfilePlaceholder,
+  ]);
+
+  const pageMeta = PAGE_TITLES[sidebarNav] || PAGE_TITLES.Home;
+
+  const openChat = useCallback(() => {
+    setChatOpen(true);
+    if (isMobile) setMobileView('chat');
+  }, [isMobile]);
+
+  const closeChat = useCallback(() => {
+    setChatOpen(false);
+    if (isMobile && mobileView === 'chat') {
+      setMobileView('home');
+      setSidebarNav('Home');
+    }
+  }, [isMobile, mobileView]);
+
+  const clearMapLaunch = useCallback(() => setMapLaunch(null), []);
+  const clearGuidedNavHandoff = useCallback(() => setGuidedNavHandoff(null), []);
 
   const openStepByStepFromMap = useCallback((payload) => {
-    setGuidedNavHandoff({
-      ...payload,
-      _id: Date.now(),
-    });
-
+    setGuidedNavHandoff({ ...payload, _id: Date.now() });
     setSidebarNav('Navigation');
     setMobileView('nav');
   }, []);
 
-  /** Keep sidebar highlight and mobile full-screen view in sync when switching primary areas. */
-  const handleNavSelect = useCallback((label) => {
-    setSidebarNav(label);
-    if (label === 'Map') setMobileView('map');
-    else if (label === 'Navigation') setMobileView('nav');
-    else if (label === 'Facilities') setMobileView('facilities');
-    else if (label === 'Lost & Found') setMobileView('lostfound');
-    else if (label === 'Operator') setMobileView('operator');
-    else setMobileView('home');
-  }, []);
+  const handleNavSelect = useCallback(
+    (label) => {
+      setChatOpen(false);
+      setSidebarNav(label);
+      if (label === 'Map') setMobileView('map');
+      else if (label === 'Navigation') setMobileView('nav');
+      else if (label === 'Facilities') setMobileView('facilities');
+      else if (label === 'Lost & Found') setMobileView('lostfound');
+      else if (label === 'Operator') setMobileView('operator');
+      else if (label === 'Profile') setMobileView('profile');
+      else setMobileView('home');
+    },
+    [],
+  );
+
+  const handleAskNav = useCallback(() => {
+    openChat();
+  }, [openChat]);
 
   const handleNewChat = useCallback(() => {
     setMessages([{ ...WELCOME, time: formatTime() }]);
     setCrisisContact(null);
-    handleNavSelect('Home');
-    setChatOpen(true);
-  }, [handleNavSelect]);
+    openChat();
+  }, [openChat]);
 
-  const handleMobileViewChange = useCallback((view) => {
-    setMobileView(view);
-    if (view === 'map') setSidebarNav('Map');
-    else if (view === 'nav') setSidebarNav('Navigation');
-    else if (view === 'facilities') setSidebarNav('Facilities');
-    else if (view === 'lostfound') setSidebarNav('Lost & Found');
-    else if (view === 'home') setSidebarNav('Home');
-    else if (view === 'profile') setSidebarNav('Profile');
-    else if (view === 'operator') setSidebarNav('Operator');
-    else if (view === 'chat') setSidebarNav('Home');
+  const handleMobileViewChange = useCallback(
+    (view) => {
+      setMoreMenuOpen(false);
+      if (view === 'chat') {
+        openChat();
+        return;
+      }
+      setChatOpen(false);
+      setMobileView(view);
+      if (view === 'map') setSidebarNav('Map');
+      else if (view === 'nav') setSidebarNav('Navigation');
+      else if (view === 'home') setSidebarNav('Home');
+    },
+    [openChat],
+  );
+
+  const handleMoreSelect = useCallback((id) => {
+    setChatOpen(false);
+    setMobileView(id);
+    if (id === 'facilities') setSidebarNav('Facilities');
+    else if (id === 'lostfound') setSidebarNav('Lost & Found');
+    else if (id === 'operator') setSidebarNav('Operator');
+    else if (id === 'profile') setSidebarNav('Profile');
   }, []);
 
   const openFloorMap = useCallback(
@@ -124,14 +200,9 @@ function App() {
     if (loc) setLocation(loc);
     setCrisisContact(null);
 
-    const userMsg = { text, role: 'user', time: formatTime() };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev) => [...prev, { text, role: 'user', time: formatTime() }]);
     setIsLoading(true);
-
-    // Switch mobile to chat view when user sends a message
-    setMobileView('chat');
-    // Ensure desktop panel is open
-    setChatOpen(true);
+    openChat();
 
     try {
       const data = await sendChatMessage(text, currentLocation, {
@@ -157,6 +228,7 @@ function App() {
           data.intent === 'navigation' ||
           openMapForRecommendation)
       ) {
+        setChatOpen(false);
         openFloorMap({ fromId: navStart, toId: navEnd, routeIndex: 0 });
       }
     } catch (err) {
@@ -170,33 +242,132 @@ function App() {
     }
   };
 
-  const handleQuickAction = ({ message, location: actionLocation }) => {
-    handleSend(message, actionLocation);
+  const handleTicketCreated = useCallback(
+    (ticket) => {
+      const lines = [
+        '## Ticket created',
+        '',
+        `Your reference is **${ticket.ticket_id}**.`,
+        '',
+        `- **Issue type:** ${ticket.category_label}`,
+        `- **Summary:** ${ticket.summary}`,
+        '',
+      ];
+      if (ticket.email_notice) {
+        lines.push(ticket.email_sent ? ticket.email_notice : `**Note:** ${ticket.email_notice}`);
+        lines.push('');
+      }
+      lines.push('Keep this number if you contact airport support about this report.');
+      setMessages((prev) => [...prev, { text: lines.join('\n'), role: 'bot', time: formatTime() }]);
+      openChat();
+    },
+    [openChat],
+  );
+
+  const renderStage = () => {
+    if (showMobileChat) {
+      return (
+        <div className="mobile-chat-page">
+          <div className="mobile-chat-page-header">
+            <button type="button" className="mobile-chat-back" onClick={closeChat} aria-label="Back">
+              <span className="ms">arrow_back</span>
+            </button>
+            <div>
+              <h2 className="mobile-chat-page-title">AirHelp</h2>
+              <p className="mobile-chat-page-sub">Ask anything about T2</p>
+            </div>
+          </div>
+          <div className="mobile-chat-page-body">
+            <ChatWindow messages={messages} isLoading={isLoading} />
+          </div>
+        </div>
+      );
+    }
+
+    if (showMap) {
+      return (
+        <TerminalMapView
+          location={location}
+          onLocationChange={setLocation}
+          launchRoute={mapLaunch}
+          onLaunchRouteConsumed={clearMapLaunch}
+          onOpenStepByStepGuidance={openStepByStepFromMap}
+        />
+      );
+    }
+
+    if (showNavFlow) {
+      return (
+        <NavigationFlowView
+          location={location}
+          onLocationChange={setLocation}
+          onOpenFloorMap={openFloorMap}
+          guidedHandoff={guidedNavHandoff}
+          onGuidedNavHandoffConsumed={clearGuidedNavHandoff}
+        />
+      );
+    }
+
+    if (showFacilities) {
+      return <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />;
+    }
+
+    if (showLostFound) {
+      return <LostFoundView location={location} onOpenFloorMap={openFloorMap} />;
+    }
+
+    if (showOperator) {
+      return <OperatorConsoleView onBack={() => handleNavSelect('Home')} />;
+    }
+
+    if (showProfilePlaceholder) {
+      return (
+        <PlaceholderView title="Profile" onBack={() => handleNavSelect('Home')} backLabel="Back to Home">
+          <p>Saved trips, preferences, and account tools will show here in a future update.</p>
+        </PlaceholderView>
+      );
+    }
+
+    return (
+      <>
+        <HomeContent
+          locationLabel={LOCATION_LABELS[location] || 'Near Entrance'}
+          onSend={handleSend}
+          onOpenNavigation={() => handleNavSelect('Navigation')}
+          onOpenFloorMap={openFloorMap}
+          onOpenReportIssue={() => setReportIssueOpen(true)}
+          onOpenFlightQueries={() => setShowFlightModal(true)}
+          onOpenChat={openChat}
+        />
+        <FlightQueryModal
+          visible={showFlightModal}
+          onClose={() => setShowFlightModal(false)}
+          onSaved={(resp) => {
+            const botText = resp.message || 'Flight saved.';
+            setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
+            openChat();
+          }}
+        />
+      </>
+    );
   };
 
-  const handleTicketCreated = useCallback((ticket) => {
-    const lines = [
-      '## Ticket created',
-      '',
-      `Your reference is **${ticket.ticket_id}**.`,
-      '',
-      `- **Issue type:** ${ticket.category_label}`,
-      `- **Summary:** ${ticket.summary}`,
-      '',
-    ];
-    if (ticket.email_notice) {
-      lines.push(ticket.email_sent ? ticket.email_notice : `**Note:** ${ticket.email_notice}`);
-      lines.push('');
-    }
-    lines.push('Keep this number if you contact airport support about this report.');
-    const text = lines.join('\n');
-    setMessages((prev) => [...prev, { text, role: 'bot', time: formatTime() }]);
-    setChatOpen(true);
-    setMobileView('chat');
-  }, []);
+  const showMobileInput = isMobile && showMobileChat && !showOperator;
+  const showMobileBottomNav = isMobile && !showOperator;
+
+  if (showDesignSystem) {
+    return (
+      <DesignSystemShowcase
+        onBack={() => {
+          window.location.hash = '';
+          setShowDesignSystem(false);
+        }}
+      />
+    );
+  }
 
   return (
-    <div className="app-container">
+    <div className={`app-container${stageKey === 'home' ? ' app-container--home' : ''}`}>
       {crisisContact ? (
         <CrisisContactOverlay data={crisisContact} onDismiss={() => setCrisisContact(null)} />
       ) : null}
@@ -208,131 +379,93 @@ function App() {
         onTicketCreated={handleTicketCreated}
       />
 
-      {/* ── Left Sidebar (Desktop) ── */}
-      <Sidebar activeNav={sidebarNav} onNavChange={handleNavSelect} onNewChat={handleNewChat} />
+      <Sidebar
+        activeNav={sidebarNav}
+        onNavChange={handleNavSelect}
+        onNewChat={handleNewChat}
+        onAsk={handleAskNav}
+      />
 
-      {/* ── Main Body ── */}
-      <div className="app-body">
+      <div className={`app-body app-body--full${stageKey === 'home' ? ' app-body--home' : ''}`}>
         <OperationalAlertsBar />
 
-        {/* Desktop Header */}
         <header className="desktop-header" role="banner">
-          <div className="header-avatar" role="button" tabIndex={0} aria-label="User account">
-            G
+          <div>
+            <h1 className="desktop-page-title">{pageMeta.title}</h1>
+            <p className="desktop-page-sub">{pageMeta.sub}</p>
+          </div>
+          <div className="desktop-header-actions">
+            <button type="button" className="desktop-ask-btn" onClick={openChat}>
+              <span className="ms">forum</span>
+              Ask AirHelp
+            </button>
+            <div className="header-avatar" role="button" tabIndex={0} aria-label="Guest profile">
+              G
+            </div>
           </div>
         </header>
 
-        {/* Mobile Header */}
         <header className="mobile-header" role="banner">
-          <button
-            type="button"
-            className="mobile-header-menu"
-            aria-label="Go to Home"
-            onClick={() => handleNavSelect('Home')}
-          >
-            <span className="ms">menu</span>
+          <button type="button" className="mobile-header-menu" aria-label="Home" onClick={() => handleNavSelect('Home')}>
+            <span className="ms">spa</span>
           </button>
           <div className="mobile-header-title">
-            <h1>AirHelp</h1>
-            <p>CSMIA Mumbai, Terminal 2</p>
+            <h1>{pageMeta.title}</h1>
+            <p>CSMIA · T2</p>
           </div>
-          <button type="button" className="mobile-header-bell" aria-label="Notifications (coming soon)">
-            <span className="ms">notifications</span>
+          <button type="button" className="mobile-header-bell" aria-label="Ask AirHelp" onClick={openChat}>
+            <span className="ms">forum</span>
           </button>
         </header>
 
-        {/* Content area */}
         <div
-          className={`content-area${showMap ? ' content-area--map' : ''}${showFacilities && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showLostFound && !showMap && !showNavFlow ? ' content-area--facilities' : ''}${showOperator ? ' content-area--facilities' : ''}`}
+          className={`content-area content-area--full${showMap ? ' content-area--map' : ''}${showFacilities || showLostFound || showOperator ? ' content-area--facilities' : ''}`}
         >
-          <main className={`main-content${mobileView === 'chat' ? ' main-content--mobile-chat' : ''}`}>
-            {showMap ? (
-              <TerminalMapView
-                location={location}
-                onLocationChange={setLocation}
-                launchRoute={mapLaunch}
-                onLaunchRouteConsumed={clearMapLaunch}
-                onOpenStepByStepGuidance={openStepByStepFromMap}
-              />
-            ) : showNavFlow ? (
-              <NavigationFlowView
-                location={location}
-                onLocationChange={setLocation}
-                onOpenFloorMap={openFloorMap}
-                guidedHandoff={guidedNavHandoff}
-                onGuidedHandoffConsumed={clearGuidedNavHandoff}
-              />
-            ) : showFacilities ? (
-              <FacilitiesDirectoryView location={location} onGoToFacility={goToFacilityOnMap} />
-            ) : showLostFound ? (
-              <LostFoundView location={location} onOpenFloorMap={openFloorMap} />
-            ) : showOperator ? (
-              <OperatorConsoleView onBack={() => handleNavSelect('Home')} />
-            ) : showProfilePlaceholder ? (
-              <PlaceholderView
-                title="Profile"
-                onBack={() => handleNavSelect('Home')}
-                backLabel="Back to Home"
-              >
-                <p>Saved trips, preferences, and account tools will show here in a future update.</p>
-              </PlaceholderView>
-            ) : (
-              <>
-                <div style={mobileView !== 'home' ? { display: 'none' } : undefined} className="home-view-mobile">
-                  <HomeContent
-                    onSend={handleSend}
-                    onOpenNavigation={() => handleNavSelect('Navigation')}
-                    onOpenFloorMap={openFloorMap}
-                    onOpenReportIssue={() => setReportIssueOpen(true)}
-                    onOpenFlightQueries={() => setShowFlightModal(true)}
-                  />
-                </div>
-
-                <FlightQueryModal
-                  visible={showFlightModal}
-                  onClose={() => setShowFlightModal(false)}
-                  onSaved={(resp) => {
-                    const botText = resp.message || 'Flight saved.';
-                    setMessages((prev) => [...prev, { text: botText, role: 'bot', time: formatTime() }]);
-                  }}
-                />
-
-                {mobileView === 'chat' && (
-                  <div className="mobile-chat-history">
-                    <div className="mobile-chat-history-inner">
-                      <ChatWindow messages={messages} isLoading={isLoading} />
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
+          <main
+            className={`main-content main-content--full${showMobileChat ? ' main-content--mobile-chat' : ''}${stageKey === 'home' ? ' main-content--home' : ''}`}
+          >
+            <ViewTransition viewKey={stageKey} enabled={isMobile}>
+              {renderStage()}
+            </ViewTransition>
           </main>
-
-          {!showMap && !showNavFlow && !showFacilities && !showLostFound && !showOperator && !showProfilePlaceholder && (
-          <RightPanel />
-        )}
         </div>
 
-        {/* ── Mobile Bottom Area (fixed) ── */}
-        <div className={`mobile-bottom${showOperator ? ' mobile-bottom--operator' : ''}`}>
-          {mobileView === 'home' && !showOperator && (
-            <QuickActions onAction={handleQuickAction} />
-          )}
-          {!showOperator ? <InputBox onSend={handleSend} isLoading={isLoading} /> : null}
-          <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} />
-        </div>
+        {showMobileBottomNav ? (
+          <div className={`mobile-bottom${showOperator ? ' mobile-bottom--operator' : ''}`}>
+            {showMobileInput ? <InputBox onSend={handleSend} isLoading={isLoading} /> : null}
+            <BottomNav activeView={mobileView} onViewChange={handleMobileViewChange} onMoreOpen={() => setMoreMenuOpen(true)} />
+          </div>
+        ) : null}
       </div>
 
-      {/* ── Floating Chat Panel (Desktop only) ── */}
-      <ChatPanel
-        messages={messages}
-        isLoading={isLoading}
-        onSend={handleSend}
-        isOpen={chatOpen}
-        onToggle={() => setChatOpen((prev) => !prev)}
-        onClose={() => setChatOpen(false)}
-        mapMode={showMap}
-      />
+      {isDesktop && !chatOpen && stageKey !== 'home' ? (
+        <button
+          type="button"
+          className={`chat-fab${showMap ? ' chat-fab--map' : ''}`}
+          onClick={openChat}
+          aria-label="Open AirHelp assistant"
+        >
+          <span className="ms" aria-hidden="true">forum</span>
+          Ask AirHelp
+        </button>
+      ) : null}
+
+      {isDesktop ? (
+        <ChatDrawer open={chatOpen} onClose={closeChat}>
+          <ChatPanel
+            messages={messages}
+            isLoading={isLoading}
+            onSend={handleSend}
+            isOpen
+            onToggle={closeChat}
+            onClose={closeChat}
+            mapMode={showMap && chatOpen}
+            drawerMode
+          />
+        </ChatDrawer>
+      ) : null}
+
+      <MoreMenuSheet open={moreMenuOpen} onClose={() => setMoreMenuOpen(false)} onSelect={handleMoreSelect} />
     </div>
   );
 }

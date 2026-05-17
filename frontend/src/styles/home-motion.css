@@ -1,0 +1,110 @@
+/* GSAP motion + promo strip */
+
+/* Promo strip */
+.hx-promo {
+  position: relative;
+  z-index: 2;
+  padding: 56px 16px 64px;
+  background: var(--lotus-mauve);
+  color: var(--lotus-petal-light);
+  text-align: center;
+}
+
+.hx-promo-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hx-promo-top,
+.hx-promo-bottom {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin: 0;
+  max-width: 22ch;
+}
+
+@media (min-width: 768px) {
+  .hx-promo-top,
+  .hx-promo-bottom {
+    max-width: none;
+  }
+}
+
+.hx-promo-reveal {
+  position: relative;
+  z-index: 2;
+  margin: 12px 0;
+  transform: rotate(-1deg);
+  border: 3px solid var(--lotus-mauve);
+  box-shadow: var(--lotus-shadow-petal-lg);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  will-change: clip-path;
+}
+
+.hx-promo-reveal-inner {
+  background: linear-gradient(135deg, var(--lotus-gold), #e9c349);
+  padding: 14px 24px 18px;
+}
+
+.hx-promo-center {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2.8vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lotus-mauve);
+}
+
+/* Scroll headline */
+.hx-scroll-headline {
+  overflow: hidden;
+  padding: 20px 0;
+  background: var(--lotus-surface-container-low);
+  border-block: 1px solid var(--lotus-outline-variant);
+}
+
+.hx-scroll-headline-track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  white-space: nowrap;
+  width: max-content;
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--lotus-mauve);
+  will-change: transform;
+}
+
+.hx-scroll-headline-track span:nth-child(even) {
+  opacity: 0.35;
+}
+
+/* GSAP marquee — no CSS keyframes */
+.hx-marquee-track--gsap {
+  animation: none;
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Splitting word fades */
+.hx-story-split-title .word,
+.hx-story-split-body .word {
+  display: inline-block;
+}
+
+.hx-promo .word {
+  display: inline-block;
+  white-space: nowrap;
+}

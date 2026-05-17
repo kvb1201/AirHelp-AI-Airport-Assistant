@@ -1,0 +1,119 @@
+/* Boarding pass upload — matches Lotus home surfaces */
+
+.boarding-pass-upload {
+  width: 100%;
+}
+
+.boarding-pass-upload .section-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: var(--lotus-on-surface);
+}
+
+.boarding-pass-upload .file-input {
+  display: none;
+}
+
+.boarding-pass-upload .file-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 16px;
+  border: 2px dashed var(--lotus-outline-variant);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  color: var(--lotus-on-surface-variant);
+  font-size: 14px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.boarding-pass-upload .file-input-label:hover {
+  border-color: var(--lotus-gold);
+  background: #fff;
+  color: var(--lotus-on-surface);
+}
+
+.boarding-pass-upload .selected-file {
+  margin: 12px 0;
+  font-size: 13px;
+  color: var(--lotus-on-surface-variant);
+}
+
+.boarding-pass-upload .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.boarding-pass-upload .upload-btn,
+.boarding-pass-upload .chat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.boarding-pass-upload .upload-btn {
+  background: linear-gradient(135deg, var(--lotus-gold), var(--lotus-gold-dim));
+  color: #fff;
+}
+
+.boarding-pass-upload .upload-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.boarding-pass-upload .chat-btn {
+  background: var(--lotus-surface-container-high);
+  color: var(--lotus-on-surface);
+  border: 1px solid var(--lotus-outline-variant);
+}
+
+.boarding-pass-upload .error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--lotus-error-container);
+  color: var(--lotus-on-error-container);
+  font-size: 13px;
+}
+
+.boarding-pass-upload .result-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--lotus-outline-variant);
+}
+
+.boarding-pass-upload .info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.boarding-pass-upload .info-item {
+  font-size: 13px;
+}
+
+.boarding-pass-upload .info-label {
+  font-weight: 600;
+  color: var(--lotus-on-surface-variant);
+}
+
+.boarding-pass-upload .info-value {
+  color: var(--lotus-on-surface);
+}
