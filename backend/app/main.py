@@ -8,7 +8,7 @@ load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
 
 if not HF_TOKEN:
-    print("⚠️ HF_TOKEN not found in environment variables")
+    print("[WARN] HF_TOKEN not found in environment variables")
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,6 +22,7 @@ from app.api import (
     lost_found,
     map as map_api,
     navigation,
+    ocr,
     tts,
     transcribe,
     translate,
@@ -46,35 +47,35 @@ from app.services.alert_scheduler import start_alert_scheduler
 # ----------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("🚀 AI Airport Companion API starting...")
+    print("[INFO] AI Airport Companion API starting...")
 
     lost_found_storage.init_db()
     print(
-        f"📦 Lost & Found storage (SQLite on this laptop): "
+        f"[INFO] Lost & Found storage (SQLite on this laptop): "
         f"{lost_found_storage.get_db_path()}"
     )
 
     ops_state.load_from_disk()
     print(
-        f"📡 Operational state (operator bulletins / delays): "
+        f"[INFO] Operational state (operator bulletins / delays): "
         f"{ops_state.get_data_path()}"
     )
 
     try:
         init_rag()
-        print("✅ RAG initialized successfully")
+        print("[OK] RAG initialized successfully")
     except Exception as e:
-        print(f"❌ RAG initialization failed: {e}")
+        print(f"[ERROR] RAG initialization failed: {e}")
 
     try:
         start_alert_scheduler()
-        print("⏰ Alert scheduler started")
+        print("[INFO] Alert scheduler started")
     except Exception as e:
-        print(f"⚠️ Failed to start alert scheduler: {e}")
+        print(f"[WARN] Failed to start alert scheduler: {e}")
 
     yield
 
-    print("🛑 API shutting down...")
+    print("[INFO] API shutting down...")
 
 
 # ----------------------------
@@ -115,6 +116,7 @@ app.include_router(lost_found.router, prefix="/api", tags=["Lost & Found"])
 app.include_router(tts.router, prefix="/api", tags=["TTS"])
 app.include_router(transcribe.router, prefix="/api", tags=["STT"])
 app.include_router(translate.router, prefix="/api", tags=["Translation"])
+app.include_router(ocr.router, prefix="/api", tags=["OCR"])
 app.include_router(
     support_tickets.router,
     prefix="/api",

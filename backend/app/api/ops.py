@@ -6,6 +6,7 @@ from typing import Literal
 
 from fastapi import APIRouter, HTTPException, Request, WebSocket
 from pydantic import BaseModel, Field
+from starlette.websockets import WebSocketDisconnect
 
 from app.config import AIRHELP_OPERATOR_TOKEN
 from app.services import operational_state_service as ops

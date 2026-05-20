@@ -25,6 +25,8 @@ function getBaseUrl() {
   const hostname = window.location.hostname;
 
   if (hostname === "localhost" || hostname === "127.0.0.1") {
+    // Call FastAPI directly on 8000 (CORS is open). Avoids Vite proxy issues
+    // (multipart uploads, content-length) and works on any dev port (3000, 3001, …).
     return "http://localhost:8000/api";
   }
 
@@ -256,6 +258,13 @@ export async function createSupportTicket(body) {
 /** HTTP origin for the API host (no ``/api`` suffix), e.g. ``http://192.168.1.10:8000``. */
 export function getApiHttpOrigin() {
   const base = apiBase().replace(/\/+$/, "");
+  // Path-only base (e.g. "/api" from a proxy setup): WebSocket must use page origin.
+  if (base === "/api" || (base.startsWith("/") && !base.startsWith("//"))) {
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "";
+  }
   return base.replace(/\/api\/?$/, "");
 }
 
@@ -537,11 +546,18 @@ export async function extractBoardingPass(file) {
     return data;
   } catch (err) {
     console.error('[OCR] API error:', err);
+    const msg = String(err?.message || err || "");
+    const isNetworkFailure =
+      (err instanceof TypeError && /failed to fetch/i.test(msg)) ||
+      /ERR_CONNECTION_REFUSED|ERR_CONTENT_LENGTH_MISMATCH|NetworkError|Load failed/i.test(msg);
+    const connectionHelp = isNetworkFailure
+      ? 'Cannot reach backend API. Start backend server on port 8000 (run `npm run api` from the repo root) or set localStorage `airhelp_api_base` / `VITE_API_BASE_URL` to the correct API host.'
+      : `OCR processing failed: ${msg}`;
     return {
       success: false,
-      message: `OCR processing failed: ${err.message}`,
+      message: connectionHelp,
       data: {},
-      error: err.message,
+      error: msg,
     };
   }
 }
