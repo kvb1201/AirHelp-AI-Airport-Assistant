@@ -9,22 +9,21 @@ $VENV_PATH = Join-Path $ROOT_DIR ".venv"
 
 if (-Not (Test-Path $VENV_PATH)) {
     Write-Host "Creating virtual environment at $VENV_PATH..."
-    python -m venv $VENV_PATH
+    & "python" -m venv $VENV_PATH
 }
 
-Write-Host "Activating virtual environment..."
-$PIP = Join-Path $VENV_PATH "Scripts\pip.exe"
-$PYTHON = Join-Path $VENV_PATH "Scripts\python.exe"
+# Activate the virtual environment for this script session
+. (Join-Path $VENV_PATH "Scripts\Activate.ps1")
 
 Write-Host "Installing uvicorn, fastapi, and pydantic..."
-& $PIP install uvicorn fastapi pydantic
+pip install uvicorn fastapi pydantic
 
 Write-Host "Installing requirements from backend/requirements.txt..."
-& $PIP install -r backend/requirements.txt
+pip install -r (Join-Path $ROOT_DIR "backend\requirements.txt")
 
 Write-Host "Installing ML libraries (this may take a few minutes)..."
-& $PIP install faster-whisper transformers torch torchaudio
+pip install faster-whisper transformers torch torchaudio
 
 Write-Host "Starting backend server..."
 Set-Location (Join-Path $ROOT_DIR "backend")
-& $PYTHON run.py
+python run.py

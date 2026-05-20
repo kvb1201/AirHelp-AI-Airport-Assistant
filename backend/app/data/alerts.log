@@ -5,3 +5,6 @@
 [2026-05-07T14:45:48.065769+05:30] Alert for user_priya: BA 286 · Head to security (scheduled at 14:00)
 [2026-05-07T14:45:48.067415+05:30] Alert for user_priya: BA 286 · Go to gate (scheduled at 14:35)
 [2026-05-07T15:10:57.345791+05:30] Alert for user_priya: BA 286 · Final call (scheduled at 15:10)
+[2026-05-20T17:11:02.054625+05:30] Alert for user_123: A1 143 · Head to security (scheduled at 09:20)
+[2026-05-20T17:11:02.059631+05:30] Alert for user_123: A1 143 · Go to gate (scheduled at 09:50)
+[2026-05-20T17:11:02.103090+05:30] Alert for user_123: A1 143 · Final call (scheduled at 10:25)

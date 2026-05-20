@@ -1,11 +1,11 @@
 {
   "user_123": {
-    "location": "t2_entrance",
-    "source": "t2_entrance",
+    "location": "t2_nw_sp_14",
+    "source": "t2_nw_sp_14",
     "user_id": "user_123",
     "created_at": "2026-05-07T17:27:12.798752+05:30",
-    "updated_at": "2026-05-08T17:18:53.566780+05:30",
-    "intent": "lounge",
+    "updated_at": "2026-05-20T17:18:03.183475+05:30",
+    "intent": "food",
     "selected": {
       "id": "csmia_00a815a43d239a",
       "name": "Bookscetra (New Store)",
@@ -28,6 +28,14 @@
         "graph_node_id": "t2_l03_postsec"
       }
     ],
-    "mode": "navigation"
+    "mode": "navigation",
+    "flight_number": "A1 143",
+    "boarding_time": "10:35",
+    "departure_time": "11:20",
+    "alerts_sent": [
+      "Head to security",
+      "Go to gate",
+      "Final call"
+    ]
   }
 }
